@@ -7,6 +7,17 @@
 
 using namespace std;
 namespace taco {
+
+static bool ISPC_codegen_enabled = ISPC_BUILT;
+bool should_use_ISPC_codegen() {
+  return ISPC_codegen_enabled;
+}
+
+void set_ISPC_codegen_enabled(bool enabled) {
+  ISPC_codegen_enabled = enabled;
+}
+
+
 /// Functions used by taco to interface with CUDA (especially unified memory)
 static bool CUDA_codegen_enabled = CUDA_BUILT;
 static bool CUDA_unified_memory_enabled = CUDA_BUILT;

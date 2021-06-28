@@ -2,6 +2,7 @@
 #include "taco/cuda.h"
 #include "codegen_cuda.h"
 #include "codegen_c.h"
+#include "codegen_ispc.h"
 #include <algorithm>
 #include <unordered_set>
 
@@ -25,6 +26,9 @@ const std::string labelPrefix = "resume_";
 shared_ptr<CodeGen> CodeGen::init_default(std::ostream &dest, OutputKind outputKind) {
   if (should_use_CUDA_codegen()) {
     return make_shared<CodeGen_CUDA>(dest, outputKind);
+  }
+  else if (should_use_ISPC_codegen()) {
+    return make_shared<CodeGen_ISPC>(dest, outputKind);
   }
   else {
     return make_shared<CodeGen_C>(dest, outputKind);

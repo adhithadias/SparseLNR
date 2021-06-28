@@ -20,6 +20,7 @@
 #include "taco/lower/lower.h"
 #include "taco/codegen/module.h"
 #include "codegen/codegen_c.h"
+#include "codegen/codegen_ispc.h"
 #include "codegen/codegen_cuda.h"
 #include "codegen/codegen.h"
 #include "taco/util/strings.h"
@@ -188,6 +189,8 @@ static void printUsageInfo() {
   cout << endl;
   printFlag("print-nocolor", "Print without colors.");
   cout << endl;
+  printFlag("ispc", "Generate ISPC code for Intel CPUs");
+  cout << endl;
   printFlag("cuda", "Generate CUDA code for NVIDIA GPUs");
   cout << endl;
   printFlag("schedule", "Specify parallel execution schedule");
@@ -279,6 +282,8 @@ static void printVersionInfo() {
     cout << "Built with Python support." << endl;
   if(TACO_FEATURE_CUDA)
     cout << "Built with CUDA support." << endl;
+  if(TACO_FEATURE_ISPC)
+    cout << "Built with ISPC support." << endl;
   cout << endl;
   cout << "Built on: " << TACO_BUILD_DATE << endl;
   cout << "CMake build type: " << TACO_BUILD_TYPE << endl;
@@ -641,6 +646,7 @@ int main(int argc, char* argv[]) {
   bool color               = true;
   bool readKernels         = false;
   bool cuda                = false;
+  bool ispc                = false;
 
   bool setSchedule         = false;
 
@@ -949,6 +955,10 @@ int main(int argc, char* argv[]) {
     else if ("-cuda" == argName) {
       cuda = true;
     }
+    else if ("-ispc" == argName) {
+      std::cout << "ispc true\n";
+      ispc = true;
+    }
     else if ("-schedule" == argName) {
       vector<string> descriptor = util::split(argValue, ",");
       if (descriptor.size() > 2 || descriptor.empty()) {
@@ -1129,9 +1139,18 @@ int main(int argc, char* argv[]) {
       return reportError("TACO must be built for CUDA (cmake -DCUDA=ON ..) to benchmark", 2);
     }
     set_CUDA_codegen_enabled(true);
+    set_ISPC_codegen_enabled(false);
+  }
+  else if (ispc) {
+    if (!ISPC_BUILT && benchmark) {
+      return reportError("TACO must be built for ISPC (cmake -DISPC=ON .. to benchmark", 2);
+    }
+    set_CUDA_codegen_enabled(false);
+    set_ISPC_codegen_enabled(true);
   }
   else {
     set_CUDA_codegen_enabled(false);
+    set_ISPC_codegen_enabled(false);
   }
 
   stmt = scalarPromote(stmt);

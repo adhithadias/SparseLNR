@@ -13,6 +13,7 @@
 #include "taco/util/strings.h"
 #include "taco/util/env.h"
 #include "codegen/codegen_c.h"
+#include "codegen/codegen_ispc.h"
 #include "codegen/codegen_cuda.h"
 #include "taco/cuda.h"
 
@@ -89,6 +90,9 @@ void writeShims(vector<Stmt> funcs, string path, string prefix) {
     if (should_use_CUDA_codegen()) {
       CodeGen_CUDA::generateShim(func, shims);
     }
+    else if (should_use_ISPC_codegen()) {
+      CodeGen_ISPC::generateShim(func, shims);
+    }
     else {
       CodeGen_C::generateShim(func, shims);
     }
@@ -97,6 +101,9 @@ void writeShims(vector<Stmt> funcs, string path, string prefix) {
   ofstream shims_file;
   if (should_use_CUDA_codegen()) {
     shims_file.open(path+prefix+"_shims.cpp");
+  }
+  else if (should_use_ISPC_codegen()) {
+    shims_file.open(path+prefix+".ispc", ios::app);
   }
   else {
     shims_file.open(path+prefix+".c", ios::app);

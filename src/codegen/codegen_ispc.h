@@ -1,5 +1,5 @@
-#ifndef TACO_BACKEND_C_H
-#define TACO_BACKEND_C_H
+#ifndef TACO_BACKEND_ISPC_H
+#define TACO_BACKEND_ISPC_H
 #include <map>
 #include <vector>
 

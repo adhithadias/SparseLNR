@@ -1297,6 +1297,7 @@ int main(int argc, char* argv[]) {
   }
 
   bool hasPrinted = false;
+
   std::shared_ptr<ir::CodeGen> codegen = ir::CodeGen::init_default(cout, ir::CodeGen::ImplementationGen);
   codegen->setColor(color);
   if (printAssemble) {
@@ -1317,6 +1318,7 @@ int main(int argc, char* argv[]) {
     }
 
     if (compute.defined()) {
+      std::cout << "Code generation\n";
       codegen->compile(compute, false);
     }
     else {

@@ -18,6 +18,8 @@ namespace taco {
 /// Functions used by taco to interface with ISPC
 bool should_use_ISPC_codegen();
 void set_ISPC_codegen_enabled(bool enabled);
+bool is_ISPC_code_stream_enabled();
+void set_ISPC_code_stream_enabled(bool enabled);
 
 
 /// Functions used by taco to interface with CUDA (especially unified memory)

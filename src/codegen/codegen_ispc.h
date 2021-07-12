@@ -16,6 +16,7 @@ public:
   /// Initialize a code generator that generates code to an
   /// output stream.
   CodeGen_ISPC(std::ostream &dest, OutputKind outputKind, bool simplify=true);
+  CodeGen_ISPC(std::ostream &dest, std::ostream &dest2, OutputKind outputKind, bool simplify=true);
   ~CodeGen_ISPC();
 
   /// Compile a lowered function
@@ -45,6 +46,7 @@ protected:
   std::map<Expr, std::string, ExprCompare> varMap;
   std::vector<Expr> localVars;
   std::ostream &out;
+  std::ostream &out2;
   
   OutputKind outputKind;
 
@@ -56,6 +58,7 @@ protected:
 
 private:
   virtual std::string restrictKeyword() const { return "restrict"; }
+  void sendToStream(std::stringstream &stream);
 };
 
 } // namespace ir

@@ -35,6 +35,18 @@ shared_ptr<CodeGen> CodeGen::init_default(std::ostream &dest, OutputKind outputK
   }
 }
 
+shared_ptr<CodeGen> CodeGen::init_default(std::ostream &dest, std::ostream &dest2, OutputKind outputKind) {
+  if (should_use_CUDA_codegen()) {
+    return make_shared<CodeGen_CUDA>(dest, outputKind);
+  }
+  else if (should_use_ISPC_codegen()) {
+    return make_shared<CodeGen_ISPC>(dest, dest2, outputKind);
+  }
+  else {
+    return make_shared<CodeGen_C>(dest, outputKind);
+  }
+}
+
 int CodeGen::countYields(const Function *func) {
   struct CountYields : public IRVisitor {
     int yields = 0;
@@ -233,6 +245,49 @@ string CodeGen::printTensorProperty(string varname, const GetProperty* op, bool 
   return ret.str();
 }
 
+string CodeGen::getUnpackedTensorArgument(string varname, const GetProperty* op,
+                            bool is_output_prop) {
+  stringstream ret;
+  ret << "";
+
+  auto tensor = op->tensor.as<Var>();
+  if (op->property == TensorProperty::Values) {
+    // for the values, it's in the last slot
+    ret << "uniform " << printType(tensor->type, false) << " " << varname << "[]";
+    return ret.str();
+  } else if (op->property == TensorProperty::ValuesSize) {
+    ret << "int32 " << varname;
+    return ret.str();
+  }
+
+  // for a Dense level, nnz is an int
+  // for a Fixed level, ptr is an int
+  // all others are int*
+  if (op->property == TensorProperty::Dimension) {
+    if (op->type == Int32) {
+      ret << "int32 ";
+    } else if (op->type == Int64) {
+      ret << "int64 ";
+    } else {
+      ret << "int ";
+    }
+    ret << varname;
+    
+  } else {
+    taco_iassert(op->property == TensorProperty::Indices);
+    if (op->type == Int32) {
+      ret << "uniform int32 ";
+    } else if (op->type == Int64) {
+      ret << "uniform int64 ";
+    } else {
+      ret << "uniform int ";
+    }
+    ret << varname << "[]";
+  }
+
+  return ret.str();
+}
+
 string CodeGen::unpackTensorProperty(string varname, const GetProperty* op,
                             bool is_output_prop) {
   stringstream ret;
@@ -314,13 +369,9 @@ string CodeGen::pointTensorProperty(std::string varname) {
   return ret.str();
 }
 
-// helper to print declarations
-string CodeGen::printDecls(map<Expr, string, ExprCompare> varMap,
-                           vector<Expr> inputs, vector<Expr> outputs) {
-  stringstream ret;
-  unordered_set<string> propsAlreadyGenerated;
-
-  vector<const GetProperty*> sortedProps;
+void CodeGen::getSortedProps(map<Expr, string, ExprCompare> &varMap,
+              vector<const GetProperty*> &sortedProps, vector<Expr> &inputs,
+              vector<Expr> &outputs) {
 
   for (auto const& p: varMap) {
     if (p.first.as<GetProperty>())
@@ -359,6 +410,17 @@ string CodeGen::printDecls(map<Expr, string, ExprCompare> varMap,
          return a->index < b->index;
        });
 
+}
+
+// helper to print declarations
+string CodeGen::printDecls(map<Expr, string, ExprCompare> varMap,
+                           vector<Expr> inputs, vector<Expr> outputs) {
+  stringstream ret;
+  unordered_set<string> propsAlreadyGenerated;
+
+  vector<const GetProperty*> sortedProps;
+  getSortedProps(varMap, sortedProps, inputs, outputs);
+
   for (auto prop: sortedProps) {
     bool isOutputProp = (find(outputs.begin(), outputs.end(),
                               prop->tensor) != outputs.end());
@@ -375,6 +437,71 @@ string CodeGen::printDecls(map<Expr, string, ExprCompare> varMap,
     }
     propsAlreadyGenerated.insert(varMap[prop]);
   }
+
+  return ret.str();
+}
+
+string CodeGen::printCallISPCFunc(const Function *func, map<Expr, string, ExprCompare> varMap,
+                                  vector<const GetProperty*> &sortedProps) {
+  std::stringstream ret;
+  ret << "  ";
+  unordered_set<string> propsAlreadyGenerated;
+
+  ret << "__" << func->name << "(";
+
+  vector<Expr> inputs = func->inputs;
+  vector<Expr> outputs = func->outputs;
+  getSortedProps(varMap, sortedProps, inputs, outputs);
+
+  for (unsigned long i=0; i < sortedProps.size(); i++) {
+    ret << varMap[sortedProps[i]];
+    if (i != sortedProps.size()-1) {
+      ret << ", ";
+    }
+    propsAlreadyGenerated.insert(varMap[sortedProps[i]]);
+  }
+
+  ret << ");\n";
+  return ret.str();
+}
+
+string CodeGen::printISPCFunc(const Function *func, map<Expr, string, ExprCompare> varMap,
+                                  vector<const GetProperty*> &sortedProps) {
+  std::stringstream ret;
+  ret << "export void ";
+  unordered_set<string> propsAlreadyGenerated;
+
+  ret << "__" << func->name << "(";
+
+  vector<Expr> inputs = func->inputs;
+  vector<Expr> outputs = func->outputs;
+  // getSortedProps(varMap, sortedProps, inputs, outputs);
+
+  for (unsigned long i=0; i < sortedProps.size(); i++) {
+    auto prop = sortedProps[i];
+    bool isOutputProp = (find(outputs.begin(), outputs.end(),
+                              prop->tensor) != outputs.end());
+    
+    auto var = prop->tensor.as<Var>();
+    if (var->is_parameter) {
+      if (isOutputProp) {
+        ret << "  " << printTensorProperty(varMap[prop], prop, false) << ";" << endl;
+      } else {
+        break; 
+      }
+    } else {
+      ret << getUnpackedTensorArgument(varMap[prop], prop, isOutputProp);
+    }
+    propsAlreadyGenerated.insert(varMap[prop]);
+
+    if (i!=sortedProps.size()-1) {
+      ret << ", ";
+    }
+    if (i%2==0) {
+      ret << "\n\t";
+    }
+  }
+  ret << ") {\n";
 
   return ret.str();
 }

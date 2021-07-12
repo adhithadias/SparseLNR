@@ -278,6 +278,7 @@ static size_t unpackTensorData(const taco_tensor_t& tensorData,
 
 /// Pack coordinates into a data structure given by the tensor format.
 void TensorBase::pack() {
+  std::cout << "TensorBase::Pack() method\n";
   if (!needsPack()) {
     return;
   }
@@ -346,6 +347,7 @@ void TensorBase::pack() {
   taco_iassert((content->coordinateBufferUsed % content->coordinateSize) == 0);
   const size_t numCoordinates = content->coordinateBufferUsed / content->coordinateSize;
 
+  std::cout << "call helperFuncs\n";
   const auto helperFuncs = getHelperFunctions(getFormat(), getComponentType(),
                                               dimensions);
 
@@ -623,6 +625,7 @@ void TensorBase::compile() {
   compile(stmt, content->assembleWhileCompute);
 }
 void TensorBase::compile(taco::IndexStmt stmt, bool assembleWhileCompute) {
+  std::cout << "TensorBase::compile\n";
   if (!needsCompile()) {
     return;
   }
@@ -934,6 +937,7 @@ TensorBase::getHelperFunctions(const Format& format, Datatype ctype,
   };
   const auto dims = util::map(dimensions, getDim);
 
+  set_ISPC_code_stream_enabled(false);
   if (format.getOrder() > 0) {
     const Format bufferFormat = COO(format.getOrder(), false, true, false,
                                     format.getModeOrdering());
@@ -951,6 +955,7 @@ TensorBase::getHelperFunctions(const Format& format, Datatype ctype,
     }
 
     // Lower packing and iterator code.
+    std::cout << "1 Lower packing and iterator code\n";
     helperModule->addFunction(lower(packStmt, "pack", true, true));
     helperModule->addFunction(lower(iterateStmt, "iterate", false, true));
   } else {
@@ -964,12 +969,14 @@ TensorBase::getHelperFunctions(const Format& format, Datatype ctype,
     IndexVar indexVar;
     IndexStmt assignment = (packedScalar() = bufferVector(indexVar));
     IndexStmt packStmt= makeConcreteNotation(makeReductionNotation(assignment));
+    std::cout << "2 Lower packing and iterator code\n";
     helperModule->addFunction(lower(packStmt, "pack", true, true));
 
     // Define and lower iterator code.
     IndexStmt iterateStmt = Yield({}, packedScalar());
     helperModule->addFunction(lower(iterateStmt, "iterate", false, true));
   }
+  std::cout << "Compiling the helperModule\n";
   helperModule->compile();
 
   helperFunctionsMutex.lock();

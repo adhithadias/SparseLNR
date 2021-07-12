@@ -16,6 +16,7 @@ class IRPrinter : public IRVisitorStrict {
 public:
   IRPrinter(std::ostream& stream);
   IRPrinter(std::ostream& stream, bool color, bool simplify);
+  IRPrinter(std::ostream& stream, std::ostream& stream2, bool color, bool simplify);
   virtual ~IRPrinter();
 
   void setColor(bool color);
@@ -72,6 +73,7 @@ protected:
   virtual void visit(const Break*);
 
   std::ostream &stream;
+  std::ostream &stream2;
   int indent;
   bool color;
   bool simplify;
@@ -109,6 +111,7 @@ protected:
   void doIndent();
   void printBinOp(Expr a, Expr b, std::string op, Precedence precedence);
   bool needsParentheses(Precedence precedence);
+  void sendToStream(std::stringstream &stream);
 
   std::string keywordString(std::string);
   std::string commentString(std::string);

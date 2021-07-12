@@ -1,6 +1,7 @@
 #include <sstream>
 #include <iostream>
 
+#include "taco/cuda.h"
 #include "taco/ir/ir.h"
 #include "taco/ir/ir_printer.h"
 #include "taco/ir/simplify.h"
@@ -34,7 +35,11 @@ IRPrinter::IRPrinter(ostream &s) : IRPrinter(s, false, false) {
 }
 
 IRPrinter::IRPrinter(ostream &s, bool color, bool simplify)
-    : stream(s), indent(0), color(color), simplify(simplify) {
+    : stream(s), stream2(s), indent(0), color(color), simplify(simplify) {
+}
+
+IRPrinter::IRPrinter(ostream &s, ostream &s2, bool color, bool simplify)
+    : stream(s), stream2(s2), indent(0), color(color), simplify(simplify) {
 }
 
 IRPrinter::~IRPrinter() {
@@ -59,79 +64,169 @@ void IRPrinter::print(Stmt stmt) {
 }
 
 void IRPrinter::visit(const Literal* op) {
-  if (color) {
-    stream << blue ;
-  }
+  if (is_ISPC_code_stream_enabled()) {
+    if (color) {
+        stream2 << blue ;
+      }
 
-  switch (op->type.getKind()) {
-    case Datatype::Bool:
-      stream << op->getValue<bool>();
-    break;
-    case Datatype::UInt8:
-      stream << static_cast<uint16_t>(op->getValue<uint8_t>());
-    break;
-    case Datatype::UInt16:
-      stream << op->getValue<uint16_t>();
-    break;
-    case Datatype::UInt32:
-      stream << op->getValue<uint32_t>();
-    break;
-    case Datatype::UInt64:
-      stream << op->getValue<uint64_t>();
-    break;
-    case Datatype::UInt128:
-      taco_not_supported_yet;
-    break;
-    case Datatype::Int8:
-      stream << static_cast<int16_t>(op->getValue<int8_t>());
-    break;
-    case Datatype::Int16:
-      stream << op->getValue<int16_t>();
-    break;
-    case Datatype::Int32:
-      stream << op->getValue<int32_t>();
-    break;
-    case Datatype::Int64:
-      stream << op->getValue<int64_t>();
-    break;
-    case Datatype::Int128:
-      taco_not_supported_yet;
-    break;
-    case Datatype::Float32:
-      stream << ((op->getValue<float>() != 0.0)
-                 ? util::toString(op->getValue<float>()) : "0.0");
-    break;
-    case Datatype::Float64:
-      stream << ((op->getValue<double>()!=0.0)
-                 ? util::toString(op->getValue<double>()) : "0.0");
-    break;
-    case Datatype::Complex64: {
-      std::complex<float> val = op->getValue<std::complex<float>>();
-      stream << val.real() << " + I*" << val.imag();
-    }
-    break;
-    case Datatype::Complex128: {
-      std::complex<double> val = op->getValue<std::complex<double>>();
-      stream << val.real() << " + I*" << val.imag();
-    }
-    break;
-    case Datatype::Undefined:
-      taco_ierror << "Undefined type in IR";
-    break;
-  }
+      // It seems this is where all the types get printed in the final code generation.
+      // Come up with a way to generate different values if stream2 is used to generate ispc code
+      switch (op->type.getKind()) {
+        case Datatype::Bool:
+          stream2 << op->getValue<bool>();
+        break;
+        case Datatype::UInt8:
+          stream2 << static_cast<uint16_t>(op->getValue<uint8_t>());
+        break;
+        case Datatype::UInt16:
+          stream2 << op->getValue<uint16_t>();
+        break;
+        case Datatype::UInt32:
+          stream2 << op->getValue<uint32_t>();
+        break;
+        case Datatype::UInt64:
+          stream2 << op->getValue<uint64_t>();
+        break;
+        case Datatype::UInt128:
+          taco_not_supported_yet;
+        break;
+        case Datatype::Int8:
+          stream2 << static_cast<int16_t>(op->getValue<int8_t>());
+        break;
+        case Datatype::Int16:
+          stream2 << op->getValue<int16_t>();
+        break;
+        case Datatype::Int32:
+          stream2 << op->getValue<int32_t>();
+        break;
+        case Datatype::Int64:
+          stream2 << op->getValue<int64_t>();
+        break;
+        case Datatype::Int128:
+          taco_not_supported_yet;
+        break;
+        case Datatype::Float32:
+          stream2 << ((op->getValue<float>() != 0.0)
+                    ? util::toString(op->getValue<float>()) : "0.0");
+        break;
+        case Datatype::Float64:
+          stream2 << ((op->getValue<double>()!=0.0)
+                    ? util::toString(op->getValue<double>()) : "0.0");
+        break;
+        case Datatype::Complex64: {
+          std::complex<float> val = op->getValue<std::complex<float>>();
+          stream2 << val.real() << " + I*" << val.imag();
+        }
+        break;
+        case Datatype::Complex128: {
+          std::complex<double> val = op->getValue<std::complex<double>>();
+          stream2 << val.real() << " + I*" << val.imag();
+        }
+        break;
+        case Datatype::Undefined:
+          taco_ierror << "Undefined type in IR";
+        break;
+      }
 
-  if (color) {
-    stream << nc;
+      if (color) {
+        stream2 << nc;
+      }
+    }
+
+
+
+  else {
+
+    if (color) {
+        stream << blue ;
+      }
+
+      // It seems this is where all the types get printed in the final code generation.
+      // Come up with a way to generate different values if stream2 is used to generate ispc code
+      switch (op->type.getKind()) {
+        case Datatype::Bool:
+          stream << op->getValue<bool>();
+        break;
+        case Datatype::UInt8:
+          stream << static_cast<uint16_t>(op->getValue<uint8_t>());
+        break;
+        case Datatype::UInt16:
+          stream << op->getValue<uint16_t>();
+        break;
+        case Datatype::UInt32:
+          stream << op->getValue<uint32_t>();
+        break;
+        case Datatype::UInt64:
+          stream << op->getValue<uint64_t>();
+        break;
+        case Datatype::UInt128:
+          taco_not_supported_yet;
+        break;
+        case Datatype::Int8:
+          stream << static_cast<int16_t>(op->getValue<int8_t>());
+        break;
+        case Datatype::Int16:
+          stream << op->getValue<int16_t>();
+        break;
+        case Datatype::Int32:
+          stream << op->getValue<int32_t>();
+        break;
+        case Datatype::Int64:
+          stream << op->getValue<int64_t>();
+        break;
+        case Datatype::Int128:
+          taco_not_supported_yet;
+        break;
+        case Datatype::Float32:
+          stream << ((op->getValue<float>() != 0.0)
+                    ? util::toString(op->getValue<float>()) : "0.0");
+        break;
+        case Datatype::Float64:
+          stream << ((op->getValue<double>()!=0.0)
+                    ? util::toString(op->getValue<double>()) : "0.0");
+        break;
+        case Datatype::Complex64: {
+          std::complex<float> val = op->getValue<std::complex<float>>();
+          stream << val.real() << " + I*" << val.imag();
+        }
+        break;
+        case Datatype::Complex128: {
+          std::complex<double> val = op->getValue<std::complex<double>>();
+          stream << val.real() << " + I*" << val.imag();
+        }
+        break;
+        case Datatype::Undefined:
+          taco_ierror << "Undefined type in IR";
+        break;
+      }
+
+      if (color) {
+        stream << nc;
+      }
+
+    
   }
+  
 }
 
 void IRPrinter::visit(const Var* op) {
-  if (varNames.contains(op)) {
-    stream << varNames.get(op);
+  if (is_ISPC_code_stream_enabled()) {
+    if (varNames.contains(op)) {
+      stream2 << varNames.get(op);
+    }
+    else {
+      stream2 << op->name;
+    }
   }
   else {
-    stream << op->name;
+    if (varNames.contains(op)) {
+      stream << varNames.get(op);
+    }
+    else {
+      stream << op->name;
+    }
   }
+
 }
 
 void IRPrinter::visit(const Neg* op) {
@@ -248,41 +343,83 @@ void IRPrinter::visit(const IfThenElse* op) {
   taco_iassert(op->cond.defined());
   taco_iassert(op->then.defined());
   doIndent();
-  stream << keywordString("if ");
-  stream << "(";
-  parentPrecedence = Precedence::TOP;
-  op->cond.accept(this);
-  stream << ")";
+  if (is_ISPC_code_stream_enabled()) {
+    stream2 << keywordString("if ");
+    stream2 << "(";
+    parentPrecedence = Precedence::TOP;
+    op->cond.accept(this);
+    stream2 << ")";
 
-  Stmt scopedStmt = Stmt(to<Scope>(op->then)->scopedStmt);
-  if (isa<Block>(scopedStmt)) {
-    stream << " {" << endl;
-    op->then.accept(this);
-    doIndent();
-    stream << "}";
+    Stmt scopedStmt = Stmt(to<Scope>(op->then)->scopedStmt);
+    if (isa<Block>(scopedStmt)) {
+      stream2 << " {" << endl;
+      op->then.accept(this);
+      doIndent();
+      stream2 << "}";
+    }
+    else if (isa<Assign>(scopedStmt)) {
+      int tmp = indent;
+      indent = 0;
+      stream2 << " ";
+      scopedStmt.accept(this);
+      indent = tmp;
+    }
+    else {
+      stream2 << endl;
+      op->then.accept(this);
+    }
+
+    if (op->otherwise.defined()) {
+      stream2 << "\n";
+      doIndent();
+      stream2 << keywordString("else");
+      stream2 << " {\n";
+      op->otherwise.accept(this);
+      doIndent();
+      stream2 << "}";
+    }
+    stream2 << endl;    
   }
-  else if (isa<Assign>(scopedStmt)) {
-    int tmp = indent;
-    indent = 0;
-    stream << " ";
-    scopedStmt.accept(this);
-    indent = tmp;
-  }
+
+
   else {
-    stream << endl;
-    op->then.accept(this);
+    stream << keywordString("if ");
+    stream << "(";
+    parentPrecedence = Precedence::TOP;
+    op->cond.accept(this);
+    stream << ")";
+
+    Stmt scopedStmt = Stmt(to<Scope>(op->then)->scopedStmt);
+    if (isa<Block>(scopedStmt)) {
+      stream << " {" << endl;
+      op->then.accept(this);
+      doIndent();
+      stream << "}";
+    }
+    else if (isa<Assign>(scopedStmt)) {
+      int tmp = indent;
+      indent = 0;
+      stream << " ";
+      scopedStmt.accept(this);
+      indent = tmp;
+    }
+    else {
+      stream << endl;
+      op->then.accept(this);
+    }
+
+    if (op->otherwise.defined()) {
+      stream << "\n";
+      doIndent();
+      stream << keywordString("else");
+      stream << " {\n";
+      op->otherwise.accept(this);
+      doIndent();
+      stream << "}";
+    }
+    stream << endl;    
   }
 
-  if (op->otherwise.defined()) {
-    stream << "\n";
-    doIndent();
-    stream << keywordString("else");
-    stream << " {\n";
-    op->otherwise.accept(this);
-    doIndent();
-    stream << "}";
-  }
-  stream << endl;
 }
 
 void IRPrinter::visit(const Case* op) {
@@ -345,12 +482,22 @@ void IRPrinter::visit(const Switch* op) {
 }
 
 void IRPrinter::visit(const Load* op) {
-  parentPrecedence = Precedence::LOAD;
-  op->arr.accept(this);
-  stream << "[";
-  parentPrecedence = Precedence::LOAD;
-  op->loc.accept(this);
-  stream << "]";
+  if (is_ISPC_code_stream_enabled()) {
+    parentPrecedence = Precedence::LOAD;
+    op->arr.accept(this);
+    stream2 << "[";
+    parentPrecedence = Precedence::LOAD;
+    op->loc.accept(this);
+    stream2 << "]";    
+  }
+  else {
+    parentPrecedence = Precedence::LOAD;
+    op->arr.accept(this);
+    stream << "[";
+    parentPrecedence = Precedence::LOAD;
+    op->loc.accept(this);
+    stream << "]";   
+  }
 }
 
 void IRPrinter::visit(const Malloc* op) {
@@ -367,66 +514,149 @@ void IRPrinter::visit(const Sizeof* op) {
 }
 
 void IRPrinter::visit(const Store* op) {
-  doIndent();
-  op->arr.accept(this);
-  stream << "[";
-  parentPrecedence = Precedence::TOP;
-  op->loc.accept(this);
-  stream << "] = ";
-  parentPrecedence = Precedence::TOP;
-  op->data.accept(this);
-  stream << ";";
-  stream << endl;
+  if (is_ISPC_code_stream_enabled()) {
+    doIndent();
+    op->arr.accept(this);
+    stream2 << "[";
+    parentPrecedence = Precedence::TOP;
+    op->loc.accept(this);
+    stream2 << "] = ";
+    parentPrecedence = Precedence::TOP;
+    op->data.accept(this);
+    stream2 << ";";
+    stream2 << endl;
+  }
+  else {
+    doIndent();
+    op->arr.accept(this);
+    stream << "[";
+    parentPrecedence = Precedence::TOP;
+    op->loc.accept(this);
+    stream << "] = ";
+    parentPrecedence = Precedence::TOP;
+    op->data.accept(this);
+    stream << ";";
+    stream << endl;
+  }
+
 }
 
 void IRPrinter::visit(const For* op) {
-  doIndent();
-  stream << keywordString("for") << " (" 
-         << keywordString(util::toString(op->var.type())) << " ";
-  op->var.accept(this);
-  stream << " = ";
-  op->start.accept(this);
-  stream << keywordString("; ");
-  op->var.accept(this);
-  stream << " < ";
-  parentPrecedence = BOTTOM;
-  op->end.accept(this);
-  stream << keywordString("; ");
-  op->var.accept(this);
+  std::cout << "This is IRPrinter::visit For op method\n";
+  if (is_ISPC_code_stream_enabled()) {
+    doIndent();
+    stream2 << keywordString("for") << " (" 
+          << keywordString(util::toString(op->var.type())) << " ";
+    op->var.accept(this);
+    stream2 << " = ";
+    op->start.accept(this);
+    stream2 << keywordString("; ");
+    op->var.accept(this);
+    stream2 << " < ";
+    parentPrecedence = BOTTOM;
+    op->end.accept(this);
+    stream2 << keywordString("; ");
+    op->var.accept(this);
 
-  auto lit = op->increment.as<Literal>();
-  if (lit != nullptr && ((lit->type.isInt()  && lit->equalsScalar(1)) ||
-                         (lit->type.isUInt() && lit->equalsScalar(1)))) {
-    stream << "++";
+    auto lit = op->increment.as<Literal>();
+    if (lit != nullptr && ((lit->type.isInt()  && lit->equalsScalar(1)) ||
+                          (lit->type.isUInt() && lit->equalsScalar(1)))) {
+      stream2 << "++";
+    }
+    else {
+      stream2 << " += ";
+      op->increment.accept(this);
+    }
+    stream2 << ") {\n";
+
+    op->contents.accept(this);
+    doIndent();
+    stream2 << "}";
+    stream2 << endl;
+  }
+  
+  
+  else {
+    doIndent();
+    stream << keywordString("for") << " (" 
+          << keywordString(util::toString(op->var.type())) << " ";
+    op->var.accept(this);
+    stream << " = ";
+    op->start.accept(this);
+    stream << keywordString("; ");
+    op->var.accept(this);
+    stream << " < ";
+    parentPrecedence = BOTTOM;
+    op->end.accept(this);
+    stream << keywordString("; ");
+    op->var.accept(this);
+
+    auto lit = op->increment.as<Literal>();
+    if (lit != nullptr && ((lit->type.isInt()  && lit->equalsScalar(1)) ||
+                          (lit->type.isUInt() && lit->equalsScalar(1)))) {
+      stream << "++";
+    }
+    else {
+      stream << " += ";
+      op->increment.accept(this);
+    }
+    stream << ") {\n";
+
+    op->contents.accept(this);
+    doIndent();
+    stream << "}";
+    stream << endl;    
+  }
+
+}
+
+void IRPrinter::sendToStream(std::stringstream &stream) {
+  if (is_ISPC_code_stream_enabled()) {
+    this->stream2 << stream.str();
   }
   else {
-    stream << " += ";
-    op->increment.accept(this);
+    this->stream << stream.str();
   }
-  stream << ") {\n";
-
-  op->contents.accept(this);
-  doIndent();
-  stream << "}";
-  stream << endl;
 }
 
 void IRPrinter::visit(const While* op) {
-  doIndent();
-  stream << keywordString("while ");
-  stream << "(";
-  parentPrecedence = Precedence::TOP;
-  op->cond.accept(this);
-  stream << ")";
-  stream << " {\n";
-  op->contents.accept(this);
-  doIndent();
-  stream << "}";
-  stream << endl;
+  // std::stringstream stream;
+  if (is_ISPC_code_stream_enabled()) {
+    doIndent();
+    stream2 << keywordString("while ");
+    stream2 << "(";
+    parentPrecedence = Precedence::TOP;
+    op->cond.accept(this);
+    stream2 << ")";
+    stream2 << " {\n";
+    op->contents.accept(this);
+    doIndent();
+    stream2 << "}";
+    stream2 << endl;    
+  }
+  else {
+    doIndent();
+    stream << keywordString("while ");
+    stream << "(";
+    parentPrecedence = Precedence::TOP;
+    op->cond.accept(this);
+    stream << ")";
+    stream << " {\n";
+    op->contents.accept(this);
+    doIndent();
+    stream << "}";
+    stream << endl;
+  }
+  // sendToStream(stream);
 }
 
 void IRPrinter::visit(const Block* op) {
-  acceptJoin(this, stream, op->contents, "");
+  if (is_ISPC_code_stream_enabled()) {
+    acceptJoin(this, stream2, op->contents, "");
+  }
+  else {
+    acceptJoin(this, stream, op->contents, "");
+  }
 }
 
 void IRPrinter::visit(const Scope* op) {
@@ -438,85 +668,183 @@ void IRPrinter::visit(const Scope* op) {
 }
 
 void IRPrinter::visit(const Function* op) {
-  stream << keywordString("void ") << op->name;
-  stream << "(";
-  if (op->outputs.size() > 0) stream << "Tensor ";
-  acceptJoin(this, stream, op->outputs, ", Tensor ");
-  if (op->outputs.size() > 0 && op->inputs.size()) stream << ", ";
-  if (op->inputs.size() > 0) stream << "Tensor ";
-  acceptJoin(this, stream, op->inputs, ", Tensor ");
-  stream << ") {" << endl;
+  if (is_ISPC_code_stream_enabled()) {
+    stream2 << keywordString("void ") << op->name;
+    stream2 << "(";
+    if (op->outputs.size() > 0) stream2 << "Tensor ";
+    acceptJoin(this, stream2, op->outputs, ", Tensor ");
+    if (op->outputs.size() > 0 && op->inputs.size()) stream2 << ", ";
+    if (op->inputs.size() > 0) stream2 << "Tensor ";
+    acceptJoin(this, stream2, op->inputs, ", Tensor ");
+    stream2 << ") {" << endl;
 
-  resetNameCounters();
-  op->body.accept(this);
+    resetNameCounters();
+    op->body.accept(this);
 
-  doIndent();
-  stream << "}";
+    doIndent();
+    stream2 << "}";
+  }
+  else {
+    stream << keywordString("void ") << op->name;
+    stream << "(";
+    if (op->outputs.size() > 0) stream << "Tensor ";
+    acceptJoin(this, stream, op->outputs, ", Tensor ");
+    if (op->outputs.size() > 0 && op->inputs.size()) stream << ", ";
+    if (op->inputs.size() > 0) stream << "Tensor ";
+    acceptJoin(this, stream, op->inputs, ", Tensor ");
+    stream << ") {" << endl;
+
+    resetNameCounters();
+    op->body.accept(this);
+
+    doIndent();
+    stream << "}";
+  }
+
 }
 
 void IRPrinter::visit(const VarDecl* op) {
-  doIndent();
-  stream << keywordString(util::toString(op->var.type()));
-  taco_iassert(isa<Var>(op->var));
-  if (to<Var>(op->var)->is_ptr) {
-    stream << "* restrict";
+  if (is_ISPC_code_stream_enabled()) {
+    doIndent();
+    if (op->var.type() == Int32) {
+      stream2 << keywordString("int32");
+    }
+    else if (op->var.type() == Int64) {
+      stream2 << keywordString("int64");
+    } else {
+      stream2 << keywordString(util::toString(op->var.type()));
+    }
+    taco_iassert(isa<Var>(op->var));
+    if (to<Var>(op->var)->is_ptr) {
+      stream2 << "* restrict";
+    }
+    stream2 << " ";
+    string varName = varNameGenerator.getUniqueName(util::toString(op->var));
+    varNames.insert({op->var, varName});
+    op->var.accept(this);
+    parentPrecedence = Precedence::TOP;
+    stream2 << " = ";
+    op->rhs.accept(this);
+    stream2 << ";";
+    stream2 << endl;
   }
-  stream << " ";
-  string varName = varNameGenerator.getUniqueName(util::toString(op->var));
-  varNames.insert({op->var, varName});
-  op->var.accept(this);
-  parentPrecedence = Precedence::TOP;
-  stream << " = ";
-  op->rhs.accept(this);
-  stream << ";";
-  stream << endl;
+  else {
+    doIndent();
+    stream << keywordString(util::toString(op->var.type()));
+    taco_iassert(isa<Var>(op->var));
+    if (to<Var>(op->var)->is_ptr) {
+      stream << "* restrict";
+    }
+    stream << " ";
+    string varName = varNameGenerator.getUniqueName(util::toString(op->var));
+    varNames.insert({op->var, varName});
+    op->var.accept(this);
+    parentPrecedence = Precedence::TOP;
+    stream << " = ";
+    op->rhs.accept(this);
+    stream << ";";
+    stream << endl;
+  }
+
 }
 
 void IRPrinter::visit(const Assign* op) {
-  doIndent();
-  op->lhs.accept(this);
-  parentPrecedence = Precedence::TOP;
-  bool printed = false;
-  if (simplify) {
-    if (isa<ir::Add>(op->rhs)) {
-      auto add = to<Add>(op->rhs);
-      if (add->a == op->lhs) {
-        const Literal* lit = add->b.as<Literal>();
-        if (lit != nullptr && ((lit->type.isInt()  && lit->equalsScalar(1)) ||
-                               (lit->type.isUInt() && lit->equalsScalar(1)))) {
-          stream << "++";
+  if (is_ISPC_code_stream_enabled()) {
+    doIndent();
+    op->lhs.accept(this);
+    parentPrecedence = Precedence::TOP;
+    bool printed = false;
+    if (simplify) {
+      if (isa<ir::Add>(op->rhs)) {
+        auto add = to<Add>(op->rhs);
+        if (add->a == op->lhs) {
+          const Literal* lit = add->b.as<Literal>();
+          if (lit != nullptr && ((lit->type.isInt()  && lit->equalsScalar(1)) ||
+                                (lit->type.isUInt() && lit->equalsScalar(1)))) {
+            stream2 << "++";
+          }
+          else {
+            stream2 << " += ";
+            add->b.accept(this);
+          }
+          printed = true;
         }
-        else {
-          stream << " += ";
-          add->b.accept(this);
+      }
+      else if (isa<Mul>(op->rhs)) {
+        auto mul = to<Mul>(op->rhs);
+        if (mul->a == op->lhs) {
+          stream2 << " *= ";
+          mul->b.accept(this);
+          printed = true;
         }
-        printed = true;
+      }
+      else if (isa<BitOr>(op->rhs)) {
+        auto bitOr = to<BitOr>(op->rhs);
+        if (bitOr->a == op->lhs) {
+          stream2 << " |= ";
+          bitOr->b.accept(this);
+          printed = true;
+        }
       }
     }
-    else if (isa<Mul>(op->rhs)) {
-      auto mul = to<Mul>(op->rhs);
-      if (mul->a == op->lhs) {
-        stream << " *= ";
-        mul->b.accept(this);
-        printed = true;
-      }
+    if (!printed) {
+      stream2 << " = ";
+      op->rhs.accept(this);
     }
-    else if (isa<BitOr>(op->rhs)) {
-      auto bitOr = to<BitOr>(op->rhs);
-      if (bitOr->a == op->lhs) {
-        stream << " |= ";
-        bitOr->b.accept(this);
-        printed = true;
-      }
-    }
+
+    stream2 << ";";
+    stream2 << endl;
   }
-  if (!printed) {
-    stream << " = ";
-    op->rhs.accept(this);
+  
+  
+  
+  else {
+    doIndent();
+    op->lhs.accept(this);
+    parentPrecedence = Precedence::TOP;
+    bool printed = false;
+    if (simplify) {
+      if (isa<ir::Add>(op->rhs)) {
+        auto add = to<Add>(op->rhs);
+        if (add->a == op->lhs) {
+          const Literal* lit = add->b.as<Literal>();
+          if (lit != nullptr && ((lit->type.isInt()  && lit->equalsScalar(1)) ||
+                                (lit->type.isUInt() && lit->equalsScalar(1)))) {
+            stream << "++";
+          }
+          else {
+            stream << " += ";
+            add->b.accept(this);
+          }
+          printed = true;
+        }
+      }
+      else if (isa<Mul>(op->rhs)) {
+        auto mul = to<Mul>(op->rhs);
+        if (mul->a == op->lhs) {
+          stream << " *= ";
+          mul->b.accept(this);
+          printed = true;
+        }
+      }
+      else if (isa<BitOr>(op->rhs)) {
+        auto bitOr = to<BitOr>(op->rhs);
+        if (bitOr->a == op->lhs) {
+          stream << " |= ";
+          bitOr->b.accept(this);
+          printed = true;
+        }
+      }
+    }
+    if (!printed) {
+      stream << " = ";
+      op->rhs.accept(this);
+    }
+
+    stream << ";";
+    stream << endl;    
   }
 
-  stream << ";";
-  stream << endl;
 }
 
 void IRPrinter::visit(const Yield* op) {
@@ -559,17 +887,32 @@ void IRPrinter::visit(const Comment* op) {
 }
 
 void IRPrinter::visit(const BlankLine*) {
-  stream << endl;
+  if (is_ISPC_code_stream_enabled()) {
+    stream2 << endl;
+  } 
+  else {
+    stream << endl;
+  }
 }
 
 void IRPrinter::visit(const Continue*) {
   doIndent();
-  stream << "continue;" << endl;
+  if (!is_ISPC_code_stream_enabled()) {
+    stream << "continue;" << endl;
+  }
+  else {
+    stream2 << "continue;" << endl;
+  }
 }
 
 void IRPrinter::visit(const Break*) {
   doIndent();
-  stream << "break;" << endl;
+  if (!is_ISPC_code_stream_enabled()) {
+    stream << "break;" << endl;
+  }
+  else {
+    stream2 << "break;" << endl;
+  }
 }
 
 void IRPrinter::visit(const Print* op) {
@@ -585,7 +928,12 @@ void IRPrinter::visit(const Print* op) {
 }
 
 void IRPrinter::visit(const GetProperty* op) {
-  stream << op->name;
+  if (is_ISPC_code_stream_enabled()) {
+    stream2 << op->name;
+  }
+  else {
+    stream << op->name;
+  }
 }
 
 void IRPrinter::visit(const Sort* op) {
@@ -643,23 +991,47 @@ void IRPrinter::resetNameCounters() {
 }
 
 void IRPrinter::doIndent() {
-  for (int i=0; i<indent; i++)
-    stream << "  ";
+  if (is_ISPC_code_stream_enabled()) {
+    for (int i=0; i<indent; i++)
+      stream2 << "  ";  
+  }
+  else {
+    for (int i=0; i<indent; i++)
+      stream << "  ";
+  }
+
 }
 
 void IRPrinter::printBinOp(Expr a, Expr b, string op, Precedence precedence) {
-  bool parenthesize = needsParentheses(precedence);
-  if (parenthesize) {
-    stream << "(";
+  if (is_ISPC_code_stream_enabled()) {
+    bool parenthesize = needsParentheses(precedence);
+    if (parenthesize) {
+      stream2 << "(";
+    }
+    parentPrecedence = precedence;
+    a.accept(this);
+    stream2 << " " << op << " ";
+    parentPrecedence = precedence;
+    b.accept(this);
+    if (parenthesize) {
+      stream2 << ")";
+    }
   }
-  parentPrecedence = precedence;
-  a.accept(this);
-  stream << " " << op << " ";
-  parentPrecedence = precedence;
-  b.accept(this);
-  if (parenthesize) {
-    stream << ")";
+  else {
+    bool parenthesize = needsParentheses(precedence);
+    if (parenthesize) {
+      stream << "(";
+    }
+    parentPrecedence = precedence;
+    a.accept(this);
+    stream << " " << op << " ";
+    parentPrecedence = precedence;
+    b.accept(this);
+    if (parenthesize) {
+      stream << ")";
+    }
   }
+
 }
 
 bool IRPrinter::needsParentheses(Precedence precedence) {

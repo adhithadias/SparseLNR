@@ -116,6 +116,7 @@ void writeShims(vector<Stmt> funcs, string path, string prefix) {
 } // anonymous namespace
 
 string Module::compile() {
+  std::cout << "Module::compile\n";
   string prefix = tmpdir+libname;
   string fullpath = prefix + ".so";
   
@@ -129,6 +130,12 @@ string Module::compile() {
     get_default_CUDA_compiler_flags());
     file_ending = ".cu";
     shims_file = prefix + "_shims.cpp";
+  }
+  else if (should_use_ISPC_codegen()) {
+    cc = util::getFromEnv(target.compiler_env, target.compiler);
+    cflags = util::getFromEnv("TACO_CFLAGS",
+    "-O3 -ffast-math -std=c99") + " -shared -fPIC";
+  
   }
   else {
     cc = util::getFromEnv(target.compiler_env, target.compiler);
@@ -150,6 +157,12 @@ string Module::compile() {
   
   // write out the shims
   writeShims(funcs, tmpdir, libname);
+  for (auto &statement : funcs) {
+    std::cout << "----- statement --------" << std::endl;
+    std::cout << statement;
+    std::cout << std::endl;
+  }
+  std::cout << tmpdir << std::endl << libname << std::endl;
   
   // now compile it
   int err = system(cmd.data());

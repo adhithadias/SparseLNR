@@ -1,4 +1,5 @@
 #include <taco/lower/mode_format_compressed.h>
+#include "taco/cuda.h"
 #include "taco/lower/lowerer_impl_imperative.h"
 #include "taco/lower/lowerer_impl.h"
 
@@ -26,6 +27,7 @@ class LowererImplImperative::Visitor : public IndexNotationVisitorStrict {
 public:
   Visitor(LowererImplImperative* impl) : impl(impl) {}
   Stmt lower(IndexStmt stmt) {
+    std::cout << "lowering IndexStmt to ir:Stmt - IndexStmt: " << stmt << std::endl;
     this->stmt = Stmt();
     impl->accessibleIterators.scope();
     IndexStmtVisitorStrict::visit(stmt);
@@ -199,6 +201,7 @@ static std::set<Expr> hasSparseInserts(IndexStmt stmt, Iterators iterators,
   );
   return ret;
 }
+
 
 Stmt
 LowererImplImperative::lower(IndexStmt stmt, string name,
@@ -586,19 +589,27 @@ LowererImplImperative::splitAppenderAndInserters(const vector<Iterator>& results
 }
 
 
+// important function
+/*
+*  This is the for loop lowering part
+*/
 Stmt LowererImplImperative::lowerForall(Forall forall)
 {
+  std::cout << "doing lowerForall: " << forall << std::endl;
   bool hasExactBound = provGraph.hasExactBound(forall.getIndexVar());
   bool forallNeedsUnderivedGuards = !hasExactBound && emitUnderivedGuards;
   if (!ignoreVectorize && forallNeedsUnderivedGuards &&
       (forall.getParallelUnit() == ParallelUnit::CPUVector ||
        forall.getUnrollFactor() > 0)) {
+    std::cout << "calling lowerForallCloned(forall)\n";
     return lowerForallCloned(forall);
   }
 
+  std::cout << "inParallelLoopDepth: " << inParallelLoopDepth << "========================\n";
   if (forall.getParallelUnit() != ParallelUnit::NotParallel) {
     inParallelLoopDepth++;
   }
+  std::cout << "inParallelLoopDepth: " << inParallelLoopDepth << "========================\n";
 
   // Recover any available parents that were not recoverable previously
   vector<Stmt> recoverySteps;
@@ -786,19 +797,23 @@ Stmt LowererImplImperative::lowerForall(Forall forall)
     }
 
     if (!isWhereProducer && hasPosDescendant && underivedAncestors.size() > 1 && provGraph.isPosVariable(iterator.getIndexVar()) && posDescendant == forall.getIndexVar()) {
+      std::cout << "calling lowerForallFusedPosition(forall\n";
       loops = lowerForallFusedPosition(forall, iterator, locators,
                                          inserters, appenders, reducedAccesses, recoveryStmt);
     }
     else if (canAccelWithSparseIteration) {
+      std::cout << "calling lowerForallDenseAcceleration(forall\n";
       loops = lowerForallDenseAcceleration(forall, locators, inserters, appenders, reducedAccesses, recoveryStmt);
     }
     // Emit dimension coordinate iteration loop
     else if (iterator.isDimensionIterator()) {
+      std::cout << "calling lowerForallDimension(forall\n";
       loops = lowerForallDimension(forall, point.locators(),
                                    inserters, appenders, reducedAccesses, recoveryStmt);
     }
     // Emit position iteration loop
     else if (iterator.hasPosIter()) {
+      std::cout << "calling lowerForallPosition(forall\n";
       loops = lowerForallPosition(forall, iterator, locators,
                                     inserters, appenders, reducedAccesses, recoveryStmt);
     }
@@ -816,6 +831,10 @@ Stmt LowererImplImperative::lowerForall(Forall forall)
     loops = lowerMergeLattice(lattice, underivedAncestors[0],
                               forall.getStmt(), reducedAccesses);
   }
+
+  std::cout << "printing loops ----------------------------------------------------------------------------------------------\n";
+  std::cout << loops << std::endl;
+  std::cout << "loops printed -----------------------------------------------------------------------------------------------\n";
 //  taco_iassert(loops.defined());
 
   if (!generateComputeCode() && !hasStores(loops)) {
@@ -832,6 +851,7 @@ Stmt LowererImplImperative::lowerForall(Forall forall)
     parallelUnitIndexVars.erase(forall.getParallelUnit());
     parallelUnitSizes.erase(forall.getParallelUnit());
   }
+  
   return Block::blanks(preInitValues,
                        temporaryValuesInitFree[0],
                        loops,
@@ -1136,6 +1156,7 @@ Stmt LowererImplImperative::lowerForallDimension(Forall forall,
                                        set<Access> reducedAccesses,
                                        ir::Stmt recoveryStmt)
 {
+  std::cout << "1 Stmt LowererImplImperative::lowerForallDimension\n";
   Expr coordinate = getCoordinateVar(forall.getIndexVar());
 
   if (forall.getParallelUnit() != ParallelUnit::NotParallel && forall.getOutputRaceStrategy() == OutputRaceStrategy::Atomics) {
@@ -1143,6 +1164,8 @@ Stmt LowererImplImperative::lowerForallDimension(Forall forall,
     atomicParallelUnit = forall.getParallelUnit();
   }
 
+  std::cout << "original forall : " << forall << std::endl;
+  std::cout << "inside IndexStmt: " << forall.getStmt() << std::endl;
   Stmt body = lowerForallBody(coordinate, forall.getStmt(),
                               locators, inserters, appenders, reducedAccesses);
 
@@ -1158,7 +1181,13 @@ Stmt LowererImplImperative::lowerForallDimension(Forall forall,
   std::vector<ir::Expr> bounds = provGraph.deriveIterBounds(forall.getIndexVar(), definedIndexVarsOrdered, underivedBounds, indexVarToExprMap, iterators);
 
   LoopKind kind = LoopKind::Serial;
-  if (forall.getParallelUnit() == ParallelUnit::CPUVector && !ignoreVectorize) {
+  if (should_use_ISPC_codegen()) {
+    std::cout << "Foreach compatible loop\n";
+    if (forall.getParallelUnit() == ParallelUnit::CPUVector && !ignoreVectorize) {
+      kind = LoopKind::Foreach;
+    }
+  } 
+  else if (forall.getParallelUnit() == ParallelUnit::CPUVector && !ignoreVectorize) {
     kind = LoopKind::Vectorized;
   }
   else if (forall.getParallelUnit() != ParallelUnit::NotParallel
@@ -1166,6 +1195,7 @@ Stmt LowererImplImperative::lowerForallDimension(Forall forall,
     kind = LoopKind::Runtime;
   }
 
+  std::cout << "2 Stmt LowererImplImperative::lowerForallDimension\n";
   return Block::blanks(For::make(coordinate, bounds[0], bounds[1], 1, body,
                                  kind,
                                  ignoreVectorize ? ParallelUnit::NotParallel : forall.getParallelUnit(), ignoreVectorize ? 0 : forall.getUnrollFactor()),
@@ -1179,6 +1209,7 @@ Stmt LowererImplImperative::lowerForallDimension(Forall forall,
                                                  set<Access> reducedAccesses,
                                                  ir::Stmt recoveryStmt)
   {
+    std::cout << "1 Stmt LowererImplImperative::lowerForallDenseAcceleration\n";
     taco_iassert(locators.size() == 1) << "Optimizing a dense workspace is only supported when the consumer is the only RHS tensor";
     taco_iassert(provGraph.isFullyDerived(forall.getIndexVar())) << "Sparsely accelerating a dense workspace only works with fully derived index vars";
     taco_iassert(forall.getParallelUnit() == ParallelUnit::NotParallel) << "Sparsely accelerating a dense workspace only works within serial loops";
@@ -1204,6 +1235,8 @@ Stmt LowererImplImperative::lowerForallDimension(Forall forall,
     }
 
     Stmt declareVar = VarDecl::make(coordinate, Load::make(indexList, loopVar));
+    std::cout << "original forall : " << forall << std::endl;
+    std::cout << "inside IndexStmt: " << forall.getStmt() << std::endl;
     Stmt body = lowerForallBody(coordinate, forall.getStmt(), locators, inserters, appenders, reducedAccesses);
     Stmt resetGuard = ir::Store::make(bitGuard, coordinate, ir::Literal::make(false), markAssignsAtomicDepth > 0, atomicParallelUnit);
 
@@ -1216,7 +1249,12 @@ Stmt LowererImplImperative::lowerForallDimension(Forall forall,
     Stmt posAppend = generateAppendPositions(appenders);
 
     LoopKind kind = LoopKind::Serial;
-    if (forall.getParallelUnit() == ParallelUnit::CPUVector && !ignoreVectorize) {
+    if (should_use_ISPC_codegen()) {
+      if (forall.getParallelUnit() == ParallelUnit::CPUVector && !ignoreVectorize) {
+        kind = LoopKind::Foreach;
+      }
+    }
+    else if (forall.getParallelUnit() == ParallelUnit::CPUVector && !ignoreVectorize) {
       kind = LoopKind::Vectorized;
     }
     else if (forall.getParallelUnit() != ParallelUnit::NotParallel
@@ -1224,6 +1262,7 @@ Stmt LowererImplImperative::lowerForallDimension(Forall forall,
       kind = LoopKind::Runtime;
     }
 
+    std::cout << "2 Stmt LowererImplImperative::lowerForallDenseAcceleration\n";
     return Block::blanks(For::make(loopVar, 0, indexListSize, 1, body, kind,
                                          ignoreVectorize ? ParallelUnit::NotParallel : forall.getParallelUnit(),
                                          ignoreVectorize ? 0 : forall.getUnrollFactor()),
@@ -1247,6 +1286,8 @@ Stmt LowererImplImperative::lowerForallPosition(Forall forall, Iterator iterator
                                       set<Access> reducedAccesses,
                                       ir::Stmt recoveryStmt)
 {
+  std::cout << "1 Stmt LowererImplImperative::lowerForallPosition\n" << std::endl;
+
   Expr coordinate = getCoordinateVar(forall.getIndexVar());
   Stmt declareCoordinate = Stmt();
   Stmt strideGuard = Stmt();
@@ -1278,6 +1319,11 @@ Stmt LowererImplImperative::lowerForallPosition(Forall forall, Iterator iterator
     markAssignsAtomicDepth++;
   }
 
+  // see we are inside a forall. ex: forall(i, forall(j, y(i) += A(i,j) * x(j)))
+  // when you call forall.getStmt it returns forall(j, y(i) += A(i,j) * x(j)) which is the 
+  // IndexStmt inside the forall IndexStmt
+  std::cout << "original forall : " << forall << std::endl;
+  std::cout << "inside IndexStmt: " << forall.getStmt() << std::endl;
   Stmt body = lowerForallBody(coordinate, forall.getStmt(),
                               locators, inserters, appenders, reducedAccesses);
 
@@ -1339,6 +1385,7 @@ Stmt LowererImplImperative::lowerForallPosition(Forall forall, Iterator iterator
     kind = LoopKind::Runtime;
   }
 
+  std::cout << "2 Stmt LowererImplImperative::lowerForallPosition\n" << std::endl;
   // Loop with preamble and postamble
   return Block::blanks(
                        boundsCompute,
@@ -1357,6 +1404,7 @@ Stmt LowererImplImperative::lowerForallFusedPosition(Forall forall, Iterator ite
                                       set<Access> reducedAccesses,
                                       ir::Stmt recoveryStmt)
 {
+  std::cout << "1 Stmt LowererImplImperative::lowerForallFusedPosition\n" << std::endl;
   Expr coordinate = getCoordinateVar(forall.getIndexVar());
   Stmt declareCoordinate = Stmt();
   if (provGraph.isCoordVariable(forall.getIndexVar())) {
@@ -1447,6 +1495,8 @@ Stmt LowererImplImperative::lowerForallFusedPosition(Forall forall, Iterator ite
     markAssignsAtomicDepth++;
   }
 
+  std::cout << "original forall : " << forall << std::endl;
+  std::cout << "inside IndexStmt: " << forall.getStmt() << std::endl;
   Stmt body = lowerForallBody(coordinate, forall.getStmt(),
                               locators, inserters, appenders, reducedAccesses);
 
@@ -1503,6 +1553,8 @@ Stmt LowererImplImperative::lowerForallFusedPosition(Forall forall, Iterator ite
            && forall.getOutputRaceStrategy() != OutputRaceStrategy::ParallelReduction && !ignoreVectorize) {
     kind = LoopKind::Runtime;
   }
+
+  std::cout << "2 Stmt LowererImplImperative::lowerForallFusedPosition\n" << std::endl;
   // Loop with preamble and postamble
   return Block::blanks(boundsCompute,
                        Block::make(Block::make(searchForUnderivedStart),
@@ -1765,6 +1817,9 @@ Stmt LowererImplImperative::lowerForallBody(Expr coordinate, IndexStmt stmt,
                                   vector<Iterator> inserters,
                                   vector<Iterator> appenders,
                                   const set<Access>& reducedAccesses) {
+
+  std::cout << "lowering a forall body----------------------------------------------------\n";
+  
   Stmt initVals = resizeAndInitValues(appenders, reducedAccesses);
 
   // Inserter positions
@@ -1780,6 +1835,7 @@ Stmt LowererImplImperative::lowerForallBody(Expr coordinate, IndexStmt stmt,
 
   // Code of loop body statement
   Stmt body = lower(stmt);
+  std::cout << "\nBefore: [" << stmt << "]\nAfter : [" << body << "]\n";
 
   // Code to append coordinates
   Stmt appendCoords = appendCoordinate(appenders, coordinate);
@@ -1889,6 +1945,7 @@ vector<Stmt> LowererImplImperative::codeToInitializeDenseAcceleratorArrays(Where
     Expr p = Var::make("p" + temporary.getName(), Int());
     Stmt guardZeroInit = Store::make(alreadySetArr, p, ir::Literal::zero(bitGuardType));
 
+    std::cout << "vector<Stmt> LowererImplImperative::codeToInitializeDenseAcceleratorArrays\n" << std::endl;
     Stmt zeroInitLoop = For::make(p, 0, bitGuardSize, 1, guardZeroInit, LoopKind::Serial);
     Stmt inits = Block::make(alreadySetDecl, indexListDecl, allocateAlreadySet, allocateIndexList, zeroInitLoop);
     return {inits, freeTemps};
@@ -2203,6 +2260,7 @@ Stmt LowererImplImperative::lowerWhere(Where where) {
                                 true, false);
     Expr size = getTemporarySize(where);
     Stmt zeroInit = Store::make(values, p, ir::Literal::zero(temporary.getType().getDataType()));
+    std::cout << "Stmt LowererImplImperative::lowerWhere\n";
     Stmt loopInit = For::make(p, 0, size, 1, zeroInit, LoopKind::Serial);
     initializeTemporary = Block::make(initializeTemporary, loopInit);
   }
@@ -2334,6 +2392,7 @@ Stmt LowererImplImperative::lowerAssemble(Assemble assemble) {
                   resultModeOrdering[iter.getMode().getLevel() - 1]);
               Expr pos = iter.getPosVar();
               Stmt initPos = VarDecl::make(pos, iter.locate(locateCoords)[0]);
+              std::cout << "Stmt LowererImplImperative::lowerAssemble\n";
               insertEdgeLoop = For::make(coords.back(), 0, dim, 1,
                                          Block::make(initPos, insertEdgeLoop));
             } else {
@@ -2415,6 +2474,7 @@ Stmt LowererImplImperative::lowerMulti(Multi multi) {
 }
 
 Stmt LowererImplImperative::lowerSuchThat(SuchThat suchThat) {
+  std::cout << "lowering such that statement\n";
   Stmt stmt = lower(suchThat.getStmt());
   return Block::make(stmt);
 }
@@ -2942,6 +3002,7 @@ Stmt LowererImplImperative::resizeAndInitValues(const std::vector<Iterator>& app
 
 
 Stmt LowererImplImperative::zeroInitValues(Expr tensor, Expr begin, Expr size) {
+  std::cout << "1 Stmt LowererImplImperative::zeroInitValues\n";
   Expr lower = simplify(ir::Mul::make(begin, size));
   Expr upper = simplify(ir::Mul::make(ir::Add::make(begin, 1), size));
   Expr p = Var::make("p" + util::toString(tensor), Int());
@@ -2953,6 +3014,10 @@ Stmt LowererImplImperative::zeroInitValues(Expr tensor, Expr begin, Expr size) {
   if (should_use_CUDA_codegen() && util::contains(parallelUnitSizes, ParallelUnit::GPUBlock)) {
     return ir::VarDecl::make(ir::Var::make("status", Int()),
                                     ir::Call::make("cudaMemset", {values, ir::Literal::make(0, Int()), ir::Mul::make(ir::Sub::make(upper, lower), ir::Literal::make(values.type().getNumBytes()))}, Int()));
+  }
+  std::cout << "2 Stmt LowererImplImperative::zeroInitValues\n";
+  if (should_use_ISPC_codegen()) {
+    return For::make(p, lower, upper, 1, zeroInit, LoopKind::Foreach);
   }
   return For::make(p, lower, upper, 1, zeroInit, parallel);
 }

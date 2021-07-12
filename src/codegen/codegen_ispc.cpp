@@ -5,6 +5,7 @@
 #include <unordered_set>
 #include <taco.h>
 
+#include "taco/cuda.h"
 #include "taco/ir/ir_visitor.h"
 #include "codegen_ispc.h"
 #include "taco/error.h"
@@ -240,7 +241,10 @@ protected:
 };
 
 CodeGen_ISPC::CodeGen_ISPC(std::ostream &dest, OutputKind outputKind, bool simplify)
-    : CodeGen(dest, false, simplify, C), out(dest), outputKind(outputKind) {}
+    : CodeGen(dest, false, simplify, C), out(dest), out2(dest), outputKind(outputKind) {}
+
+CodeGen_ISPC::CodeGen_ISPC(std::ostream &dest, std::ostream &dest2, OutputKind outputKind, bool simplify)
+    : CodeGen(dest, dest2, false, simplify, C), out(dest), out2(dest2), outputKind(outputKind) {}
 
 CodeGen_ISPC::~CodeGen_ISPC() {}
 
@@ -254,7 +258,17 @@ void CodeGen_ISPC::compile(Stmt stmt, bool isFirst) {
   }
   out << endl;
   // generate code for the Stmt
+  std::cout << "Compiling the code\n";
   stmt.accept(this);
+}
+
+void CodeGen_ISPC::sendToStream(std::stringstream &stream) {
+  if (is_ISPC_code_stream_enabled()) {
+    this->out2 << stream.str();
+  }
+  else {
+    this->out << stream.str();
+  }
 }
 
 void CodeGen_ISPC::visit(const Function* func) {
@@ -300,13 +314,13 @@ void CodeGen_ISPC::visit(const Function* func) {
   // Print variable declarations
   out << printDecls(varFinder.varDecls, func->inputs, func->outputs) << endl;
 
+  vector<const GetProperty*> sortedProps;
+  out << printCallISPCFunc(func, varFinder.varDecls, sortedProps);
+
   if (emittingCoroutine) {
     out << printContextDeclAndInit(varMap, localVars, numYields, func->name)
         << endl;
   }
-
-  // output body
-  print(func->body);
 
   // output repack only if we allocated memory
   if (checkForAlloc(func))
@@ -321,21 +335,50 @@ void CodeGen_ISPC::visit(const Function* func) {
   indent--;
 
   doIndent();
-  out << "}\n";
+  out << "}\n\n";
+
+  set_ISPC_code_stream_enabled(true);
+  out2 << printISPCFunc(func, varFinder.varDecls, sortedProps);
+  indent++;
+  doIndent();
+  // output body
+  print(func->body);
+  indent--;
+  out2 << "}\n";
+  set_ISPC_code_stream_enabled(false);
+
 }
 
 void CodeGen_ISPC::visit(const VarDecl* op) {
-  if (emittingCoroutine) {
-    doIndent();
-    op->var.accept(this);
-    parentPrecedence = Precedence::TOP;
-    stream << " = ";
-    op->rhs.accept(this);
-    stream << ";";
-    stream << endl;
-  } else {
-    IRPrinter::visit(op);
+  // std::stringstream stream;
+  if (is_ISPC_code_stream_enabled()) {
+    if (emittingCoroutine) {
+      doIndent();
+      op->var.accept(this);
+      parentPrecedence = Precedence::TOP;
+      stream2 << " = ";
+      op->rhs.accept(this);
+      stream2 << ";";
+      stream2 << endl;
+    } else {
+      IRPrinter::visit(op);
+    }
   }
+  else {
+    if (emittingCoroutine) {
+      doIndent();
+      op->var.accept(this);
+      parentPrecedence = Precedence::TOP;
+      stream << " = ";
+      op->rhs.accept(this);
+      stream << ";";
+      stream << endl;
+    } else {
+      IRPrinter::visit(op);
+    }    
+  }
+
+  // sendToStream(stream);
 }
 
 void CodeGen_ISPC::visit(const Yield* op) {
@@ -345,14 +388,27 @@ void CodeGen_ISPC::visit(const Yield* op) {
 // For Vars, we replace their names with the generated name,
 // since we match by reference (not name)
 void CodeGen_ISPC::visit(const Var* op) {
-  taco_iassert(varMap.count(op) > 0) <<
-      "Var " << op->name << " not found in varMap";
-  if (emittingCoroutine) {
-//    out << "TACO_DEREF(";
+  if (is_ISPC_code_stream_enabled()) {
+    taco_iassert(varMap.count(op) > 0) <<
+        "Var " << op->name << " not found in varMap";
+    if (emittingCoroutine) {
+  //    out << "TACO_DEREF(";
+    }
+    out2 << varMap[op];
+    if (emittingCoroutine) {
+  //    out << ")";
+    }
   }
-  out << varMap[op];
-  if (emittingCoroutine) {
-//    out << ")";
+  else {
+    taco_iassert(varMap.count(op) > 0) <<
+        "Var " << op->name << " not found in varMap";
+    if (emittingCoroutine) {
+  //    out << "TACO_DEREF(";
+    }
+    out << varMap[op];
+    if (emittingCoroutine) {
+  //    out << ")";
+    }
   }
 }
 
@@ -367,31 +423,31 @@ static string genVectorizePragma(int width) {
   return ret.str();
 }
 
-static string getParallelizePragma(LoopKind kind) {
-  stringstream ret;
-  ret << "#pragma omp parallel for schedule";
-  switch (kind) {
-    case LoopKind::Static:
-      ret << "(static, 1)";
-      break;
-    case LoopKind::Dynamic:
-      ret << "(dynamic, 1)";
-      break;
-    case LoopKind::Runtime:
-      ret << "(runtime)";
-      break;
-    case LoopKind::Static_Chunked:
-      ret << "(static)";
-      break;
-    default:
-      break;
-  }
-  return ret.str();
-}
+// static string getParallelizePragma(LoopKind kind) {
+//   stringstream ret;
+//   ret << "#pragma omp parallel for schedule";
+//   switch (kind) {
+//     case LoopKind::Static:
+//       ret << "(static, 1)";
+//       break;
+//     case LoopKind::Dynamic:
+//       ret << "(dynamic, 1)";
+//       break;
+//     case LoopKind::Runtime:
+//       ret << "(runtime)";
+//       break;
+//     case LoopKind::Static_Chunked:
+//       ret << "(static)";
+//       break;
+//     default:
+//       break;
+//   }
+//   return ret.str();
+// }
 
-static string getUnrollPragma(size_t unrollFactor) {
-  return "#pragma unroll " + std::to_string(unrollFactor);
-}
+// static string getUnrollPragma(size_t unrollFactor) {
+//   return "#pragma unroll " + std::to_string(unrollFactor);
+// }
 
 static string getAtomicPragma() {
   return "#pragma omp atomic";
@@ -404,58 +460,75 @@ static string getAtomicPragma() {
 // http://clang.llvm.org/docs/LanguageExtensions.html#extensions-for-loop-hint-optimizations
 void CodeGen_ISPC::visit(const For* op) {
   switch (op->kind) {
+    // TODO - add ISPC based multi threaded execution handling
     case LoopKind::Vectorized:
-      doIndent();
-      out << genVectorizePragma(op->vec_width);
-      out << "\n";
-      break;
     case LoopKind::Static:
     case LoopKind::Dynamic:
     case LoopKind::Runtime:
     case LoopKind::Static_Chunked:
-      doIndent();
-      out << getParallelizePragma(op->kind);
-      out << "\n";
-      break;
     default:
-      if (op->unrollFactor > 0) {
-        doIndent();
-        out << getUnrollPragma(op->unrollFactor) << endl;
-      }
       break;
   }
 
   doIndent();
-  stream << keywordString("for") << " (";
-  if (!emittingCoroutine) {
-    stream << keywordString(util::toString(op->var.type())) << " ";
-  }
-  op->var.accept(this);
-  stream << " = ";
-  op->start.accept(this);
-  stream << keywordString("; ");
-  op->var.accept(this);
-  stream << " < ";
-  parentPrecedence = BOTTOM;
-  op->end.accept(this);
-  stream << keywordString("; ");
-  op->var.accept(this);
 
-  auto lit = op->increment.as<Literal>();
-  if (lit != nullptr && ((lit->type.isInt()  && lit->equalsScalar(1)) ||
-                         (lit->type.isUInt() && lit->equalsScalar(1)))) {
-    stream << "++";
+  if (op->kind == LoopKind::Foreach) {
+    stream2 << keywordString("foreach") << " (";
+    // if (!emittingCoroutine) {
+    //   if (op->var.type() == Int32) {
+    //       stream << "int32 ";
+    //   }
+    //   else if (op->var.type() == Int64) {
+    //       stream << "int64 ";
+    //   }
+      
+    // }
+    op->var.accept(this);
+    stream2 << " = ";
+    op->start.accept(this);
+    stream2 << keywordString(" ... ");
+    op->end.accept(this);
+    stream2 << ") {\n";
+
+  } else {
+    stream2 << keywordString("for") << " (";
+    if (!emittingCoroutine) {
+      if (op->var.type() == Int32) {
+          stream2 << "int32 ";
+      }
+      else if (op->var.type() == Int64) {
+          stream2 << "int64 ";
+      }
+      
+    }
+    op->var.accept(this);
+    stream2 << " = ";
+    op->start.accept(this);
+    stream2 << keywordString("; ");
+    op->var.accept(this);
+    stream2 << " < ";
+    parentPrecedence = BOTTOM;
+    op->end.accept(this);
+    stream2 << keywordString("; ");
+    op->var.accept(this);
+
+    auto lit = op->increment.as<Literal>();
+    if (lit != nullptr && ((lit->type.isInt()  && lit->equalsScalar(1)) ||
+                          (lit->type.isUInt() && lit->equalsScalar(1)))) {
+      stream2 << "++";
+    }
+    else {
+      stream2 << " += ";
+      op->increment.accept(this);
+    }
+    stream2 << ") {\n";
   }
-  else {
-    stream << " += ";
-    op->increment.accept(this);
-  }
-  stream << ") {\n";
 
   op->contents.accept(this);
   doIndent();
-  stream << "}";
-  stream << endl;
+  stream2 << "}";
+  stream2 << endl;
+
 }
 
 void CodeGen_ISPC::visit(const While* op) {
@@ -474,7 +547,13 @@ void CodeGen_ISPC::visit(const While* op) {
 void CodeGen_ISPC::visit(const GetProperty* op) {
   taco_iassert(varMap.count(op) > 0) <<
       "Property " << Expr(op) << " of " << op->tensor << " not found in varMap";
-  out << varMap[op];
+  if (is_ISPC_code_stream_enabled()) {
+    out2 << varMap[op];
+  }
+  else {
+    out << varMap[op];
+  }
+
 }
 
 void CodeGen_ISPC::visit(const Min* op) {
@@ -549,17 +628,34 @@ void CodeGen_ISPC::visit(const Sqrt* op) {
 }
 
 void CodeGen_ISPC::visit(const Assign* op) {
-  if (op->use_atomics) {
-    doIndent();
-    stream << getAtomicPragma() << endl;
+  if (is_ISPC_code_stream_enabled()) {
+    if (op->use_atomics) {
+      doIndent();
+      stream2 << getAtomicPragma() << endl;
+    }
   }
+  else {
+    if (op->use_atomics) {
+      doIndent();
+      stream << getAtomicPragma() << endl;
+    }    
+  }
+
   IRPrinter::visit(op);
 }
 
 void CodeGen_ISPC::visit(const Store* op) {
-  if (op->use_atomics) {
-    doIndent();
-    stream << getAtomicPragma() << endl;
+  if (is_ISPC_code_stream_enabled()) {
+    if (op->use_atomics) {
+      doIndent();
+      stream2 << getAtomicPragma() << endl;
+    }
+  }
+  else {
+    if (op->use_atomics) {
+      doIndent();
+      stream << getAtomicPragma() << endl;
+    }    
   }
   IRPrinter::visit(op);
 }

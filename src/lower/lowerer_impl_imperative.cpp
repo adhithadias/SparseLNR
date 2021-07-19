@@ -1,5 +1,6 @@
 #include <taco/lower/mode_format_compressed.h>
 #include "taco/cuda.h"
+#include "taco/ir_tags.h"
 #include "taco/lower/lowerer_impl_imperative.h"
 #include "taco/lower/lowerer_impl.h"
 
@@ -417,6 +418,7 @@ LowererImplImperative::lower(IndexStmt stmt, string name,
 
 Stmt LowererImplImperative::lowerAssignment(Assignment assignment)
 {
+  std::cout << "\n\n converting assignment IndexStmt============================================ Assignment\n";
   taco_iassert(generateAssembleCode() || generateComputeCode());
 
   Stmt computeStmt;
@@ -424,7 +426,7 @@ Stmt LowererImplImperative::lowerAssignment(Assignment assignment)
   Expr var = getTensorVar(result);
 
   const bool needComputeAssign = util::contains(needCompute, result);
-
+  std::cout << "does assignment need compute assign: " << needComputeAssign << std::endl;
   Expr rhs;
   if (needComputeAssign) {
     rhs = lower(assignment.getRhs());
@@ -432,20 +434,51 @@ Stmt LowererImplImperative::lowerAssignment(Assignment assignment)
 
   // Assignment to scalar variables.
   if (isScalar(result.getType())) {
+    std::cout << "assignment to scalar variables\n";
     if (needComputeAssign) {
+      std::cout << "compute assign\n";
       if (!assignment.getOperator().defined()) {
+        std::cout << "assignment operator is not defined\n";
+        std::cout << "var: " << var << ", rhs, : " << rhs << std::endl;
         computeStmt = Assign::make(var, rhs);
       }
       else {
         taco_iassert(isa<taco::Add>(assignment.getOperator()));
-        bool useAtomics = markAssignsAtomicDepth > 0 &&
-                          !util::contains(whereTemps, result);
+        
+        std::cout << "assignment depth -- loopDepth: " << loopDepth << std::endl;
+        std::cout << "is markAssignsAtomicDepth > 0: " << (markAssignsAtomicDepth > 0) << std::endl;
+        for (auto &tensors_ : whereTemps) {
+          std::cout << tensors_ << ", ";
+        }  
+        std::cout << std::endl;
+        std::cout << result << std::endl;
+        int tempVarInitLoopDepth = whereTempsWithLoopDepth.find(result)->second;
+        std::cout << "tempInitLoopDepth: " << tempVarInitLoopDepth << std::endl;
+        
+        bool reduction = false;
+        std::map<int, ParallelUnit>::iterator itr;
+        for (itr = forUnits.begin(); itr!=forUnits.end(); ++itr) {
+          if (itr->first<=loopDepth && itr->first>tempVarInitLoopDepth && itr->second == ParallelUnit::CPUSimd) {
+            reduction = true;
+          }
+          std::cout << itr->first << "\t" << ParallelUnit_NAMES[(int) itr->second] << std::endl;
+        }
+
+        // less than or equal to loopDepth but greater than temp variable initialized loop depth
+        bool useAtomics = markAssignsAtomicDepth > 0 && (!util::contains(whereTemps, result) || reduction);
+        std::cout << "whereTemps and result: " << !util::contains(whereTemps, result) << std::endl;
+        std::cout << "assignment to scalar variables useAtomics: " << useAtomics << std::endl;
         computeStmt = compoundAssign(var, rhs, useAtomics, atomicParallelUnit);
+        std::cout << "computeStatment: " << computeStmt << std::endl;
       }
+    }
+    else {
+      std::cout << "not compute assign\n";
     }
   }
   // Assignments to tensor variables (non-scalar).
   else {
+    std::cout << "assignment to tensor variables\n";
     Expr values = getValuesArray(result);
     Expr loc = generateValueLocExpr(assignment.getLhs());
 
@@ -479,6 +512,7 @@ Stmt LowererImplImperative::lowerAssignment(Assignment assignment)
     }
 
     if (needComputeAssign && values.defined()) {
+      std::cout << "assign compute statement\n";
       if (!assignment.getOperator().defined()) {
         computeStmt = Store::make(values, loc, rhs);
       }
@@ -595,9 +629,20 @@ LowererImplImperative::splitAppenderAndInserters(const vector<Iterator>& results
 */
 Stmt LowererImplImperative::lowerForall(Forall forall)
 {
+  loopDepth++;
+  forUnits.insert(std::pair<int, ParallelUnit>(loopDepth,forall.getParallelUnit()));
   std::cout << "doing lowerForall: " << forall << std::endl;
   bool hasExactBound = provGraph.hasExactBound(forall.getIndexVar());
   bool forallNeedsUnderivedGuards = !hasExactBound && emitUnderivedGuards;
+
+
+  std::cout << "printing temporary variables with their atomic depths\n";
+  map<TensorVar, int>::iterator itr;
+  for (itr = whereTempsWithLoopDepth.begin(); itr != whereTempsWithLoopDepth.end(); ++itr) {
+    std::cout << itr->first << "\t" << itr->second << "\n";
+  }
+
+
   if (!ignoreVectorize && forallNeedsUnderivedGuards &&
       (forall.getParallelUnit() == ParallelUnit::CPUVector ||
        forall.getUnrollFactor() > 0)) {
@@ -852,6 +897,8 @@ Stmt LowererImplImperative::lowerForall(Forall forall)
     parallelUnitSizes.erase(forall.getParallelUnit());
   }
   
+  forUnits.erase(loopDepth);
+  loopDepth--;
   return Block::blanks(preInitValues,
                        temporaryValuesInitFree[0],
                        loops,
@@ -1157,11 +1204,17 @@ Stmt LowererImplImperative::lowerForallDimension(Forall forall,
                                        ir::Stmt recoveryStmt)
 {
   std::cout << "1 Stmt LowererImplImperative::lowerForallDimension\n";
+  std::cout << "1 Stmt LowererImplImperative::lowerForallDimension markAssignsAtomicDepth: " << markAssignsAtomicDepth << std::endl;
   Expr coordinate = getCoordinateVar(forall.getIndexVar());
 
   if (forall.getParallelUnit() != ParallelUnit::NotParallel && forall.getOutputRaceStrategy() == OutputRaceStrategy::Atomics) {
     markAssignsAtomicDepth++;
+    std::cout << "1 Stmt LowererImplImperative::lowerForallDimension getParallelUnit() is Not NotParallel and outputRaceStrategy is Atomics\n";
+    std::cout << "markAssignsAtomicDepth: " << markAssignsAtomicDepth << std::endl;
     atomicParallelUnit = forall.getParallelUnit();
+  }
+  else {
+    std::cout << "1 Stmt LowererImplImperative::lowerForallDimension getParallelUnit() is NotParallel or outputRaceStrategy is not Atomics\n";
   }
 
   std::cout << "original forall : " << forall << std::endl;
@@ -1183,8 +1236,13 @@ Stmt LowererImplImperative::lowerForallDimension(Forall forall,
   LoopKind kind = LoopKind::Serial;
   if (should_use_ISPC_codegen()) {
     std::cout << "Foreach compatible loop\n";
-    if (forall.getParallelUnit() == ParallelUnit::CPUVector && !ignoreVectorize) {
+    if (forall.getParallelUnit() == ParallelUnit::CPUSimd) {
       kind = LoopKind::Foreach;
+    }
+    else if (forall.getParallelUnit() == ParallelUnit::CPUSpmd 
+            && forall.getOutputRaceStrategy() != OutputRaceStrategy::ParallelReduction
+    ) {
+      kind = LoopKind::Mul_Thread;
     }
   } 
   else if (forall.getParallelUnit() == ParallelUnit::CPUVector && !ignoreVectorize) {
@@ -1250,7 +1308,7 @@ Stmt LowererImplImperative::lowerForallDimension(Forall forall,
 
     LoopKind kind = LoopKind::Serial;
     if (should_use_ISPC_codegen()) {
-      if (forall.getParallelUnit() == ParallelUnit::CPUVector && !ignoreVectorize) {
+      if (forall.getParallelUnit() == ParallelUnit::CPUSimd) {
         kind = LoopKind::Foreach;
       }
     }
@@ -2201,6 +2259,7 @@ vector<Stmt> LowererImplImperative::codeToInitializeTemporary(Where where) {
 }
 
 Stmt LowererImplImperative::lowerWhere(Where where) {
+  std::cout << "\n--------------------------------------- lowering where statement: " << where << "\n\n\n";
   TensorVar temporary = where.getTemporary();
   bool accelerateDenseWorkSpace, sortAccelerator;
   std::tie(accelerateDenseWorkSpace, sortAccelerator) =
@@ -2237,6 +2296,7 @@ Stmt LowererImplImperative::lowerWhere(Where where) {
         })
   );
 
+  std::cout << "\ninitiating lowering of where consumer: " << where.getConsumer() << std::endl;
   Stmt consumer = lower(where.getConsumer());
   if (accelerateDenseWorkSpace && sortAccelerator) {
     // We need to sort the indices array
@@ -2266,6 +2326,7 @@ Stmt LowererImplImperative::lowerWhere(Where where) {
   }
 
   whereConsumers.push_back(consumer);
+  std::cout << "\nwhere temporaries: " << where.getTemporary() << std::endl;
   whereTemps.push_back(where.getTemporary());
   captureNextLocatePos = true;
 
@@ -2276,12 +2337,17 @@ Stmt LowererImplImperative::lowerWhere(Where where) {
     restoreAtomicDepth = true;
   }
 
+  whereTempsWithLoopDepth.insert(std::pair<TensorVar, int>(where.getTemporary(), loopDepth));
+
+  std::cout << "\ninitiating lowering of where producer: " << where.getConsumer() << std::endl;
   Stmt producer = lower(where.getProducer());
   if (accelerateDenseWorkSpace) {
     const Expr indexListSizeExpr = tempToIndexListSize.at(temporary);
     const Stmt indexListSizeDecl = VarDecl::make(indexListSizeExpr, ir::Literal::make(0));
     initializeTemporary = Block::make(indexListSizeDecl, initializeTemporary);
   }
+
+  whereTempsWithLoopDepth.erase(where.getTemporary());
 
   if (restoreAtomicDepth) {
     markAssignsAtomicDepth++;

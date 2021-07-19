@@ -621,6 +621,7 @@ void TensorBase::compile() {
   IndexStmt stmt = makeConcreteNotation(makeReductionNotation(assignment));
   stmt = reorderLoopsTopologically(stmt);
   stmt = insertTemporaries(stmt);
+  std::cout << "calling parallelizeOuterLoop(stmt)\n";
   stmt = parallelizeOuterLoop(stmt);
   compile(stmt, content->assembleWhileCompute);
 }

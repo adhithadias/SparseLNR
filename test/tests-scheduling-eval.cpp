@@ -65,14 +65,31 @@ IndexStmt scheduleSpMMCPU(IndexStmt stmt, Tensor<double> A, int CHUNK_SIZE=16, i
           .parallelize(k, ParallelUnit::CPUVector, OutputRaceStrategy::IgnoreRaces);
 }
 
-IndexStmt scheduleSpMMISPC(IndexStmt stmt, Tensor<double> A, int CHUNK_SIZE=16, int UNROLL_FACTOR=8) {
+IndexStmt scheduleSpMMISPC1(IndexStmt stmt, Tensor<double> A, int CHUNK_SIZE=16, int UNROLL_FACTOR=8) {
   IndexVar i0("i0"), i1("i1"), kbounded("kbounded"), k0("k0"), k1("k1"), jpos("jpos"), jpos0("jpos0"), jpos1("jpos1");
   return stmt.split(i, i0, i1, CHUNK_SIZE)
           .pos(j, jpos, A(i,j))
           .split(jpos, jpos0, jpos1, UNROLL_FACTOR)
           .reorder({i0, i1, jpos0, k, jpos1})
           .parallelize(i0, ParallelUnit::CPUThread, OutputRaceStrategy::NoRaces)
-          .parallelize(k, ParallelUnit::CPUVector, OutputRaceStrategy::IgnoreRaces);
+          .parallelize(k, ParallelUnit::CPUSimd, OutputRaceStrategy::IgnoreRaces);
+}
+
+IndexStmt scheduleSpMMISPC2(IndexStmt stmt, Tensor<double> A, int CHUNK_SIZE=16, int UNROLL_FACTOR=8) {
+  IndexVar i0("i0"), i1("i1"), kbounded("kbounded"), k0("k0"), k1("k1"), jpos("jpos"), jpos0("jpos0"), jpos1("jpos1");
+  return stmt
+          .parallelize(k, ParallelUnit::CPUSimd, OutputRaceStrategy::IgnoreRaces);
+}
+
+IndexStmt scheduleSpMMISPC3(IndexStmt stmt, Tensor<double> A, int CHUNK_SIZE=16, int UNROLL_FACTOR=8) {
+  IndexVar i0("i0"), i1("i1"), kbounded("kbounded"), k0("k0"), k1("k1"), jpos("jpos"), jpos0("jpos0"), jpos1("jpos1");
+  return stmt
+          // .split(i, i0, i1, CHUNK_SIZE)
+          // .pos(j, jpos, A(i,j))
+          // .split(jpos, jpos0, jpos1, UNROLL_FACTOR)
+          .reorder({j, k})
+          .parallelize(i0, ParallelUnit::CPUThread, OutputRaceStrategy::NoRaces)
+          .parallelize(k, ParallelUnit::CPUSimd, OutputRaceStrategy::IgnoreRaces);
 }
 
 IndexStmt scheduleSpGEMMCPU(IndexStmt stmt, bool doPrecompute) {
@@ -126,6 +143,27 @@ IndexStmt scheduleSDDMMCPU(IndexStmt stmt, Tensor<double> B, int CHUNK_SIZE=16, 
           .reorder({i0, i1, kpos0, j, kpos1})
           .parallelize(i0, ParallelUnit::CPUThread, OutputRaceStrategy::NoRaces)
           .parallelize(kpos1, ParallelUnit::CPUVector, OutputRaceStrategy::ParallelReduction);
+}
+
+IndexStmt scheduleSDDMMISPC1(IndexStmt stmt, Tensor<double> B, int CHUNK_SIZE=16, int UNROLL_FACTOR=8) {
+  IndexVar i0("i0"), i1("i1"), kpos("kpos"), kpos0("kpos0"), kpos1("kpos1");
+  return stmt.split(i, i0, i1, CHUNK_SIZE)
+          .pos(k, kpos, B(i,k))
+          .split(kpos, kpos0, kpos1, UNROLL_FACTOR)
+          .reorder({i0, i1, kpos0, j, kpos1})
+          .parallelize(i0, ParallelUnit::CPUThread, OutputRaceStrategy::NoRaces)
+          .parallelize(kpos1, ParallelUnit::CPUSimd, OutputRaceStrategy::ParallelReduction);
+}
+
+IndexStmt scheduleSDDMMISPC2(IndexStmt stmt, Tensor<double> B, int CHUNK_SIZE=16, int UNROLL_FACTOR=8) {
+  IndexVar i0("i0"), i1("i1"), kpos("kpos"), kpos0("kpos0"), kpos1("kpos1");
+  return stmt;
+          // .split(i, i0, i1, CHUNK_SIZE)
+          // .pos(k, kpos, B(i,k))
+          // .split(kpos, kpos0, kpos1, UNROLL_FACTOR)
+          // .reorder({i0, i1, kpos0, j, kpos1})
+          // .parallelize(i0, ParallelUnit::CPUThread, OutputRaceStrategy::NoRaces)
+          // .parallelize(kpos1, ParallelUnit::CPUSimd, OutputRaceStrategy::ParallelReduction);
 }
 
 IndexStmt scheduleTTVCPU(IndexStmt stmt, Tensor<double> B, int CHUNK_SIZE=16) {
@@ -1550,24 +1588,80 @@ TEST(generate_ispc_evaluation_files, ispc) {
     stringstream source2;
     std::shared_ptr<ir::CodeGen> codegen = ir::CodeGen::init_default(source1, source2, ir::CodeGen::ImplementationGen);
     Tensor<double> A("A", {NUM_I, NUM_J}, CSR);
-    Tensor<double> B("B", {NUM_J, NUM_K}, {Dense, Dense});
-    Tensor<double> C("C", {NUM_I, NUM_K}, {Dense, Dense});
-    C(i, k) = A(i, j) * B(j, k);
-    IndexStmt stmt = C.getAssignment().concretize();
+    Tensor<double> X("X", {NUM_J, NUM_K}, {Dense, Dense});
+    Tensor<double> Y("Y", {NUM_I, NUM_K}, {Dense, Dense});
+    Y(i, k) = A(i, j) * X(j, k);
+    IndexStmt stmt = Y.getAssignment().concretize();
     bool isFirst = true;
     for (auto paramSet : spmm_parameters) {
-      IndexStmt scheduled = scheduleSpMMISPC(stmt, A, paramSet[0], paramSet[1]);
-      ir::Stmt compute = lower(scheduled, string("compute_") + util::join(paramSet, "_"),  false, true);
+      IndexStmt scheduled = scheduleSpMMISPC1(stmt, A, paramSet[0], paramSet[1]);
+      ir::Stmt compute = lower(scheduled, string("compute1_") + util::join(paramSet, "_"),  false, true);
       codegen->compile(compute, isFirst);
       isFirst = false;
     }
     ofstream source_file;
-    source_file.open(file_path + "spmm_csr_ispc_taco" + c_file_ending);
+    source_file.open(file_path + "spmm_csr_ispc_taco1" + c_file_ending);
     source_file << source1.str();
     source_file.close();
 
     ofstream ispc_source_file;
-    ispc_source_file.open(file_path + "__spmm_csr_ispc_taco" + file_ending);
+    ispc_source_file.open(file_path + "__spmm_csr_ispc_taco1" + file_ending);
+    ispc_source_file << source2.str();
+    ispc_source_file.close();
+  }
+
+  // spmm
+  {
+    stringstream source1;
+    stringstream source2;
+    std::shared_ptr<ir::CodeGen> codegen = ir::CodeGen::init_default(source1, source2, ir::CodeGen::ImplementationGen);
+    Tensor<double> A("A", {NUM_I, NUM_J}, CSR);
+    Tensor<double> X("X", {NUM_J, NUM_K}, {Dense, Dense});
+    Tensor<double> Y("Y", {NUM_I, NUM_K}, {Dense, Dense});
+    Y(i, k) = A(i, j) * X(j, k);
+    IndexStmt stmt = Y.getAssignment().concretize();
+    bool isFirst = true;
+    for (auto paramSet : spmm_parameters) {
+      IndexStmt scheduled = scheduleSpMMISPC2(stmt, A, paramSet[0], paramSet[1]);
+      ir::Stmt compute = lower(scheduled, string("compute2_") + util::join(paramSet, "_"),  false, true);
+      codegen->compile(compute, isFirst);
+      isFirst = false;
+    }
+    ofstream source_file;
+    source_file.open(file_path + "spmm_csr_ispc_taco2" + c_file_ending);
+    source_file << source1.str();
+    source_file.close();
+
+    ofstream ispc_source_file;
+    ispc_source_file.open(file_path + "__spmm_csr_ispc_taco2" + file_ending);
+    ispc_source_file << source2.str();
+    ispc_source_file.close();
+  }
+
+  // spmm
+  {
+    stringstream source1;
+    stringstream source2;
+    std::shared_ptr<ir::CodeGen> codegen = ir::CodeGen::init_default(source1, source2, ir::CodeGen::ImplementationGen);
+    Tensor<double> A("A", {NUM_I, NUM_J}, CSR);
+    Tensor<double> X("X", {NUM_J, NUM_K}, {Dense, Dense});
+    Tensor<double> Y("Y", {NUM_I, NUM_K}, {Dense, Dense});
+    Y(i, k) = A(i, j) * X(j, k);
+    IndexStmt stmt = Y.getAssignment().concretize();
+    bool isFirst = true;
+    for (auto paramSet : spmm_parameters) {
+      IndexStmt scheduled = scheduleSpMMISPC3(stmt, A, paramSet[0], paramSet[1]);
+      ir::Stmt compute = lower(scheduled, string("compute3_") + util::join(paramSet, "_"),  false, true);
+      codegen->compile(compute, isFirst);
+      isFirst = false;
+    }
+    ofstream source_file;
+    source_file.open(file_path + "spmm_csr_ispc_taco3" + c_file_ending);
+    source_file << source1.str();
+    source_file.close();
+
+    ofstream ispc_source_file;
+    ispc_source_file.open(file_path + "__spmm_csr_ispc_taco3" + file_ending);
     ispc_source_file << source2.str();
     ispc_source_file.close();
   }
@@ -1575,6 +1669,99 @@ TEST(generate_ispc_evaluation_files, ispc) {
 
   return;
 }
+
+
+
+TEST(generate_ispc_sddmm_evaluation_files, ispc) {
+  std::cout << "Hi Adhitha!\n" << std::endl ;
+  set_CUDA_codegen_enabled(false);
+  set_ISPC_codegen_enabled(true);
+
+  vector<vector<int>> spmv_parameters = {{32}};
+  vector<vector<int>> spmspv_parameters = {{8}};
+
+  // 4 to 512 and 4, 8, 16
+  vector<vector<int>> spmm_dcsr_parameters = {{16, 8}};
+  vector<vector<int>> spmm_parameters = {{16,4}};
+
+  vector<vector<int>> mttkrp_parameters = {};
+  mttkrp_parameters.push_back({64,0});
+
+  vector<vector<int>> sddmm_parameters = {{8, 8}};
+  vector<vector<int>> ttv_parameters = {{32}};
+
+  int NUM_I = 100;
+  int NUM_J = 100;
+  int NUM_K = 100;
+
+  string c_file_ending = ".h";
+  string file_ending = ".ispc";
+  string file_path = "eval_prepared_ispc/sddmm/";
+  mkdir(file_path.c_str(), 0777);
+
+  // sddmm
+  {
+    stringstream source1;
+    stringstream source2;
+    std::shared_ptr<ir::CodeGen> codegen = ir::CodeGen::init_default(source1, source2, ir::CodeGen::ImplementationGen);
+    Tensor<double> A("A", {NUM_I, NUM_K}, {Dense, Dense});
+    Tensor<double> B("B", {NUM_I, NUM_K}, CSR);
+    Tensor<double> C("C", {NUM_I, NUM_J}, {Dense, Dense});
+    Tensor<double> D("D", {NUM_J, NUM_K}, {Dense, Dense});
+    A(i,k) = B(i,k) * C(i,j) * D(j,k);
+    IndexStmt stmt = A.getAssignment().concretize();
+    bool isFirst = true;
+    for (auto paramSet : sddmm_parameters) {
+      IndexStmt scheduled = scheduleSDDMMISPC1(stmt, B, paramSet[0], paramSet[1]);
+      ir::Stmt compute = lower(scheduled, string("compute1_") + util::join(paramSet, "_"),  false, true);
+      codegen->compile(compute, isFirst);
+      isFirst = false;
+    }
+    ofstream source_file;
+    source_file.open(file_path + "sddmm_cpu_ispc_taco1" + file_ending);
+    source_file << source1.str();
+    source_file.close();
+
+    ofstream ispc_source_file;
+    ispc_source_file.open(file_path + "__sddmm_cpu_ispc_taco1" + file_ending);
+    ispc_source_file << source2.str();
+    ispc_source_file.close();
+  }
+
+
+  // sddmm
+  {
+    stringstream source1;
+    stringstream source2;
+    std::shared_ptr<ir::CodeGen> codegen = ir::CodeGen::init_default(source1, source2, ir::CodeGen::ImplementationGen);
+    Tensor<double> Y("Y", {NUM_I, NUM_K}, {Dense, Dense});
+    Tensor<double> A("A", {NUM_I, NUM_K}, CSR);
+    Tensor<double> X("X", {NUM_I, NUM_J}, {Dense, Dense});
+    Y(i,j) = A(i,j) * X(i,k) * X(j,k);
+    IndexStmt stmt = Y.getAssignment().concretize();
+    bool isFirst = true;
+    for (auto paramSet : sddmm_parameters) {
+      IndexStmt scheduled = scheduleSDDMMISPC2(stmt, A, paramSet[0], paramSet[1]);
+      ir::Stmt compute = lower(scheduled, string("compute2_") + util::join(paramSet, "_"),  false, true);
+      codegen->compile(compute, isFirst);
+      isFirst = false;
+    }
+    ofstream source_file;
+    source_file.open(file_path + "sddmm_cpu_ispc_taco2" + file_ending);
+    source_file << source1.str();
+    source_file.close();
+
+    ofstream ispc_source_file;
+    ispc_source_file.open(file_path + "__sddmm_cpu_ispc_taco2" + file_ending);
+    ispc_source_file << source2.str();
+    ispc_source_file.close();
+  }
+
+
+  return;
+}
+
+
 
 TEST(generate_evaluation_files, cpu) {
   if (should_use_CUDA_codegen()) {

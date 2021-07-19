@@ -43,6 +43,12 @@ protected:
   void visit(const Store*);
   void visit(const Assign*);
 
+  Stmt simplifyFunctionBodies(Stmt stmt);
+  std::string printCallISPCFunc(const Function *func, std::map<Expr, std::string, ExprCompare> varMap,
+                                std::vector<const GetProperty*> &sortedProps);
+  std::string printISPCFunc(const Function *func, std::map<Expr, std::string, ExprCompare> varMap,
+                                  std::vector<const GetProperty*> &sortedProps);
+
   std::map<Expr, std::string, ExprCompare> varMap;
   std::vector<Expr> localVars;
   std::ostream &out;
@@ -55,6 +61,7 @@ protected:
   bool emittingCoroutine;
 
   class FindVars;
+  class DeviceFunctionCollector;
 
 private:
   virtual std::string restrictKeyword() const { return "restrict"; }

@@ -49,10 +49,6 @@ protected:
   std::string printContextDeclAndInit(std::map<Expr, std::string, ExprCompare> varMap,
                                           std::vector<Expr> localVars, int labels,
                                           std::string funcName);
-  std::string printCallISPCFunc(const Function *func, std::map<Expr, std::string, ExprCompare> varMap,
-                                std::vector<const GetProperty*> &sortedProps);
-  std::string printISPCFunc(const Function *func, std::map<Expr, std::string, ExprCompare> varMap,
-                                  std::vector<const GetProperty*> &sortedProps);
   std::string printDecls(std::map<Expr, std::string, ExprCompare> varMap,
                          std::vector<Expr> inputs, std::vector<Expr> outputs);
   std::string printPack(std::map<std::tuple<Expr, TensorProperty, int, int>,
@@ -63,6 +59,10 @@ protected:
   std::string printFuncName(const Function *func, 
           std::map<Expr, std::string, ExprCompare> inputMap={}, 
           std::map<Expr, std::string, ExprCompare> outputMap={});
+  
+  std::string printTensorProperty(std::string varname, const GetProperty* op, bool is_ptr);
+  std::string getUnpackedTensorArgument(std::string varname, const GetProperty* op,
+                              bool is_output_prop); 
 
   void resetUniqueNameCounters();
   std::string genUniqueName(std::string name);
@@ -72,11 +72,8 @@ protected:
 private:
   virtual std::string restrictKeyword() const { return ""; }
 
-  std::string printTensorProperty(std::string varname, const GetProperty* op, bool is_ptr);
   std::string unpackTensorProperty(std::string varname, const GetProperty* op,
-                              bool is_output_prop);
-  std::string getUnpackedTensorArgument(std::string varname, const GetProperty* op,
-                              bool is_output_prop);  
+                              bool is_output_prop); 
   std::string packTensorProperty(std::string varname, Expr tnsr, TensorProperty property,
                             int mode, int index);
   std::string pointTensorProperty(std::string varname);

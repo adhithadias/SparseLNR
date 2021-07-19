@@ -7,6 +7,9 @@
 
 #include "taco/cuda.h"
 #include "taco/ir/ir_visitor.h"
+#include "taco/ir/ir_rewriter.h"
+#include "taco/ir/simplify.h"
+
 #include "codegen_ispc.h"
 #include "taco/error.h"
 #include "taco/util/strings.h"
@@ -240,6 +243,121 @@ protected:
   }
 };
 
+
+// Finds all for loops tagged with accelerator and adds statements to deviceFunctions
+// Also tracks scope of when device function is called and
+// tracks which variables must be passed to function.
+class CodeGen_ISPC::DeviceFunctionCollector : public IRVisitor {
+public:
+  vector<Stmt> blockFors;
+  vector<Stmt> threadFors; // contents is device function
+  vector<Stmt> warpFors;
+  map<Expr, string, ExprCompare> scopeMap;
+
+  // the variables to pass to each device function
+  vector<vector<pair<string, Expr>>> functionParameters;
+  vector<pair<string, Expr>> currentParameters; // keep as vector so code generation is deterministic
+  set<Expr> currentParameterSet;
+
+  set<Expr> variablesDeclaredInKernel;
+
+  vector<pair<string, Expr>> threadIDVars;
+  vector<pair<string, Expr>> blockIDVars;
+  vector<pair<string, Expr>> warpIDVars;
+  vector<Expr> numThreads;
+  vector<Expr> numWarps;
+
+  CodeGen_ISPC *codeGen;
+  // copy inputs and outputs into the map
+  DeviceFunctionCollector(vector<Expr> inputs, vector<Expr> outputs, CodeGen_ISPC *codeGen) : codeGen(codeGen)  {
+    inDeviceFunction = false;
+    for (auto v: inputs) {
+      auto var = v.as<Var>();
+      taco_iassert(var) << "Inputs must be vars in codegen";
+      taco_iassert(scopeMap.count(var) == 0) <<
+                                             "Duplicate input found in codegen";
+      scopeMap[var] = var->name;
+    }
+    for (auto v: outputs) {
+      auto var = v.as<Var>();
+      taco_iassert(var) << "Outputs must be vars in codegen";
+      taco_iassert(scopeMap.count(var) == 0) <<
+                                             "Duplicate output found in codegen";
+
+      scopeMap[var] = var->name;
+    }
+  }
+
+protected:
+  bool inDeviceFunction;
+  using IRVisitor::visit;
+
+  virtual void visit(const For *op) {
+    if (op->parallel_unit == ParallelUnit::CPUSpmd) {
+      std::cout << "ParallelUnit::CPUSpmd directive found\n";
+      inDeviceFunction = false;
+      op->var.accept(this);
+      inDeviceFunction = true;
+
+      threadFors.push_back(op);
+      std::cout << "scopeMap: [" << scopeMap[op->var] << "], varExpr: [" << op->var << "]\n";
+      threadIDVars.push_back(pair<string, Expr>(scopeMap[op->var], op->var));
+      Expr blockSize = ir::simplify(ir::Div::make(ir::Sub::make(op->end, op->start), op->increment));
+      numThreads.push_back(blockSize);
+
+    }
+    else if (op->parallel_unit == ParallelUnit::CPUSimd) {
+
+    }
+    else{
+      op->var.accept(this);
+    }
+    op->start.accept(this);
+    op->end.accept(this);
+    op->increment.accept(this);
+    op->contents.accept(this);
+  }
+
+  virtual void visit(const Var *op) {
+    if (scopeMap.count(op) == 0) {
+      string name = codeGen->genUniqueName(op->name);
+      if (!inDeviceFunction) {
+        scopeMap[op] = name;
+      }
+    }
+    else if (scopeMap.count(op) == 1 && inDeviceFunction && currentParameterSet.count(op) == 0
+            && (threadIDVars.empty() || op != threadIDVars.back().second)
+            && !variablesDeclaredInKernel.count(op)) {
+      currentParameters.push_back(pair<string, Expr>(scopeMap[op], op));
+      currentParameterSet.insert(op);
+    }
+  }
+
+  virtual void visit(const VarDecl *op) {
+    if (inDeviceFunction) {
+      variablesDeclaredInKernel.insert(op->var);
+    }
+    op->var.accept(this);
+    op->rhs.accept(this);
+  }
+
+  virtual void visit(const GetProperty *op) {
+    if (scopeMap.count(op->tensor) == 0 && !inDeviceFunction) {
+      auto key =
+              tuple<Expr,TensorProperty,int,int>(op->tensor,op->property,
+                                                 (size_t)op->mode,
+                                                 (size_t)op->index);
+      auto unique_name = codeGen->genUniqueName(op->name);
+      scopeMap[op->tensor] = unique_name;
+    }
+    else if (scopeMap.count(op->tensor) == 1 && inDeviceFunction && currentParameterSet.count(op->tensor) == 0) {
+      currentParameters.push_back(pair<string, Expr>(op->tensor.as<Var>()->name, op->tensor));
+      currentParameterSet.insert(op->tensor);
+    }
+  }
+};
+
+
 CodeGen_ISPC::CodeGen_ISPC(std::ostream &dest, OutputKind outputKind, bool simplify)
     : CodeGen(dest, false, simplify, C), out(dest), out2(dest), outputKind(outputKind) {}
 
@@ -260,6 +378,76 @@ void CodeGen_ISPC::compile(Stmt stmt, bool isFirst) {
   // generate code for the Stmt
   std::cout << "Compiling the code\n";
   stmt.accept(this);
+}
+
+string CodeGen_ISPC::printCallISPCFunc(const Function *func, map<Expr, string, ExprCompare> varMap,
+                                  vector<const GetProperty*> &sortedProps) {
+  std::stringstream ret;
+  ret << "  ";
+  unordered_set<string> propsAlreadyGenerated;
+
+  ret << "__" << func->name << "(";
+
+  vector<Expr> inputs = func->inputs;
+  vector<Expr> outputs = func->outputs;
+  getSortedProps(varMap, sortedProps, inputs, outputs);
+
+  for (unsigned long i=0; i < sortedProps.size(); i++) {
+    ret << varMap[sortedProps[i]];
+    if (i != sortedProps.size()-1) {
+      ret << ", ";
+    }
+    propsAlreadyGenerated.insert(varMap[sortedProps[i]]);
+  }
+
+  ret << ");\n";
+  return ret.str();
+}
+
+string CodeGen_ISPC::printISPCFunc(const Function *func, map<Expr, string, ExprCompare> varMap,
+                                  vector<const GetProperty*> &sortedProps) {
+
+  DeviceFunctionCollector deviceFunctionCollector(func->inputs, func->outputs, this);
+  func->body.accept(&deviceFunctionCollector);
+
+
+  std::stringstream ret;
+  ret << "export void ";
+  unordered_set<string> propsAlreadyGenerated;
+
+  ret << "__" << func->name << "(";
+
+  vector<Expr> inputs = func->inputs;
+  vector<Expr> outputs = func->outputs;
+  // getSortedProps(varMap, sortedProps, inputs, outputs);
+
+  for (unsigned long i=0; i < sortedProps.size(); i++) {
+    auto prop = sortedProps[i];
+    bool isOutputProp = (find(outputs.begin(), outputs.end(),
+                              prop->tensor) != outputs.end());
+    
+    auto var = prop->tensor.as<Var>();
+    if (var->is_parameter) {
+      if (isOutputProp) {
+        ret << "  " << printTensorProperty(varMap[prop], prop, false) << ";" << endl;
+      } else {
+        break; 
+      }
+    } else {
+      ret << getUnpackedTensorArgument(varMap[prop], prop, isOutputProp);
+    }
+    propsAlreadyGenerated.insert(varMap[prop]);
+
+    if (i!=sortedProps.size()-1) {
+      ret << ", ";
+    }
+    if (i%2==0) {
+      ret << "\n\t";
+    }
+  }
+  ret << "\n) {\n\n";
+
+  return ret.str();
 }
 
 void CodeGen_ISPC::sendToStream(std::stringstream &stream) {
@@ -466,6 +654,21 @@ void CodeGen_ISPC::visit(const For* op) {
     case LoopKind::Dynamic:
     case LoopKind::Runtime:
     case LoopKind::Static_Chunked:
+    case LoopKind::Mul_Thread:
+      op->start.accept(this);
+      stream2 << std::endl;
+      op->start.accept(this);
+      stream2 << std::endl;
+      op->start.accept(this);
+      stream2 << std::endl;
+      op->start.accept(this);
+      stream2 << std::endl;
+      op->end.accept(this);
+      stream2 << std::endl;
+      op->end.accept(this);
+      stream2 << std::endl;
+      op->end.accept(this);
+      stream2 << std::endl;
     default:
       break;
   }
@@ -629,10 +832,58 @@ void CodeGen_ISPC::visit(const Sqrt* op) {
 
 void CodeGen_ISPC::visit(const Assign* op) {
   if (is_ISPC_code_stream_enabled()) {
-    if (op->use_atomics) {
-      doIndent();
-      stream2 << getAtomicPragma() << endl;
+    doIndent();
+    op->lhs.accept(this);
+    parentPrecedence = Precedence::TOP;
+    bool printed = false;
+    if (simplify) {
+      if (isa<ir::Add>(op->rhs)) {
+        auto add = to<Add>(op->rhs);
+        if (add->a == op->lhs) {
+          const Literal* lit = add->b.as<Literal>();
+          if (lit != nullptr && ((lit->type.isInt()  && lit->equalsScalar(1)) ||
+                                (lit->type.isUInt() && lit->equalsScalar(1)))) {
+            stream2 << "++";
+          }
+          else {
+            if (op->use_atomics) {
+              stream2 << " += reduce_add(";
+              add->b.accept(this);
+              stream2 << ")";
+            }
+            else {
+              stream2 << " += ";
+              add->b.accept(this);
+            }
+          }
+          printed = true;
+        }
+      }
+      else if (isa<Mul>(op->rhs)) {
+        auto mul = to<Mul>(op->rhs);
+        if (mul->a == op->lhs) {
+          stream2 << " *= ";
+          mul->b.accept(this);
+          printed = true;
+        }
+      }
+      else if (isa<BitOr>(op->rhs)) {
+        auto bitOr = to<BitOr>(op->rhs);
+        if (bitOr->a == op->lhs) {
+          stream2 << " |= ";
+          bitOr->b.accept(this);
+          printed = true;
+        }
+      }
     }
+    if (!printed) {
+      stream2 << " = ";
+      op->rhs.accept(this);
+    }
+
+    stream2 << ";";
+    stream2 << endl;
+
   }
   else {
     if (op->use_atomics) {

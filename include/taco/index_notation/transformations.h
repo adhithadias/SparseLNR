@@ -223,6 +223,8 @@ IndexStmt parallelizeOuterLoop(IndexStmt stmt);
  */
 IndexStmt reorderLoopsTopologically(IndexStmt stmt);
 
+IndexStmt justTraverseThroughTheIndexStmt(IndexStmt stmt);
+
 /**
  * Performs scalar promotion so that reductions are done by accumulating into 
  * scalar temporaries whenever possible.

@@ -750,50 +750,7 @@ void IRPrinter::visit(const VarDecl* op) {
 
 void IRPrinter::visit(const Assign* op) {
   if (is_ISPC_code_stream_enabled()) {
-    doIndent();
-    op->lhs.accept(this);
-    parentPrecedence = Precedence::TOP;
-    bool printed = false;
-    if (simplify) {
-      if (isa<ir::Add>(op->rhs)) {
-        auto add = to<Add>(op->rhs);
-        if (add->a == op->lhs) {
-          const Literal* lit = add->b.as<Literal>();
-          if (lit != nullptr && ((lit->type.isInt()  && lit->equalsScalar(1)) ||
-                                (lit->type.isUInt() && lit->equalsScalar(1)))) {
-            stream2 << "++";
-          }
-          else {
-            stream2 << " += ";
-            add->b.accept(this);
-          }
-          printed = true;
-        }
-      }
-      else if (isa<Mul>(op->rhs)) {
-        auto mul = to<Mul>(op->rhs);
-        if (mul->a == op->lhs) {
-          stream2 << " *= ";
-          mul->b.accept(this);
-          printed = true;
-        }
-      }
-      else if (isa<BitOr>(op->rhs)) {
-        auto bitOr = to<BitOr>(op->rhs);
-        if (bitOr->a == op->lhs) {
-          stream2 << " |= ";
-          bitOr->b.accept(this);
-          printed = true;
-        }
-      }
-    }
-    if (!printed) {
-      stream2 << " = ";
-      op->rhs.accept(this);
-    }
 
-    stream2 << ";";
-    stream2 << endl;
   }
   
   

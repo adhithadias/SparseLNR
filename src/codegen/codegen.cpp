@@ -265,9 +265,9 @@ string CodeGen::getUnpackedTensorArgument(string varname, const GetProperty* op,
   // all others are int*
   if (op->property == TensorProperty::Dimension) {
     if (op->type == Int32) {
-      ret << "int32 ";
+      ret << "uniform int32 ";
     } else if (op->type == Int64) {
-      ret << "int64 ";
+      ret << "uniform int64 ";
     } else {
       ret << "int ";
     }

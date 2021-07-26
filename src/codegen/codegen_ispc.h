@@ -5,7 +5,7 @@
 
 #include "taco/ir/ir.h"
 #include "taco/ir/ir_printer.h"
-#include "codegen.h"
+#include "codegen_c.h"
 
 namespace taco {
 namespace ir {
@@ -46,7 +46,7 @@ protected:
   Stmt simplifyFunctionBodies(Stmt stmt);
   std::string printCallISPCFunc(const Function *func, std::map<Expr, std::string, ExprCompare> varMap,
                                 std::vector<const GetProperty*> &sortedProps);
-  std::string printISPCFunc(const Function *func, std::map<Expr, std::string, ExprCompare> varMap,
+  void printISPCFunc(const Function *func, std::map<Expr, std::string, ExprCompare> varMap,
                                   std::vector<const GetProperty*> &sortedProps);
 
   std::map<Expr, std::string, ExprCompare> varMap;

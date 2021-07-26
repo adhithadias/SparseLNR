@@ -6,10 +6,12 @@
 #include <taco.h>
 
 #include "taco/cuda.h"
+#include "taco/ir/ir_printer.h"
 #include "taco/ir/ir_visitor.h"
 #include "taco/ir/ir_rewriter.h"
 #include "taco/ir/simplify.h"
 
+#include "codegen_c.h"
 #include "codegen_ispc.h"
 #include "taco/error.h"
 #include "taco/util/strings.h"
@@ -295,6 +297,7 @@ protected:
   virtual void visit(const For *op) {
     if (op->parallel_unit == ParallelUnit::CPUSpmd) {
       std::cout << "ParallelUnit::CPUSpmd directive found\n";
+
       inDeviceFunction = false;
       op->var.accept(this);
       inDeviceFunction = true;
@@ -380,6 +383,8 @@ void CodeGen_ISPC::compile(Stmt stmt, bool isFirst) {
   stmt.accept(this);
 }
 
+
+
 string CodeGen_ISPC::printCallISPCFunc(const Function *func, map<Expr, string, ExprCompare> varMap,
                                   vector<const GetProperty*> &sortedProps) {
   std::stringstream ret;
@@ -388,9 +393,6 @@ string CodeGen_ISPC::printCallISPCFunc(const Function *func, map<Expr, string, E
 
   ret << "__" << func->name << "(";
 
-  vector<Expr> inputs = func->inputs;
-  vector<Expr> outputs = func->outputs;
-  getSortedProps(varMap, sortedProps, inputs, outputs);
 
   for (unsigned long i=0; i < sortedProps.size(); i++) {
     ret << varMap[sortedProps[i]];
@@ -404,50 +406,123 @@ string CodeGen_ISPC::printCallISPCFunc(const Function *func, map<Expr, string, E
   return ret.str();
 }
 
-string CodeGen_ISPC::printISPCFunc(const Function *func, map<Expr, string, ExprCompare> varMap,
+// varMap is already sorted <- make sure to pass the sorted varMap
+void CodeGen_ISPC::printISPCFunc(const Function *func, map<Expr, string, ExprCompare> varMap,
                                   vector<const GetProperty*> &sortedProps) {
 
   DeviceFunctionCollector deviceFunctionCollector(func->inputs, func->outputs, this);
   func->body.accept(&deviceFunctionCollector);
 
-
-  std::stringstream ret;
-  ret << "export void ";
-  unordered_set<string> propsAlreadyGenerated;
-
-  ret << "__" << func->name << "(";
-
+  std::stringstream variables;
   vector<Expr> inputs = func->inputs;
   vector<Expr> outputs = func->outputs;
-  // getSortedProps(varMap, sortedProps, inputs, outputs);
+  unordered_set<string> propsAlreadyGenerated;
 
-  for (unsigned long i=0; i < sortedProps.size(); i++) {
-    auto prop = sortedProps[i];
-    bool isOutputProp = (find(outputs.begin(), outputs.end(),
-                              prop->tensor) != outputs.end());
-    
-    auto var = prop->tensor.as<Var>();
-    if (var->is_parameter) {
-      if (isOutputProp) {
-        ret << "  " << printTensorProperty(varMap[prop], prop, false) << ";" << endl;
+    for (unsigned long i=0; i < sortedProps.size(); i++) {
+      auto prop = sortedProps[i];
+      bool isOutputProp = (find(outputs.begin(), outputs.end(),
+                                prop->tensor) != outputs.end());
+      
+      auto var = prop->tensor.as<Var>();
+      if (var->is_parameter) {
+        if (isOutputProp) {
+          variables << "  " << printTensorProperty(varMap[prop], prop, false) << ";" << endl;
+        } else {
+          break; 
+        }
       } else {
-        break; 
+        variables << getUnpackedTensorArgument(varMap[prop], prop, isOutputProp);
       }
-    } else {
-      ret << getUnpackedTensorArgument(varMap[prop], prop, isOutputProp);
-    }
-    propsAlreadyGenerated.insert(varMap[prop]);
+      propsAlreadyGenerated.insert(varMap[prop]);
 
-    if (i!=sortedProps.size()-1) {
-      ret << ", ";
+      if (i!=sortedProps.size()-1) {
+        variables << ", ";
+      }
+      if (i%2==0) {
+        variables << "\n\t";
+      }
     }
-    if (i%2==0) {
-      ret << "\n\t";
-    }
+
+  resetUniqueNameCounters();
+  for (size_t i = 0; i < deviceFunctionCollector.threadFors.size(); i++) {
+
+    const For *threadloop = to<For>(deviceFunctionCollector.threadFors[i]);
+    taco_iassert(threadloop->parallel_unit == ParallelUnit::CPUSpmd);
+    Stmt function = threadloop->contents;
+    std::cout << "threadloop function: " << function << std::endl;
+
+    out2 << "static task void __" << func->name << "__ (";
+    out2 << variables.str();
+    out2 << "\n) {\n\n";
+
+    indent++;
+    doIndent();
+    // output body
+    print(threadloop);
+    indent--;
+    out2 << "}\n";
+
+    out2 << "export void __" << func->name << "(";
+    out2 << variables.str();
+    out2 << "\n) {\n\n";
+    indent++;
+    doIndent();
+    out2 << "launch[4] " << printCallISPCFunc(func, varMap, sortedProps) << "\n";
+    indent--;
+    out2 << "}\n";   
+
   }
-  ret << "\n) {\n\n";
 
-  return ret.str();
+  if (deviceFunctionCollector.threadFors.size()==0) {
+    out2 << "export void __" << func->name << " (";
+    out2 << variables.str();
+    out2 << "\n) {\n\n";
+
+    indent++;
+    doIndent();
+    // output body
+    print(func->body);
+    indent--;
+    out2 << "}\n";
+  }
+
+  // out2 << "export void ";
+
+  // out2 << "__" << func->name << "(";
+
+  // for (unsigned long i=0; i < sortedProps.size(); i++) {
+  //   auto prop = sortedProps[i];
+  //   bool isOutputProp = (find(outputs.begin(), outputs.end(),
+  //                             prop->tensor) != outputs.end());
+    
+  //   auto var = prop->tensor.as<Var>();
+  //   if (var->is_parameter) {
+  //     if (isOutputProp) {
+  //       out2 << "  " << printTensorProperty(varMap[prop], prop, false) << ";" << endl;
+  //     } else {
+  //       break; 
+  //     }
+  //   } else {
+  //     out2 << getUnpackedTensorArgument(varMap[prop], prop, isOutputProp);
+  //   }
+  //   propsAlreadyGenerated.insert(varMap[prop]);
+
+  //   if (i!=sortedProps.size()-1) {
+  //     out2 << ", ";
+  //   }
+  //   if (i%2==0) {
+  //     out2 << "\n\t";
+  //   }
+  // }
+  // out2 << "\n) {\n\n";
+
+  // indent++;
+  // doIndent();
+  // // output body
+  // print(func->body);
+  // indent--;
+  // out2 << "}\n";
+  
 }
 
 void CodeGen_ISPC::sendToStream(std::stringstream &stream) {
@@ -461,6 +536,75 @@ void CodeGen_ISPC::sendToStream(std::stringstream &stream) {
 
 void CodeGen_ISPC::visit(const Function* func) {
   // if generating a header, protect the function declaration with a guard
+  if (func->name == "assemble") {
+    if (outputKind == HeaderGen) {
+      out << "#ifndef TACO_GENERATED_" << func->name << "\n";
+      out << "#define TACO_GENERATED_" << func->name << "\n";
+    }
+
+    int numYields = countYields(func);
+    emittingCoroutine = (numYields > 0);
+    funcName = func->name;
+    labelCount = 0;
+
+    resetUniqueNameCounters();
+    FindVars inputVarFinder(func->inputs, {}, this);
+    func->body.accept(&inputVarFinder);
+    FindVars outputVarFinder({}, func->outputs, this);
+    func->body.accept(&outputVarFinder);
+
+    // output function declaration
+    doIndent();
+    out << printFuncName(func, inputVarFinder.varDecls, outputVarFinder.varDecls);
+
+    // if we're just generating a header, this is all we need to do
+    if (outputKind == HeaderGen) {
+      out << ";\n";
+      out << "#endif\n";
+      return;
+    }
+
+    out << " {\n";
+
+    indent++;
+
+    // find all the vars that are not inputs or outputs and declare them
+    resetUniqueNameCounters();
+    FindVars varFinder(func->inputs, func->outputs, this);
+    func->body.accept(&varFinder);
+    varMap = varFinder.varMap;
+    localVars = varFinder.localVars;
+
+    // Print variable declarations
+    out << printDecls(varFinder.varDecls, func->inputs, func->outputs) << endl;
+
+    if (emittingCoroutine) {
+      out << printContextDeclAndInit(varMap, localVars, numYields, func->name)
+          << endl;
+    }
+
+    // output body
+    print(func->body);
+
+    // output repack only if we allocated memory
+    if (checkForAlloc(func))
+      out << endl << printPack(varFinder.outputProperties, func->outputs);
+
+    if (emittingCoroutine) {
+      out << printCoroutineFinish(numYields, funcName);
+    }
+
+    doIndent();
+    out << "return 0;\n";
+    indent--;
+
+    doIndent();
+    out << "}\n";
+    return;
+
+  }
+
+
   if (outputKind == HeaderGen) {
     out << "#ifndef TACO_GENERATED_" << func->name << "\n";
     out << "#define TACO_GENERATED_" << func->name << "\n";
@@ -503,6 +647,9 @@ void CodeGen_ISPC::visit(const Function* func) {
   out << printDecls(varFinder.varDecls, func->inputs, func->outputs) << endl;
 
   vector<const GetProperty*> sortedProps;
+  vector<Expr> inputs = func->inputs;
+  vector<Expr> outputs = func->outputs;
+  getSortedProps(varFinder.varDecls, sortedProps, inputs, outputs);
   out << printCallISPCFunc(func, varFinder.varDecls, sortedProps);
 
   if (emittingCoroutine) {
@@ -526,13 +673,7 @@ void CodeGen_ISPC::visit(const Function* func) {
   out << "}\n\n";
 
   set_ISPC_code_stream_enabled(true);
-  out2 << printISPCFunc(func, varFinder.varDecls, sortedProps);
-  indent++;
-  doIndent();
-  // output body
-  print(func->body);
-  indent--;
-  out2 << "}\n";
+  printISPCFunc(func, varFinder.varDecls, sortedProps);
   set_ISPC_code_stream_enabled(false);
 
 }
@@ -655,20 +796,20 @@ void CodeGen_ISPC::visit(const For* op) {
     case LoopKind::Runtime:
     case LoopKind::Static_Chunked:
     case LoopKind::Mul_Thread:
-      op->start.accept(this);
-      stream2 << std::endl;
-      op->start.accept(this);
-      stream2 << std::endl;
-      op->start.accept(this);
-      stream2 << std::endl;
-      op->start.accept(this);
-      stream2 << std::endl;
-      op->end.accept(this);
-      stream2 << std::endl;
-      op->end.accept(this);
-      stream2 << std::endl;
-      op->end.accept(this);
-      stream2 << std::endl;
+      // op->start.accept(this);
+      // stream2 << std::endl;
+      // op->start.accept(this);
+      // stream2 << std::endl;
+      // op->start.accept(this);
+      // stream2 << std::endl;
+      // op->start.accept(this);
+      // stream2 << std::endl;
+      // op->end.accept(this);
+      // stream2 << std::endl;
+      // op->end.accept(this);
+      // stream2 << std::endl;
+      // op->end.accept(this);
+      // stream2 << std::endl;
     default:
       break;
   }

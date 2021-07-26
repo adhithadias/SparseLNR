@@ -808,9 +808,9 @@ void TensorBase::assemble() {
 
 void TensorBase::compute() {
   taco_uassert(!needsCompile()) << error::compute_without_compile;
-  if (!needsCompute()) {
-    return;
-  }
+  // if (!needsCompute()) {
+  //   return;
+  // }
   setNeedsCompute(false);
   // Sync operand tensors if needed.
   auto operands = getTensors(getAssignment().getRhs());

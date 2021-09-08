@@ -145,7 +145,60 @@ const string cHeaders =
   "  free(t);\n"
   "}\n"
   "#endif\n";
+
+const string ispcHeaders = 
+  "#define __TACO_MIN(_a,_b) ((_a) < (_b) ? (_a) : (_b))\n"
+  "#define __TACO_MAX(_a,_b) ((_a) > (_b) ? (_a) : (_b))\n"
+  "#define __TACO_DEREF(_a) (((___context___*)(*__ctx__))->_a)\n"
+  "int __cmp(const void *a, const void *b) {\n"
+  "  return *((const int*)a) - *((const int*)b);\n"
+  "}\n"
+  "int __taco_binarySearchAfter(int *array, int arrayStart, int arrayEnd, int target) {\n"
+  "  if (array[arrayStart] >= target) {\n"
+  "    return arrayStart;\n"
+  "  }\n"
+  "  int lowerBound = arrayStart; // always < target\n"
+  "  int upperBound = arrayEnd; // always >= target\n"
+  "  while (upperBound - lowerBound > 1) {\n"
+  "    int mid = (upperBound + lowerBound) / 2;\n"
+  "    int midValue = array[mid];\n"
+  "    if (midValue < target) {\n"
+  "      lowerBound = mid;\n"
+  "    }\n"
+  "    else if (midValue > target) {\n"
+  "      upperBound = mid;\n"
+  "    }\n"
+  "    else {\n"
+  "      return mid;\n"
+  "    }\n"
+  "  }\n"
+  "  return upperBound;\n"
+  "}\n"
+  "int __taco_binarySearchBefore(int *array, int arrayStart, int arrayEnd, int target) {\n"
+  "  if (array[arrayEnd] <= target) {\n"
+  "    return arrayEnd;\n"
+  "  }\n"
+  "  int lowerBound = arrayStart; // always <= target\n"
+  "  int upperBound = arrayEnd; // always > target\n"
+  "  while (upperBound - lowerBound > 1) {\n"
+  "    int mid = (upperBound + lowerBound) / 2;\n"
+  "    int midValue = array[mid];\n"
+  "    if (midValue < target) {\n"
+  "      lowerBound = mid;\n"
+  "    }\n"
+  "    else if (midValue > target) {\n"
+  "      upperBound = mid;\n"
+  "    }\n"
+  "    else {\n"
+  "      return mid;\n"
+  "    }\n"
+  "  }\n"
+  "  return lowerBound;\n"
+  "}\n\n\n";
+
 } // anonymous namespace
+
+
 
 // find variables for generating declarations
 // generates a single var for each GetProperty
@@ -249,11 +302,10 @@ protected:
 // Finds all for loops tagged with accelerator and adds statements to deviceFunctions
 // Also tracks scope of when device function is called and
 // tracks which variables must be passed to function.
-class CodeGen_ISPC::DeviceFunctionCollector : public IRVisitor {
+class CodeGen_ISPC::FunctionCollector : public IRVisitor {
 public:
-  vector<Stmt> blockFors;
   vector<Stmt> threadFors; // contents is device function
-  vector<Stmt> warpFors;
+  vector<Stmt> initFors;  // for loops to initialize statements
   map<Expr, string, ExprCompare> scopeMap;
 
   // the variables to pass to each device function
@@ -271,7 +323,7 @@ public:
 
   CodeGen_ISPC *codeGen;
   // copy inputs and outputs into the map
-  DeviceFunctionCollector(vector<Expr> inputs, vector<Expr> outputs, CodeGen_ISPC *codeGen) : codeGen(codeGen)  {
+  FunctionCollector(vector<Expr> inputs, vector<Expr> outputs, CodeGen_ISPC *codeGen) : codeGen(codeGen)  {
     inDeviceFunction = false;
     for (auto v: inputs) {
       auto var = v.as<Var>();
@@ -310,7 +362,11 @@ protected:
 
     }
     else if (op->parallel_unit == ParallelUnit::CPUSimd) {
-
+      std::cout << "************************************************************************** CPUSimd For node\n";
+    }
+    else if (op->kind == LoopKind::Init) {
+      std::cout << "************************************************************************* Init loop kind found\n";
+      initFors.push_back(op);
     }
     else{
       op->var.accept(this);
@@ -376,6 +432,10 @@ void CodeGen_ISPC::compile(Stmt stmt, bool isFirst) {
   if (isFirst) {
     // output the headers
     out << cHeaders;
+
+    if (&out != &out2) {
+      out2 << ispcHeaders;
+    }
   }
   out << endl;
   // generate code for the Stmt
@@ -385,13 +445,13 @@ void CodeGen_ISPC::compile(Stmt stmt, bool isFirst) {
 
 
 
-string CodeGen_ISPC::printCallISPCFunc(const Function *func, map<Expr, string, ExprCompare> varMap,
+string CodeGen_ISPC::printCallISPCFunc(const std::string& funcName, map<Expr, string, ExprCompare> varMap,
                                   vector<const GetProperty*> &sortedProps) {
   std::stringstream ret;
   ret << "  ";
   unordered_set<string> propsAlreadyGenerated;
 
-  ret << "__" << func->name << "(";
+  ret << "__" << funcName << "(";
 
 
   for (unsigned long i=0; i < sortedProps.size(); i++) {
@@ -410,118 +470,71 @@ string CodeGen_ISPC::printCallISPCFunc(const Function *func, map<Expr, string, E
 void CodeGen_ISPC::printISPCFunc(const Function *func, map<Expr, string, ExprCompare> varMap,
                                   vector<const GetProperty*> &sortedProps) {
 
-  DeviceFunctionCollector deviceFunctionCollector(func->inputs, func->outputs, this);
-  func->body.accept(&deviceFunctionCollector);
+  FunctionCollector functionCollector(func->inputs, func->outputs, this);
+  func->body.accept(&functionCollector);
 
-  std::stringstream variables;
   vector<Expr> inputs = func->inputs;
   vector<Expr> outputs = func->outputs;
   unordered_set<string> propsAlreadyGenerated;
 
-    for (unsigned long i=0; i < sortedProps.size(); i++) {
-      auto prop = sortedProps[i];
-      bool isOutputProp = (find(outputs.begin(), outputs.end(),
-                                prop->tensor) != outputs.end());
-      
-      auto var = prop->tensor.as<Var>();
-      if (var->is_parameter) {
-        if (isOutputProp) {
-          variables << "  " << printTensorProperty(varMap[prop], prop, false) << ";" << endl;
-        } else {
-          break; 
-        }
+  for (unsigned long i=0; i < sortedProps.size(); i++) {
+    auto prop = sortedProps[i];
+    bool isOutputProp = (find(outputs.begin(), outputs.end(),
+                              prop->tensor) != outputs.end());
+    
+    auto var = prop->tensor.as<Var>();
+    if (var->is_parameter) {
+      if (isOutputProp) {
+        funcVariables << "  " << printTensorProperty(varMap[prop], prop, false) << ";" << endl;
       } else {
-        variables << getUnpackedTensorArgument(varMap[prop], prop, isOutputProp);
+        break; 
       }
-      propsAlreadyGenerated.insert(varMap[prop]);
-
-      if (i!=sortedProps.size()-1) {
-        variables << ", ";
-      }
-      if (i%2==0) {
-        variables << "\n\t";
-      }
+    } else {
+      funcVariables << getUnpackedTensorArgument(varMap[prop], prop, isOutputProp);
     }
+    propsAlreadyGenerated.insert(varMap[prop]);
+
+    if (i!=sortedProps.size()-1) {
+      funcVariables << ", ";
+    }
+    if (i%2==0) {
+      funcVariables << "\n\t";
+    }
+  }
 
   resetUniqueNameCounters();
-  for (size_t i = 0; i < deviceFunctionCollector.threadFors.size(); i++) {
 
-    const For *threadloop = to<For>(deviceFunctionCollector.threadFors[i]);
+  // threadFors code generation
+  for (size_t i = 0; i < functionCollector.threadFors.size(); i++) {
+
+    const For *threadloop = to<For>(functionCollector.threadFors[i]);
     taco_iassert(threadloop->parallel_unit == ParallelUnit::CPUSpmd);
     Stmt function = threadloop->contents;
     std::cout << "threadloop function: " << function << std::endl;
 
-    out2 << "static task void __" << func->name << "__ (";
-    out2 << variables.str();
+    out2 << "\nstatic task void __" << func->name << "__ (";
+    out2 << funcVariables.str();
     out2 << "\n) {\n\n";
 
     indent++;
-    doIndent();
-    // output body
+    // output body of the threadloop
+    taskCode = true;
     print(threadloop);
     indent--;
-    out2 << "}\n";
-
-    out2 << "export void __" << func->name << "(";
-    out2 << variables.str();
-    out2 << "\n) {\n\n";
-    indent++;
-    doIndent();
-    out2 << "launch[4] " << printCallISPCFunc(func, varMap, sortedProps) << "\n";
-    indent--;
-    out2 << "}\n";   
+    out2 << "}\n\n";  
 
   }
 
-  if (deviceFunctionCollector.threadFors.size()==0) {
-    out2 << "export void __" << func->name << " (";
-    out2 << variables.str();
-    out2 << "\n) {\n\n";
+  taskCode = false;
+  out2 << "export void __" << func->name << " (";
+  out2 << funcVariables.str();
+  out2 << "\n) {\n\n";
 
-    indent++;
-    doIndent();
-    // output body
-    print(func->body);
-    indent--;
-    out2 << "}\n";
-  }
-
-  // out2 << "export void ";
-
-  // out2 << "__" << func->name << "(";
-
-  // for (unsigned long i=0; i < sortedProps.size(); i++) {
-  //   auto prop = sortedProps[i];
-  //   bool isOutputProp = (find(outputs.begin(), outputs.end(),
-  //                             prop->tensor) != outputs.end());
-    
-  //   auto var = prop->tensor.as<Var>();
-  //   if (var->is_parameter) {
-  //     if (isOutputProp) {
-  //       out2 << "  " << printTensorProperty(varMap[prop], prop, false) << ";" << endl;
-  //     } else {
-  //       break; 
-  //     }
-  //   } else {
-  //     out2 << getUnpackedTensorArgument(varMap[prop], prop, isOutputProp);
-  //   }
-  //   propsAlreadyGenerated.insert(varMap[prop]);
-
-  //   if (i!=sortedProps.size()-1) {
-  //     out2 << ", ";
-  //   }
-  //   if (i%2==0) {
-  //     out2 << "\n\t";
-  //   }
-  // }
-  // out2 << "\n) {\n\n";
-
-  // indent++;
-  // doIndent();
-  // // output body
-  // print(func->body);
-  // indent--;
-  // out2 << "}\n";
+  indent++;
+  // output body
+  print(func->body);
+  indent--;
+  out2 << "}\n";
   
 }
 
@@ -535,6 +548,8 @@ void CodeGen_ISPC::sendToStream(std::stringstream &stream) {
 }
 
 void CodeGen_ISPC::visit(const Function* func) {
+  set_ISPC_code_stream_enabled(false);
+
   // if generating a header, protect the function declaration with a guard
   if (func->name == "assemble") {
     if (outputKind == HeaderGen) {
@@ -646,11 +661,11 @@ void CodeGen_ISPC::visit(const Function* func) {
   // Print variable declarations
   out << printDecls(varFinder.varDecls, func->inputs, func->outputs) << endl;
 
-  vector<const GetProperty*> sortedProps;
+  sortedProps = {};
   vector<Expr> inputs = func->inputs;
   vector<Expr> outputs = func->outputs;
   getSortedProps(varFinder.varDecls, sortedProps, inputs, outputs);
-  out << printCallISPCFunc(func, varFinder.varDecls, sortedProps);
+  out << printCallISPCFunc(func->name, varFinder.varDecls, sortedProps);
 
   if (emittingCoroutine) {
     out << printContextDeclAndInit(varMap, localVars, numYields, func->name)
@@ -788,51 +803,84 @@ static string getAtomicPragma() {
 // Docs for vectorization pragmas:
 // http://clang.llvm.org/docs/LanguageExtensions.html#extensions-for-loop-hint-optimizations
 void CodeGen_ISPC::visit(const For* op) {
-  switch (op->kind) {
-    // TODO - add ISPC based multi threaded execution handling
-    case LoopKind::Vectorized:
-    case LoopKind::Static:
-    case LoopKind::Dynamic:
-    case LoopKind::Runtime:
-    case LoopKind::Static_Chunked:
-    case LoopKind::Mul_Thread:
-      // op->start.accept(this);
-      // stream2 << std::endl;
-      // op->start.accept(this);
-      // stream2 << std::endl;
-      // op->start.accept(this);
-      // stream2 << std::endl;
-      // op->start.accept(this);
-      // stream2 << std::endl;
-      // op->end.accept(this);
-      // stream2 << std::endl;
-      // op->end.accept(this);
-      // stream2 << std::endl;
-      // op->end.accept(this);
-      // stream2 << std::endl;
-    default:
-      break;
+  if (!is_ISPC_code_stream_enabled()) {
+    CodeGen::visit(op);
+    return;
   }
-
   doIndent();
 
-  if (op->kind == LoopKind::Foreach) {
-    stream2 << keywordString("foreach") << " (";
-    // if (!emittingCoroutine) {
-    //   if (op->var.type() == Int32) {
-    //       stream << "int32 ";
-    //   }
-    //   else if (op->var.type() == Int64) {
-    //       stream << "int64 ";
-    //   }
+  if (op->kind == LoopKind::Mul_Thread) {
+    if (!taskCode) {
+      out2 << "launch[4] " << printCallISPCFunc(funcName+"__", varMap, sortedProps) << "\n";
+      return;
+    }
+    stream2 << "uniform unsigned int chunk_size = (";
+    op->end.accept(this);
+    stream2 << " - ";
+    op->start.accept(this);
+    stream2 << ") / taskCount;\n";
+    stream2 << "  uniform unsigned int modulo = (";
+    op->end.accept(this);
+    stream2 << " - ";
+    op->start.accept(this);
+    stream2 << ") % taskCount;\n";
+
+    stream2 << "  uniform unsigned int start = ";
+    op->start.accept(this);
+    stream2 << " + chunk_size * taskIndex;\n";
+
+    stream2 << "  if (taskIndex != 0) {\n";
+    stream2 << "    start += modulo;\n";
+    stream2 << "  }\n";
+    
+    stream2 << "  uniform unsigned int end = start + chunk_size;\n";
+    stream2 << "  if (taskIndex == 0) {\n";
+    stream2 << "    end += modulo;\n";
+    stream2 << "  }\n\n";
+        
+    stream2 << keywordString("  for") << " (";
+    if (!emittingCoroutine) {
+      if (op->var.type() == Int32) {
+          stream2 << "int32 ";
+      }
+      else if (op->var.type() == Int64) {
+          stream2 << "int64 ";
+      }
       
-    // }
+    }
+    op->var.accept(this);
+    stream2 << " = ";
+    stream2 << "start";
+    // op->start.accept(this);
+    stream2 << keywordString("; ");
+    op->var.accept(this);
+    stream2 << " < ";
+    parentPrecedence = BOTTOM;
+    stream2 << "end";
+    // op->end.accept(this);
+    stream2 << keywordString("; ");
+    op->var.accept(this);
+
+    auto lit = op->increment.as<Literal>();
+    if (lit != nullptr && ((lit->type.isInt()  && lit->equalsScalar(1)) ||
+                          (lit->type.isUInt() && lit->equalsScalar(1)))) {
+      stream2 << "++";
+    }
+    else {
+      stream2 << " += ";
+      op->increment.accept(this);
+    }
+
+  }
+
+  else if (op->kind == LoopKind::Foreach) {
+    stream2 << keywordString("foreach") << " (";
+
     op->var.accept(this);
     stream2 << " = ";
     op->start.accept(this);
     stream2 << keywordString(" ... ");
     op->end.accept(this);
-    stream2 << ") {\n";
 
   } else {
     stream2 << keywordString("for") << " (";
@@ -865,9 +913,10 @@ void CodeGen_ISPC::visit(const For* op) {
       stream2 << " += ";
       op->increment.accept(this);
     }
-    stream2 << ") {\n";
+    
   }
 
+  stream2 << ") {\n";
   op->contents.accept(this);
   doIndent();
   stream2 << "}";
@@ -934,33 +983,69 @@ void CodeGen_ISPC::visit(const Max* op) {
 
 void CodeGen_ISPC::visit(const Allocate* op) {
   string elementType = printCType(op->var.type(), false);
-
   doIndent();
-  op->var.accept(this);
-  stream << " = (";
-  stream << elementType << "*";
-  stream << ")";
-  if (op->is_realloc) {
-    stream << "realloc(";
+
+  if (is_ISPC_code_stream_enabled()) {
+
     op->var.accept(this);
-    stream << ", ";
-  }
-  else {
-    // If the allocation was requested to clear the allocated memory,
-    // use calloc instead of malloc.
-    if (op->clear) {
-      stream << "calloc(1, ";
-    } else {
-      stream << "malloc(";
+    stream2 << " = ";
+    // stream2 << " = (";
+    // stream2 << elementType << "*";
+    // stream2 << ")";
+    if (op->is_realloc) {
+      stream2 << "realloc(";
+      op->var.accept(this);
+      stream2 << ", ";
     }
-  }
-  stream << "sizeof(" << elementType << ")";
-  stream << " * ";
-  parentPrecedence = MUL;
-  op->num_elements.accept(this);
-  parentPrecedence = TOP;
-  stream << ");";
+    else {
+      // If the allocation was requested to clear the allocated memory,
+      // use calloc instead of malloc.
+      if (op->clear) {
+        stream2 << "calloc(1, ";
+      } else {
+        stream2 << "new ";
+      }
+    }
+    stream2 << elementType << "[";
+    parentPrecedence = MUL;
+    op->num_elements.accept(this);
+    parentPrecedence = TOP;
+    stream2 << "];";
+    stream2 << endl;
+
+
+  } else {
+
+    op->var.accept(this);
+    stream << " = (";
+    stream << elementType << "*";
+    stream << ")";
+    if (op->is_realloc) {
+      stream << "realloc(";
+      op->var.accept(this);
+      stream << ", ";
+    }
+    else {
+      // If the allocation was requested to clear the allocated memory,
+      // use calloc instead of malloc.
+      if (op->clear) {
+        stream << "calloc(1, ";
+      } else {
+        stream << "malloc(";
+      }
+    }
+    stream << "sizeof(" << elementType << ")";
+    stream << " * ";
+    parentPrecedence = MUL;
+    op->num_elements.accept(this);
+    parentPrecedence = TOP;
+    stream << ");";
     stream << endl;
+
+
+  }
+
+
 }
 
 void CodeGen_ISPC::visit(const Sqrt* op) {

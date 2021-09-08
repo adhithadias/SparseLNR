@@ -333,10 +333,18 @@ void IRPrinter::visit(const Cast* op) {
 }
 
 void IRPrinter::visit(const Call* op) {
-  stream << op->func << "(";
-  parentPrecedence = Precedence::CALL;
-  acceptJoin(this, stream, op->args, ", ");
-  stream << ")";
+  if (!is_ISPC_code_stream_enabled()) {
+    stream << op->func << "(";
+    parentPrecedence = Precedence::CALL;
+    acceptJoin(this, stream, op->args, ", ");
+    stream << ")";
+  } else {
+    // statically added function to the ispc file has __ in the front
+    stream2 << "__" << op->func << "(";
+    parentPrecedence = Precedence::CALL;
+    acceptJoin(this, stream2, op->args, ", ");
+    stream2 << ")";
+  }
 }
 
 void IRPrinter::visit(const IfThenElse* op) {
@@ -716,7 +724,7 @@ void IRPrinter::visit(const VarDecl* op) {
     }
     taco_iassert(isa<Var>(op->var));
     if (to<Var>(op->var)->is_ptr) {
-      stream2 << "* restrict";
+      stream2 << "* "; // removed restrict keyword from here
     }
     stream2 << " ";
     string varName = varNameGenerator.getUniqueName(util::toString(op->var));
@@ -829,12 +837,22 @@ void IRPrinter::visit(const Allocate* op) {
 }
 
 void IRPrinter::visit(const Free* op) {
-  doIndent();
-  stream << "free(";
-  parentPrecedence = Precedence::TOP;
-  op->var.accept(this);
-  stream << ");";
-  stream << endl;
+  if (is_ISPC_code_stream_enabled()) {
+    doIndent();
+    stream2 << "delete[] ";
+    parentPrecedence = Precedence::TOP;
+    op->var.accept(this);
+    stream2 << ";";
+    stream2 << endl;
+  }
+  else {
+    doIndent();
+    stream << "free(";
+    parentPrecedence = Precedence::TOP;
+    op->var.accept(this);
+    stream << ");";
+    stream << endl;
+  }
 }
 
 void IRPrinter::visit(const Comment* op) {

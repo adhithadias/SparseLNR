@@ -2,6 +2,7 @@
 #define TACO_BACKEND_ISPC_H
 #include <map>
 #include <vector>
+#include <stdbool.h>
 
 #include "taco/ir/ir.h"
 #include "taco/ir/ir_printer.h"
@@ -44,24 +45,27 @@ protected:
   void visit(const Assign*);
 
   Stmt simplifyFunctionBodies(Stmt stmt);
-  std::string printCallISPCFunc(const Function *func, std::map<Expr, std::string, ExprCompare> varMap,
+  std::string printCallISPCFunc(const std::string& funcName, std::map<Expr, std::string, ExprCompare> varMap,
                                 std::vector<const GetProperty*> &sortedProps);
   void printISPCFunc(const Function *func, std::map<Expr, std::string, ExprCompare> varMap,
                                   std::vector<const GetProperty*> &sortedProps);
 
   std::map<Expr, std::string, ExprCompare> varMap;
   std::vector<Expr> localVars;
+  bool taskCode = false;
   std::ostream &out;
   std::ostream &out2;
   
   OutputKind outputKind;
 
   std::string funcName;
+  std::stringstream funcVariables;
+  std::vector<const GetProperty*> sortedProps;
   int labelCount;
   bool emittingCoroutine;
 
   class FindVars;
-  class DeviceFunctionCollector;
+  class FunctionCollector;
 
 private:
   virtual std::string restrictKeyword() const { return "restrict"; }

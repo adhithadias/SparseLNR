@@ -12,7 +12,7 @@ project(taco
 option(CUDA "Build for NVIDIA GPU (CUDA must be preinstalled)" OFF)
 option(ISPC "Build for Intel ISPC Compiler (ISPC Compiler must be preinstalled)" OFF)
 option(PYTHON "Build TACO for python environment" OFF)
-option(OPENMP "Build with OpenMP execution support" OFF)
+option(OPENMP "Build with OpenMP execution support" ON)
 option(COVERAGE "Build with code coverage analysis" OFF)
 set(TACO_FEATURE_CUDA 0)
 set(TACO_FEATURE_ISPC 0)

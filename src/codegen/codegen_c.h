@@ -16,6 +16,7 @@ public:
   /// Initialize a code generator that generates code to an
   /// output stream.
   CodeGen_C(std::ostream &dest, OutputKind outputKind, bool simplify=true);
+  CodeGen_C(std::ostream &dest, std::ostream &dest2, OutputKind outputKind, bool simplify=true);
   ~CodeGen_C();
 
   /// Compile a lowered function
@@ -28,23 +29,24 @@ public:
 protected:
   using IRPrinter::visit;
 
-  void visit(const Function*);
-  void visit(const VarDecl*);
-  void visit(const Yield*);
-  void visit(const Var*);
-  void visit(const For*);
-  void visit(const While*);
-  void visit(const GetProperty*);
-  void visit(const Min*);
-  void visit(const Max*);
-  void visit(const Allocate*);
-  void visit(const Sqrt*);
-  void visit(const Store*);
-  void visit(const Assign*);
+  virtual void visit(const Function*);
+  virtual void visit(const VarDecl*);
+  virtual void visit(const Yield*);
+  virtual void visit(const Var*);
+  virtual void visit(const For*);
+  virtual void visit(const While*);
+  virtual void visit(const GetProperty*);
+  virtual void visit(const Min*);
+  virtual void visit(const Max*);
+  virtual void visit(const Allocate*);
+  virtual void visit(const Sqrt*);
+  virtual void visit(const Store*);
+  virtual void visit(const Assign*);
 
   std::map<Expr, std::string, ExprCompare> varMap;
   std::vector<Expr> localVars;
   std::ostream &out;
+  std::ostream &out2;
   
   OutputKind outputKind;
 

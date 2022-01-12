@@ -10,6 +10,7 @@
 #include <utility>
 #include <mutex>
 
+#include "../test/util.h"
 #include "taco/cuda.h"
 #include "taco/format.h"
 #include "taco/taco_tensor_t.h"
@@ -820,7 +821,12 @@ void TensorBase::compute() {
   }
 
   auto arguments = packArguments(*this);
-  this->content->module->callFuncPacked("compute", arguments.data());
+
+  taco::util::TimeResults timevalue;
+  bool time                = true;
+  TOOL_BENCHMARK_TIMER(this->content->module->callFuncPacked("compute", arguments.data()), 
+      "\n\nkernel execution time: ", timevalue);
+  // this->content->module->callFuncPacked("compute", arguments.data());
 
   if (content->assembleWhileCompute) {
     setNeedsAssemble(false);

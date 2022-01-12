@@ -255,6 +255,8 @@ INSTANTIATE_TEST_CASE_P(parallelize, apply,
 
 struct reorderLoopsTopologically : public TestWithParam<NotationTest> {};
 
+
+//
 TEST_P(reorderLoopsTopologically, test) {
   IndexStmt actual = taco::reorderLoopsTopologically(GetParam().actual);
   ASSERT_NOTATION_EQ(GetParam().expected, actual);

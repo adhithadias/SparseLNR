@@ -178,7 +178,7 @@ string Module::compile() {
   writeShims(funcs, tmpdir, libname);
   for (auto &statement : funcs) {
     std::cout << "----- statement --------" << std::endl;
-    std::cout << statement;
+    // std::cout << statement;
     std::cout << std::endl;
   }
   std::cout << tmpdir << std::endl << libname << std::endl;

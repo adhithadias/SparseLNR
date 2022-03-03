@@ -418,10 +418,10 @@ protected:
 
 
 CodeGen_ISPC::CodeGen_ISPC(std::ostream &dest, OutputKind outputKind, bool simplify)
-    : CodeGen(dest, false, simplify, C), out(dest), out2(dest), outputKind(outputKind) {}
+    : CodeGen_C(dest, dest, outputKind, simplify) {}
 
 CodeGen_ISPC::CodeGen_ISPC(std::ostream &dest, std::ostream &dest2, OutputKind outputKind, bool simplify)
-    : CodeGen(dest, dest2, false, simplify, C), out(dest), out2(dest2), outputKind(outputKind) {}
+    : CodeGen_C(dest, dest2, outputKind, simplify) {}
 
 CodeGen_ISPC::~CodeGen_ISPC() {}
 
@@ -543,7 +543,7 @@ void CodeGen_ISPC::sendToStream(std::stringstream &stream) {
     this->out2 << stream.str();
   }
   else {
-    this->out << stream.str();
+    CodeGen_C::sendToStream(stream);
   }
 }
 
@@ -709,17 +709,7 @@ void CodeGen_ISPC::visit(const VarDecl* op) {
     }
   }
   else {
-    if (emittingCoroutine) {
-      doIndent();
-      op->var.accept(this);
-      parentPrecedence = Precedence::TOP;
-      stream << " = ";
-      op->rhs.accept(this);
-      stream << ";";
-      stream << endl;
-    } else {
-      IRPrinter::visit(op);
-    }    
+    CodeGen_C::visit(op);   
   }
 
   // sendToStream(stream);
@@ -744,15 +734,7 @@ void CodeGen_ISPC::visit(const Var* op) {
     }
   }
   else {
-    taco_iassert(varMap.count(op) > 0) <<
-        "Var " << op->name << " not found in varMap";
-    if (emittingCoroutine) {
-  //    out << "TACO_DEREF(";
-    }
-    out << varMap[op];
-    if (emittingCoroutine) {
-  //    out << ")";
-    }
+    CodeGen_C::visit(op);
   }
 }
 
@@ -804,7 +786,7 @@ static string getAtomicPragma() {
 // http://clang.llvm.org/docs/LanguageExtensions.html#extensions-for-loop-hint-optimizations
 void CodeGen_ISPC::visit(const For* op) {
   if (!is_ISPC_code_stream_enabled()) {
-    CodeGen::visit(op);
+    CodeGen_C::visit(op);
     return;
   }
   doIndent();
@@ -934,7 +916,7 @@ void CodeGen_ISPC::visit(const While* op) {
     out << "\n";
   }
 
-  IRPrinter::visit(op);
+  CodeGen_C::visit(op);
 }
 
 void CodeGen_ISPC::visit(const GetProperty* op) {
@@ -982,10 +964,11 @@ void CodeGen_ISPC::visit(const Max* op) {
 }
 
 void CodeGen_ISPC::visit(const Allocate* op) {
-  string elementType = printCType(op->var.type(), false);
-  doIndent();
+
 
   if (is_ISPC_code_stream_enabled()) {
+    string elementType = printCType(op->var.type(), false);
+    doIndent();
 
     op->var.accept(this);
     stream2 << " = ";
@@ -1015,33 +998,7 @@ void CodeGen_ISPC::visit(const Allocate* op) {
 
 
   } else {
-
-    op->var.accept(this);
-    stream << " = (";
-    stream << elementType << "*";
-    stream << ")";
-    if (op->is_realloc) {
-      stream << "realloc(";
-      op->var.accept(this);
-      stream << ", ";
-    }
-    else {
-      // If the allocation was requested to clear the allocated memory,
-      // use calloc instead of malloc.
-      if (op->clear) {
-        stream << "calloc(1, ";
-      } else {
-        stream << "malloc(";
-      }
-    }
-    stream << "sizeof(" << elementType << ")";
-    stream << " * ";
-    parentPrecedence = MUL;
-    op->num_elements.accept(this);
-    parentPrecedence = TOP;
-    stream << ");";
-    stream << endl;
-
+    CodeGen_C::visit(op);
 
   }
 
@@ -1110,15 +1067,14 @@ void CodeGen_ISPC::visit(const Assign* op) {
     stream2 << ";";
     stream2 << endl;
 
+    IRPrinter::visit(op);
   }
   else {
-    if (op->use_atomics) {
-      doIndent();
-      stream << getAtomicPragma() << endl;
-    }    
+    CodeGen_C::visit(op);
+  
   }
 
-  IRPrinter::visit(op);
+  
 }
 
 void CodeGen_ISPC::visit(const Store* op) {
@@ -1137,43 +1093,5 @@ void CodeGen_ISPC::visit(const Store* op) {
   IRPrinter::visit(op);
 }
 
-void CodeGen_ISPC::generateShim(const Stmt& func, stringstream &ret) {
-  const Function *funcPtr = func.as<Function>();
-
-  ret << "int _shim_" << funcPtr->name << "(void** parameterPack) {\n";
-  ret << "  return " << funcPtr->name << "(";
-
-  size_t i=0;
-  string delimiter = "";
-
-  const auto returnType = funcPtr->getReturnType();
-  if (returnType.second != Datatype()) {
-    ret << "(void**)(parameterPack[0]), ";
-    ret << "(char*)(parameterPack[1]), ";
-    ret << "(" << returnType.second << "*)(parameterPack[2]), ";
-    ret << "(int32_t*)(parameterPack[3])";
-
-    i = 4;
-    delimiter = ", ";
-  }
-
-  for (auto output : funcPtr->outputs) {
-    auto var = output.as<Var>();
-    auto cast_type = var->is_tensor ? "taco_tensor_t*"
-    : printCType(var->type, var->is_ptr);
-
-    ret << delimiter << "(" << cast_type << ")(parameterPack[" << i++ << "])";
-    delimiter = ", ";
-  }
-  for (auto input : funcPtr->inputs) {
-    auto var = input.as<Var>();
-    auto cast_type = var->is_tensor ? "taco_tensor_t*"
-    : printCType(var->type, var->is_ptr);
-    ret << delimiter << "(" << cast_type << ")(parameterPack[" << i++ << "])";
-    delimiter = ", ";
-  }
-  ret << ");\n";
-  ret << "}\n";
-}
 }
 }

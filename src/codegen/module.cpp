@@ -4,6 +4,7 @@
 #include <fstream>
 #include <dlfcn.h>
 #include <unistd.h>
+// #include </home/min/a/kadhitha/workspace/my_taco/valgrind/callgrind/callgrind.h>
 #if USE_OPENMP
 #include <omp.h>
 #endif
@@ -178,7 +179,7 @@ string Module::compile() {
   writeShims(funcs, tmpdir, libname);
   for (auto &statement : funcs) {
     std::cout << "----- statement --------" << std::endl;
-    std::cout << statement;
+    // std::cout << statement;
     std::cout << std::endl;
   }
   std::cout << tmpdir << std::endl << libname << std::endl;
@@ -233,8 +234,59 @@ string Module::getSource() {
   return source.str();
 }
 
+void* Module::getFuncPtr(std::string& sofile, std::string name) {
+  std::cout << "opening shared object 1\n";
+  if (so_lib_handle) {
+    dlclose(so_lib_handle);
+  }
+  std::cout << "opening shared object 2\n";
+  so_lib_handle = dlopen(sofile.data(), RTLD_NOW | RTLD_LOCAL);
+  std::cout << "opening shared object : " << sofile << std::endl;
+  return dlsym(so_lib_handle, name.data());
+}
+
 void* Module::getFuncPtr(std::string name) {
   return dlsym(lib_handle, name.data());
+}
+
+int Module::callFuncPackedRaw(std::string name, std::string& sofile, void** args) {
+  typedef int (*fnptr_t)(void**);
+  static_assert(sizeof(void*) == sizeof(fnptr_t),
+    "Unable to cast dlsym() returned void pointer to function pointer");
+  void* v_func_ptr = getFuncPtr(sofile, name);
+  fnptr_t func_ptr;
+  *reinterpret_cast<void**>(&func_ptr) = v_func_ptr;
+
+#if USE_OPENMP
+  omp_sched_t existingSched;
+  ParallelSchedule tacoSched;
+  int existingChunkSize, tacoChunkSize;
+  int existingNumThreads = omp_get_max_threads();
+  omp_get_schedule(&existingSched, &existingChunkSize);
+  taco_get_parallel_schedule(&tacoSched, &tacoChunkSize);
+  switch (tacoSched) {
+    case ParallelSchedule::Static:
+      omp_set_schedule(omp_sched_static, tacoChunkSize);
+      break;
+    case ParallelSchedule::Dynamic:
+      omp_set_schedule(omp_sched_dynamic, tacoChunkSize);
+      break;
+    default:
+      break;
+  }
+  omp_set_num_threads(taco_get_num_threads());
+#endif
+
+  std::cout << "calling the function\n";
+  int ret = func_ptr(args);
+  std::cout << "function call completed\n";
+
+#if USE_OPENMP
+  omp_set_schedule(existingSched, existingChunkSize);
+  omp_set_num_threads(existingNumThreads);
+#endif
+
+  return ret;
 }
 
 int Module::callFuncPackedRaw(std::string name, void** args) {
@@ -265,7 +317,13 @@ int Module::callFuncPackedRaw(std::string name, void** args) {
   omp_set_num_threads(taco_get_num_threads());
 #endif
 
+  std::cout << "calling the function\n";
+  //   CALLGRIND_START_INSTRUMENTATION;
+  // CALLGRIND_TOGGLE_COLLECT;
   int ret = func_ptr(args);
+  //   CALLGRIND_TOGGLE_COLLECT;
+  // CALLGRIND_STOP_INSTRUMENTATION;
+  std::cout << "function call completed\n";
 
 #if USE_OPENMP
   omp_set_schedule(existingSched, existingChunkSize);

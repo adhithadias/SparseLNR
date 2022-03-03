@@ -550,7 +550,7 @@ void IRPrinter::visit(const Store* op) {
 }
 
 void IRPrinter::visit(const For* op) {
-  std::cout << "This is IRPrinter::visit For op method\n";
+  // std::cout << "This is IRPrinter::visit For op method\n";
   if (is_ISPC_code_stream_enabled()) {
     doIndent();
     stream2 << keywordString("for") << " (" 

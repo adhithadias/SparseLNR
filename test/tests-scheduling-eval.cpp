@@ -1,87 +1,7 @@
-#include <iostream>
-#include <taco/index_notation/transformations.h>
-#include <codegen/codegen_c.h>
-#include <codegen/codegen_ispc.h>
-#include <codegen/codegen_cuda.h>
-#include <fstream>
-#include <memory>
-#include "taco/cuda.h"
-#include "test.h"
-#include "test_tensors.h"
-#include "taco/tensor.h"
-#include "taco/index_notation/index_notation.h"
-#include "taco/index_notation/transformations.h"
-#include "codegen/codegen.h"
-#include "taco/lower/lower.h"
-#include "taco/util/timers.h"
+#include "util.h"
 
-
-#define TOOL_BENCHMARK_TIMER(CODE,NAME,TIMER) {                  \
-    if (time) {                                                  \
-      taco::util::Timer timer;                                   \
-      timer.start();                                             \
-      CODE;                                                      \
-      timer.stop();                                              \
-      taco::util::TimeResults result = timer.getResult();        \
-      cout << NAME << " " << result << " ms" << endl;            \
-      TIMER=result;                                              \
-    }                                                            \
-    else {                                                       \
-      CODE;                                                      \
-    }                                                            \
-}
-
-using namespace taco;
 const IndexVar i("i"), j("j"), k("k"), l("l"), m("m"), n("n");
 int WARP_SIZE = 32;
-
-void printToCout(IndexStmt stmt) {
-  std::shared_ptr<ir::CodeGen> codegen = ir::CodeGen::init_default(cout, ir::CodeGen::ImplementationGen);
-  ir::Stmt compute = lower(stmt, "compute", false, true);
-  codegen->compile(compute, true);
-}
-
-void printToFile(string filename, IndexStmt stmt) {
-  stringstream source;
-
-  string file_path = "eval_generated/";
-  mkdir(file_path.c_str(), 0777);
-
-  std::shared_ptr<ir::CodeGen> codegen = ir::CodeGen::init_default(source, ir::CodeGen::ImplementationGen);
-  ir::Stmt compute = lower(stmt, "compute",  false, true);
-  codegen->compile(compute, true);
-
-  ofstream source_file;
-  string file_ending = should_use_CUDA_codegen() ? ".cu" : ".c";
-  source_file.open(file_path + filename + file_ending);
-  source_file << source.str();
-  source_file.close();
-}
-
-void printToFile(string filename, string additional_filename, IndexStmt stmt) {
-  stringstream source1;
-  stringstream source2;
-
-  string file_path = "eval_generated/";
-  mkdir(file_path.c_str(), 0777);
-
-  std::shared_ptr<ir::CodeGen> codegen = ir::CodeGen::init_default(source1, source2, ir::CodeGen::ImplementationGen);
-  ir::Stmt compute = lower(stmt, "compute", false, true);
-  codegen->compile(compute, true);
-
-  ofstream source_file;
-  string file_ending = should_use_CUDA_codegen() ? ".cu" : ".c";
-  source_file.open(file_path+filename+file_ending);
-  source_file << source1.str();
-  source_file.close();
-
-  ofstream additional_source_file;
-  string additional_file_ending = ".ispc";
-  additional_source_file.open(file_path+additional_filename+additional_file_ending);
-  additional_source_file << source2.str();
-  additional_source_file.close();
-
-}
 
 IndexStmt scheduleSpMVCPU(IndexStmt stmt, int CHUNK_SIZE=16) {
   IndexVar i0("i0"), i1("i1"), kpos("kpos"), kpos0("kpos0"), kpos1("kpos1");
@@ -909,7 +829,7 @@ TEST(scheduling_eval, spmmISPC) {
   expected.compute();
   ASSERT_TENSOR_EQ(expected, C);
 
-  float ERROR_MARGIN = 0.01;
+  // float ERROR_MARGIN = 0.01;
   // ASSERT_TENSOR_VAL(expected, y);
   for (int i = 0; i < NUM_I; i++) {
     for (int k = 0; k < NUM_K; k++) {
@@ -1172,6 +1092,67 @@ TEST(scheduling_eval, sddmmCPU) {
   ASSERT_TENSOR_EQ(expected, A);
 }
 
+TEST(scheduling_eval, sddmmSPMMFusedCPU) {
+  if (should_use_CUDA_codegen() || should_use_ISPC_codegen()) {
+    return;
+  }
+
+  int NUM_I = 1021/10;
+  int NUM_J = 1039/10;
+  int NUM_K = 1057/10;
+  float SPARSITY = .3;
+  Tensor<double> A("A", {NUM_I, NUM_K}, {Dense, Dense});
+  Tensor<double> B("B", {NUM_I, NUM_K}, CSR);
+  Tensor<double> C("C", {NUM_I, NUM_J}, {Dense, Dense});
+  Tensor<double> D("D", {NUM_J, NUM_K}, {Dense, Dense});
+
+  srand(268238);
+  for (int i = 0; i < NUM_I; i++) {
+    for (int j = 0; j < NUM_J; j++) {
+      float rand_float = (float)rand()/(float)(RAND_MAX);
+      C.insert({i, j}, (double) ((int) (rand_float*3/SPARSITY)));
+    }
+  }
+
+  for (int i = 0; i < NUM_I; i++) {
+    for (int k = 0; k < NUM_K; k++) {
+      float rand_float = (float)rand()/(float)(RAND_MAX);
+      if (rand_float < SPARSITY) {
+        B.insert({i, k}, (double) ((int) (rand_float*3/SPARSITY)));
+      }
+    }
+  }
+
+  for (int j = 0; j < NUM_J; j++) {
+    for (int k = 0; k < NUM_K; k++) {
+      float rand_float = (float)rand()/(float)(RAND_MAX);
+      D.insert({j, k}, (double) ((int) (rand_float*3/SPARSITY)));
+    }
+  }
+
+  B.pack();
+  C.pack();
+  D.pack();
+
+  A(i,k) = B(i,k) * C(i,j) * D(j,k);
+
+  IndexStmt stmt = A.getAssignment().concretize();
+  stmt = scheduleSDDMMCPU(stmt, B);
+
+  printToFile("sddmm_cpu_ryan2", stmt);
+
+  A.compile(stmt);
+  A.assemble();
+  A.compute();
+
+  Tensor<double> expected("expected", {NUM_I, NUM_K}, {Dense, Dense});
+  expected(i,k) = B(i,k) * C(i,j) * D(j,k);
+  expected.compile();
+  expected.assemble();
+  expected.compute();
+  ASSERT_TENSOR_EQ(expected, A);
+}
+
 
 TEST(scheduling_eval, sddmmcsrCPU) {
   if (should_use_CUDA_codegen()) {
@@ -1246,8 +1227,8 @@ TEST(scheduling_eval, sddmm2CPU) {
   int NUM_J = 1021/10;
   int NUM_K = 18;
   float SPARSITY = .3;
-  Tensor<double> Y("Y", {NUM_I, NUM_J}, CSR);
-  Tensor<double> A("A", {NUM_I, NUM_J}, CSR);
+  Tensor<double> Y("Y", {NUM_I, NUM_J}, {Dense, Compressed(ModeFormat::UNIQUE)});
+  Tensor<double> A("A", {NUM_I, NUM_J}, {Dense, Compressed(ModeFormat::UNIQUE)});
   Tensor<double> X("X", {NUM_I, NUM_K}, {Dense, Dense});
 
   srand(268238);
@@ -1271,23 +1252,23 @@ TEST(scheduling_eval, sddmm2CPU) {
   A.pack();
   X.pack();
 
-  Y(i,j) = A(i,j) * X(i,k) * X(j,k);
+  Y(i,j) = A(i,j) * X(i,k) * X(k,j);
 
-  IndexStmt stmt = A.getAssignment().concretize();
-  // stmt = scheduleSDDMMCPU(stmt, B);
+  // IndexStmt stmt = A.getAssignment().concretize();
+  // // stmt = scheduleSDDMMCPU(stmt, A);
 
-  //printToFile("sddmm_cpu", stmt);
+  // printToFile("sddmm2_cpu", stmt);
 
-  A.compile(stmt);
-  A.assemble();
-  A.compute();
+  // A.compile(stmt);
+  // A.assemble();
+  // A.compute();
 
-  Tensor<double> expected("expected", {NUM_I, NUM_J}, {Dense, Dense});
-  expected(i,j) = A(i,j) * X(i,k) * X(j,k);
-  expected.compile();
-  expected.assemble();
-  expected.compute();
-  ASSERT_TENSOR_EQ(expected, A);
+  // Tensor<double> expected("expected", {NUM_I, NUM_J}, {Dense, Dense});
+  // expected(i,j) = A(i,j) * X(i,k) * X(j,k);
+  // expected.compile();
+  // expected.assemble();
+  // expected.compute();
+  // ASSERT_TENSOR_EQ(expected, A);
 }
 
 
@@ -1365,7 +1346,7 @@ TEST(scheduling_eval, sddmmISPC) {
   ASSERT_TENSOR_EQ(expected, A);
 
 
-  float ERROR_MARGIN = 0.01;
+  // float ERROR_MARGIN = 0.01;
   // ASSERT_TENSOR_VAL(expected, y);
   for (int i = 0; i < NUM_I; i++) {
     for (int k = 0; k < NUM_K; k++) {
@@ -1447,7 +1428,7 @@ TEST(scheduling_eval, sddmm2ISPC) {
   ASSERT_TENSOR_EQ(expected, A);
 
 
-  float ERROR_MARGIN = 0.01;
+  // float ERROR_MARGIN = 0.01;
   // ASSERT_TENSOR_VAL(expected, y);
   for (int i = 0; i < NUM_I; i++) {
     for (int j = 0; j < NUM_J; j++) {
@@ -1585,7 +1566,7 @@ TEST(scheduling_eval, spmvISPC) {
 
   ASSERT_TENSOR_EQ(expected, y);
 
-  float ERROR_MARGIN = 0.01;
+  // float ERROR_MARGIN = 0.01;
   // ASSERT_TENSOR_VAL(expected, y);
   for (int j = 0; j < NUM_J; j++) {
     if (expected(j) <= y(j) + ERROR_MARGIN && expected(j) >= y(j) - ERROR_MARGIN) {
@@ -2015,6 +1996,64 @@ TEST(scheduling_eval, mttkrpCPU) {
   ASSERT_TENSOR_EQ(expected, A);
 }
 
+TEST(scheduling_eval, temp) {
+  if (should_use_CUDA_codegen() || should_use_ISPC_codegen()) {
+    return;
+  }
+  std::default_random_engine gen(0);
+  std::uniform_real_distribution<double> unif(0.0, 1.0);
+  // Predeclare the storage formats that the inputs and output will be stored as.
+  // To define a format, you must specify whether each dimension is dense or sparse
+  // and (optionally) the order in which dimensions should be stored. The formats
+  // declared below correspond to doubly compressed sparse row (dcsr), row-major
+  // dense (rm), and column-major dense (dm).
+  Format dcsr({Sparse,Sparse});
+  Format   rm({Dense,Dense});
+  Format   cm({Dense,Dense}, {1,0});
+
+  // Load a sparse matrix from file (stored in the Matrix Market format) and
+  // store it as a doubly compressed sparse row matrix. Matrices correspond to
+  // order-2 tensors in taco. The matrix in this example can be download from:
+  // https://www.cise.ufl.edu/research/sparse/MM/Williams/webbase-1M.tar.gz
+  Tensor<double> B = read("/home/min/a/kadhitha/ispc-examples/data/ufl/webbase-1M/webbase-1M.mtx", dcsr);
+  // Generate a random dense matrix and store it in row-major (dense) format.
+  Tensor<double> C({B.getDimension(0), 1000}, rm);
+  for (int i = 0; i < C.getDimension(0); ++i) {
+    for (int j = 0; j < C.getDimension(1); ++j) {
+      C.insert({i,j}, unif(gen));
+    }
+  }
+  C.pack();
+
+  // Generate another random dense matrix and store it in column-major format.
+  Tensor<double> D({1000, B.getDimension(1)}, cm);
+  for (int i = 0; i < D.getDimension(0); ++i) {
+    for (int j = 0; j < D.getDimension(1); ++j) {
+      D.insert({i,j}, unif(gen));
+    }
+  }
+  D.pack();
+
+  // Declare the output matrix to be a sparse matrix with the same dimensions as
+  // input matrix B, to be also stored as a doubly compressed sparse row matrix.
+  Tensor<double> A(B.getDimensions(), dcsr);
+
+  // Define the SDDMM computation using index notation.
+  IndexVar i, j, k;
+  A(i,j) = B(i,j) * C(i,k) * D(k,j);
+
+  // At this point, we have defined how entries in the output matrix should be
+  // computed from entries in the input matrices but have not actually performed
+  // the computation yet. To do so, we must first tell taco to generate code that
+  // can be executed to compute the SDDMM operation.
+  A.compile();
+  // We can now call the functions taco generated to assemble the indices of the
+  // output matrix and then actually compute the SDDMM.
+  A.assemble();
+  A.compute();
+  // Write the output of the computation to file (stored in the Matrix Market format).
+  write("A.mtx", A);
+}
 
 TEST(scheduling_eval, mttkrpISPC) {
   if (should_use_CUDA_codegen()) {

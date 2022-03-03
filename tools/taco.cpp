@@ -9,6 +9,7 @@
 #include "taco.h"
 
 #include "taco/error.h"
+#include "taco/index_notation/index_notation.h"
 #include "taco/parser/lexer.h"
 #include "taco/parser/parser.h"
 #include "taco/parser/schedule_parser.h"
@@ -313,7 +314,9 @@ static void printCommandLine(ostream& os, int argc, char* argv[]) {
   }
 }
 
-static int setSchedulingCommands(vector<vector<string>> scheduleCommands, parser::Parser& parser, IndexStmt& stmt) {
+static int setSchedulingCommands(vector<vector<string>> scheduleCommands, 
+  parser::Parser& parser, IndexStmt& stmt, Assignment assignment) {
+
   std::cout << "setting scheduling commands\n";
   auto findVar = [&stmt](string name) {
     ProvenanceGraph graph(stmt);
@@ -364,6 +367,16 @@ static int setSchedulingCommands(vector<vector<string>> scheduleCommands, parser
       IndexVar fused(f);
       stmt = stmt.fuse(findVar(i), findVar(j), fused);
 
+    } else if (command == "loopfuse") {
+      taco_uassert(scheduleCommand.size() == 2) 
+        << "'loopfuse' scheduling directive takes 2 parameters: fuse(b, 2)";
+      std::string side = scheduleCommand[0];
+      taco_uassert(side == "b" || side == "f") 
+        << "first parameter must be either 'f' or 'b'";
+
+      int iters = std::stoi(scheduleCommand[1]);
+
+      stmt = loopFusionOverFission(stmt, assignment, side, iters);
     } else if (command == "split") {
       taco_uassert(scheduleCommand.size() == 4)
           << "'split' scheduling directive takes 4 parameters: split(i, i1, i2, splitFactor)";
@@ -1048,6 +1061,7 @@ int main(int argc, char* argv[]) {
   map<string,TensorBase> loadedTensors;
   TensorBase temp_tensor;
   parser::Parser temp_parser(exprStr, formats, dataTypes, tensorsDimensions, loadedTensors, 42);
+  std::cout << exprStr << std::endl;
   try {
     temp_parser.parse();
     temp_tensor = temp_parser.getResultTensor();
@@ -1148,19 +1162,27 @@ int main(int argc, char* argv[]) {
   taco_set_parallel_schedule(sched, chunkSize);
   taco_set_num_threads(nthreads);
 
-  IndexStmt stmt =
-      makeConcreteNotation(makeReductionNotation(tensor.getAssignment()));
+  Assignment assignment = tensor.getAssignment();
+  std::cout << "tensor.getAssignment(): " << assignment << std::endl;
+
+  IndexStmt stmt2 = makeReductionNotation(tensor.getAssignment());
+  std::cout << "reducedNotation: " << stmt2 << std::endl;
+  // IndexStmt stmt = 
+  //     makeConcreteNotation(makeReductionNotation(tensor.getAssignment()));
+  IndexStmt stmt = makeConcreteNotation(stmt2);
   std::cout << "concrete index statement: " << stmt << std::endl;
-  stmt = justTraverseThroughTheIndexStmt(stmt);
   stmt = reorderLoopsTopologically(stmt);
+
   std::cout << "topologically reordered loops statement: " << stmt << std::endl;
 
   if (setSchedule) {
-    int val = setSchedulingCommands(scheduleCommands, parser, stmt);
+    int val = setSchedulingCommands(scheduleCommands, parser, stmt, tensor.getAssignment());
+    // stmt = loopFusionOverFission(stmt, tensor.getAssignment());
     cuda |= (val==1);
     ispc |= (val==2);
   }
   else {
+    // stmt = loopFusionOverFission(stmt, tensor.getAssignment());
     stmt = insertTemporaries(stmt);
     stmt = parallelizeOuterLoop(stmt);
   }
@@ -1186,12 +1208,15 @@ int main(int argc, char* argv[]) {
     set_ISPC_codegen_enabled(false);
   }
 
-  std::cout << "running scalar promote\n" << std::endl;
+  std::cout << "running scalar promote\n" << std::endl; //
   stmt = scalarPromote(stmt);
+  std::cout << "\nafter scalar promote: \n" << stmt << std::endl << std::endl;
+
   if (printConcrete) {
     cout << stmt << endl;
   }
 
+  // lower index statement to ir statement
   Kernel kernel;
   if (benchmark) {
     if (time) cout << endl;
@@ -1278,6 +1303,11 @@ int main(int argc, char* argv[]) {
     compute = lower(stmt, prefix+"compute",  computeWithAssemble, true);
     assemble = lower(stmt, prefix+"assemble", true, false);
     evaluate = lower(stmt, prefix+"evaluate", true, true);
+
+    std::cout << "\n\ncompute kernel\n------------\n" << compute << std::endl << std::endl;
+    // compute kernel is the most basic kernel after lowering phase
+
+    std::cout << "\n\nevaluate kernel\n------------\n" << evaluate << std::endl << std::endl;
   }
 
   string packComment =
@@ -1411,7 +1441,7 @@ int main(int argc, char* argv[]) {
   }
 
   IterationGraph iterationGraph;
-  if (printIterationGraph) {
+  if (printIterationGraph) { // print iteration graph
     iterationGraph = IterationGraph::make(tensor.getAssignment());
   }
 

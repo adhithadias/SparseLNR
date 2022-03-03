@@ -2,6 +2,7 @@
 #define TACO_TENSOR_PATH_H
 
 #include <memory>
+#include <ostream>
 #include <vector>
 
 #include "taco/util/comparable.h"
@@ -47,13 +48,12 @@ public:
 
   friend bool operator==(const TensorPath&, const TensorPath&);
   friend bool operator<(const TensorPath&, const TensorPath&);
+  friend std::ostream& operator<<(std::ostream&, const TensorPath&);
 
 private:
   struct Content;
   std::shared_ptr<Content> content;
 };
-
-std::ostream& operator<<(std::ostream&, const TensorPath&);
 
 
 /// A step along a tensor path.

@@ -12,7 +12,7 @@ namespace taco {
 namespace ir {
 
 
-class CodeGen_ISPC : public CodeGen {
+class CodeGen_ISPC : public CodeGen_C {
 public:
   /// Initialize a code generator that generates code to an
   /// output stream.
@@ -28,7 +28,7 @@ public:
   static void generateShim(const Stmt& func, std::stringstream &stream);
 
 protected:
-  using IRPrinter::visit;
+  using CodeGen_C::visit;
 
   void visit(const Function*);
   void visit(const VarDecl*);
@@ -50,19 +50,10 @@ protected:
   void printISPCFunc(const Function *func, std::map<Expr, std::string, ExprCompare> varMap,
                                   std::vector<const GetProperty*> &sortedProps);
 
-  std::map<Expr, std::string, ExprCompare> varMap;
-  std::vector<Expr> localVars;
   bool taskCode = false;
-  std::ostream &out;
-  std::ostream &out2;
-  
-  OutputKind outputKind;
 
-  std::string funcName;
   std::stringstream funcVariables;
   std::vector<const GetProperty*> sortedProps;
-  int labelCount;
-  bool emittingCoroutine;
 
   class FindVars;
   class FunctionCollector;

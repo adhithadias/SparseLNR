@@ -1,0 +1,5174 @@
+
+sddmm-spmm execution
+
+-----------------------------------------
+/home/min/a/kadhitha/ispc-examples/data/suitesparse/synthetic/synthetic.mtx
+ref(i,l)=B(i,j)*C(i,k)*D(j,k)*F(j,l);
+B1_dimension: 102, B2_dimension: 103, vals: 3149
+C1_dimension: 102, C2_dimension: 64, vals: 6528
+D1_dimension: 103, D2_dimension: 64, vals: 6592
+E1_dimension: 103, E2_dimension: 48, vals: 4944
+
+
+kernel execution time:  6223.98 ms
+fused time: 6225.14
+
+kernel execution time:  3659.4 ms
+sddmm time: 3660.83
+
+kernel execution time:  3145.85 ms
+spmm time: 3146.77
+
+sddmm-spmm execution
+
+-----------------------------------------
+/home/min/a/kadhitha/ispc-examples/data/suitesparse/bcsstk17/bcsstk17.mtx
+ref(i,l)=B(i,j)*C(i,k)*D(j,k)*F(j,l);
+B1_dimension: 10974, B2_dimension: 10974, vals: 428650
+C1_dimension: 10974, C2_dimension: 64, vals: 702336
+D1_dimension: 10974, D2_dimension: 64, vals: 702336
+E1_dimension: 10974, E2_dimension: 64, vals: 702336
+
+
+kernel execution time:  17.1703 ms
+fused time: 17.6378
+
+kernel execution time:  8.23135 ms
+sddmm time: 8.77073
+
+kernel execution time:  19.3034 ms
+spmm time: 19.7426
+
+kernel execution time:  514.133 ms
+taco reference time: 514.662
+
+mtx dim1 dim2 nnz fused sddmm spmm taco-original
+bcsstk17 10974 10974 428650 17.1703 8.23135 19.3034 514.662
+
+
+sddmm-spmm execution
+
+-----------------------------------------
+/home/min/a/kadhitha/ispc-examples/data/suitesparse/pdb1HYS/pdb1HYS.mtx
+ref(i,l)=B(i,j)*C(i,k)*D(j,k)*F(j,l);
+B1_dimension: 36417, B2_dimension: 36417, vals: 4344765
+C1_dimension: 36417, C2_dimension: 64, vals: 2330688
+D1_dimension: 36417, D2_dimension: 64, vals: 2330688
+E1_dimension: 36417, E2_dimension: 64, vals: 2330688
+
+
+kernel execution time:  163.616 ms
+fused time: 164.099
+
+kernel execution time:  81.2672 ms
+sddmm time: 81.8014
+
+kernel execution time:  294.454 ms
+spmm time: 294.968
+
+kernel execution time:  5149.58 ms
+taco reference time: 5150.58
+
+mtx dim1 dim2 nnz fused sddmm spmm taco-original
+bcsstk17 10974 10974 428650 17.1703 8.23135 19.3034 514.662
+pdb1HYS 36417 36417 4344765 163.616 81.2672 294.454 5149.58
+
+sddmm-spmm execution
+
+-----------------------------------------
+/home/min/a/kadhitha/ispc-examples/data/suitesparse/rma10/rma10.mtx
+ref(i,l)=B(i,j)*C(i,k)*D(j,k)*F(j,l);
+B1_dimension: 46835, B2_dimension: 46835, vals: 2374001
+C1_dimension: 46835, C2_dimension: 64, vals: 2997440
+D1_dimension: 46835, D2_dimension: 64, vals: 2997440
+E1_dimension: 46835, E2_dimension: 64, vals: 2997440
+
+
+kernel execution time:  92.8319 ms
+fused time: 93.3139
+
+kernel execution time:  45.3221 ms
+sddmm time: 45.8599
+
+kernel execution time:  136.693 ms
+spmm time: 137.198
+
+kernel execution time:  2824.95 ms
+taco reference time: 2825.53
+
+mtx dim1 dim2 nnz fused sddmm spmm taco-original
+bcsstk17 10974 10974 428650 17.1703 8.23135 19.3034 514.662
+pdb1HYS 36417 36417 4344765 163.616 81.2672 294.454 5149.58
+rma10 46835 46835 2374001 92.8319 45.3221 136.693 2824.95
+
+sddmm-spmm execution
+
+-----------------------------------------
+/home/min/a/kadhitha/ispc-examples/data/suitesparse/cant/cant.mtx
+ref(i,l)=B(i,j)*C(i,k)*D(j,k)*F(j,l);
+B1_dimension: 62451, B2_dimension: 62451, vals: 4007383
+C1_dimension: 62451, C2_dimension: 64, vals: 3996864
+D1_dimension: 62451, D2_dimension: 64, vals: 3996864
+E1_dimension: 62451, E2_dimension: 64, vals: 3996864
+
+
+kernel execution time:  153.867 ms
+fused time: 154.368
+
+kernel execution time:  74.9071 ms
+sddmm time: 75.4719
+
+kernel execution time:  258.678 ms
+spmm time: 259.209
+
+kernel execution time:  4786.95 ms
+taco reference time: 4788.05
+
+mtx dim1 dim2 nnz fused sddmm spmm taco-original
+bcsstk17 10974 10974 428650 17.1703 8.23135 19.3034 514.662
+pdb1HYS 36417 36417 4344765 163.616 81.2672 294.454 5149.58
+rma10 46835 46835 2374001 92.8319 45.3221 136.693 2824.95
+cant 62451 62451 4007383 153.867 74.9071 258.678 4786.95
+
+sddmm-spmm execution
+
+-----------------------------------------
+/home/min/a/kadhitha/ispc-examples/data/suitesparse/consph/consph.mtx
+ref(i,l)=B(i,j)*C(i,k)*D(j,k)*F(j,l);
+B1_dimension: 83334, B2_dimension: 83334, vals: 6010480
+C1_dimension: 83334, C2_dimension: 64, vals: 5333376
+D1_dimension: 83334, D2_dimension: 64, vals: 5333376
+E1_dimension: 83334, E2_dimension: 64, vals: 5333376
+
+
+kernel execution time:  231.253 ms
+fused time: 231.75
+
+kernel execution time:  112.863 ms
+sddmm time: 113.405
+
+kernel execution time:  417.749 ms
+spmm time: 418.285
+
+kernel execution time:  7133.75 ms
+taco reference time: 7134.88
+
+consph 83334 83334 6010480 231.253 112.863 417.749 7133.75
+
+sddmm-spmm execution
+
+-----------------------------------------
+/home/min/a/kadhitha/ispc-examples/data/suitesparse/cop20k_A/cop20k_A.mtx
+ref(i,l)=B(i,j)*C(i,k)*D(j,k)*F(j,l);
+B1_dimension: 121192, B2_dimension: 121192, vals: 2624331
+C1_dimension: 121192, C2_dimension: 64, vals: 7756288
+D1_dimension: 121192, D2_dimension: 64, vals: 7756288
+E1_dimension: 121192, E2_dimension: 64, vals: 7756288
+
+
+kernel execution time:  192.743 ms
+fused time: 193.23
+
+kernel execution time:  85.0563 ms
+sddmm time: 85.6227
+
+kernel execution time:  150.367 ms
+spmm time: 150.908
+
+kernel execution time:  3285.24 ms
+taco reference time: 3286.37
+
+cop20k_A 121192 121192 2624331 192.743 85.0563 150.367 3285.24
+
+sddmm-spmm execution
+
+-----------------------------------------
+/home/min/a/kadhitha/ispc-examples/data/suitesparse/shipsec1/shipsec1.mtx
+ref(i,l)=B(i,j)*C(i,k)*D(j,k)*F(j,l);
+B1_dimension: 140874, B2_dimension: 140874, vals: 7813404
+C1_dimension: 140874, C2_dimension: 64, vals: 9015936
+D1_dimension: 140874, D2_dimension: 64, vals: 9015936
+E1_dimension: 140874, E2_dimension: 64, vals: 9015936
+
+
+kernel execution time:  307.481 ms
+fused time: 307.98
+
+kernel execution time:  150.621 ms
+sddmm time: 151.15
+
+kernel execution time:  451.195 ms
+spmm time: 451.689
+
+kernel execution time:  9393.95 ms
+taco reference time: 9395.02
+
+shipsec1 140874 140874 7813404 307.481 150.621 451.195 9393.95
+
+sddmm-spmm execution
+
+-----------------------------------------
+/home/min/a/kadhitha/ispc-examples/data/suitesparse/scircuit/scircuit.mtx
+ref(i,l)=B(i,j)*C(i,k)*D(j,k)*F(j,l);
+B1_dimension: 170998, B2_dimension: 170998, vals: 958936
+C1_dimension: 170998, C2_dimension: 64, vals: 10943872
+D1_dimension: 170998, D2_dimension: 64, vals: 10943872
+E1_dimension: 170998, E2_dimension: 64, vals: 10943872
+
+
+kernel execution time:  85.4659 ms
+fused time: 85.9614
+
+kernel execution time:  34.7139 ms
+sddmm time: 35.2946
+
+kernel execution time:  71.0646 ms
+spmm time: 71.6139
+
+kernel execution time:  1234.06 ms
+taco reference time: 1234.68
+
+scircuit 170998 170998 958936 85.4659 34.7139 71.0646 1234.06
+
+sddmm-spmm execution
+
+-----------------------------------------
+/home/min/a/kadhitha/ispc-examples/data/suitesparse/mac_econ_fwd500/mac_econ_fwd500.mtx
+ref(i,l)=B(i,j)*C(i,k)*D(j,k)*F(j,l);
+B1_dimension: 206500, B2_dimension: 206500, vals: 1273389
+C1_dimension: 206500, C2_dimension: 64, vals: 13216000
+D1_dimension: 206500, D2_dimension: 64, vals: 13216000
+E1_dimension: 206500, E2_dimension: 64, vals: 13216000
+
+
+kernel execution time:  88.3959 ms
+fused time: 88.8687
+
+kernel execution time:  36.7565 ms
+sddmm time: 37.3021
+
+kernel execution time:  80.2217 ms
+spmm time: 80.7621
+
+kernel execution time:  1588.94 ms
+taco reference time: 1589.58
+
+mac_econ_fwd500 206500 206500 1273389 88.3959 36.7565 80.2217 1588.94
+
+sddmm-spmm execution
+
+-----------------------------------------
+/home/min/a/kadhitha/ispc-examples/data/ufl/webbase-1M/webbase-1M.mtx
+ref(i,l)=B(i,j)*C(i,k)*D(j,k)*F(j,l);
+B1_dimension: 1000005, B2_dimension: 1000005, vals: 3105536
+C1_dimension: 1000005, C2_dimension: 64, vals: 64000320
+D1_dimension: 1000005, D2_dimension: 64, vals: 64000320
+E1_dimension: 1000005, E2_dimension: 64, vals: 64000320
+
+
+kernel execution time:  244.992 ms
+fused time: 245.482
+
+kernel execution time:  86.8711 ms
+sddmm time: 87.4084
+
+kernel execution time:  245.054 ms
+spmm time: 245.552
+
+kernel execution time:  3952.47 ms
+taco reference time: 3953.57
+
+webbase-1M 1000005 1000005 3105536 244.992 86.8711 245.054 3952.47
+
+sddmm-spmm execution
+
+-----------------------------------------
+/home/min/a/kadhitha/ispc-examples/data/suitesparse/circuit5M/circuit5M.mtx
+ref(i,l)=B(i,j)*C(i,k)*D(j,k)*F(j,l);
+B1_dimension: 5558326, B2_dimension: 5558326, vals: 59524291
+C1_dimension: 5558326, C2_dimension: 64, vals: 355732864
+D1_dimension: 5558326, D2_dimension: 64, vals: 355732864
+E1_dimension: 5558326, E2_dimension: 64, vals: 355732864
+
+
+kernel execution time:  3275.48 ms
+fused time: 3276.44
+
+kernel execution time:  1522.51 ms
+sddmm time: 1523.05
+
+kernel execution time:  7164.88 ms
+spmm time: 7165.87
+
+kernel execution time:  84078.7 ms
+taco reference time: 84079.8
+
+circuit5M 5558326 5558326 59524291 3275.48 1522.51 7164.88 84078.7
+sddmm-spmm execution
+
+-----------------------------------------
+/home/min/a/kadhitha/ispc-examples/data/suitesparse/cop20k_A/cop20k_A.mtx
+ref(i,l)=B(i,j)*C(i,k)*D(j,k)*F(j,l);
+B1_dimension: 121192, B2_dimension: 121192, vals: 2624331
+C1_dimension: 121192, C2_dimension: 64, vals: 7756288
+D1_dimension: 121192, D2_dimension: 64, vals: 7756288
+E1_dimension: 121192, E2_dimension: 64, vals: 7756288
+
+
+kernel execution time:  62.8847 ms
+fused time: 63.418
+
+kernel execution time:  561.815 ms
+sddmm time: 562.479
+
+kernel execution time:  62.7688 ms
+spmm time: 63.4747
+
+kernel execution time:  727.65 ms
+taco reference time: 728.755
+
+sddmm-spmm execution
+
+-----------------------------------------
+/home/min/a/kadhitha/ispc-examples/data/suitesparse/cop20k_A/cop20k_A.mtx
+ref(i,l)=B(i,j)*C(i,k)*D(j,k)*F(j,l);
+B1_dimension: 121192, B2_dimension: 121192, vals: 2624331
+C1_dimension: 121192, C2_dimension: 64, vals: 7756288
+D1_dimension: 121192, D2_dimension: 64, vals: 7756288
+E1_dimension: 121192, E2_dimension: 64, vals: 7756288
+
+
+kernel execution time:  1121.74 ms
+fused time: 1122.26
+
+kernel execution time:  524.494 ms
+sddmm time: 525.084
+
+kernel execution time:  602.517 ms
+spmm time: 603.056
+
+kernel execution time:  38095.2 ms
+taco reference time: 38096.3
+
+sddmm-spmm execution
+
+-----------------------------------------
+/home/min/a/kadhitha/ispc-examples/data/suitesparse/cop20k_A/cop20k_A.mtx
+ref(i,l)=B(i,j)*C(i,k)*D(j,k)*F(j,l);
+B1_dimension: 121192, B2_dimension: 121192, vals: 2624331
+C1_dimension: 121192, C2_dimension: 64, vals: 7756288
+D1_dimension: 121192, D2_dimension: 64, vals: 7756288
+E1_dimension: 121192, E2_dimension: 64, vals: 7756288
+
+
+kernel execution time:  1129.96 ms
+fused time: 1130.47
+
+kernel execution time:  528.571 ms
+sddmm time: 529.152
+
+kernel execution time:  611.108 ms
+spmm time: 611.643
+
+kernel execution time:  38230.1 ms
+taco reference time: 38231.1
+
+sddmm-spmm execution
+
+-----------------------------------------
+/home/min/a/kadhitha/ispc-examples/data/suitesparse/cop20k_A/cop20k_A.mtx
+ref(i,l)=B(i,j)*C(i,k)*D(j,k)*F(j,l);
+B1_dimension: 121192, B2_dimension: 121192, vals: 2624331
+C1_dimension: 121192, C2_dimension: 64, vals: 7756288
+D1_dimension: 121192, D2_dimension: 64, vals: 7756288
+E1_dimension: 121192, E2_dimension: 64, vals: 7756288
+
+
+kernel execution time:  63.6404 ms
+fused time: 64.1428
+
+kernel execution time:  562.966 ms
+sddmm time: 563.609
+
+kernel execution time:  62.5981 ms
+spmm time: 63.1044
+
+kernel execution time:  728.068 ms
+taco reference time: 729.005
+
+sddmm-spmm execution
+
+-----------------------------------------
+/home/min/a/kadhitha/ispc-examples/data/suitesparse/cop20k_A/cop20k_A.mtx
+ref(i,l)=B(i,j)*C(i,k)*D(j,k)*F(j,l);
+B1_dimension: 121192, B2_dimension: 121192, vals: 2624331
+C1_dimension: 121192, C2_dimension: 64, vals: 7756288
+D1_dimension: 121192, D2_dimension: 64, vals: 7756288
+E1_dimension: 121192, E2_dimension: 64, vals: 7756288
+
+
+kernel execution time:  62.7795 ms
+fused time: 63.2831
+
+kernel execution time:  564.376 ms
+sddmm time: 565.025
+
+kernel execution time:  62.8883 ms
+spmm time: 63.4116
+
+kernel execution time:  727.567 ms
+taco reference time: 728.511
+
+sddmm-spmm execution
+
+-----------------------------------------
+/home/min/a/kadhitha/ispc-examples/data/suitesparse/cop20k_A/cop20k_A.mtx
+ref(i,l)=B(i,j)*C(i,k)*D(j,k)*F(j,l);
+B1_dimension: 121192, B2_dimension: 121192, vals: 2624331
+C1_dimension: 121192, C2_dimension: 64, vals: 7756288
+D1_dimension: 121192, D2_dimension: 64, vals: 7756288
+E1_dimension: 121192, E2_dimension: 64, vals: 7756288
+
+
+kernel execution time:  68.4674 ms
+fused time: 68.9896
+
+kernel execution time:  563.596 ms
+sddmm time: 564.267
+
+kernel execution time:  62.5779 ms
+spmm time: 63.0812
+
+kernel execution time:  730.226 ms
+taco reference time: 731.124
+
+sddmm-spmm execution
+
+-----------------------------------------
+/home/min/a/kadhitha/ispc-examples/data/suitesparse/cop20k_A/cop20k_A.mtx
+ref(i,l)=B(i,j)*C(i,k)*D(j,k)*F(j,l);
+B1_dimension: 121192, B2_dimension: 121192, vals: 2624331
+C1_dimension: 121192, C2_dimension: 64, vals: 7756288
+D1_dimension: 121192, D2_dimension: 64, vals: 7756288
+E1_dimension: 121192, E2_dimension: 64, vals: 7756288
+
+
+kernel execution time:  56.5639 ms
+fused time: 57.0618
+
+kernel execution time:  562.554 ms
+sddmm time: 563.193
+
+kernel execution time:  62.6038 ms
+spmm time: 63.1209
+
+kernel execution time:  730.018 ms
+taco reference time: 730.906
+
+sddmm-spmm execution
+
+-----------------------------------------
+/home/min/a/kadhitha/ispc-examples/data/suitesparse/cop20k_A/cop20k_A.mtx
+ref(i,l)=B(i,j)*C(i,k)*D(j,k)*F(j,l);
+B1_dimension: 121192, B2_dimension: 121192, vals: 2624331
+C1_dimension: 121192, C2_dimension: 64, vals: 7756288
+D1_dimension: 121192, D2_dimension: 64, vals: 7756288
+E1_dimension: 121192, E2_dimension: 64, vals: 7756288
+
+
+kernel execution time:  66.7636 ms
+fused time: 67.2669
+
+kernel execution time:  564.075 ms
+sddmm time: 564.809
+
+kernel execution time:  62.9335 ms
+spmm time: 63.4347
+
+kernel execution time:  727.588 ms
+taco reference time: 728.484
+
+sddmm-spmm execution
+
+-----------------------------------------
+/home/min/a/kadhitha/ispc-examples/data/suitesparse/cop20k_A/cop20k_A.mtx
+ref(i,l)=B(i,j)*C(i,k)*D(j,k)*F(j,l);
+B1_dimension: 121192, B2_dimension: 121192, vals: 2624331
+C1_dimension: 121192, C2_dimension: 64, vals: 7756288
+D1_dimension: 121192, D2_dimension: 64, vals: 7756288
+E1_dimension: 121192, E2_dimension: 64, vals: 7756288
+
+
+kernel execution time:  55.1612 ms
+fused time: 55.6765
+
+kernel execution time:  574.602 ms
+sddmm time: 575.262
+
+kernel execution time:  62.2801 ms
+spmm time: 62.7918
+
+kernel execution time:  738.027 ms
+taco reference time: 738.739
+
+sddmm-spmm execution
+
+-----------------------------------------
+/home/min/a/kadhitha/ispc-examples/data/suitesparse/cop20k_A/cop20k_A.mtx
+ref(i,l)=B(i,j)*C(i,k)*D(j,k)*F(j,l);
+B1_dimension: 121192, B2_dimension: 121192, vals: 2624331
+C1_dimension: 121192, C2_dimension: 64, vals: 7756288
+D1_dimension: 121192, D2_dimension: 64, vals: 7756288
+E1_dimension: 121192, E2_dimension: 64, vals: 7756288
+
+
+kernel execution time:  864.868 ms
+fused time: 865.374
+
+kernel execution time:  544.426 ms
+sddmm time: 545.045
+
+kernel execution time:  377.977 ms
+spmm time: 378.522
+
+kernel execution time:  19947 ms
+taco reference time: 19948.1
+
+sddmm-spmm execution
+
+-----------------------------------------
+/home/min/a/kadhitha/ispc-examples/data/suitesparse/cop20k_A/cop20k_A.mtx
+ref(i,l)=B(i,j)*C(i,k)*D(j,k)*F(j,l);
+B1_dimension: 121192, B2_dimension: 121192, vals: 2624331
+C1_dimension: 121192, C2_dimension: 64, vals: 7756288
+D1_dimension: 121192, D2_dimension: 64, vals: 7756288
+E1_dimension: 121192, E2_dimension: 64, vals: 7756288
+
+
+kernel execution time:  71.685 ms
+fused time: 72.1905
+
+kernel execution time:  548.984 ms
+sddmm time: 549.581
+
+kernel execution time:  51.9969 ms
+spmm time: 52.562
+
+kernel execution time:  969.838 ms
+taco reference time: 970.48
+
+sddmm-spmm execution
+
+-----------------------------------------
+/home/min/a/kadhitha/ispc-examples/data/suitesparse/cop20k_A/cop20k_A.mtx
+ref(i,l)=B(i,j)*C(i,k)*D(j,k)*F(j,l);
+B1_dimension: 121192, B2_dimension: 121192, vals: 2624331
+C1_dimension: 121192, C2_dimension: 64, vals: 7756288
+D1_dimension: 121192, D2_dimension: 64, vals: 7756288
+E1_dimension: 121192, E2_dimension: 64, vals: 7756288
+
+
+kernel execution time:  56.1268 ms
+fused time: 56.6263
+
+kernel execution time:  566.523 ms
+sddmm time: 567.123
+
+kernel execution time:  60.4097 ms
+spmm time: 60.9402
+
+kernel execution time:  757.174 ms
+taco reference time: 757.82
+
+sddmm-spmm execution
+
+-----------------------------------------
+/home/min/a/kadhitha/ispc-examples/data/suitesparse/cop20k_A/cop20k_A.mtx
+ref(i,l)=B(i,j)*C(i,k)*D(j,k)*F(j,l);
+B1_dimension: 121192, B2_dimension: 121192, vals: 2624331
+C1_dimension: 121192, C2_dimension: 64, vals: 7756288
+D1_dimension: 121192, D2_dimension: 64, vals: 7756288
+E1_dimension: 121192, E2_dimension: 64, vals: 7756288
+
+24 threads
+
+kernel execution time:  119.302 ms
+fused time: 119.817
+
+kernel execution time:  550.24 ms
+sddmm time: 550.791
+
+kernel execution time:  49.3294 ms
+spmm time: 49.8462
+
+kernel execution time:  1710.98 ms
+taco reference time: 1711.58
+
+sddmm-spmm execution
+
+-----------------------------------------
+/home/min/a/kadhitha/ispc-examples/data/suitesparse/cop20k_A/cop20k_A.mtx
+ref(i,l)=B(i,j)*C(i,k)*D(j,k)*F(j,l);
+B1_dimension: 121192, B2_dimension: 121192, vals: 2624331
+C1_dimension: 121192, C2_dimension: 64, vals: 7756288
+D1_dimension: 121192, D2_dimension: 64, vals: 7756288
+E1_dimension: 121192, E2_dimension: 64, vals: 7756288
+
+2 threads
+
+kernel execution time:  832.831 ms
+fused time: 833.337
+
+kernel execution time:  543.518 ms
+sddmm time: 544.133
+
+kernel execution time:  372.721 ms
+spmm time: 373.277
+
+kernel execution time:  19871.7 ms
+taco reference time: 19873
+
+sddmm-spmm execution
+
+-----------------------------------------
+/home/min/a/kadhitha/ispc-examples/data/suitesparse/cop20k_A/cop20k_A.mtx
+ref(i,l)=B(i,j)*C(i,k)*D(j,k)*F(j,l);
+B1_dimension: 121192, B2_dimension: 121192, vals: 2624331
+C1_dimension: 121192, C2_dimension: 64, vals: 7756288
+D1_dimension: 121192, D2_dimension: 64, vals: 7756288
+E1_dimension: 121192, E2_dimension: 64, vals: 7756288
+
+
+kernel execution time:  1177.5 ms
+fused time: 1178
+
+kernel execution time:  547.532 ms
+sddmm time: 548.083
+
+kernel execution time:  618.83 ms
+spmm time: 619.38
+
+kernel execution time:  39590.7 ms
+taco reference time: 39591.8
+
+
+
+---------- 24 threads
+
+
+sddmm-spmm execution
+
+-----------------------------------------
+/home/min/a/kadhitha/ispc-examples/data/suitesparse/bcsstk17/bcsstk17.mtx
+ref(i,l)=B(i,j)*C(i,k)*D(j,k)*F(j,l);
+B1_dimension: 10974, B2_dimension: 10974, vals: 428650
+C1_dimension: 10974, C2_dimension: 64, vals: 702336
+D1_dimension: 10974, D2_dimension: 64, vals: 702336
+E1_dimension: 10974, E2_dimension: 64, vals: 702336
+
+
+kernel execution time:  18.2194 ms
+fused time: 18.6902
+
+kernel execution time:  80.3278 ms
+sddmm time: 80.7347
+
+kernel execution time:  5.17506 ms
+spmm time: 5.64137
+
+kernel execution time:  275.571 ms
+taco reference time: 275.978
+
+sddmm-spmm execution
+
+-----------------------------------------
+/home/min/a/kadhitha/ispc-examples/data/suitesparse/pdb1HYS/pdb1HYS.mtx
+ref(i,l)=B(i,j)*C(i,k)*D(j,k)*F(j,l);
+B1_dimension: 36417, B2_dimension: 36417, vals: 4344765
+C1_dimension: 36417, C2_dimension: 64, vals: 2330688
+D1_dimension: 36417, D2_dimension: 64, vals: 2330688
+E1_dimension: 36417, E2_dimension: 64, vals: 2330688
+
+
+kernel execution time:  159.53 ms
+fused time: 160.016
+
+kernel execution time:  814.453 ms
+sddmm time: 814.988
+
+kernel execution time:  41.9148 ms
+spmm time: 42.4142
+
+kernel execution time:  2782.76 ms
+taco reference time: 2783.34
+
+sddmm-spmm execution
+
+-----------------------------------------
+/home/min/a/kadhitha/ispc-examples/data/suitesparse/rma10/rma10.mtx
+ref(i,l)=B(i,j)*C(i,k)*D(j,k)*F(j,l);
+B1_dimension: 46835, B2_dimension: 46835, vals: 2374001
+C1_dimension: 46835, C2_dimension: 64, vals: 2997440
+D1_dimension: 46835, D2_dimension: 64, vals: 2997440
+E1_dimension: 46835, E2_dimension: 64, vals: 2997440
+
+
+kernel execution time:  80.1703 ms
+fused time: 80.65
+
+kernel execution time:  442.648 ms
+sddmm time: 443.191
+
+kernel execution time:  27.375 ms
+spmm time: 27.8981
+
+kernel execution time:  1518.49 ms
+taco reference time: 1519.1
+
+sddmm-spmm execution
+
+-----------------------------------------
+/home/min/a/kadhitha/ispc-examples/data/suitesparse/cant/cant.mtx
+ref(i,l)=B(i,j)*C(i,k)*D(j,k)*F(j,l);
+B1_dimension: 62451, B2_dimension: 62451, vals: 4007383
+C1_dimension: 62451, C2_dimension: 64, vals: 3996864
+D1_dimension: 62451, D2_dimension: 64, vals: 3996864
+E1_dimension: 62451, E2_dimension: 64, vals: 3996864
+
+
+kernel execution time:  147.378 ms
+fused time: 147.862
+
+kernel execution time:  746.182 ms
+sddmm time: 746.722
+
+kernel execution time:  43.521 ms
+spmm time: 44.0217
+
+kernel execution time:  2560.78 ms
+taco reference time: 2561.36
+
+sddmm-spmm execution
+
+-----------------------------------------
+/home/min/a/kadhitha/ispc-examples/data/suitesparse/consph/consph.mtx
+ref(i,l)=B(i,j)*C(i,k)*D(j,k)*F(j,l);
+B1_dimension: 83334, B2_dimension: 83334, vals: 6010480
+C1_dimension: 83334, C2_dimension: 64, vals: 5333376
+D1_dimension: 83334, D2_dimension: 64, vals: 5333376
+E1_dimension: 83334, E2_dimension: 64, vals: 5333376
+
+
+kernel execution time:  220.568 ms
+fused time: 221.066
+
+kernel execution time:  1121.47 ms
+sddmm time: 1122.03
+
+kernel execution time:  61.8518 ms
+spmm time: 62.3779
+
+kernel execution time:  3844.87 ms
+taco reference time: 3845.8
+
+sddmm-spmm execution
+
+-----------------------------------------
+/home/min/a/kadhitha/ispc-examples/data/suitesparse/cop20k_A/cop20k_A.mtx
+ref(i,l)=B(i,j)*C(i,k)*D(j,k)*F(j,l);
+B1_dimension: 121192, B2_dimension: 121192, vals: 2624331
+C1_dimension: 121192, C2_dimension: 64, vals: 7756288
+D1_dimension: 121192, D2_dimension: 64, vals: 7756288
+E1_dimension: 121192, E2_dimension: 64, vals: 7756288
+
+
+kernel execution time:  118.211 ms
+fused time: 118.715
+
+kernel execution time:  552.77 ms
+sddmm time: 553.326
+
+kernel execution time:  49.2278 ms
+spmm time: 49.7369
+
+kernel execution time:  1713.01 ms
+taco reference time: 1713.63
+
+sddmm-spmm execution
+
+-----------------------------------------
+/home/min/a/kadhitha/ispc-examples/data/suitesparse/shipsec1/shipsec1.mtx
+ref(i,l)=B(i,j)*C(i,k)*D(j,k)*F(j,l);
+B1_dimension: 140874, B2_dimension: 140874, vals: 7813404
+C1_dimension: 140874, C2_dimension: 64, vals: 9015936
+D1_dimension: 140874, D2_dimension: 64, vals: 9015936
+E1_dimension: 140874, E2_dimension: 64, vals: 9015936
+
+
+kernel execution time:  300.972 ms
+fused time: 301.471
+
+kernel execution time:  1461.86 ms
+sddmm time: 1462.45
+
+kernel execution time:  89.5313 ms
+spmm time: 90.0418
+
+kernel execution time:  5010.7 ms
+taco reference time: 5011.67
+
+sddmm-spmm execution
+
+-----------------------------------------
+/home/min/a/kadhitha/ispc-examples/data/suitesparse/scircuit/scircuit.mtx
+ref(i,l)=B(i,j)*C(i,k)*D(j,k)*F(j,l);
+B1_dimension: 170998, B2_dimension: 170998, vals: 958936
+C1_dimension: 170998, C2_dimension: 64, vals: 10943872
+D1_dimension: 170998, D2_dimension: 64, vals: 10943872
+E1_dimension: 170998, E2_dimension: 64, vals: 10943872
+
+
+kernel execution time:  52.5196 ms
+fused time: 53.0296
+
+kernel execution time:  210.075 ms
+sddmm time: 210.666
+
+kernel execution time:  67.487 ms
+spmm time: 68.0293
+
+kernel execution time:  632.81 ms
+taco reference time: 633.445
+
+sddmm-spmm execution
+
+-----------------------------------------
+/home/min/a/kadhitha/ispc-examples/data/suitesparse/mac_econ_fwd500/mac_econ_fwd500.mtx
+ref(i,l)=B(i,j)*C(i,k)*D(j,k)*F(j,l);
+B1_dimension: 206500, B2_dimension: 206500, vals: 1273389
+C1_dimension: 206500, C2_dimension: 64, vals: 13216000
+D1_dimension: 206500, D2_dimension: 64, vals: 13216000
+E1_dimension: 206500, E2_dimension: 64, vals: 13216000
+
+
+kernel execution time:  60.3333 ms
+fused time: 60.8277
+
+kernel execution time:  261.834 ms
+sddmm time: 262.379
+
+kernel execution time:  82.326 ms
+spmm time: 82.838
+
+kernel execution time:  836.401 ms
+taco reference time: 837.023
+
+sddmm-spmm execution
+
+-----------------------------------------
+/home/min/a/kadhitha/ispc-examples/data/ufl/webbase-1M/webbase-1M.mtx
+ref(i,l)=B(i,j)*C(i,k)*D(j,k)*F(j,l);
+B1_dimension: 1000005, B2_dimension: 1000005, vals: 3105536
+C1_dimension: 1000005, C2_dimension: 64, vals: 64000320
+D1_dimension: 1000005, D2_dimension: 64, vals: 64000320
+E1_dimension: 1000005, E2_dimension: 64, vals: 64000320
+
+
+kernel execution time:  187.296 ms
+fused time: 187.792
+
+kernel execution time:  616.026 ms
+sddmm time: 616.601
+
+kernel execution time:  382.801 ms
+spmm time: 383.307
+
+kernel execution time:  2082.34 ms
+taco reference time: 2082.95
+
+sddmm-spmm execution
+
+-----------------------------------------
+/home/min/a/kadhitha/ispc-examples/data/suitesparse/circuit5M/circuit5M.mtx
+ref(i,l)=B(i,j)*C(i,k)*D(j,k)*F(j,l);
+B1_dimension: 5558326, B2_dimension: 5558326, vals: 59524291
+C1_dimension: 5558326, C2_dimension: 64, vals: 355732864
+D1_dimension: 5558326, D2_dimension: 64, vals: 355732864
+E1_dimension: 5558326, E2_dimension: 64, vals: 355732864
+
+
+kernel execution time:  2499.56 ms
+fused time: 2500.39
+
+kernel execution time:  11463.5 ms
+sddmm time: 11464.5
+
+kernel execution time:  2581.49 ms
+spmm time: 2582.04
+
+kernel execution time:  39683.3 ms
+taco reference time: 39684.4
+
+
+
+
+
+--------------------
+---------------------
+
+
+
+
+
+
+
+sddmm-spmm execution
+
+-----------------------------------------
+/home/min/a/kadhitha/ispc-examples/data/suitesparse/bcsstk17/bcsstk17.mtx
+ref(i,l)=B(i,j)*C(i,k)*D(j,k)*F(j,l);
+B1_dimension: 10974, B2_dimension: 10974, vals: 428650
+C1_dimension: 10974, C2_dimension: 64, vals: 702336
+D1_dimension: 10974, D2_dimension: 64, vals: 702336
+E1_dimension: 10974, E2_dimension: 64, vals: 702336
+
+
+kernel execution time:  163.669 ms
+fused time: 164.155
+
+kernel execution time:  79.1673 ms
+sddmm time: 79.7118
+
+kernel execution time:  88.6347 ms
+spmm time: 89.0784
+
+kernel execution time:  6143.97 ms
+taco reference time: 6144.94
+
+
+163.669 79.1673 88.6347 6144.94
+
+
+sddmm-spmm execution
+
+-----------------------------------------
+/home/min/a/kadhitha/ispc-examples/data/suitesparse/bcsstk17/bcsstk17.mtx
+ref(i,l)=B(i,j)*C(i,k)*D(j,k)*F(j,l);
+B1_dimension: 10974, B2_dimension: 10974, vals: 428650
+C1_dimension: 10974, C2_dimension: 64, vals: 702336
+D1_dimension: 10974, D2_dimension: 64, vals: 702336
+E1_dimension: 10974, E2_dimension: 64, vals: 702336
+
+
+kernel execution time:  17.2275 ms
+fused time: 17.6988
+
+kernel execution time:  8.26223 ms
+sddmm time: 8.8233
+
+kernel execution time:  19.3989 ms
+spmm time: 19.8422
+
+kernel execution time:  519.537 ms
+taco reference time: 520.073
+
+sddmm-spmm execution
+
+-----------------------------------------
+/home/min/a/kadhitha/ispc-examples/data/suitesparse/bcsstk17/bcsstk17.mtx
+ref(i,l)=B(i,j)*C(i,k)*D(j,k)*F(j,l);
+B1_dimension: 10974, B2_dimension: 10974, vals: 428650
+C1_dimension: 10974, C2_dimension: 64, vals: 702336
+D1_dimension: 10974, D2_dimension: 64, vals: 702336
+E1_dimension: 10974, E2_dimension: 64, vals: 702336
+
+
+kernel execution time:  3.03999 ms
+fused time: 3.51084
+
+kernel execution time:  8.19604 ms
+sddmm time: 8.67702
+
+kernel execution time:  5.63342 ms
+spmm time: 6.05327
+
+kernel execution time:  25.6437 ms
+taco reference time: 26.0382
+
+sddmm-spmm execution
+
+-----------------------------------------
+/home/min/a/kadhitha/ispc-examples/data/suitesparse/pdb1HYS/pdb1HYS.mtx
+ref(i,l)=B(i,j)*C(i,k)*D(j,k)*F(j,l);
+B1_dimension: 36417, B2_dimension: 36417, vals: 4344765
+C1_dimension: 36417, C2_dimension: 64, vals: 2330688
+D1_dimension: 36417, D2_dimension: 64, vals: 2330688
+E1_dimension: 36417, E2_dimension: 64, vals: 2330688
+
+
+kernel execution time:  41.03 ms
+fused time: 41.5262
+
+kernel execution time:  82.5401 ms
+sddmm time: 83.1745
+
+kernel execution time:  15.9687 ms
+spmm time: 16.5644
+
+kernel execution time:  244.774 ms
+taco reference time: 245.387
+
+sddmm-spmm execution
+
+-----------------------------------------
+/home/min/a/kadhitha/ispc-examples/data/suitesparse/rma10/rma10.mtx
+ref(i,l)=B(i,j)*C(i,k)*D(j,k)*F(j,l);
+B1_dimension: 46835, B2_dimension: 46835, vals: 2374001
+C1_dimension: 46835, C2_dimension: 64, vals: 2997440
+D1_dimension: 46835, D2_dimension: 64, vals: 2997440
+E1_dimension: 46835, E2_dimension: 64, vals: 2997440
+
+
+kernel execution time:  27.5081 ms
+fused time: 28.0034
+
+kernel execution time:  45.9865 ms
+sddmm time: 46.5649
+
+kernel execution time:  20.0912 ms
+spmm time: 20.6288
+
+kernel execution time:  138.544 ms
+taco reference time: 139.148
+
+
+----------
+-----------
+
+
+
+
+sddmm-spmm execution
+
+-----------------------------------------
+/home/min/a/kadhitha/ispc-examples/data/suitesparse/bcsstk17/bcsstk17.mtx
+ref(i,l)=B(i,j)*C(i,k)*D(j,k)*F(j,l);
+B1_dimension: 10974, B2_dimension: 10974, vals: 428650
+C1_dimension: 10974, C2_dimension: 64, vals: 702336
+D1_dimension: 10974, D2_dimension: 64, vals: 702336
+E1_dimension: 10974, E2_dimension: 64, vals: 702336
+
+
+kernel execution time:  3.25222 ms
+fused time: 3.71775
+
+kernel execution time:  8.13173 ms
+sddmm time: 8.56798
+
+kernel execution time:  5.42295 ms
+spmm time: 5.85093
+
+kernel execution time:  25.1419 ms
+taco reference time: 25.5332
+
+sddmm-spmm execution
+
+-----------------------------------------
+/home/min/a/kadhitha/ispc-examples/data/suitesparse/pdb1HYS/pdb1HYS.mtx
+ref(i,l)=B(i,j)*C(i,k)*D(j,k)*F(j,l);
+B1_dimension: 36417, B2_dimension: 36417, vals: 4344765
+C1_dimension: 36417, C2_dimension: 64, vals: 2330688
+D1_dimension: 36417, D2_dimension: 64, vals: 2330688
+E1_dimension: 36417, E2_dimension: 64, vals: 2330688
+
+
+kernel execution time:  40.046 ms
+fused time: 40.5327
+
+kernel execution time:  82.7374 ms
+sddmm time: 83.308
+
+kernel execution time:  17.148 ms
+spmm time: 17.6723
+
+kernel execution time:  244.434 ms
+taco reference time: 245.084
+
+sddmm-spmm execution
+
+-----------------------------------------
+/home/min/a/kadhitha/ispc-examples/data/suitesparse/rma10/rma10.mtx
+ref(i,l)=B(i,j)*C(i,k)*D(j,k)*F(j,l);
+B1_dimension: 46835, B2_dimension: 46835, vals: 2374001
+C1_dimension: 46835, C2_dimension: 64, vals: 2997440
+D1_dimension: 46835, D2_dimension: 64, vals: 2997440
+E1_dimension: 46835, E2_dimension: 64, vals: 2997440
+
+
+kernel execution time:  27.3917 ms
+fused time: 27.8878
+
+kernel execution time:  46.1218 ms
+sddmm time: 46.7015
+
+kernel execution time:  19.567 ms
+spmm time: 20.0877
+
+kernel execution time:  136.269 ms
+taco reference time: 136.877
+
+sddmm-spmm execution
+
+-----------------------------------------
+/home/min/a/kadhitha/ispc-examples/data/suitesparse/cant/cant.mtx
+ref(i,l)=B(i,j)*C(i,k)*D(j,k)*F(j,l);
+B1_dimension: 62451, B2_dimension: 62451, vals: 4007383
+C1_dimension: 62451, C2_dimension: 64, vals: 3996864
+D1_dimension: 62451, D2_dimension: 64, vals: 3996864
+E1_dimension: 62451, E2_dimension: 64, vals: 3996864
+
+
+kernel execution time:  42.3074 ms
+fused time: 42.8144
+
+kernel execution time:  75.8411 ms
+sddmm time: 76.427
+
+kernel execution time:  25.5141 ms
+spmm time: 26.0647
+
+kernel execution time:  229.9 ms
+taco reference time: 230.514
+
+sddmm-spmm execution
+
+-----------------------------------------
+/home/min/a/kadhitha/ispc-examples/data/suitesparse/consph/consph.mtx
+ref(i,l)=B(i,j)*C(i,k)*D(j,k)*F(j,l);
+B1_dimension: 83334, B2_dimension: 83334, vals: 6010480
+C1_dimension: 83334, C2_dimension: 64, vals: 5333376
+D1_dimension: 83334, D2_dimension: 64, vals: 5333376
+E1_dimension: 83334, E2_dimension: 64, vals: 5333376
+
+
+kernel execution time:  57.3193 ms
+fused time: 57.8292
+
+kernel execution time:  115.953 ms
+sddmm time: 116.536
+
+kernel execution time:  31.4256 ms
+spmm time: 31.9698
+
+kernel execution time:  344.97 ms
+taco reference time: 345.594
+
+sddmm-spmm execution
+
+-----------------------------------------
+/home/min/a/kadhitha/ispc-examples/data/suitesparse/cop20k_A/cop20k_A.mtx
+ref(i,l)=B(i,j)*C(i,k)*D(j,k)*F(j,l);
+B1_dimension: 121192, B2_dimension: 121192, vals: 2624331
+C1_dimension: 121192, C2_dimension: 64, vals: 7756288
+D1_dimension: 121192, D2_dimension: 64, vals: 7756288
+E1_dimension: 121192, E2_dimension: 64, vals: 7756288
+
+
+kernel execution time:  58.8731 ms
+fused time: 59.371
+
+kernel execution time:  96.3746 ms
+sddmm time: 96.9431
+
+kernel execution time:  52.3502 ms
+spmm time: 52.8781
+
+kernel execution time:  176.858 ms
+taco reference time: 177.482
+
+sddmm-spmm execution
+
+-----------------------------------------
+/home/min/a/kadhitha/ispc-examples/data/suitesparse/shipsec1/shipsec1.mtx
+ref(i,l)=B(i,j)*C(i,k)*D(j,k)*F(j,l);
+B1_dimension: 140874, B2_dimension: 140874, vals: 7813404
+C1_dimension: 140874, C2_dimension: 64, vals: 9015936
+D1_dimension: 140874, D2_dimension: 64, vals: 9015936
+E1_dimension: 140874, E2_dimension: 64, vals: 9015936
+
+
+kernel execution time:  97.3646 ms
+fused time: 97.869
+
+kernel execution time:  154.708 ms
+sddmm time: 155.284
+
+kernel execution time:  61.8392 ms
+spmm time: 62.3666
+
+kernel execution time:  455.127 ms
+taco reference time: 455.719
+
+sddmm-spmm execution
+
+-----------------------------------------
+/home/min/a/kadhitha/ispc-examples/data/suitesparse/scircuit/scircuit.mtx
+ref(i,l)=B(i,j)*C(i,k)*D(j,k)*F(j,l);
+B1_dimension: 170998, B2_dimension: 170998, vals: 958936
+C1_dimension: 170998, C2_dimension: 64, vals: 10943872
+D1_dimension: 170998, D2_dimension: 64, vals: 10943872
+E1_dimension: 170998, E2_dimension: 64, vals: 10943872
+
+
+kernel execution time:  30.2488 ms
+fused time: 30.744
+
+kernel execution time:  39.9852 ms
+sddmm time: 40.5654
+
+kernel execution time:  67.5062 ms
+spmm time: 68.0413
+
+kernel execution time:  74.4023 ms
+taco reference time: 75.0271
+
+sddmm-spmm execution
+
+-----------------------------------------
+/home/min/a/kadhitha/ispc-examples/data/suitesparse/mac_econ_fwd500/mac_econ_fwd500.mtx
+ref(i,l)=B(i,j)*C(i,k)*D(j,k)*F(j,l);
+B1_dimension: 206500, B2_dimension: 206500, vals: 1273389
+C1_dimension: 206500, C2_dimension: 64, vals: 13216000
+D1_dimension: 206500, D2_dimension: 64, vals: 13216000
+E1_dimension: 206500, E2_dimension: 64, vals: 13216000
+
+
+kernel execution time:  34.9737 ms
+fused time: 35.4724
+
+kernel execution time:  39.6662 ms
+sddmm time: 40.2179
+
+kernel execution time:  82.4413 ms
+spmm time: 82.9627
+
+kernel execution time:  91.1415 ms
+taco reference time: 91.8035
+
+sddmm-spmm execution
+
+-----------------------------------------
+
+sddmm-spmm execution
+
+-----------------------------------------
+/home/min/a/kadhitha/ispc-examples/data/ufl/webbase-1M/webbase-1M.mtx
+ref(i,l)=B(i,j)*C(i,k)*D(j,k)*F(j,l);
+B1_dimension: 1000005, B2_dimension: 1000005, vals: 3105536
+C1_dimension: 1000005, C2_dimension: 64, vals: 64000320
+D1_dimension: 1000005, D2_dimension: 64, vals: 64000320
+E1_dimension: 1000005, E2_dimension: 64, vals: 64000320
+
+
+kernel execution time:  118.92 ms
+fused time: 119.4
+
+kernel execution time:  90.6065 ms
+sddmm time: 91.1522
+
+kernel execution time:  390.342 ms
+spmm time: 390.863
+
+kernel execution time:  423.16 ms
+taco reference time: 423.757
+
+sddmm-spmm execution
+
+-----------------------------------------
+/home/min/a/kadhitha/ispc-examples/data/suitesparse/circuit5M/circuit5M.mtx
+ref(i,l)=B(i,j)*C(i,k)*D(j,k)*F(j,l);
+B1_dimension: 5558326, B2_dimension: 5558326, vals: 59524291
+C1_dimension: 5558326, C2_dimension: 64, vals: 355732864
+D1_dimension: 5558326, D2_dimension: 64, vals: 355732864
+E1_dimension: 5558326, E2_dimension: 64, vals: 355732864
+
+
+kernel execution time:  1158.96 ms
+fused time: 1159.93
+
+kernel execution time:  1561.31 ms
+sddmm time: 1561.87
+
+kernel execution time:  2533.87 ms
+spmm time: 2534.43
+
+kernel execution time:  6529.81 ms
+taco reference time: 6530.95
+
+sddmm-spmm execution
+
+-----------------------------------------
+/home/min/a/kadhitha/ispc-examples/data/suitesparse/bcsstk17/bcsstk17.mtx
+ref(i,l)=B(i,j)*C(i,k)*D(j,k)*F(j,l);
+B1_dimension: 10974, B2_dimension: 10974, vals: 428650
+C1_dimension: 10974, C2_dimension: 64, vals: 702336
+D1_dimension: 10974, D2_dimension: 64, vals: 702336
+E1_dimension: 10974, E2_dimension: 64, vals: 702336
+
+
+kernel execution time:  3.12799 ms
+fused time: 3.5888
+
+kernel execution time:  8.20063 ms
+sddmm time: 8.64883
+
+kernel execution time:  5.23889 ms
+spmm time: 5.67244
+
+kernel execution time:  25.0758 ms
+taco reference time: 25.4671
+
+sddmm-spmm execution
+
+-----------------------------------------
+/home/min/a/kadhitha/ispc-examples/data/suitesparse/pdb1HYS/pdb1HYS.mtx
+ref(i,l)=B(i,j)*C(i,k)*D(j,k)*F(j,l);
+B1_dimension: 36417, B2_dimension: 36417, vals: 4344765
+C1_dimension: 36417, C2_dimension: 64, vals: 2330688
+D1_dimension: 36417, D2_dimension: 64, vals: 2330688
+E1_dimension: 36417, E2_dimension: 64, vals: 2330688
+
+
+kernel execution time:  39.3104 ms
+fused time: 39.7945
+
+kernel execution time:  82.5126 ms
+sddmm time: 83.0785
+
+kernel execution time:  15.6324 ms
+spmm time: 16.1739
+
+kernel execution time:  245.768 ms
+taco reference time: 246.406
+
+sddmm-spmm execution
+
+-----------------------------------------
+/home/min/a/kadhitha/ispc-examples/data/suitesparse/synthetic/synthetic.mtx
+ref(i,l)=B(i,j)*C(i,k)*D(j,k)*F(j,l);
+B1_dimension: 102, B2_dimension: 103, vals: 3149
+C1_dimension: 102, C2_dimension: 64, vals: 6528
+D1_dimension: 103, D2_dimension: 64, vals: 6592
+E1_dimension: 103, E2_dimension: 64, vals: 6592
+
+
+kernel execution time:  0.160132 ms
+fused time: 0.567098
+
+kernel execution time:  0.065981 ms
+sddmm time: 0.853092
+
+kernel execution time:  0.081641 ms
+spmm time: 0.331655
+
+kernel execution time:  0.336385 ms
+taco reference time: 1.05356
+
+sddmm-spmm execution
+
+-----------------------------------------
+/home/min/a/kadhitha/ispc-examples/data/suitesparse/cage3/cage3.mtx
+ref(i,l)=B(i,j)*C(i,k)*D(j,k)*F(j,l);
+B1_dimension: 5, B2_dimension: 5, vals: 19
+C1_dimension: 5, C2_dimension: 64, vals: 320
+D1_dimension: 5, D2_dimension: 64, vals: 320
+E1_dimension: 5, E2_dimension: 64, vals: 320
+
+
+kernel execution time:  0.0165 ms
+fused time: 0.78845
+
+kernel execution time:  0.011641 ms
+sddmm time: 0.873231
+
+kernel execution time:  0.011011 ms
+spmm time: 0.486977
+
+kernel execution time:  0.059631 ms
+taco reference time: 0.958413
+
+sddmm-spmm execution
+
+-----------------------------------------
+/home/min/a/kadhitha/ispc-examples/data/suitesparse/cage3/cage3.mtx
+ref(i,l)=B(i,j)*C(i,k)*D(j,k)*F(j,l);
+B1_dimension: 5, B2_dimension: 5, vals: 19
+C1_dimension: 5, C2_dimension: 64, vals: 320
+D1_dimension: 5, D2_dimension: 64, vals: 320
+E1_dimension: 5, E2_dimension: 64, vals: 320
+
+
+kernel execution time:  0.01989 ms
+fused time: 0.813381
+
+kernel execution time:  0.01392 ms
+sddmm time: 0.976913
+
+kernel execution time:  0.013151 ms
+spmm time: 0.497287
+
+kernel execution time:  0.058 ms
+taco reference time: 0.974083
+
+sddmm-spmm execution
+
+-----------------------------------------
+/home/min/a/kadhitha/ispc-examples/data/suitesparse/cage3/cage3.mtx
+ref(i,l)=B(i,j)*C(i,k)*D(j,k)*F(j,l);
+B1_dimension: 5, B2_dimension: 5, vals: 19
+C1_dimension: 5, C2_dimension: 64, vals: 320
+D1_dimension: 5, D2_dimension: 64, vals: 320
+E1_dimension: 5, E2_dimension: 64, vals: 320
+
+
+kernel execution time:  0.0192 ms
+fused time: 0.8019
+
+kernel execution time:  0.012991 ms
+sddmm time: 0.990253
+
+kernel execution time:  0.01291 ms
+spmm time: 0.490396
+
+kernel execution time:  0.057891 ms
+taco reference time: 0.929332
+
+sddmm-spmm execution
+
+-----------------------------------------
+/home/min/a/kadhitha/ispc-examples/data/suitesparse/cage3/cage3.mtx
+ref(i,l)=B(i,j)*C(i,k)*D(j,k)*F(j,l);
+B1_dimension: 5, B2_dimension: 5, vals: 19
+C1_dimension: 5, C2_dimension: 64, vals: 320
+D1_dimension: 5, D2_dimension: 64, vals: 320
+E1_dimension: 5, E2_dimension: 64, vals: 320
+
+
+kernel execution time:  0.01797 ms
+fused time: 0.779061
+
+kernel execution time:  0.013 ms
+sddmm time: 0.7717
+
+kernel execution time:  0.01429 ms
+spmm time: 0.487296
+
+kernel execution time:  0.05764 ms
+taco reference time: 0.72862
+
+sddmm-spmm execution
+
+
+
+sddmm with parallel execution
+-----------------------------------------
+/home/min/a/kadhitha/ispc-examples/data/suitesparse/cage3/cage3.mtx
+ref(i,l)=B(i,j)*C(i,k)*D(j,k)*F(j,l);
+B1_dimension: 5, B2_dimension: 5, vals: 19
+C1_dimension: 5, C2_dimension: 64, vals: 320
+D1_dimension: 5, D2_dimension: 64, vals: 320
+E1_dimension: 5, E2_dimension: 64, vals: 320
+
+
+kernel execution time:  0.02088 ms
+fused time: 0.912153
+
+kernel execution time:  0.01161 ms
+sddmm time: 0.944402
+
+kernel execution time:  0.01292 ms
+spmm time: 0.562267
+
+kernel execution time:  0.067781 ms
+taco reference time: 1.10908
+
+sddmm-spmm execution
+
+-----------------------------------------
+/home/min/a/kadhitha/ispc-examples/data/suitesparse/pdb1HYS/pdb1HYS.mtx
+ref(i,l)=B(i,j)*C(i,k)*D(j,k)*F(j,l);
+B1_dimension: 36417, B2_dimension: 36417, vals: 4344765
+C1_dimension: 36417, C2_dimension: 64, vals: 2330688
+D1_dimension: 36417, D2_dimension: 64, vals: 2330688
+E1_dimension: 36417, E2_dimension: 64, vals: 2330688
+
+
+kernel execution time:  166.429 ms
+fused time: 166.938
+
+kernel execution time:  83.0174 ms
+sddmm time: 83.5946
+
+kernel execution time:  303.7 ms
+spmm time: 304.246
+
+kernel execution time:  5227.75 ms
+taco reference time: 5228.77
+
+sddmm-spmm execution
+
+-----------------------------------------
+/home/min/a/kadhitha/ispc-examples/data/suitesparse/pdb1HYS/pdb1HYS.mtx
+ref(i,l)=B(i,j)*C(i,k)*D(j,k)*F(j,l);
+B1_dimension: 36417, B2_dimension: 36417, vals: 4344765
+C1_dimension: 36417, C2_dimension: 64, vals: 2330688
+D1_dimension: 36417, D2_dimension: 64, vals: 2330688
+E1_dimension: 36417, E2_dimension: 64, vals: 2330688
+
+
+kernel execution time:  166.755 ms
+fused time: 167.262
+
+kernel execution time:  83.1762 ms
+sddmm time: 83.7333
+
+kernel execution time:  303.525 ms
+spmm time: 304.051
+
+kernel execution time:  5232.78 ms
+taco reference time: 5233.91
+
+sddmm-spmm execution
+
+-----------------------------------------
+/home/min/a/kadhitha/ispc-examples/data/suitesparse/pdb1HYS/pdb1HYS.mtx
+ref(i,l)=B(i,j)*C(i,k)*D(j,k)*F(j,l);
+B1_dimension: 36417, B2_dimension: 36417, vals: 4344765
+C1_dimension: 36417, C2_dimension: 64, vals: 2330688
+D1_dimension: 36417, D2_dimension: 64, vals: 2330688
+E1_dimension: 36417, E2_dimension: 64, vals: 2330688
+
+
+kernel execution time:  27.2912 ms
+fused time: 27.7968
+
+kernel execution time:  84.1751 ms
+sddmm time: 84.7569
+
+kernel execution time:  12.6781 ms
+spmm time: 13.1881
+
+kernel execution time:  134.209 ms
+taco reference time: 134.846
+
+sddmm-spmm execution
+
+-----------------------------------------
+/home/min/a/kadhitha/ispc-examples/data/suitesparse/pdb1HYS/pdb1HYS.mtx
+ref(i,l)=B(i,j)*C(i,k)*D(j,k)*F(j,l);
+B1_dimension: 36417, B2_dimension: 36417, vals: 4344765
+C1_dimension: 36417, C2_dimension: 64, vals: 2330688
+D1_dimension: 36417, D2_dimension: 64, vals: 2330688
+E1_dimension: 36417, E2_dimension: 64, vals: 2330688
+
+
+kernel execution time:  26.6207 ms
+fused time: 27.1299
+
+kernel execution time:  86.3046 ms
+sddmm time: 86.9394
+
+kernel execution time:  12.7749 ms
+spmm time: 13.2807
+
+kernel execution time:  130.582 ms
+taco reference time: 131.278
+
+sddmm-spmm execution
+
+-----------------------------------------
+/home/min/a/kadhitha/ispc-examples/data/suitesparse/pdb1HYS/pdb1HYS.mtx
+ref(i,l)=B(i,j)*C(i,k)*D(j,k)*F(j,l);
+B1_dimension: 36417, B2_dimension: 36417, vals: 4344765
+C1_dimension: 36417, C2_dimension: 64, vals: 2330688
+D1_dimension: 36417, D2_dimension: 64, vals: 2330688
+E1_dimension: 36417, E2_dimension: 64, vals: 2330688
+
+
+kernel execution time:  101.848 ms
+fused time: 102.362
+
+kernel execution time:  83.9029 ms
+sddmm time: 84.4969
+
+kernel execution time:  42.5674 ms
+spmm time: 43.1242
+
+kernel execution time:  708.807 ms
+taco reference time: 709.518
+
+sddmm-spmm execution
+
+-----------------------------------------
+/home/min/a/kadhitha/ispc-examples/data/suitesparse/pdb1HYS/pdb1HYS.mtx
+ref(i,l)=B(i,j)*C(i,k)*D(j,k)*F(j,l);
+B1_dimension: 36417, B2_dimension: 36417, vals: 4344765
+C1_dimension: 36417, C2_dimension: 64, vals: 2330688
+D1_dimension: 36417, D2_dimension: 64, vals: 2330688
+E1_dimension: 36417, E2_dimension: 64, vals: 2330688
+
+
+kernel execution time:  107.29 ms
+fused time: 107.797
+
+kernel execution time:  83.8499 ms
+sddmm time: 84.3953
+
+kernel execution time:  43.5065 ms
+spmm time: 44.0135
+
+kernel execution time:  705.909 ms
+taco reference time: 706.511
+
+sddmm-spmm execution
+
+-----------------------------------------
+/home/min/a/kadhitha/ispc-examples/data/suitesparse/pdb1HYS/pdb1HYS.mtx
+ref(i,l)=B(i,j)*C(i,k)*D(j,k)*F(j,l);
+B1_dimension: 36417, B2_dimension: 36417, vals: 4344765
+C1_dimension: 36417, C2_dimension: 64, vals: 2330688
+D1_dimension: 36417, D2_dimension: 64, vals: 2330688
+E1_dimension: 36417, E2_dimension: 64, vals: 2330688
+
+
+kernel execution time:  26.2026 ms
+fused time: 26.7322
+
+kernel execution time:  86.809 ms
+sddmm time: 87.4374
+
+kernel execution time:  12.6681 ms
+spmm time: 13.1758
+
+kernel execution time:  130.015 ms
+taco reference time: 130.717
+
+sddmm-spmm execution
+
+-----------------------------------------
+/home/min/a/kadhitha/ispc-examples/data/suitesparse/bcsstk17/bcsstk17.mtx
+ref(i,l)=B(i,j)*C(i,k)*D(j,k)*F(j,l);
+B1_dimension: 10974, B2_dimension: 10974, vals: 428650
+C1_dimension: 10974, C2_dimension: 64, vals: 702336
+D1_dimension: 10974, D2_dimension: 64, vals: 702336
+E1_dimension: 10974, E2_dimension: 64, vals: 702336
+
+
+sddmm-spmm execution
+
+-----------------------------------------
+/home/min/a/kadhitha/ispc-examples/data/suitesparse/bcsstk17/bcsstk17.mtx
+ref(i,l)=B(i,j)*C(i,k)*D(j,k)*F(j,l);
+B1_dimension: 10974, B2_dimension: 10974, vals: 428650
+C1_dimension: 10974, C2_dimension: 64, vals: 702336
+D1_dimension: 10974, D2_dimension: 64, vals: 702336
+E1_dimension: 10974, E2_dimension: 64, vals: 702336
+
+
+sddmm-spmm execution
+
+-----------------------------------------
+/home/min/a/kadhitha/ispc-examples/data/suitesparse/bcsstk17/bcsstk17.mtx
+ref(i,l)=B(i,j)*C(i,k)*D(j,k)*F(j,l);
+B1_dimension: 10974, B2_dimension: 10974, vals: 428650
+C1_dimension: 10974, C2_dimension: 64, vals: 702336
+D1_dimension: 10974, D2_dimension: 64, vals: 702336
+E1_dimension: 10974, E2_dimension: 64, vals: 702336
+
+
+sddmm-spmm execution
+
+-----------------------------------------
+/home/min/a/kadhitha/ispc-examples/data/suitesparse/bcsstk17/bcsstk17.mtx
+ref(i,l)=B(i,j)*C(i,k)*D(j,k)*F(j,l);
+B1_dimension: 10974, B2_dimension: 10974, vals: 428650
+C1_dimension: 10974, C2_dimension: 64, vals: 702336
+D1_dimension: 10974, D2_dimension: 64, vals: 702336
+E1_dimension: 10974, E2_dimension: 64, vals: 702336
+
+
+sddmm-spmm execution
+
+-----------------------------------------
+/home/min/a/kadhitha/ispc-examples/data/suitesparse/bcsstk17/bcsstk17.mtx
+ref(i,l)=B(i,j)*C(i,k)*D(j,k)*F(j,l);
+B1_dimension: 10974, B2_dimension: 10974, vals: 428650
+C1_dimension: 10974, C2_dimension: 64, vals: 702336
+D1_dimension: 10974, D2_dimension: 64, vals: 702336
+E1_dimension: 10974, E2_dimension: 64, vals: 702336
+
+
+sddmm-spmm execution
+
+-----------------------------------------
+/home/min/a/kadhitha/ispc-examples/data/suitesparse/bcsstk17/bcsstk17.mtx
+ref(i,l)=B(i,j)*C(i,k)*D(j,k)*F(j,l);
+B1_dimension: 10974, B2_dimension: 10974, vals: 428650
+C1_dimension: 10974, C2_dimension: 64, vals: 702336
+D1_dimension: 10974, D2_dimension: 64, vals: 702336
+E1_dimension: 10974, E2_dimension: 64, vals: 702336
+
+
+sddmm-spmm execution
+
+-----------------------------------------
+/home/min/a/kadhitha/ispc-examples/data/suitesparse/bcsstk17/bcsstk17.mtx
+ref(i,l)=B(i,j)*C(i,k)*D(j,k)*F(j,l);
+B1_dimension: 10974, B2_dimension: 10974, vals: 428650
+C1_dimension: 10974, C2_dimension: 64, vals: 702336
+D1_dimension: 10974, D2_dimension: 64, vals: 702336
+E1_dimension: 10974, E2_dimension: 64, vals: 702336
+
+
+kernel execution time:  4.9002 ms
+fused time: 5.40296
+
+kernel execution time:  9.21483 ms
+sddmm time: 9.69115
+
+kernel execution time:  5.35955 ms
+spmm time: 5.79675
+
+kernel execution time:  14.9148 ms
+taco reference time: 15.4012
+
+sddmm-spmm execution
+
+-----------------------------------------
+/home/min/a/kadhitha/ispc-examples/data/suitesparse/bcsstk17/bcsstk17.mtx
+ref(i,l)=B(i,j)*C(i,k)*D(j,k)*F(j,l);
+B1_dimension: 10974, B2_dimension: 10974, vals: 428650
+C1_dimension: 10974, C2_dimension: 64, vals: 702336
+D1_dimension: 10974, D2_dimension: 64, vals: 702336
+E1_dimension: 10974, E2_dimension: 64, vals: 702336
+
+
+sddmm-spmm execution
+
+-----------------------------------------
+/home/min/a/kadhitha/ispc-examples/data/suitesparse/bcsstk17/bcsstk17.mtx
+ref(i,l)=B(i,j)*C(i,k)*D(j,k)*F(j,l);
+B1_dimension: 10974, B2_dimension: 10974, vals: 428650
+C1_dimension: 10974, C2_dimension: 64, vals: 702336
+D1_dimension: 10974, D2_dimension: 64, vals: 702336
+E1_dimension: 10974, E2_dimension: 64, vals: 702336
+
+
+kernel execution time:  2.39607 ms
+fused time: 2.86927
+
+kernel execution time:  8.62899 ms
+sddmm time: 8.97544
+
+kernel execution time:  5.41841 ms
+spmm time: 5.83089
+
+kernel execution time:  14.2058 ms
+taco reference time: 14.5956
+
+sddmm-spmm execution
+
+-----------------------------------------
+/home/min/a/kadhitha/ispc-examples/data/suitesparse/bcsstk17/bcsstk17.mtx
+ref(i,l)=B(i,j)*C(i,k)*D(j,k)*F(j,l);
+B1_dimension: 10974, B2_dimension: 10974, vals: 428650
+C1_dimension: 10974, C2_dimension: 64, vals: 702336
+D1_dimension: 10974, D2_dimension: 64, vals: 702336
+E1_dimension: 10974, E2_dimension: 64, vals: 702336
+
+
+sddmm-spmm execution
+
+-----------------------------------------
+/home/min/a/kadhitha/ispc-examples/data/suitesparse/bcsstk17/bcsstk17.mtx
+ref(i,l)=B(i,j)*C(i,k)*D(j,k)*F(j,l);
+B1_dimension: 10974, B2_dimension: 10974, vals: 428650
+C1_dimension: 10974, C2_dimension: 64, vals: 702336
+D1_dimension: 10974, D2_dimension: 64, vals: 702336
+E1_dimension: 10974, E2_dimension: 64, vals: 702336
+
+
+sddmm-spmm execution
+
+-----------------------------------------
+/home/min/a/kadhitha/ispc-examples/data/suitesparse/bcsstk17/bcsstk17.mtx
+ref(i,l)=B(i,j)*C(i,k)*D(j,k)*F(j,l);
+B1_dimension: 10974, B2_dimension: 10974, vals: 428650
+C1_dimension: 10974, C2_dimension: 64, vals: 702336
+D1_dimension: 10974, D2_dimension: 64, vals: 702336
+E1_dimension: 10974, E2_dimension: 64, vals: 702336
+
+
+sddmm-spmm execution
+
+-----------------------------------------
+/home/min/a/kadhitha/ispc-examples/data/suitesparse/bcsstk17/bcsstk17.mtx
+ref(i,l)=B(i,j)*C(i,k)*D(j,k)*F(j,l);
+B1_dimension: 10974, B2_dimension: 10974, vals: 428650
+C1_dimension: 10974, C2_dimension: 64, vals: 702336
+D1_dimension: 10974, D2_dimension: 64, vals: 702336
+E1_dimension: 10974, E2_dimension: 64, vals: 702336
+
+
+sddmm-spmm execution
+
+-----------------------------------------
+/home/min/a/kadhitha/ispc-examples/data/suitesparse/bcsstk17/bcsstk17.mtx
+ref(i,l)=B(i,j)*C(i,k)*D(j,k)*F(j,l);
+B1_dimension: 10974, B2_dimension: 10974, vals: 428650
+C1_dimension: 10974, C2_dimension: 64, vals: 702336
+D1_dimension: 10974, D2_dimension: 64, vals: 702336
+E1_dimension: 10974, E2_dimension: 64, vals: 702336
+
+
+sddmm-spmm execution
+
+-----------------------------------------
+/home/min/a/kadhitha/ispc-examples/data/suitesparse/bcsstk17/bcsstk17.mtx
+ref(i,l)=B(i,j)*C(i,k)*D(j,k)*F(j,l);
+B1_dimension: 10974, B2_dimension: 10974, vals: 428650
+C1_dimension: 10974, C2_dimension: 64, vals: 702336
+D1_dimension: 10974, D2_dimension: 64, vals: 702336
+E1_dimension: 10974, E2_dimension: 64, vals: 702336
+
+
+kernel execution time:  1.85339 ms
+fused time: 2.66762
+
+sddmm-spmm execution
+
+-----------------------------------------
+/home/min/a/kadhitha/ispc-examples/data/suitesparse/bcsstk17/bcsstk17.mtx
+ref(i,l)=B(i,j)*C(i,k)*D(j,k)*F(j,l);
+B1_dimension: 10974, B2_dimension: 10974, vals: 428650
+C1_dimension: 10974, C2_dimension: 64, vals: 702336
+D1_dimension: 10974, D2_dimension: 64, vals: 702336
+E1_dimension: 10974, E2_dimension: 64, vals: 702336
+
+
+kernel execution time:  4.94195 ms
+fused time: 6.0647
+
+sddmm-spmm execution
+
+-----------------------------------------
+/home/min/a/kadhitha/ispc-examples/data/suitesparse/bcsstk17/bcsstk17.mtx
+ref(i,l)=B(i,j)*C(i,k)*D(j,k)*F(j,l);
+B1_dimension: 10974, B2_dimension: 10974, vals: 428650
+C1_dimension: 10974, C2_dimension: 64, vals: 702336
+D1_dimension: 10974, D2_dimension: 64, vals: 702336
+E1_dimension: 10974, E2_dimension: 64, vals: 702336
+
+
+kernel execution time:  5.09918 ms
+fused time: 6.23075
+
+kernel execution time:  14.2105 ms
+sddmm time: 15.026
+
+sddmm-spmm execution
+
+-----------------------------------------
+/home/min/a/kadhitha/ispc-examples/data/suitesparse/bcsstk17/bcsstk17.mtx
+ref(i,l)=B(i,j)*C(i,k)*D(j,k)*F(j,l);
+B1_dimension: 10974, B2_dimension: 10974, vals: 428650
+C1_dimension: 10974, C2_dimension: 64, vals: 702336
+D1_dimension: 10974, D2_dimension: 64, vals: 702336
+E1_dimension: 10974, E2_dimension: 64, vals: 702336
+
+
+kernel execution time:  4.93573 ms
+fused time: 5.42636
+
+kernel execution time:  8.35333 ms
+sddmm time: 8.77215
+
+kernel execution time:  5.35189 ms
+spmm time: 5.7874
+
+kernel execution time:  15.4744 ms
+taco reference time: 15.8619
+
+sddmm-spmm execution
+
+-----------------------------------------
+/home/min/a/kadhitha/ispc-examples/data/suitesparse/bcsstk17/bcsstk17.mtx
+ref(i,l)=B(i,j)*C(i,k)*D(j,k)*F(j,l);
+B1_dimension: 10974, B2_dimension: 10974, vals: 428650
+C1_dimension: 10974, C2_dimension: 64, vals: 702336
+D1_dimension: 10974, D2_dimension: 64, vals: 702336
+E1_dimension: 10974, E2_dimension: 64, vals: 702336
+
+
+kernel execution time:  1.72938 ms
+fused time: 2.19226
+
+kernel execution time:  8.38474 ms
+sddmm time: 8.70208
+
+kernel execution time:  5.55896 ms
+spmm time: 5.96847
+
+kernel execution time:  13.8271 ms
+taco reference time: 14.2228
+
+sddmm-spmm execution
+
+-----------------------------------------
+/home/min/a/kadhitha/ispc-examples/data/suitesparse/bcsstk17/bcsstk17.mtx
+ref(i,l)=B(i,j)*C(i,k)*D(j,k)*F(j,l);
+B1_dimension: 10974, B2_dimension: 10974, vals: 428650
+C1_dimension: 10974, C2_dimension: 64, vals: 702336
+D1_dimension: 10974, D2_dimension: 64, vals: 702336
+E1_dimension: 10974, E2_dimension: 64, vals: 702336
+
+
+kernel execution time:  1.99224 ms
+fused time: 2.45758
+
+kernel execution time:  8.4613 ms
+sddmm time: 8.79168
+
+kernel execution time:  5.51595 ms
+spmm time: 5.95761
+
+kernel execution time:  13.5919 ms
+taco reference time: 13.973
+
+sddmm-spmm execution
+
+-----------------------------------------
+/home/min/a/kadhitha/ispc-examples/data/suitesparse/bcsstk17/bcsstk17.mtx
+ref(i,l)=B(i,j)*C(i,k)*D(j,k)*F(j,l);
+B1_dimension: 10974, B2_dimension: 10974, vals: 428650
+C1_dimension: 10974, C2_dimension: 64, vals: 702336
+D1_dimension: 10974, D2_dimension: 64, vals: 702336
+E1_dimension: 10974, E2_dimension: 64, vals: 702336
+
+
+kernel execution time:  2.17974 ms
+fused time: 2.64915
+
+kernel execution time:  9.49553 ms
+sddmm time: 9.89178
+
+kernel execution time:  5.3851 ms
+spmm time: 5.80552
+
+kernel execution time:  15.1854 ms
+taco reference time: 15.6294
+
+sddmm-spmm execution
+
+-----------------------------------------
+/home/min/a/kadhitha/ispc-examples/data/suitesparse/bcsstk17/bcsstk17.mtx
+ref(i,l)=B(i,j)*C(i,k)*D(j,k)*F(j,l);
+B1_dimension: 10974, B2_dimension: 10974, vals: 428650
+C1_dimension: 10974, C2_dimension: 64, vals: 702336
+D1_dimension: 10974, D2_dimension: 64, vals: 702336
+E1_dimension: 10974, E2_dimension: 64, vals: 702336
+
+
+sddmm-spmm execution
+
+-----------------------------------------
+/home/min/a/kadhitha/ispc-examples/data/suitesparse/bcsstk17/bcsstk17.mtx
+ref(i,l)=B(i,j)*C(i,k)*D(j,k)*F(j,l);
+B1_dimension: 10974, B2_dimension: 10974, vals: 428650
+C1_dimension: 10974, C2_dimension: 64, vals: 702336
+D1_dimension: 10974, D2_dimension: 64, vals: 702336
+E1_dimension: 10974, E2_dimension: 64, vals: 702336
+
+
+sddmm-spmm execution
+
+-----------------------------------------
+/home/min/a/kadhitha/ispc-examples/data/suitesparse/bcsstk17/bcsstk17.mtx
+ref(i,l)=B(i,j)*C(i,k)*D(j,k)*F(j,l);
+B1_dimension: 10974, B2_dimension: 10974, vals: 428650
+C1_dimension: 10974, C2_dimension: 64, vals: 702336
+D1_dimension: 10974, D2_dimension: 64, vals: 702336
+E1_dimension: 10974, E2_dimension: 64, vals: 702336
+
+
+kernel execution time:  1.77985 ms
+fused time: 2.24554
+
+kernel execution time:  9.31643 ms
+sddmm time: 9.66639
+
+kernel execution time:  5.48351 ms
+spmm time: 5.89775
+
+kernel execution time:  15.1635 ms
+taco reference time: 15.6173
+
+sddmm-spmm execution
+
+-----------------------------------------
+/home/min/a/kadhitha/ispc-examples/data/suitesparse/bcsstk17/bcsstk17.mtx
+ref(i,l)=B(i,j)*C(i,k)*D(j,k)*F(j,l);
+B1_dimension: 10974, B2_dimension: 10974, vals: 428650
+C1_dimension: 10974, C2_dimension: 64, vals: 702336
+D1_dimension: 10974, D2_dimension: 64, vals: 702336
+E1_dimension: 10974, E2_dimension: 64, vals: 702336
+
+
+sddmm-spmm execution
+
+-----------------------------------------
+/home/min/a/kadhitha/ispc-examples/data/suitesparse/bcsstk17/bcsstk17.mtx
+ref(i,l)=B(i,j)*C(i,k)*D(j,k)*F(j,l);
+B1_dimension: 10974, B2_dimension: 10974, vals: 428650
+C1_dimension: 10974, C2_dimension: 64, vals: 702336
+D1_dimension: 10974, D2_dimension: 64, vals: 702336
+E1_dimension: 10974, E2_dimension: 64, vals: 702336
+
+
+sddmm-spmm execution
+
+-----------------------------------------
+/home/min/a/kadhitha/ispc-examples/data/suitesparse/bcsstk17/bcsstk17.mtx
+ref(i,l)=B(i,j)*C(i,k)*D(j,k)*F(j,l);
+B1_dimension: 10974, B2_dimension: 10974, vals: 428650
+C1_dimension: 10974, C2_dimension: 64, vals: 702336
+D1_dimension: 10974, D2_dimension: 64, vals: 702336
+E1_dimension: 10974, E2_dimension: 64, vals: 702336
+
+
+sddmm-spmm execution
+
+-----------------------------------------
+/home/min/a/kadhitha/ispc-examples/data/suitesparse/bcsstk17/bcsstk17.mtx
+ref(i,l)=B(i,j)*C(i,k)*D(j,k)*F(j,l);
+B1_dimension: 10974, B2_dimension: 10974, vals: 428650
+C1_dimension: 10974, C2_dimension: 64, vals: 702336
+D1_dimension: 10974, D2_dimension: 64, vals: 702336
+E1_dimension: 10974, E2_dimension: 64, vals: 702336
+
+
+sddmm-spmm execution
+
+-----------------------------------------
+/home/min/a/kadhitha/ispc-examples/data/suitesparse/bcsstk17/bcsstk17.mtx
+ref(i,l)=B(i,j)*C(i,k)*D(j,k)*F(j,l);
+B1_dimension: 10974, B2_dimension: 10974, vals: 428650
+C1_dimension: 10974, C2_dimension: 64, vals: 702336
+D1_dimension: 10974, D2_dimension: 64, vals: 702336
+E1_dimension: 10974, E2_dimension: 64, vals: 702336
+
+
+kernel execution time:  2.09062 ms
+fused time: 2.75986
+
+kernel execution time:  8.53961 ms
+sddmm time: 8.99868
+
+kernel execution time:  5.43386 ms
+spmm time: 5.86914
+
+kernel execution time:  14.7848 ms
+taco reference time: 15.2128
+
+sddmm-spmm execution
+
+-----------------------------------------
+/home/min/a/kadhitha/ispc-examples/data/suitesparse/bcsstk17/bcsstk17.mtx
+ref(i,l)=B(i,j)*C(i,k)*D(j,k)*F(j,l);
+B1_dimension: 10974, B2_dimension: 10974, vals: 428650
+C1_dimension: 10974, C2_dimension: 64, vals: 702336
+D1_dimension: 10974, D2_dimension: 64, vals: 702336
+E1_dimension: 10974, E2_dimension: 64, vals: 702336
+
+
+kernel execution time:  1.99345 ms
+fused time: 2.4639
+
+kernel execution time:  10.0509 ms
+sddmm time: 10.4945
+
+kernel execution time:  5.37643 ms
+spmm time: 5.82607
+
+kernel execution time:  15.0911 ms
+taco reference time: 15.5753
+
+sddmm-spmm execution
+
+-----------------------------------------
+/home/min/a/kadhitha/ispc-examples/data/suitesparse/bcsstk17/bcsstk17.mtx
+ref(i,l)=B(i,j)*C(i,k)*D(j,k)*F(j,l);
+B1_dimension: 10974, B2_dimension: 10974, vals: 428650
+C1_dimension: 10974, C2_dimension: 64, vals: 702336
+D1_dimension: 10974, D2_dimension: 64, vals: 702336
+E1_dimension: 10974, E2_dimension: 64, vals: 702336
+
+
+kernel execution time:  2.14705 ms
+fused time: 2.62359
+
+kernel execution time:  9.35781 ms
+sddmm time: 9.71116
+
+kernel execution time:  6.0153 ms
+spmm time: 6.42121
+
+kernel execution time:  14.8814 ms
+taco reference time: 15.3035
+
+sddmm-spmm execution
+
+-----------------------------------------
+/home/min/a/kadhitha/ispc-examples/data/suitesparse/bcsstk17/bcsstk17.mtx
+ref(i,l)=B(i,j)*C(i,k)*D(j,k)*F(j,l);
+B1_dimension: 10974, B2_dimension: 10974, vals: 428650
+C1_dimension: 10974, C2_dimension: 64, vals: 702336
+D1_dimension: 10974, D2_dimension: 64, vals: 702336
+E1_dimension: 10974, E2_dimension: 64, vals: 702336
+
+
+kernel execution time:  3.85621 ms
+fused time: 4.31728
+
+kernel execution time:  8.49591 ms
+sddmm time: 8.85325
+
+kernel execution time:  4.55458 ms
+spmm time: 5.00309
+
+kernel execution time:  71.693 ms
+taco reference time: 72.1249
+
+sddmm-spmm execution
+
+-----------------------------------------
+/home/min/a/kadhitha/ispc-examples/data/suitesparse/bcsstk17/bcsstk17.mtx
+ref(i,l)=B(i,j)*C(i,k)*D(j,k)*F(j,l);
+B1_dimension: 10974, B2_dimension: 10974, vals: 428650
+C1_dimension: 10974, C2_dimension: 64, vals: 702336
+D1_dimension: 10974, D2_dimension: 64, vals: 702336
+E1_dimension: 10974, E2_dimension: 64, vals: 702336
+
+
+kernel execution time:  4.4083 ms
+fused time: 4.87449
+
+kernel execution time:  9.23609 ms
+sddmm time: 9.68592
+
+kernel execution time:  4.52337 ms
+spmm time: 4.93316
+
+kernel execution time:  75.7983 ms
+taco reference time: 76.2419
+
+sddmm-spmm execution
+
+-----------------------------------------
+/home/min/a/kadhitha/ispc-examples/data/suitesparse/bcsstk17/bcsstk17.mtx
+ref(i,l)=B(i,j)*C(i,k)*D(j,k)*F(j,l);
+B1_dimension: 10974, B2_dimension: 10974, vals: 428650
+C1_dimension: 10974, C2_dimension: 64, vals: 702336
+D1_dimension: 10974, D2_dimension: 64, vals: 702336
+E1_dimension: 10974, E2_dimension: 64, vals: 702336
+
+
+kernel execution time:  2.02675 ms
+fused time: 2.47188
+
+kernel execution time:  9.25498 ms
+sddmm time: 9.67129
+
+kernel execution time:  5.23325 ms
+spmm time: 5.68302
+
+kernel execution time:  14.8775 ms
+taco reference time: 15.3813
+
+sddmm-spmm execution
+
+-----------------------------------------
+/home/min/a/kadhitha/ispc-examples/data/suitesparse/bcsstk17/bcsstk17.mtx
+ref(i,l)=B(i,j)*C(i,k)*D(j,k)*F(j,l);
+B1_dimension: 10974, B2_dimension: 10974, vals: 428650
+C1_dimension: 10974, C2_dimension: 64, vals: 702336
+D1_dimension: 10974, D2_dimension: 64, vals: 702336
+E1_dimension: 10974, E2_dimension: 64, vals: 702336
+
+
+kernel execution time:  1.94846 ms
+fused time: 2.40322
+
+kernel execution time:  9.52502 ms
+sddmm time: 9.90909
+
+kernel execution time:  5.31443 ms
+spmm time: 5.71988
+
+kernel execution time:  15.7004 ms
+taco reference time: 16.1456
+
+sddmm-spmm execution
+
+-----------------------------------------
+/home/min/a/kadhitha/ispc-examples/data/suitesparse/bcsstk17/bcsstk17.mtx
+ref(i,l)=B(i,j)*C(i,k)*D(j,k)*F(j,l);
+B1_dimension: 10974, B2_dimension: 10974, vals: 428650
+C1_dimension: 10974, C2_dimension: 64, vals: 702336
+D1_dimension: 10974, D2_dimension: 64, vals: 702336
+E1_dimension: 10974, E2_dimension: 64, vals: 702336
+
+
+kernel execution time:  1.79798 ms
+fused time: 2.25022
+
+kernel execution time:  9.43793 ms
+sddmm time: 9.82708
+
+kernel execution time:  5.29275 ms
+spmm time: 5.69457
+
+kernel execution time:  14.9269 ms
+taco reference time: 15.3874
+
+sddmm-spmm execution
+
+-----------------------------------------
+/home/min/a/kadhitha/ispc-examples/data/suitesparse/bcsstk17/bcsstk17.mtx
+ref(i,l)=B(i,j)*C(i,k)*D(j,k)*F(j,l);
+B1_dimension: 10974, B2_dimension: 10974, vals: 428650
+C1_dimension: 10974, C2_dimension: 64, vals: 702336
+D1_dimension: 10974, D2_dimension: 64, vals: 702336
+E1_dimension: 10974, E2_dimension: 64, vals: 702336
+
+
+kernel execution time:  1.75935 ms
+fused time: 2.20095
+
+kernel execution time:  8.58506 ms
+sddmm time: 8.92534
+
+kernel execution time:  5.5533 ms
+spmm time: 5.93899
+
+kernel execution time:  14.2327 ms
+taco reference time: 14.5943
+
+sddmm-spmm execution
+
+-----------------------------------------
+/home/min/a/kadhitha/ispc-examples/data/suitesparse/bcsstk17/bcsstk17.mtx
+ref(i,l)=B(i,j)*C(i,k)*D(j,k)*F(j,l);
+B1_dimension: 10974, B2_dimension: 10974, vals: 428650
+C1_dimension: 10974, C2_dimension: 64, vals: 702336
+D1_dimension: 10974, D2_dimension: 64, vals: 702336
+E1_dimension: 10974, E2_dimension: 64, vals: 702336
+
+
+kernel execution time:  2.04599 ms
+fused time: 2.50059
+
+kernel execution time:  9.39166 ms
+sddmm time: 9.80431
+
+kernel execution time:  5.3514 ms
+spmm time: 5.75487
+
+kernel execution time:  15.0619 ms
+taco reference time: 15.497
+
+sddmm-spmm execution
+
+-----------------------------------------
+/home/min/a/kadhitha/ispc-examples/data/suitesparse/bcsstk17/bcsstk17.mtx
+ref(i,l)=B(i,j)*C(i,k)*D(j,k)*F(j,l);
+B1_dimension: 10974, B2_dimension: 10974, vals: 428650
+C1_dimension: 10974, C2_dimension: 64, vals: 702336
+D1_dimension: 10974, D2_dimension: 64, vals: 702336
+E1_dimension: 10974, E2_dimension: 64, vals: 702336
+
+
+kernel execution time:  1.9781 ms
+fused time: 2.41055
+
+kernel execution time:  8.50024 ms
+sddmm time: 8.81933
+
+kernel execution time:  5.28711 ms
+spmm time: 5.68452
+
+kernel execution time:  13.5108 ms
+taco reference time: 13.8766
+
+sddmm-spmm execution
+
+-----------------------------------------
+/home/min/a/kadhitha/ispc-examples/data/suitesparse/cage3/cage3.mtx
+ref(i,l)=B(i,j)*C(i,k)*D(j,k)*F(j,l);
+B1_dimension: 5, B2_dimension: 5, vals: 19
+C1_dimension: 5, C2_dimension: 64, vals: 320
+D1_dimension: 5, D2_dimension: 64, vals: 320
+E1_dimension: 5, E2_dimension: 64, vals: 320
+
+
+kernel execution time:  11.5205 ms
+fused time: 12.2496
+
+kernel execution time:  0.00954 ms
+sddmm time: 0.935822
+
+kernel execution time:  0.02342 ms
+spmm time: 0.324625
+
+kernel execution time:  0.050091 ms
+taco reference time: 0.727519
+
+sddmm-spmm execution
+
+-----------------------------------------
+/home/min/a/kadhitha/ispc-examples/data/suitesparse/cage3/cage3.mtx
+ref(i,l)=B(i,j)*C(i,k)*D(j,k)*F(j,l);
+B1_dimension: 5, B2_dimension: 5, vals: 19
+C1_dimension: 5, C2_dimension: 64, vals: 320
+D1_dimension: 5, D2_dimension: 64, vals: 320
+E1_dimension: 5, E2_dimension: 64, vals: 320
+
+
+kernel execution time:  0.235743 ms
+fused time: 0.969273
+
+kernel execution time:  0.01214 ms
+sddmm time: 0.981613
+
+kernel execution time:  0.03193 ms
+spmm time: 0.521637
+
+kernel execution time:  0.059391 ms
+taco reference time: 0.945792
+
+sddmm-spmm execution
+
+-----------------------------------------
+/home/min/a/kadhitha/ispc-examples/data/suitesparse/cage3/cage3.mtx
+ref(i,l)=B(i,j)*C(i,k)*D(j,k)*F(j,l);
+B1_dimension: 5, B2_dimension: 5, vals: 19
+C1_dimension: 5, C2_dimension: 64, vals: 320
+D1_dimension: 5, D2_dimension: 64, vals: 320
+E1_dimension: 5, E2_dimension: 64, vals: 320
+
+
+kernel execution time:  0.235003 ms
+fused time: 0.964663
+
+kernel execution time:  0.013771 ms
+sddmm time: 1.23201
+
+kernel execution time:  0.027521 ms
+spmm time: 0.470876
+
+kernel execution time:  0.043441 ms
+taco reference time: 0.814271
+
+sddmm-spmm execution
+
+-----------------------------------------
+/home/min/a/kadhitha/ispc-examples/data/suitesparse/cage3/cage3.mtx
+ref(i,l)=B(i,j)*C(i,k)*D(j,k)*F(j,l);
+B1_dimension: 5, B2_dimension: 5, vals: 19
+C1_dimension: 5, C2_dimension: 64, vals: 320
+D1_dimension: 5, D2_dimension: 64, vals: 320
+E1_dimension: 5, E2_dimension: 64, vals: 320
+
+
+kernel execution time:  0.242774 ms
+fused time: 0.984063
+
+kernel execution time:  0.01744 ms
+sddmm time: 1.07782
+
+kernel execution time:  0.03915 ms
+spmm time: 0.602928
+
+kernel execution time:  0.073381 ms
+taco reference time: 0.858301
+
+sddmm-spmm execution
+
+-----------------------------------------
+/home/min/a/kadhitha/ispc-examples/data/suitesparse/cage3/cage3.mtx
+ref(i,l)=B(i,j)*C(i,k)*D(j,k)*F(j,l);
+B1_dimension: 5, B2_dimension: 5, vals: 19
+C1_dimension: 5, C2_dimension: 64, vals: 320
+D1_dimension: 5, D2_dimension: 64, vals: 320
+E1_dimension: 5, E2_dimension: 64, vals: 320
+
+
+kernel execution time:  0.199533 ms
+fused time: 0.604928
+
+kernel execution time:  0.00675 ms
+sddmm time: 0.983573
+
+kernel execution time:  0.02448 ms
+spmm time: 0.300224
+
+sddmm-spmm execution
+
+-----------------------------------------
+/home/min/a/kadhitha/ispc-examples/data/suitesparse/cage3/cage3.mtx
+ref(i,l)=B(i,j)*C(i,k)*D(j,k)*F(j,l);
+B1_dimension: 5, B2_dimension: 5, vals: 19
+C1_dimension: 5, C2_dimension: 64, vals: 320
+D1_dimension: 5, D2_dimension: 64, vals: 320
+E1_dimension: 5, E2_dimension: 64, vals: 320
+
+
+kernel execution time:  0.192703 ms
+fused time: 0.575667
+
+kernel execution time:  0.00622 ms
+sddmm time: 0.863292
+
+kernel execution time:  0.0221 ms
+spmm time: 0.270204
+
+sddmm-spmm execution
+
+-----------------------------------------
+/home/min/a/kadhitha/ispc-examples/data/suitesparse/cage3/cage3.mtx
+ref(i,l)=B(i,j)*C(i,k)*D(j,k)*F(j,l);
+B1_dimension: 5, B2_dimension: 5, vals: 19
+C1_dimension: 5, C2_dimension: 64, vals: 320
+D1_dimension: 5, D2_dimension: 64, vals: 320
+E1_dimension: 5, E2_dimension: 64, vals: 320
+
+
+kernel execution time:  0.195482 ms
+fused time: 0.580768
+
+kernel execution time:  0.00652 ms
+sddmm time: 0.957703
+
+kernel execution time:  0.025451 ms
+spmm time: 0.313074
+
+kernel execution time:  0.085611 ms
+taco reference time: 0.970753
+
+sddmm-spmm execution
+
+-----------------------------------------
+/home/min/a/kadhitha/ispc-examples/data/suitesparse/bcsstk17/bcsstk17.mtx
+ref(i,l)=B(i,j)*C(i,k)*D(j,k)*F(j,l);
+B1_dimension: 10974, B2_dimension: 10974, vals: 428650
+C1_dimension: 10974, C2_dimension: 64, vals: 702336
+D1_dimension: 10974, D2_dimension: 64, vals: 702336
+E1_dimension: 10974, E2_dimension: 64, vals: 702336
+
+
+kernel execution time:  2.00856 ms
+fused time: 2.45147
+
+kernel execution time:  8.5121 ms
+sddmm time: 8.95565
+
+kernel execution time:  5.46083 ms
+spmm time: 5.93676
+
+kernel execution time:  14.1411 ms
+taco reference time: 14.7397
+
+sddmm-spmm execution
+
+-----------------------------------------
+/home/min/a/kadhitha/ispc-examples/data/suitesparse/pdb1HYS/pdb1HYS.mtx
+ref(i,l)=B(i,j)*C(i,k)*D(j,k)*F(j,l);
+B1_dimension: 36417, B2_dimension: 36417, vals: 4344765
+C1_dimension: 36417, C2_dimension: 64, vals: 2330688
+D1_dimension: 36417, D2_dimension: 64, vals: 2330688
+E1_dimension: 36417, E2_dimension: 64, vals: 2330688
+
+
+kernel execution time:  9.91597 ms
+fused time: 10.4166
+
+kernel execution time:  85.127 ms
+sddmm time: 85.7297
+
+kernel execution time:  12.8101 ms
+spmm time: 13.3194
+
+kernel execution time:  129.721 ms
+taco reference time: 130.362
+
+sddmm-spmm execution
+
+-----------------------------------------
+/home/min/a/kadhitha/ispc-examples/data/suitesparse/pdb1HYS/pdb1HYS.mtx
+ref(i,l)=B(i,j)*C(i,k)*D(j,k)*F(j,l);
+B1_dimension: 36417, B2_dimension: 36417, vals: 4344765
+C1_dimension: 36417, C2_dimension: 64, vals: 2330688
+D1_dimension: 36417, D2_dimension: 64, vals: 2330688
+E1_dimension: 36417, E2_dimension: 64, vals: 2330688
+
+
+kernel execution time:  9.9746 ms
+fused time: 10.4536
+
+kernel execution time:  85.6921 ms
+sddmm time: 86.3192
+
+kernel execution time:  12.752 ms
+spmm time: 13.2448
+
+kernel execution time:  135.682 ms
+taco reference time: 136.351
+
+sddmm-spmm execution
+
+-----------------------------------------
+/home/min/a/kadhitha/ispc-examples/data/suitesparse/pdb1HYS/pdb1HYS.mtx
+ref(i,l)=B(i,j)*C(i,k)*D(j,k)*F(j,l);
+B1_dimension: 36417, B2_dimension: 36417, vals: 4344765
+C1_dimension: 36417, C2_dimension: 64, vals: 2330688
+D1_dimension: 36417, D2_dimension: 64, vals: 2330688
+E1_dimension: 36417, E2_dimension: 64, vals: 2330688
+
+
+kernel execution time:  10.0998 ms
+fused time: 10.5872
+
+kernel execution time:  85.0064 ms
+sddmm time: 85.6385
+
+kernel execution time:  12.6128 ms
+spmm time: 13.1169
+
+kernel execution time:  134.629 ms
+taco reference time: 135.323
+
+sddmm-spmm execution
+
+-----------------------------------------
+/home/min/a/kadhitha/ispc-examples/data/suitesparse/pdb1HYS/pdb1HYS.mtx
+ref(i,l)=B(i,j)*C(i,k)*D(j,k)*F(j,l);
+B1_dimension: 36417, B2_dimension: 36417, vals: 4344765
+C1_dimension: 36417, C2_dimension: 64, vals: 2330688
+D1_dimension: 36417, D2_dimension: 64, vals: 2330688
+E1_dimension: 36417, E2_dimension: 64, vals: 2330688
+
+
+kernel execution time:  10.1006 ms
+fused time: 10.5902
+
+kernel execution time:  88.2603 ms
+sddmm time: 88.897
+
+kernel execution time:  12.5197 ms
+spmm time: 13.0137
+
+kernel execution time:  130.3 ms
+taco reference time: 130.977
+
+sddmm-spmm execution
+
+-----------------------------------------
+/home/min/a/kadhitha/ispc-examples/data/suitesparse/pdb1HYS/pdb1HYS.mtx
+ref(i,l)=B(i,j)*C(i,k)*D(j,k)*F(j,l);
+B1_dimension: 36417, B2_dimension: 36417, vals: 4344765
+C1_dimension: 36417, C2_dimension: 64, vals: 2330688
+D1_dimension: 36417, D2_dimension: 64, vals: 2330688
+E1_dimension: 36417, E2_dimension: 64, vals: 2330688
+
+
+kernel execution time:  27.6596 ms
+fused time: 28.2096
+
+kernel execution time:  85.6018 ms
+sddmm time: 86.213
+
+kernel execution time:  12.8244 ms
+spmm time: 13.3343
+
+kernel execution time:  131.089 ms
+taco reference time: 131.789
+
+sddmm-spmm execution
+
+-----------------------------------------
+/home/min/a/kadhitha/ispc-examples/data/suitesparse/pdb1HYS/pdb1HYS.mtx
+ref(i,l)=B(i,j)*C(i,k)*D(j,k)*F(j,l);
+B1_dimension: 36417, B2_dimension: 36417, vals: 4344765
+C1_dimension: 36417, C2_dimension: 64, vals: 2330688
+D1_dimension: 36417, D2_dimension: 64, vals: 2330688
+E1_dimension: 36417, E2_dimension: 64, vals: 2330688
+
+
+kernel execution time:  26.582 ms
+fused time: 27.0673
+
+kernel execution time:  87.6048 ms
+sddmm time: 88.2462
+
+kernel execution time:  12.5643 ms
+spmm time: 13.0723
+
+kernel execution time:  130.366 ms
+taco reference time: 131.043
+
+sddmm-spmm execution
+
+-----------------------------------------
+/home/min/a/kadhitha/ispc-examples/data/suitesparse/pdb1HYS/pdb1HYS.mtx
+ref(i,l)=B(i,j)*C(i,k)*D(j,k)*F(j,l);
+B1_dimension: 36417, B2_dimension: 36417, vals: 4344765
+C1_dimension: 36417, C2_dimension: 64, vals: 2330688
+D1_dimension: 36417, D2_dimension: 64, vals: 2330688
+E1_dimension: 36417, E2_dimension: 64, vals: 2330688
+
+
+kernel execution time:  26.5615 ms
+fused time: 27.0713
+
+kernel execution time:  87.5473 ms
+sddmm time: 88.1848
+
+kernel execution time:  12.6726 ms
+spmm time: 13.152
+
+kernel execution time:  131.024 ms
+taco reference time: 131.701
+
+sddmm-spmm execution
+
+-----------------------------------------
+/home/min/a/kadhitha/ispc-examples/data/suitesparse/pdb1HYS/pdb1HYS.mtx
+ref(i,l)=B(i,j)*C(i,k)*D(j,k)*F(j,l);
+B1_dimension: 36417, B2_dimension: 36417, vals: 4344765
+C1_dimension: 36417, C2_dimension: 64, vals: 2330688
+D1_dimension: 36417, D2_dimension: 64, vals: 2330688
+E1_dimension: 36417, E2_dimension: 64, vals: 2330688
+
+
+kernel execution time:  26.3835 ms
+fused time: 26.8768
+
+kernel execution time:  84.7609 ms
+sddmm time: 85.3584
+
+kernel execution time:  12.8437 ms
+spmm time: 13.346
+
+kernel execution time:  132.548 ms
+taco reference time: 133.168
+
+sddmm-spmm execution
+
+-----------------------------------------
+/home/min/a/kadhitha/ispc-examples/data/suitesparse/pdb1HYS/pdb1HYS.mtx
+ref(i,l)=B(i,j)*C(i,k)*D(j,k)*F(j,l);
+B1_dimension: 36417, B2_dimension: 36417, vals: 4344765
+C1_dimension: 36417, C2_dimension: 64, vals: 2330688
+D1_dimension: 36417, D2_dimension: 64, vals: 2330688
+E1_dimension: 36417, E2_dimension: 64, vals: 2330688
+
+
+kernel execution time:  26.6808 ms
+fused time: 27.1679
+
+kernel execution time:  87.0948 ms
+sddmm time: 87.7219
+
+kernel execution time:  12.695 ms
+spmm time: 13.1923
+
+kernel execution time:  134.587 ms
+taco reference time: 135.255
+
+sddmm-spmm execution
+
+-----------------------------------------
+/home/min/a/kadhitha/ispc-examples/data/suitesparse/cage3/cage3.mtx
+ref(i,l)=B(i,j)*C(i,k)*D(j,k)*F(j,l);
+B1_dimension: 5, B2_dimension: 5, vals: 19
+C1_dimension: 5, C2_dimension: 64, vals: 320
+D1_dimension: 5, D2_dimension: 64, vals: 320
+E1_dimension: 5, E2_dimension: 64, vals: 320
+
+
+kernel execution time:  0.235254 ms
+fused time: 1.04843
+
+kernel execution time:  0.01102 ms
+sddmm time: 0.989634
+
+kernel execution time:  0.028701 ms
+spmm time: 0.574108
+
+kernel execution time:  0.04363 ms
+taco reference time: 0.840431
+
+sddmm-spmm execution
+
+-----------------------------------------
+/home/min/a/kadhitha/ispc-examples/data/suitesparse/bcsstk17/bcsstk17.mtx
+ref(i,l)=B(i,j)*C(i,k)*D(j,k)*F(j,l);
+B1_dimension: 10974, B2_dimension: 10974, vals: 428650
+C1_dimension: 10974, C2_dimension: 64, vals: 702336
+D1_dimension: 10974, D2_dimension: 64, vals: 702336
+E1_dimension: 10974, E2_dimension: 64, vals: 702336
+
+
+kernel execution time:  4.9177 ms
+fused time: 5.37305
+
+kernel execution time:  8.31608 ms
+sddmm time: 8.76144
+
+kernel execution time:  5.43042 ms
+spmm time: 5.82157
+
+kernel execution time:  15.0881 ms
+taco reference time: 15.4618
+
+sddmm-spmm execution
+
+-----------------------------------------
+/home/min/a/kadhitha/ispc-examples/data/suitesparse/pdb1HYS/pdb1HYS.mtx
+ref(i,l)=B(i,j)*C(i,k)*D(j,k)*F(j,l);
+B1_dimension: 36417, B2_dimension: 36417, vals: 4344765
+C1_dimension: 36417, C2_dimension: 64, vals: 2330688
+D1_dimension: 36417, D2_dimension: 64, vals: 2330688
+E1_dimension: 36417, E2_dimension: 64, vals: 2330688
+
+
+kernel execution time:  175.005 ms
+fused time: 175.507
+
+kernel execution time:  83.4127 ms
+sddmm time: 83.9734
+
+kernel execution time:  14.3027 ms
+spmm time: 14.8133
+
+kernel execution time:  5196.98 ms
+taco reference time: 5198.39
+
+sddmm-spmm execution
+
+-----------------------------------------
+/home/min/a/kadhitha/ispc-examples/data/suitesparse/rma10/rma10.mtx
+ref(i,l)=B(i,j)*C(i,k)*D(j,k)*F(j,l);
+B1_dimension: 46835, B2_dimension: 46835, vals: 2374001
+C1_dimension: 46835, C2_dimension: 64, vals: 2997440
+D1_dimension: 46835, D2_dimension: 64, vals: 2997440
+E1_dimension: 46835, E2_dimension: 64, vals: 2997440
+
+
+kernel execution time:  96.7809 ms
+fused time: 97.2629
+
+kernel execution time:  46.666 ms
+sddmm time: 47.229
+
+kernel execution time:  23.9017 ms
+spmm time: 24.4045
+
+kernel execution time:  2871.87 ms
+taco reference time: 2872.47
+
+sddmm-spmm execution
+
+-----------------------------------------
+/home/min/a/kadhitha/ispc-examples/data/suitesparse/rma10/rma10.mtx
+ref(i,l)=B(i,j)*C(i,k)*D(j,k)*F(j,l);
+B1_dimension: 46835, B2_dimension: 46835, vals: 2374001
+C1_dimension: 46835, C2_dimension: 64, vals: 2997440
+D1_dimension: 46835, D2_dimension: 64, vals: 2997440
+E1_dimension: 46835, E2_dimension: 64, vals: 2997440
+
+
+kernel execution time:  98.4225 ms
+fused time: 98.9062
+
+kernel execution time:  46.8647 ms
+sddmm time: 47.4013
+
+kernel execution time:  22.9253 ms
+spmm time: 23.4505
+
+kernel execution time:  2873.94 ms
+taco reference time: 2874.59
+
+sddmm-spmm execution
+
+-----------------------------------------
+/home/min/a/kadhitha/ispc-examples/data/suitesparse/pdb1HYS/pdb1HYS.mtx
+ref(i,l)=B(i,j)*C(i,k)*D(j,k)*F(j,l);
+B1_dimension: 36417, B2_dimension: 36417, vals: 4344765
+C1_dimension: 36417, C2_dimension: 64, vals: 2330688
+D1_dimension: 36417, D2_dimension: 64, vals: 2330688
+E1_dimension: 36417, E2_dimension: 64, vals: 2330688
+
+
+kernel execution time:  174.126 ms
+fused time: 174.616
+
+kernel execution time:  83.7673 ms
+sddmm time: 84.3199
+
+kernel execution time:  13.0437 ms
+spmm time: 13.5625
+
+kernel execution time:  5227.23 ms
+taco reference time: 5228.25
+
+sddmm-spmm execution
+
+-----------------------------------------
+/home/min/a/kadhitha/ispc-examples/data/suitesparse/pdb1HYS/pdb1HYS.mtx
+ref(i,l)=B(i,j)*C(i,k)*D(j,k)*F(j,l);
+B1_dimension: 36417, B2_dimension: 36417, vals: 4344765
+C1_dimension: 36417, C2_dimension: 64, vals: 2330688
+D1_dimension: 36417, D2_dimension: 64, vals: 2330688
+E1_dimension: 36417, E2_dimension: 64, vals: 2330688
+
+
+kernel execution time:  27.6542 ms
+fused time: 28.1392
+
+kernel execution time:  85.8985 ms
+sddmm time: 86.5293
+
+kernel execution time:  12.6722 ms
+spmm time: 13.1883
+
+kernel execution time:  130.948 ms
+taco reference time: 131.642
+
+sddmm-spmm execution
+
+-----------------------------------------
+/home/min/a/kadhitha/ispc-examples/data/suitesparse/pdb1HYS/pdb1HYS.mtx
+ref(i,l)=B(i,j)*C(i,k)*D(j,k)*F(j,l);
+B1_dimension: 36417, B2_dimension: 36417, vals: 4344765
+C1_dimension: 36417, C2_dimension: 64, vals: 2330688
+D1_dimension: 36417, D2_dimension: 64, vals: 2330688
+E1_dimension: 36417, E2_dimension: 64, vals: 2330688
+
+
+kernel execution time:  102.4 ms
+fused time: 102.884
+
+kernel execution time:  83.5498 ms
+sddmm time: 84.1386
+
+kernel execution time:  42.5049 ms
+spmm time: 43.0426
+
+kernel execution time:  710.168 ms
+taco reference time: 710.765
+
+sddmm-spmm execution
+
+-----------------------------------------
+/home/min/a/kadhitha/ispc-examples/data/suitesparse/pdb1HYS/pdb1HYS.mtx
+ref(i,l)=B(i,j)*C(i,k)*D(j,k)*F(j,l);
+B1_dimension: 36417, B2_dimension: 36417, vals: 4344765
+C1_dimension: 36417, C2_dimension: 64, vals: 2330688
+D1_dimension: 36417, D2_dimension: 64, vals: 2330688
+E1_dimension: 36417, E2_dimension: 64, vals: 2330688
+
+
+kernel execution time:  43.9551 ms
+fused time: 44.6972
+
+kernel execution time:  87.6996 ms
+sddmm time: 89.4613
+
+kernel execution time:  18.2632 ms
+spmm time: 18.7804
+
+kernel execution time:  122.262 ms
+taco reference time: 123.152
+
+sddmm-spmm execution
+
+-----------------------------------------
+/home/min/a/kadhitha/ispc-examples/data/suitesparse/pdb1HYS/pdb1HYS.mtx
+ref(i,l)=B(i,j)*C(i,k)*D(j,k)*F(j,l);
+B1_dimension: 36417, B2_dimension: 36417, vals: 4344765
+C1_dimension: 36417, C2_dimension: 64, vals: 2330688
+D1_dimension: 36417, D2_dimension: 64, vals: 2330688
+E1_dimension: 36417, E2_dimension: 64, vals: 2330688
+
+
+kernel execution time:  47.9407 ms
+fused time: 48.4339
+
+kernel execution time:  89.2157 ms
+sddmm time: 89.8924
+
+kernel execution time:  18.2009 ms
+spmm time: 18.7261
+
+kernel execution time:  123.559 ms
+taco reference time: 124.405
+
+sddmm-spmm execution
+
+-----------------------------------------
+/home/min/a/kadhitha/ispc-examples/data/suitesparse/pdb1HYS/pdb1HYS.mtx
+ref(i,l)=B(i,j)*C(i,k)*D(j,k)*F(j,l);
+B1_dimension: 36417, B2_dimension: 36417, vals: 4344765
+C1_dimension: 36417, C2_dimension: 64, vals: 2330688
+D1_dimension: 36417, D2_dimension: 64, vals: 2330688
+E1_dimension: 36417, E2_dimension: 64, vals: 2330688
+
+
+kernel execution time:  43.2059 ms
+fused time: 43.6957
+
+kernel execution time:  90.4258 ms
+sddmm time: 91.1259
+
+kernel execution time:  18.2655 ms
+spmm time: 18.7701
+
+kernel execution time:  123.565 ms
+taco reference time: 124.302
+
+sddmm-spmm execution
+
+-----------------------------------------
+/home/min/a/kadhitha/ispc-examples/data/suitesparse/pdb1HYS/pdb1HYS.mtx
+ref(i,l)=B(i,j)*C(i,k)*D(j,k)*F(j,l);
+B1_dimension: 36417, B2_dimension: 36417, vals: 4344765
+C1_dimension: 36417, C2_dimension: 64, vals: 2330688
+D1_dimension: 36417, D2_dimension: 64, vals: 2330688
+E1_dimension: 36417, E2_dimension: 64, vals: 2330688
+
+
+kernel execution time:  48.4004 ms
+fused time: 48.9337
+
+kernel execution time:  85.0973 ms
+sddmm time: 85.6769
+
+kernel execution time:  18.1666 ms
+spmm time: 18.6607
+
+kernel execution time:  123.347 ms
+taco reference time: 124.257
+
+sddmm-spmm execution
+
+-----------------------------------------
+/home/min/a/kadhitha/ispc-examples/data/suitesparse/pdb1HYS/pdb1HYS.mtx
+ref(i,l)=B(i,j)*C(i,k)*D(j,k)*F(j,l);
+B1_dimension: 36417, B2_dimension: 36417, vals: 4344765
+C1_dimension: 36417, C2_dimension: 64, vals: 2330688
+D1_dimension: 36417, D2_dimension: 64, vals: 2330688
+E1_dimension: 36417, E2_dimension: 64, vals: 2330688
+
+
+kernel execution time:  25.3405 ms
+fused time: 25.8282
+
+kernel execution time:  87.1326 ms
+sddmm time: 87.7761
+
+kernel execution time:  12.9441 ms
+spmm time: 13.4425
+
+kernel execution time:  132.388 ms
+taco reference time: 133.056
+
+sddmm-spmm execution
+
+-----------------------------------------
+/home/min/a/kadhitha/ispc-examples/data/suitesparse/pdb1HYS/pdb1HYS.mtx
+ref(i,l)=B(i,j)*C(i,k)*D(j,k)*F(j,l);
+B1_dimension: 36417, B2_dimension: 36417, vals: 4344765
+C1_dimension: 36417, C2_dimension: 64, vals: 2330688
+D1_dimension: 36417, D2_dimension: 64, vals: 2330688
+E1_dimension: 36417, E2_dimension: 64, vals: 2330688
+
+
+kernel execution time:  26.5881 ms
+fused time: 27.0669
+
+kernel execution time:  85.9749 ms
+sddmm time: 86.5764
+
+kernel execution time:  12.5752 ms
+spmm time: 13.1009
+
+kernel execution time:  131.368 ms
+taco reference time: 132.072
+
+sddmm-spmm execution
+
+-----------------------------------------
+/home/min/a/kadhitha/ispc-examples/data/suitesparse/pdb1HYS/pdb1HYS.mtx
+ref(i,l)=B(i,j)*C(i,k)*D(j,k)*F(j,l);
+B1_dimension: 36417, B2_dimension: 36417, vals: 4344765
+C1_dimension: 36417, C2_dimension: 64, vals: 2330688
+D1_dimension: 36417, D2_dimension: 64, vals: 2330688
+E1_dimension: 36417, E2_dimension: 64, vals: 2330688
+
+
+kernel execution time:  177.141 ms
+fused time: 177.635
+
+kernel execution time:  83.6231 ms
+sddmm time: 84.2074
+
+kernel execution time:  303.927 ms
+spmm time: 304.455
+
+kernel execution time:  5553.72 ms
+taco reference time: 5554.89
+
+sddmm-spmm execution
+
+-----------------------------------------
+/home/min/a/kadhitha/ispc-examples/data/suitesparse/pdb1HYS/pdb1HYS.mtx
+ref(i,l)=B(i,j)*C(i,k)*D(j,k)*F(j,l);
+B1_dimension: 36417, B2_dimension: 36417, vals: 4344765
+C1_dimension: 36417, C2_dimension: 64, vals: 2330688
+D1_dimension: 36417, D2_dimension: 64, vals: 2330688
+E1_dimension: 36417, E2_dimension: 64, vals: 2330688
+
+
+kernel execution time:  177.24 ms
+fused time: 177.718
+
+kernel execution time:  83.5235 ms
+sddmm time: 84.0624
+
+kernel execution time:  299.135 ms
+spmm time: 299.642
+
+kernel execution time:  5568.94 ms
+taco reference time: 5570.07
+
+sddmm-spmm execution
+
+-----------------------------------------
+/home/min/a/kadhitha/ispc-examples/data/suitesparse/pdb1HYS/pdb1HYS.mtx
+ref(i,l)=B(i,j)*C(i,k)*D(j,k)*F(j,l);
+B1_dimension: 36417, B2_dimension: 36417, vals: 4344765
+C1_dimension: 36417, C2_dimension: 64, vals: 2330688
+D1_dimension: 36417, D2_dimension: 64, vals: 2330688
+E1_dimension: 36417, E2_dimension: 64, vals: 2330688
+
+
+kernel execution time:  177.334 ms
+fused time: 177.831
+
+kernel execution time:  83.7814 ms
+sddmm time: 84.3619
+
+kernel execution time:  302.13 ms
+spmm time: 302.653
+
+kernel execution time:  5535.64 ms
+taco reference time: 5536.87
+
+sddmm-spmm execution
+
+-----------------------------------------
+/home/min/a/kadhitha/ispc-examples/data/suitesparse/pdb1HYS/pdb1HYS.mtx
+ref(i,l)=B(i,j)*C(i,k)*D(j,k)*F(j,l);
+B1_dimension: 36417, B2_dimension: 36417, vals: 4344765
+C1_dimension: 36417, C2_dimension: 64, vals: 2330688
+D1_dimension: 36417, D2_dimension: 64, vals: 2330688
+E1_dimension: 36417, E2_dimension: 64, vals: 2330688
+
+
+sddmm-spmm execution
+
+-----------------------------------------
+/home/min/a/kadhitha/ispc-examples/data/suitesparse/pdb1HYS/pdb1HYS.mtx
+ref(i,l)=B(i,j)*C(i,k)*D(j,k)*F(j,l);
+B1_dimension: 36417, B2_dimension: 36417, vals: 4344765
+C1_dimension: 36417, C2_dimension: 64, vals: 2330688
+D1_dimension: 36417, D2_dimension: 64, vals: 2330688
+E1_dimension: 36417, E2_dimension: 64, vals: 2330688
+
+
+sddmm-spmm execution
+
+-----------------------------------------
+/home/min/a/kadhitha/ispc-examples/data/suitesparse/pdb1HYS/pdb1HYS.mtx
+ref(i,l)=B(i,j)*C(i,k)*D(j,k)*F(j,l);
+B1_dimension: 36417, B2_dimension: 36417, vals: 4344765
+C1_dimension: 36417, C2_dimension: 64, vals: 2330688
+D1_dimension: 36417, D2_dimension: 64, vals: 2330688
+E1_dimension: 36417, E2_dimension: 64, vals: 2330688
+
+
+sddmm-spmm execution
+
+-----------------------------------------
+/home/min/a/kadhitha/ispc-examples/data/suitesparse/pdb1HYS/pdb1HYS.mtx
+ref(i,l)=B(i,j)*C(i,k)*D(j,k)*F(j,l);
+B1_dimension: 36417, B2_dimension: 36417, vals: 4344765
+C1_dimension: 36417, C2_dimension: 64, vals: 2330688
+D1_dimension: 36417, D2_dimension: 64, vals: 2330688
+E1_dimension: 36417, E2_dimension: 64, vals: 2330688
+
+
+kernel execution time:  180.923 ms
+fused time: 181.39
+
+kernel execution time:  88.0592 ms
+sddmm time: 88.6258
+
+kernel execution time:  300.533 ms
+spmm time: 301.047
+
+kernel execution time:  5549.25 ms
+taco reference time: 5550.45
+
+sddmm-spmm execution
+
+-----------------------------------------
+/home/min/a/kadhitha/ispc-examples/data/suitesparse/pdb1HYS/pdb1HYS.mtx
+ref(i,l)=B(i,j)*C(i,k)*D(j,k)*F(j,l);
+B1_dimension: 36417, B2_dimension: 36417, vals: 4344765
+C1_dimension: 36417, C2_dimension: 64, vals: 2330688
+D1_dimension: 36417, D2_dimension: 64, vals: 2330688
+E1_dimension: 36417, E2_dimension: 64, vals: 2330688
+
+
+kernel execution time:  27.7589 ms
+fused time: 28.2424
+
+kernel execution time:  87.4027 ms
+sddmm time: 88.0292
+
+kernel execution time:  13.0621 ms
+spmm time: 13.5896
+
+kernel execution time:  131.501 ms
+taco reference time: 132.191
+
+sddmm-spmm execution
+
+-----------------------------------------
+/home/min/a/kadhitha/ispc-examples/data/suitesparse/pdb1HYS/pdb1HYS.mtx
+ref(i,l)=B(i,j)*C(i,k)*D(j,k)*F(j,l);
+B1_dimension: 36417, B2_dimension: 36417, vals: 4344765
+C1_dimension: 36417, C2_dimension: 64, vals: 2330688
+D1_dimension: 36417, D2_dimension: 64, vals: 2330688
+E1_dimension: 36417, E2_dimension: 64, vals: 2330688
+
+
+kernel execution time:  27.1159 ms
+fused time: 27.6123
+
+kernel execution time:  88.1805 ms
+sddmm time: 88.8475
+
+kernel execution time:  13.2301 ms
+spmm time: 13.7512
+
+kernel execution time:  130.96 ms
+taco reference time: 131.633
+
+sddmm-spmm execution
+
+-----------------------------------------
+/home/min/a/kadhitha/ispc-examples/data/suitesparse/pdb1HYS/pdb1HYS.mtx
+ref(i,l)=B(i,j)*C(i,k)*D(j,k)*F(j,l);
+B1_dimension: 36417, B2_dimension: 36417, vals: 4344765
+C1_dimension: 36417, C2_dimension: 64, vals: 2330688
+D1_dimension: 36417, D2_dimension: 64, vals: 2330688
+E1_dimension: 36417, E2_dimension: 64, vals: 2330688
+
+
+kernel execution time:  11.1791 ms
+fused time: 11.6596
+
+kernel execution time:  324.829 ms
+sddmm time: 325.459
+
+kernel execution time:  5.82413 ms
+spmm time: 6.613
+
+kernel execution time:  162.505 ms
+taco reference time: 163.319
+
+sddmm-spmm execution
+
+-----------------------------------------
+/home/min/a/kadhitha/ispc-examples/data/suitesparse/pdb1HYS/pdb1HYS.mtx
+ref(i,l)=B(i,j)*C(i,k)*D(j,k)*F(j,l);
+B1_dimension: 36417, B2_dimension: 36417, vals: 4344765
+C1_dimension: 36417, C2_dimension: 64, vals: 2330688
+D1_dimension: 36417, D2_dimension: 64, vals: 2330688
+E1_dimension: 36417, E2_dimension: 64, vals: 2330688
+
+
+kernel execution time:  167.093 ms
+fused time: 167.577
+
+kernel execution time:  264.158 ms
+sddmm time: 264.712
+
+kernel execution time:  68.6915 ms
+spmm time: 69.2406
+
+kernel execution time:  5581.71 ms
+taco reference time: 5582.83
+
+sddmm-spmm execution
+
+-----------------------------------------
+/home/min/a/kadhitha/ispc-examples/data/suitesparse/pdb1HYS/pdb1HYS.mtx
+ref(i,l)=B(i,j)*C(i,k)*D(j,k)*F(j,l);
+B1_dimension: 36417, B2_dimension: 36417, vals: 4344765
+C1_dimension: 36417, C2_dimension: 64, vals: 2330688
+D1_dimension: 36417, D2_dimension: 64, vals: 2330688
+E1_dimension: 36417, E2_dimension: 64, vals: 2330688
+
+
+kernel execution time:  170.702 ms
+fused time: 171.176
+
+kernel execution time:  88.5905 ms
+sddmm time: 89.1447
+
+kernel execution time:  68.5964 ms
+spmm time: 69.1031
+
+kernel execution time:  5551.85 ms
+taco reference time: 5552.97
+
+sddmm-spmm execution
+
+-----------------------------------------
+/home/min/a/kadhitha/ispc-examples/data/suitesparse/pdb1HYS/pdb1HYS.mtx
+ref(i,l)=B(i,j)*C(i,k)*D(j,k)*F(j,l);
+B1_dimension: 36417, B2_dimension: 36417, vals: 4344765
+C1_dimension: 36417, C2_dimension: 64, vals: 2330688
+D1_dimension: 36417, D2_dimension: 64, vals: 2330688
+E1_dimension: 36417, E2_dimension: 64, vals: 2330688
+
+
+kernel execution time:  10.8645 ms
+fused time: 11.3531
+
+kernel execution time:  9.04029 ms
+sddmm time: 9.79108
+
+kernel execution time:  5.63795 ms
+spmm time: 6.23454
+
+kernel execution time:  131.822 ms
+taco reference time: 132.52
+
+sddmm-spmm execution
+
+-----------------------------------------
+/home/min/a/kadhitha/ispc-examples/data/suitesparse/rma10/rma10.mtx
+ref(i,l)=B(i,j)*C(i,k)*D(j,k)*F(j,l);
+B1_dimension: 46835, B2_dimension: 46835, vals: 2374001
+C1_dimension: 46835, C2_dimension: 64, vals: 2997440
+D1_dimension: 46835, D2_dimension: 64, vals: 2997440
+E1_dimension: 46835, E2_dimension: 64, vals: 2997440
+
+
+kernel execution time:  9.65163 ms
+fused time: 10.1436
+
+kernel execution time:  9.70327 ms
+sddmm time: 10.2929
+
+kernel execution time:  4.85235 ms
+spmm time: 5.40286
+
+kernel execution time:  74.2349 ms
+taco reference time: 74.8374
+
+sddmm-spmm execution
+
+-----------------------------------------
+/home/min/a/kadhitha/ispc-examples/data/suitesparse/cant/cant.mtx
+ref(i,l)=B(i,j)*C(i,k)*D(j,k)*F(j,l);
+B1_dimension: 62451, B2_dimension: 62451, vals: 4007383
+C1_dimension: 62451, C2_dimension: 64, vals: 3996864
+D1_dimension: 62451, D2_dimension: 64, vals: 3996864
+E1_dimension: 62451, E2_dimension: 64, vals: 3996864
+
+
+kernel execution time:  15.2637 ms
+fused time: 15.7881
+
+kernel execution time:  12.0484 ms
+sddmm time: 12.7139
+
+kernel execution time:  7.9269 ms
+spmm time: 8.5266
+
+kernel execution time:  122.713 ms
+taco reference time: 123.431
+
+sddmm-spmm execution
+
+-----------------------------------------
+/home/min/a/kadhitha/ispc-examples/data/suitesparse/circuit5M/circuit5M.mtx
+ref(i,l)=B(i,j)*C(i,k)*D(j,k)*F(j,l);
+B1_dimension: 5558326, B2_dimension: 5558326, vals: 59524291
+C1_dimension: 5558326, C2_dimension: 64, vals: 355732864
+D1_dimension: 5558326, D2_dimension: 64, vals: 355732864
+E1_dimension: 5558326, E2_dimension: 64, vals: 355732864
+
+
+kernel execution time:  750.953 ms
+fused time: 751.849
+
+kernel execution time:  410.668 ms
+sddmm time: 411.252
+
+kernel execution time:  490.401 ms
+spmm time: 490.993
+
+kernel execution time:  7382.94 ms
+taco reference time: 7384.02
+
+
+
+--------------------------------
+
+
+
+sddmm-spmm execution
+
+-----------------------------------------
+/home/min/a/kadhitha/ispc-examples/data/suitesparse/bcsstk17/bcsstk17.mtx
+ref(i,l)=B(i,j)*C(i,k)*D(j,k)*F(j,l);
+B1_dimension: 10974, B2_dimension: 10974, vals: 428650
+C1_dimension: 10974, C2_dimension: 64, vals: 702336
+D1_dimension: 10974, D2_dimension: 64, vals: 702336
+E1_dimension: 10974, E2_dimension: 64, vals: 702336
+
+
+kernel execution time:  2.89124 ms
+fused time: 3.33064
+
+kernel execution time:  2.48885 ms
+sddmm time: 2.80581
+
+kernel execution time:  1.25714 ms
+sddmm time: 1.58645
+
+kernel execution time:  1.82611 ms
+spmm time: 2.10693
+
+kernel execution time:  14.7536 ms
+taco reference time: 15.1553
+
+sddmm-spmm execution
+
+-----------------------------------------
+/home/min/a/kadhitha/ispc-examples/data/suitesparse/pdb1HYS/pdb1HYS.mtx
+ref(i,l)=B(i,j)*C(i,k)*D(j,k)*F(j,l);
+B1_dimension: 36417, B2_dimension: 36417, vals: 4344765
+C1_dimension: 36417, C2_dimension: 64, vals: 2330688
+D1_dimension: 36417, D2_dimension: 64, vals: 2330688
+E1_dimension: 36417, E2_dimension: 64, vals: 2330688
+
+
+kernel execution time:  10.4526 ms
+fused time: 10.9812
+
+kernel execution time:  9.28251 ms
+sddmm time: 9.93109
+
+kernel execution time:  5.36035 ms
+sddmm time: 5.99358
+
+kernel execution time:  5.29728 ms
+spmm time: 5.86825
+
+kernel execution time:  132.268 ms
+taco reference time: 132.952
+
+sddmm-spmm execution
+
+-----------------------------------------
+/home/min/a/kadhitha/ispc-examples/data/suitesparse/rma10/rma10.mtx
+ref(i,l)=B(i,j)*C(i,k)*D(j,k)*F(j,l);
+B1_dimension: 46835, B2_dimension: 46835, vals: 2374001
+C1_dimension: 46835, C2_dimension: 64, vals: 2997440
+D1_dimension: 46835, D2_dimension: 64, vals: 2997440
+E1_dimension: 46835, E2_dimension: 64, vals: 2997440
+
+
+kernel execution time:  9.78667 ms
+fused time: 10.2677
+
+kernel execution time:  9.62847 ms
+sddmm time: 10.2355
+
+kernel execution time:  3.92285 ms
+sddmm time: 4.52461
+
+kernel execution time:  4.91246 ms
+spmm time: 5.38467
+
+kernel execution time:  74.8226 ms
+taco reference time: 75.4131
+
+sddmm-spmm execution
+
+-----------------------------------------
+/home/min/a/kadhitha/ispc-examples/data/suitesparse/consph/consph.mtx
+ref(i,l)=B(i,j)*C(i,k)*D(j,k)*F(j,l);
+B1_dimension: 83334, B2_dimension: 83334, vals: 6010480
+C1_dimension: 83334, C2_dimension: 64, vals: 5333376
+D1_dimension: 83334, D2_dimension: 64, vals: 5333376
+E1_dimension: 83334, E2_dimension: 64, vals: 5333376
+
+
+kernel execution time:  19.7265 ms
+fused time: 20.2664
+
+kernel execution time:  17.1571 ms
+sddmm time: 17.8366
+
+kernel execution time:  10.5179 ms
+sddmm time: 11.1615
+
+kernel execution time:  10.7719 ms
+spmm time: 11.4141
+
+kernel execution time:  186.633 ms
+taco reference time: 187.406
+
+sddmm-spmm execution
+
+-----------------------------------------
+/home/min/a/kadhitha/ispc-examples/data/suitesparse/cop20k_A/cop20k_A.mtx
+ref(i,l)=B(i,j)*C(i,k)*D(j,k)*F(j,l);
+B1_dimension: 121192, B2_dimension: 121192, vals: 2624331
+C1_dimension: 121192, C2_dimension: 64, vals: 7756288
+D1_dimension: 121192, D2_dimension: 64, vals: 7756288
+E1_dimension: 121192, E2_dimension: 64, vals: 7756288
+
+
+kernel execution time:  28.3142 ms
+fused time: 28.8151
+
+kernel execution time:  20.3455 ms
+sddmm time: 21.0059
+
+kernel execution time:  12.2316 ms
+sddmm time: 12.8542
+
+kernel execution time:  13.8246 ms
+spmm time: 14.4268
+
+kernel execution time:  100.583 ms
+taco reference time: 101.304
+
+sddmm-spmm execution
+
+-----------------------------------------
+/home/min/a/kadhitha/ispc-examples/data/suitesparse/scircuit/scircuit.mtx
+ref(i,l)=B(i,j)*C(i,k)*D(j,k)*F(j,l);
+B1_dimension: 170998, B2_dimension: 170998, vals: 958936
+C1_dimension: 170998, C2_dimension: 64, vals: 10943872
+D1_dimension: 170998, D2_dimension: 64, vals: 10943872
+E1_dimension: 170998, E2_dimension: 64, vals: 10943872
+
+
+kernel execution time:  20.038 ms
+fused time: 20.555
+
+kernel execution time:  11.3385 ms
+sddmm time: 11.9822
+
+kernel execution time:  8.08082 ms
+sddmm time: 8.71341
+
+kernel execution time:  10.9562 ms
+spmm time: 11.5782
+
+kernel execution time:  80.9289 ms
+taco reference time: 81.6333
+
+sddmm-spmm execution
+
+-----------------------------------------
+/home/min/a/kadhitha/ispc-examples/data/suitesparse/mac_econ_fwd500/mac_econ_fwd500.mtx
+ref(i,l)=B(i,j)*C(i,k)*D(j,k)*F(j,l);
+B1_dimension: 206500, B2_dimension: 206500, vals: 1273389
+C1_dimension: 206500, C2_dimension: 64, vals: 13216000
+D1_dimension: 206500, D2_dimension: 64, vals: 13216000
+E1_dimension: 206500, E2_dimension: 64, vals: 13216000
+
+
+kernel execution time:  25.3126 ms
+fused time: 25.8254
+
+kernel execution time:  15.9278 ms
+sddmm time: 16.6406
+
+kernel execution time:  10.5087 ms
+sddmm time: 11.2503
+
+kernel execution time:  14.3281 ms
+spmm time: 14.9822
+
+kernel execution time:  98.03 ms
+taco reference time: 98.7014
+
+sddmm-spmm execution
+
+-----------------------------------------
+/home/min/a/kadhitha/ispc-examples/data/ufl/webbase-1M/webbase-1M.mtx
+ref(i,l)=B(i,j)*C(i,k)*D(j,k)*F(j,l);
+B1_dimension: 1000005, B2_dimension: 1000005, vals: 3105536
+C1_dimension: 1000005, C2_dimension: 64, vals: 64000320
+D1_dimension: 1000005, D2_dimension: 64, vals: 64000320
+E1_dimension: 1000005, E2_dimension: 64, vals: 64000320
+
+
+kernel execution time:  77.5645 ms
+fused time: 78.0892
+
+kernel execution time:  31.7247 ms
+sddmm time: 32.4147
+
+kernel execution time:  26.0367 ms
+sddmm time: 26.7311
+
+kernel execution time:  47.1564 ms
+spmm time: 47.8767
+
+kernel execution time:  444.658 ms
+taco reference time: 445.356
+
+sddmm-spmm execution
+
+-----------------------------------------
+/home/min/a/kadhitha/ispc-examples/data/suitesparse/circuit5M/circuit5M.mtx
+ref(i,l)=B(i,j)*C(i,k)*D(j,k)*F(j,l);
+B1_dimension: 5558326, B2_dimension: 5558326, vals: 59524291
+C1_dimension: 5558326, C2_dimension: 64, vals: 355732864
+D1_dimension: 5558326, D2_dimension: 64, vals: 355732864
+E1_dimension: 5558326, E2_dimension: 64, vals: 355732864
+
+
+kernel execution time:  760.552 ms
+fused time: 761.497
+
+kernel execution time:  414.806 ms
+sddmm time: 415.511
+
+kernel execution time:  347.288 ms
+sddmm time: 348.046
+
+kernel execution time:  493.652 ms
+spmm time: 494.215
+
+kernel execution time:  7069.3 ms
+taco reference time: 7070.64
+
+sddmm-spmm execution
+
+-----------------------------------------
+/home/min/a/kadhitha/ispc-examples/data/suitesparse/cant/cant.mtx
+ref(i,l)=B(i,j)*C(i,k)*D(j,k)*F(j,l);
+B1_dimension: 62451, B2_dimension: 62451, vals: 4007383
+C1_dimension: 62451, C2_dimension: 64, vals: 3996864
+D1_dimension: 62451, D2_dimension: 64, vals: 3996864
+E1_dimension: 62451, E2_dimension: 64, vals: 3996864
+
+
+kernel execution time:  14.868 ms
+fused time: 15.3593
+
+kernel execution time:  12.1237 ms
+sddmm time: 12.798
+
+kernel execution time:  7.68559 ms
+sddmm time: 8.34388
+
+kernel execution time:  7.93647 ms
+spmm time: 8.56812
+
+kernel execution time:  122.125 ms
+taco reference time: 122.846
+
+sddmm-spmm execution
+
+-----------------------------------------
+/home/min/a/kadhitha/ispc-examples/data/suitesparse/shipsec1/shipsec1.mtx
+ref(i,l)=B(i,j)*C(i,k)*D(j,k)*F(j,l);
+B1_dimension: 140874, B2_dimension: 140874, vals: 7813404
+C1_dimension: 140874, C2_dimension: 64, vals: 9015936
+D1_dimension: 140874, D2_dimension: 64, vals: 9015936
+E1_dimension: 140874, E2_dimension: 64, vals: 9015936
+
+
+kernel execution time:  28.6635 ms
+fused time: 29.1538
+
+kernel execution time:  24.0642 ms
+sddmm time: 24.694
+
+kernel execution time:  15.2 ms
+sddmm time: 15.875
+
+kernel execution time:  16.0406 ms
+spmm time: 16.6827
+
+kernel execution time:  242.63 ms
+taco reference time: 243.336
+
+sddmm-spmm execution
+
+-----------------------------------------
+/home/min/a/kadhitha/ispc-examples/data/suitesparse/shipsec1/shipsec1.mtx
+ref(i,l)=B(i,j)*C(i,k)*D(j,k)*F(j,l);
+B1_dimension: 140874, B2_dimension: 140874, vals: 7813404
+C1_dimension: 140874, C2_dimension: 128, vals: 18031872
+D1_dimension: 140874, D2_dimension: 128, vals: 18031872
+E1_dimension: 140874, E2_dimension: 128, vals: 18031872
+
+
+kernel execution time:  50.9773 ms
+fused time: 51.4656
+
+kernel execution time:  42.0404 ms
+sddmm time: 42.7352
+
+kernel execution time:  24.4547 ms
+sddmm time: 25.1418
+
+kernel execution time:  28.4623 ms
+spmm time: 29.1722
+
+kernel execution time:  903.853 ms
+taco reference time: 904.701
+
+sddmm-spmm execution
+
+-----------------------------------------
+/home/min/a/kadhitha/ispc-examples/data/suitesparse/shipsec1/shipsec1.mtx
+ref(i,l)=B(i,j)*C(i,k)*D(j,k)*F(j,l);
+B1_dimension: 140874, B2_dimension: 140874, vals: 7813404
+C1_dimension: 140874, C2_dimension: 250, vals: 35218500
+D1_dimension: 140874, D2_dimension: 250, vals: 35218500
+E1_dimension: 140874, E2_dimension: 250, vals: 35218500
+
+
+kernel execution time:  97.1385 ms
+fused time: 97.6193
+
+kernel execution time:  87.9795 ms
+sddmm time: 88.6535
+
+kernel execution time:  41.8878 ms
+sddmm time: 42.5463
+
+kernel execution time:  54.1433 ms
+spmm time: 54.7894
+
+kernel execution time:  3669.52 ms
+taco reference time: 3670.78
+
+sddmm-spmm execution
+
+-----------------------------------------
+/home/min/a/kadhitha/ispc-examples/data/suitesparse/shipsec1/shipsec1.mtx
+ref(i,l)=B(i,j)*C(i,k)*D(j,k)*F(j,l);
+B1_dimension: 140874, B2_dimension: 140874, vals: 7813404
+C1_dimension: 140874, C2_dimension: 512, vals: 72127488
+D1_dimension: 140874, D2_dimension: 512, vals: 72127488
+E1_dimension: 140874, E2_dimension: 512, vals: 72127488
+
+
+kernel execution time:  200.849 ms
+fused time: 201.329
+
+kernel execution time:  208.737 ms
+sddmm time: 209.393
+
+kernel execution time:  81.0923 ms
+sddmm time: 81.7181
+
+kernel execution time:  106.669 ms
+spmm time: 107.272
+
+kernel execution time:  15631.7 ms
+taco reference time: 15632.4
+
+sddmm-spmm execution
+
+-----------------------------------------
+/home/min/a/kadhitha/ispc-examples/data/suitesparse/shipsec1/shipsec1.mtx
+ref(i,l)=B(i,j)*C(i,k)*D(j,k)*F(j,l);
+B1_dimension: 140874, B2_dimension: 140874, vals: 7813404
+C1_dimension: 140874, C2_dimension: 32, vals: 4507968
+D1_dimension: 140874, D2_dimension: 32, vals: 4507968
+E1_dimension: 140874, E2_dimension: 32, vals: 4507968
+
+
+kernel execution time:  16.5631 ms
+fused time: 17.0602
+
+kernel execution time:  15.2542 ms
+sddmm time: 15.8919
+
+kernel execution time:  9.9104 ms
+sddmm time: 10.5671
+
+kernel execution time:  9.61101 ms
+spmm time: 10.2251
+
+kernel execution time:  68.1735 ms
+taco reference time: 68.8921
+
+sddmm-spmm execution
+
+-----------------------------------------
+/home/min/a/kadhitha/ispc-examples/data/suitesparse/shipsec1/shipsec1.mtx
+ref(i,l)=B(i,j)*C(i,k)*D(j,k)*F(j,l);
+B1_dimension: 140874, B2_dimension: 140874, vals: 7813404
+C1_dimension: 140874, C2_dimension: 256, vals: 36063744
+D1_dimension: 140874, D2_dimension: 256, vals: 36063744
+E1_dimension: 140874, E2_dimension: 256, vals: 36063744
+
+
+kernel execution time:  98.882 ms
+fused time: 99.3547
+
+kernel execution time:  90.4755 ms
+sddmm time: 91.136
+
+kernel execution time:  42.7487 ms
+sddmm time: 43.4726
+
+kernel execution time:  55.0127 ms
+spmm time: 55.731
+
+kernel execution time:  3836.15 ms
+taco reference time: 3837.42
+
+
+
+
+
+--------- single threads
+
+
+sddmm-spmm execution
+
+-----------------------------------------
+/home/min/a/kadhitha/ispc-examples/data/suitesparse/bcsstk17/bcsstk17.mtx
+ref(i,l)=B(i,j)*C(i,k)*D(j,k)*F(j,l);
+B1_dimension: 10974, B2_dimension: 10974, vals: 428650
+C1_dimension: 10974, C2_dimension: 64, vals: 702336
+D1_dimension: 10974, D2_dimension: 64, vals: 702336
+E1_dimension: 10974, E2_dimension: 64, vals: 702336
+
+
+kernel execution time:  22.3045 ms
+fused time: 22.7793
+
+kernel execution time:  8.91826 ms
+sddmm time: 9.46409
+
+kernel execution time:  9.62695 ms
+sddmm time: 10.1105
+
+kernel execution time:  10.8309 ms
+spmm time: 11.2862
+
+kernel execution time:  554.747 ms
+taco reference time: 555.315
+
+sddmm-spmm execution
+
+-----------------------------------------
+/home/min/a/kadhitha/ispc-examples/data/suitesparse/pdb1HYS/pdb1HYS.mtx
+ref(i,l)=B(i,j)*C(i,k)*D(j,k)*F(j,l);
+B1_dimension: 36417, B2_dimension: 36417, vals: 4344765
+C1_dimension: 36417, C2_dimension: 64, vals: 2330688
+D1_dimension: 36417, D2_dimension: 64, vals: 2330688
+E1_dimension: 36417, E2_dimension: 64, vals: 2330688
+
+
+kernel execution time:  166.569 ms
+fused time: 167.058
+
+kernel execution time:  83.9979 ms
+sddmm time: 84.5309
+
+kernel execution time:  88.9971 ms
+sddmm time: 89.5559
+
+kernel execution time:  68.5334 ms
+spmm time: 69.0587
+
+kernel execution time:  5562.04 ms
+taco reference time: 5563.12
+
+sddmm-spmm execution
+
+-----------------------------------------
+/home/min/a/kadhitha/ispc-examples/data/suitesparse/rma10/rma10.mtx
+ref(i,l)=B(i,j)*C(i,k)*D(j,k)*F(j,l);
+B1_dimension: 46835, B2_dimension: 46835, vals: 2374001
+C1_dimension: 46835, C2_dimension: 64, vals: 2997440
+D1_dimension: 46835, D2_dimension: 64, vals: 2997440
+E1_dimension: 46835, E2_dimension: 64, vals: 2997440
+
+
+kernel execution time:  94.7764 ms
+fused time: 95.2526
+
+kernel execution time:  47.3174 ms
+sddmm time: 47.8674
+
+kernel execution time:  49.7766 ms
+sddmm time: 50.3372
+
+kernel execution time:  51.3685 ms
+spmm time: 51.8719
+
+kernel execution time:  3073.44 ms
+taco reference time: 3074.55
+
+sddmm-spmm execution
+
+-----------------------------------------
+/home/min/a/kadhitha/ispc-examples/data/suitesparse/cant/cant.mtx
+ref(i,l)=B(i,j)*C(i,k)*D(j,k)*F(j,l);
+B1_dimension: 62451, B2_dimension: 62451, vals: 4007383
+C1_dimension: 62451, C2_dimension: 64, vals: 3996864
+D1_dimension: 62451, D2_dimension: 64, vals: 3996864
+E1_dimension: 62451, E2_dimension: 64, vals: 3996864
+
+
+kernel execution time:  158.175 ms
+fused time: 158.637
+
+kernel execution time:  78.3163 ms
+sddmm time: 78.8675
+
+kernel execution time:  82.3237 ms
+sddmm time: 82.8606
+
+kernel execution time:  76.2056 ms
+spmm time: 76.7067
+
+kernel execution time:  5178.46 ms
+taco reference time: 5179.53
+
+sddmm-spmm execution
+
+-----------------------------------------
+/home/min/a/kadhitha/ispc-examples/data/suitesparse/consph/consph.mtx
+ref(i,l)=B(i,j)*C(i,k)*D(j,k)*F(j,l);
+B1_dimension: 83334, B2_dimension: 83334, vals: 6010480
+C1_dimension: 83334, C2_dimension: 64, vals: 5333376
+D1_dimension: 83334, D2_dimension: 64, vals: 5333376
+E1_dimension: 83334, E2_dimension: 64, vals: 5333376
+
+
+kernel execution time:  241.194 ms
+fused time: 241.676
+
+kernel execution time:  117.775 ms
+sddmm time: 118.325
+
+kernel execution time:  124.006 ms
+sddmm time: 124.563
+
+kernel execution time:  117.052 ms
+spmm time: 117.594
+
+kernel execution time:  7844.57 ms
+taco reference time: 7845.69
+
+sddmm-spmm execution
+
+-----------------------------------------
+/home/min/a/kadhitha/ispc-examples/data/suitesparse/cop20k_A/cop20k_A.mtx
+ref(i,l)=B(i,j)*C(i,k)*D(j,k)*F(j,l);
+B1_dimension: 121192, B2_dimension: 121192, vals: 2624331
+C1_dimension: 121192, C2_dimension: 64, vals: 7756288
+D1_dimension: 121192, D2_dimension: 64, vals: 7756288
+E1_dimension: 121192, E2_dimension: 64, vals: 7756288
+
+
+kernel execution time:  201.49 ms
+fused time: 201.973
+
+kernel execution time:  90.6759 ms
+sddmm time: 91.2506
+
+kernel execution time:  93.0462 ms
+sddmm time: 93.6053
+
+kernel execution time:  119.005 ms
+spmm time: 119.547
+
+kernel execution time:  3567.55 ms
+taco reference time: 3568.67
+
+sddmm-spmm execution
+
+-----------------------------------------
+/home/min/a/kadhitha/ispc-examples/data/suitesparse/shipsec1/shipsec1.mtx
+ref(i,l)=B(i,j)*C(i,k)*D(j,k)*F(j,l);
+B1_dimension: 140874, B2_dimension: 140874, vals: 7813404
+C1_dimension: 140874, C2_dimension: 64, vals: 9015936
+D1_dimension: 140874, D2_dimension: 64, vals: 9015936
+E1_dimension: 140874, E2_dimension: 64, vals: 9015936
+
+
+kernel execution time:  315.238 ms
+fused time: 315.723
+
+kernel execution time:  156.048 ms
+sddmm time: 156.588
+
+kernel execution time:  164.148 ms
+sddmm time: 164.747
+
+kernel execution time:  162.502 ms
+spmm time: 163.021
+
+kernel execution time:  10131.2 ms
+taco reference time: 10132.3
+
+sddmm-spmm execution
+
+-----------------------------------------
+/home/min/a/kadhitha/ispc-examples/data/suitesparse/scircuit/scircuit.mtx
+ref(i,l)=B(i,j)*C(i,k)*D(j,k)*F(j,l);
+B1_dimension: 170998, B2_dimension: 170998, vals: 958936
+C1_dimension: 170998, C2_dimension: 64, vals: 10943872
+D1_dimension: 170998, D2_dimension: 64, vals: 10943872
+E1_dimension: 170998, E2_dimension: 64, vals: 10943872
+
+
+kernel execution time:  87.9511 ms
+fused time: 88.4267
+
+kernel execution time:  37.6228 ms
+sddmm time: 38.1792
+
+kernel execution time:  37.8418 ms
+sddmm time: 38.3903
+
+kernel execution time:  84.4997 ms
+spmm time: 85.037
+
+kernel execution time:  1330.01 ms
+taco reference time: 1330.63
+
+sddmm-spmm execution
+
+-----------------------------------------
+/home/min/a/kadhitha/ispc-examples/data/suitesparse/mac_econ_fwd500/mac_econ_fwd500.mtx
+ref(i,l)=B(i,j)*C(i,k)*D(j,k)*F(j,l);
+B1_dimension: 206500, B2_dimension: 206500, vals: 1273389
+C1_dimension: 206500, C2_dimension: 64, vals: 13216000
+D1_dimension: 206500, D2_dimension: 64, vals: 13216000
+E1_dimension: 206500, E2_dimension: 64, vals: 13216000
+
+
+kernel execution time:  92.8914 ms
+fused time: 93.3697
+
+kernel execution time:  39.7714 ms
+sddmm time: 40.3051
+
+kernel execution time:  40.1835 ms
+sddmm time: 40.7458
+
+kernel execution time:  98.0818 ms
+spmm time: 98.5997
+
+kernel execution time:  1721.01 ms
+taco reference time: 1721.64
+
+sddmm-spmm execution
+
+-----------------------------------------
+/home/min/a/kadhitha/ispc-examples/data/ufl/webbase-1M/webbase-1M.mtx
+ref(i,l)=B(i,j)*C(i,k)*D(j,k)*F(j,l);
+B1_dimension: 1000005, B2_dimension: 1000005, vals: 3105536
+C1_dimension: 1000005, C2_dimension: 64, vals: 64000320
+D1_dimension: 1000005, D2_dimension: 64, vals: 64000320
+E1_dimension: 1000005, E2_dimension: 64, vals: 64000320
+
+
+kernel execution time:  259.845 ms
+fused time: 260.329
+
+kernel execution time:  95.8311 ms
+sddmm time: 96.3809
+
+kernel execution time:  97.6925 ms
+sddmm time: 98.2397
+
+kernel execution time:  292.415 ms
+spmm time: 292.952
+
+kernel execution time:  4292.03 ms
+taco reference time: 4293.1
+
+sddmm-spmm execution
+
+-----------------------------------------
+/home/min/a/kadhitha/ispc-examples/data/suitesparse/circuit5M/circuit5M.mtx
+ref(i,l)=B(i,j)*C(i,k)*D(j,k)*F(j,l);
+B1_dimension: 5558326, B2_dimension: 5558326, vals: 59524291
+C1_dimension: 5558326, C2_dimension: 64, vals: 355732864
+D1_dimension: 5558326, D2_dimension: 64, vals: 355732864
+E1_dimension: 5558326, E2_dimension: 64, vals: 355732864
+
+
+kernel execution time:  3326.66 ms
+fused time: 3327.64
+
+kernel execution time:  1617.82 ms
+sddmm time: 1618.36
+
+kernel execution time:  1672.73 ms
+sddmm time: 1673.27
+
+kernel execution time:  3199.32 ms
+spmm time: 3200.35
+
+kernel execution time:  88682 ms
+taco reference time: 88683.1
+
+sddmm-spmm execution
+
+-----------------------------------------
+/home/min/a/kadhitha/ispc-examples/data/suitesparse/circuit5M/circuit5M.mtx
+ref(i,l)=B(i,j)*C(i,k)*D(j,k)*F(j,l);
+B1_dimension: 5558326, B2_dimension: 5558326, vals: 59524291
+C1_dimension: 5558326, C2_dimension: 64, vals: 355732864
+D1_dimension: 5558326, D2_dimension: 64, vals: 355732864
+E1_dimension: 5558326, E2_dimension: 64, vals: 355732864
+
+
+kernel execution time:  722.484 ms
+fused time: 723.506
+
+kernel execution time:  613.844 ms
+sddmm time: 614.401
+
+kernel execution time:  331.43 ms
+sddmm time: 331.978
+
+kernel execution time:  463.752 ms
+spmm time: 464.328
+
+kernel execution time:  8864.13 ms
+taco reference time: 8865.18
+
+sddmm-spmm execution
+
+-----------------------------------------
+/home/min/a/kadhitha/ispc-examples/data/suitesparse/shipsec1/shipsec1.mtx
+ref(i,l)=B(i,j)*C(i,k)*D(j,k)*F(j,l);
+B1_dimension: 140874, B2_dimension: 140874, vals: 7813404
+C1_dimension: 140874, C2_dimension: 16, vals: 2253984
+D1_dimension: 140874, D2_dimension: 16, vals: 2253984
+E1_dimension: 140874, E2_dimension: 16, vals: 2253984
+
+
+kernel execution time:  10.0607 ms
+fused time: 10.5457
+
+kernel execution time:  8.70278 ms
+sddmm time: 9.26539
+
+kernel execution time:  6.88021 ms
+sddmm time: 7.49853
+
+kernel execution time:  5.91127 ms
+spmm time: 6.50028
+
+kernel execution time:  23.776 ms
+taco reference time: 24.3947
+
+sddmm-spmm execution
+
+-----------------------------------------
+/home/min/a/kadhitha/ispc-examples/data/ufl/webbase-1M/webbase-1M.mtx
+ref(i,l)=B(i,j)*C(i,k)*D(j,k)*F(j,l);
+B1_dimension: 1000005, B2_dimension: 1000005, vals: 3105536
+C1_dimension: 1000005, C2_dimension: 64, vals: 64000320
+D1_dimension: 1000005, D2_dimension: 64, vals: 64000320
+E1_dimension: 1000005, E2_dimension: 64, vals: 64000320
+
+
+kernel execution time:  179.752 ms
+fused time: 180.214
+
+kernel execution time:  170.678 ms
+sddmm time: 171.224
+
+kernel execution time:  67.5166 ms
+sddmm time: 68.0688
+
+kernel execution time:  168.557 ms
+spmm time: 169.083
+
+kernel execution time:  2452.7 ms
+taco reference time: 2453.34
+
+sddmm-spmm execution
+
+-----------------------------------------
+/home/min/a/kadhitha/ispc-examples/data/ufl/webbase-1M/webbase-1M.mtx
+ref(i,l)=B(i,j)*C(i,k)*D(j,k)*F(j,l);
+B1_dimension: 1000005, B2_dimension: 1000005, vals: 3105536
+C1_dimension: 1000005, C2_dimension: 64, vals: 64000320
+D1_dimension: 1000005, D2_dimension: 64, vals: 64000320
+E1_dimension: 1000005, E2_dimension: 64, vals: 64000320
+
+
+kernel execution time:  111.508 ms
+fused time: 111.983
+
+kernel execution time:  171.316 ms
+sddmm time: 171.863
+
+kernel execution time:  40.3219 ms
+sddmm time: 40.8676
+
+kernel execution time:  91.8855 ms
+spmm time: 92.3888
+
+kernel execution time:  1349.98 ms
+taco reference time: 1350.57
+
+sddmm-spmm execution
+
+-----------------------------------------
+/home/min/a/kadhitha/ispc-examples/data/ufl/webbase-1M/webbase-1M.mtx
+ref(i,l)=B(i,j)*C(i,k)*D(j,k)*F(j,l);
+B1_dimension: 1000005, B2_dimension: 1000005, vals: 3105536
+C1_dimension: 1000005, C2_dimension: 64, vals: 64000320
+D1_dimension: 1000005, D2_dimension: 64, vals: 64000320
+E1_dimension: 1000005, E2_dimension: 64, vals: 64000320
+
+
+kernel execution time:  84.4185 ms
+fused time: 84.8803
+
+kernel execution time:  131.898 ms
+sddmm time: 132.465
+
+kernel execution time:  27.6062 ms
+sddmm time: 28.2117
+
+kernel execution time:  59.0816 ms
+spmm time: 59.6189
+
+kernel execution time:  731.805 ms
+taco reference time: 732.441
+
+sddmm-spmm execution
+
+-----------------------------------------
+/home/min/a/kadhitha/ispc-examples/data/ufl/webbase-1M/webbase-1M.mtx
+ref(i,l)=B(i,j)*C(i,k)*D(j,k)*F(j,l);
+B1_dimension: 1000005, B2_dimension: 1000005, vals: 3105536
+C1_dimension: 1000005, C2_dimension: 64, vals: 64000320
+D1_dimension: 1000005, D2_dimension: 64, vals: 64000320
+E1_dimension: 1000005, E2_dimension: 64, vals: 64000320
+
+
+kernel execution time:  76.4489 ms
+fused time: 76.9087
+
+kernel execution time:  65.9875 ms
+sddmm time: 66.5522
+
+kernel execution time:  25.2905 ms
+sddmm time: 25.8759
+
+kernel execution time:  50.1563 ms
+spmm time: 50.6842
+
+kernel execution time:  397.479 ms
+taco reference time: 398.109
+
+sddmm-spmm execution
+
+-----------------------------------------
+/home/min/a/kadhitha/ispc-examples/data/ufl/webbase-1M/webbase-1M.mtx
+ref(i,l)=B(i,j)*C(i,k)*D(j,k)*F(j,l);
+B1_dimension: 1000005, B2_dimension: 1000005, vals: 3105536
+C1_dimension: 1000005, C2_dimension: 64, vals: 64000320
+D1_dimension: 1000005, D2_dimension: 64, vals: 64000320
+E1_dimension: 1000005, E2_dimension: 64, vals: 64000320
+
+
+kernel execution time:  74.0227 ms
+fused time: 74.5259
+
+kernel execution time:  40.2983 ms
+sddmm time: 40.889
+
+kernel execution time:  25.1349 ms
+sddmm time: 25.7522
+
+kernel execution time:  46.3853 ms
+spmm time: 46.9556
+
+kernel execution time:  418.693 ms
+taco reference time: 419.345
+
+sddmm-spmm execution
+
+-----------------------------------------
+/home/min/a/kadhitha/ispc-examples/data/suitesparse/circuit5M/circuit5M.mtx
+ref(i,l)=B(i,j)*C(i,k)*D(j,k)*F(j,l);
+B1_dimension: 5558326, B2_dimension: 5558326, vals: 59524291
+C1_dimension: 5558326, C2_dimension: 64, vals: 355732864
+D1_dimension: 5558326, D2_dimension: 64, vals: 355732864
+E1_dimension: 5558326, E2_dimension: 64, vals: 355732864
+
+
+kernel execution time:  1982.06 ms
+fused time: 1982.93
+
+kernel execution time:  1668.23 ms
+sddmm time: 1668.77
+
+kernel execution time:  962.046 ms
+sddmm time: 962.591
+
+kernel execution time:  1821.97 ms
+spmm time: 1822.46
+
+kernel execution time:  47772.2 ms
+taco reference time: 47773.4
+
+sddmm-spmm execution
+
+-----------------------------------------
+/home/min/a/kadhitha/ispc-examples/data/suitesparse/circuit5M/circuit5M.mtx
+ref(i,l)=B(i,j)*C(i,k)*D(j,k)*F(j,l);
+B1_dimension: 5558326, B2_dimension: 5558326, vals: 59524291
+C1_dimension: 5558326, C2_dimension: 64, vals: 355732864
+D1_dimension: 5558326, D2_dimension: 64, vals: 355732864
+E1_dimension: 5558326, E2_dimension: 64, vals: 355732864
+
+
+kernel execution time:  1143.12 ms
+fused time: 1144.05
+
+kernel execution time:  1254.57 ms
+sddmm time: 1255.18
+
+kernel execution time:  539.54 ms
+sddmm time: 540.136
+
+kernel execution time:  1005.14 ms
+spmm time: 1005.69
+
+kernel execution time:  25805.1 ms
+taco reference time: 25806.1
+
+sddmm-spmm execution
+
+-----------------------------------------
+/home/min/a/kadhitha/ispc-examples/data/suitesparse/circuit5M/circuit5M.mtx
+ref(i,l)=B(i,j)*C(i,k)*D(j,k)*F(j,l);
+B1_dimension: 5558326, B2_dimension: 5558326, vals: 59524291
+C1_dimension: 5558326, C2_dimension: 64, vals: 355732864
+D1_dimension: 5558326, D2_dimension: 64, vals: 355732864
+E1_dimension: 5558326, E2_dimension: 64, vals: 355732864
+
+
+kernel execution time:  782.496 ms
+fused time: 783.574
+
+kernel execution time:  872.793 ms
+sddmm time: 873.351
+
+kernel execution time:  353.256 ms
+sddmm time: 353.8
+
+kernel execution time:  606.511 ms
+spmm time: 607.041
+
+kernel execution time:  15198.9 ms
+taco reference time: 15199.9
+
+sddmm-spmm execution
+
+-----------------------------------------
+/home/min/a/kadhitha/ispc-examples/data/suitesparse/circuit5M/circuit5M.mtx
+ref(i,l)=B(i,j)*C(i,k)*D(j,k)*F(j,l);
+B1_dimension: 5558326, B2_dimension: 5558326, vals: 59524291
+C1_dimension: 5558326, C2_dimension: 64, vals: 355732864
+D1_dimension: 5558326, D2_dimension: 64, vals: 355732864
+E1_dimension: 5558326, E2_dimension: 64, vals: 355732864
+
+
+kernel execution time:  729.345 ms
+fused time: 730.242
+
+kernel execution time:  608.324 ms
+sddmm time: 608.908
+
+kernel execution time:  334.109 ms
+sddmm time: 334.653
+
+kernel execution time:  471.211 ms
+spmm time: 471.77
+
+kernel execution time:  8630.19 ms
+taco reference time: 8631.29
+
+sddmm-spmm execution
+
+-----------------------------------------
+/home/min/a/kadhitha/ispc-examples/data/suitesparse/circuit5M/circuit5M.mtx
+ref(i,l)=B(i,j)*C(i,k)*D(j,k)*F(j,l);
+B1_dimension: 5558326, B2_dimension: 5558326, vals: 59524291
+C1_dimension: 5558326, C2_dimension: 64, vals: 355732864
+D1_dimension: 5558326, D2_dimension: 64, vals: 355732864
+E1_dimension: 5558326, E2_dimension: 64, vals: 355732864
+
+
+kernel execution time:  736.326 ms
+fused time: 737.203
+
+kernel execution time:  482.639 ms
+sddmm time: 483.19
+
+kernel execution time:  333.58 ms
+sddmm time: 334.131
+
+kernel execution time:  478.49 ms
+spmm time: 479.051
+
+kernel execution time:  7244.99 ms
+taco reference time: 7246.13
+
+sddmm-spmm execution
+
+-----------------------------------------
+/home/min/a/kadhitha/ispc-examples/data/suitesparse/cant/cant.mtx
+ref(i,l)=B(i,j)*C(i,k)*D(j,k)*F(j,l);
+B1_dimension: 62451, B2_dimension: 62451, vals: 4007383
+C1_dimension: 62451, C2_dimension: 64, vals: 3996864
+D1_dimension: 62451, D2_dimension: 64, vals: 3996864
+E1_dimension: 62451, E2_dimension: 64, vals: 3996864
+
+
+kernel execution time:  13.4143 ms
+fused time: 13.9143
+
+kernel execution time:  11.2836 ms
+sddmm time: 12.0149
+
+kernel execution time:  7.35609 ms
+sddmm time: 8.06588
+
+kernel execution time:  7.36916 ms
+spmm time: 7.93476
+
+kernel execution time:  120.287 ms
+taco reference time: 120.948
+
+sddmm-spmm execution
+
+-----------------------------------------
+/home/min/a/kadhitha/ispc-examples/data/suitesparse/cant/cant.mtx
+ref(i,l)=B(i,j)*C(i,k)*D(j,k)*F(j,l);
+B1_dimension: 62451, B2_dimension: 62451, vals: 4007383
+C1_dimension: 62451, C2_dimension: 64, vals: 3996864
+D1_dimension: 62451, D2_dimension: 64, vals: 3996864
+E1_dimension: 62451, E2_dimension: 64, vals: 3996864
+
+
+kernel execution time:  156.322 ms
+fused time: 156.802
+
+kernel execution time:  77.0794 ms
+sddmm time: 77.6574
+
+kernel execution time:  81.2772 ms
+sddmm time: 81.8141
+
+kernel execution time:  74.4419 ms
+spmm time: 74.9538
+
+kernel execution time:  5091.25 ms
+taco reference time: 5092.34
+
+sddmm-spmm execution
+
+-----------------------------------------
+/home/min/a/kadhitha/ispc-examples/data/suitesparse/cant/cant.mtx
+ref(i,l)=B(i,j)*C(i,k)*D(j,k)*F(j,l);
+B1_dimension: 62451, B2_dimension: 62451, vals: 4007383
+C1_dimension: 62451, C2_dimension: 64, vals: 3996864
+D1_dimension: 62451, D2_dimension: 64, vals: 3996864
+E1_dimension: 62451, E2_dimension: 64, vals: 3996864
+
+
+kernel execution time:  160.868 ms
+fused time: 161.347
+
+kernel execution time:  78.1223 ms
+sddmm time: 78.7031
+
+kernel execution time:  82.4929 ms
+sddmm time: 83.0729
+
+kernel execution time:  77.24 ms
+spmm time: 77.7896
+
+kernel execution time:  5087.42 ms
+taco reference time: 5088.53
+
+sddmm-spmm execution
+
+-----------------------------------------
+/home/min/a/kadhitha/ispc-examples/data/suitesparse/cant/cant.mtx
+ref(i,l)=B(i,j)*C(i,k)*D(j,k)*F(j,l);
+B1_dimension: 62451, B2_dimension: 62451, vals: 4007383
+C1_dimension: 62451, C2_dimension: 64, vals: 3996864
+D1_dimension: 62451, D2_dimension: 64, vals: 3996864
+E1_dimension: 62451, E2_dimension: 64, vals: 3996864
+
+
+kernel execution time:  157.627 ms
+fused time: 158.106
+
+kernel execution time:  76.9497 ms
+sddmm time: 77.5265
+
+kernel execution time:  81.9491 ms
+sddmm time: 82.4945
+
+kernel execution time:  81.9841 ms
+spmm time: 82.5149
+
+kernel execution time:  5084.06 ms
+taco reference time: 5085.15
+
+sddmm-spmm execution
+
+-----------------------------------------
+/home/min/a/kadhitha/ispc-examples/data/suitesparse/cant/cant.mtx
+ref(i,l)=B(i,j)*C(i,k)*D(j,k)*F(j,l);
+B1_dimension: 62451, B2_dimension: 62451, vals: 4007383
+C1_dimension: 62451, C2_dimension: 64, vals: 3996864
+D1_dimension: 62451, D2_dimension: 64, vals: 3996864
+E1_dimension: 62451, E2_dimension: 64, vals: 3996864
+
+
+kernel execution time:  156.608 ms
+fused time: 157.085
+
+kernel execution time:  76.6969 ms
+sddmm time: 77.2366
+
+kernel execution time:  80.7238 ms
+sddmm time: 81.2624
+
+kernel execution time:  74.4498 ms
+spmm time: 74.9694
+
+kernel execution time:  5076.16 ms
+taco reference time: 5077.28
+
+sddmm-spmm execution
+
+-----------------------------------------
+/home/min/a/kadhitha/ispc-examples/data/suitesparse/cant/cant.mtx
+ref(i,l)=B(i,j)*C(i,k)*D(j,k)*F(j,l);
+B1_dimension: 62451, B2_dimension: 62451, vals: 4007383
+C1_dimension: 62451, C2_dimension: 64, vals: 3996864
+D1_dimension: 62451, D2_dimension: 64, vals: 3996864
+E1_dimension: 62451, E2_dimension: 64, vals: 3996864
+
+
+kernel execution time:  156.489 ms
+fused time: 156.996
+
+kernel execution time:  77.2215 ms
+sddmm time: 77.7763
+
+kernel execution time:  81.2983 ms
+sddmm time: 81.8357
+
+kernel execution time:  75.4752 ms
+spmm time: 76.0191
+
+kernel execution time:  5087.37 ms
+taco reference time: 5088.51
+
+sddmm-spmm execution
+
+-----------------------------------------
+/home/min/a/kadhitha/ispc-examples/data/suitesparse/cant/cant.mtx
+ref(i,l)=B(i,j)*C(i,k)*D(j,k)*F(j,l);
+B1_dimension: 62451, B2_dimension: 62451, vals: 4007383
+C1_dimension: 62451, C2_dimension: 64, vals: 3996864
+D1_dimension: 62451, D2_dimension: 64, vals: 3996864
+E1_dimension: 62451, E2_dimension: 64, vals: 3996864
+
+
+kernel execution time:  156.515 ms
+fused time: 156.991
+
+kernel execution time:  76.9797 ms
+sddmm time: 77.5298
+
+kernel execution time:  81.4654 ms
+sddmm time: 82.0017
+
+kernel execution time:  76.1847 ms
+spmm time: 76.693
+
+kernel execution time:  5078.68 ms
+taco reference time: 5079.85
+
+sddmm-spmm execution
+
+-----------------------------------------
+A(i) = B(i,j) * C(j,k) * v(k);
+B1_dimension: 5, B2_dimension: 5, vals: 19
+C1_dimension: 5, C2_dimension: 5, vals: 19
+D1_dimension: 5, vals: 5
+
+
+sddmm-spmm execution
+
+-----------------------------------------
+A(i) = B(i,j) * C(j,k) * v(k);
+B1_dimension: 5, B2_dimension: 5, vals: 19
+C1_dimension: 5, C2_dimension: 5, vals: 19
+D1_dimension: 5, vals: 5
+
+
+sddmm-spmm execution
+
+-----------------------------------------
+A(i) = B(i,j) * C(j,k) * v(k);
+B1_dimension: 5, B2_dimension: 5, vals: 19
+C1_dimension: 5, C2_dimension: 5, vals: 19
+D1_dimension: 5, vals: 5
+
+
+sddmm-spmm execution
+
+-----------------------------------------
+A(i) = B(i,j) * C(j,k) * v(k);
+B1_dimension: 5, B2_dimension: 5, vals: 19
+C1_dimension: 5, C2_dimension: 5, vals: 19
+D1_dimension: 5, vals: 5
+
+
+sddmm-spmm execution
+
+-----------------------------------------
+A(i) = B(i,j) * C(j,k) * v(k);
+B1_dimension: 5, B2_dimension: 5, vals: 19
+C1_dimension: 5, C2_dimension: 5, vals: 19
+D1_dimension: 5, vals: 5
+
+
+sddmm-spmm execution
+
+-----------------------------------------
+A(i) = B(i,j) * C(j,k) * v(k);
+B1_dimension: 5, B2_dimension: 5, vals: 19
+C1_dimension: 5, C2_dimension: 5, vals: 19
+D1_dimension: 5, vals: 5
+
+
+sddmm-spmm execution
+
+-----------------------------------------
+A(i) = B(i,j) * C(j,k) * v(k);
+B1_dimension: 5, B2_dimension: 5, vals: 19
+C1_dimension: 5, C2_dimension: 5, vals: 19
+D1_dimension: 5, vals: 5
+
+
+sddmm-spmm execution
+
+-----------------------------------------
+A(i) = B(i,j) * C(j,k) * v(k);
+B1_dimension: 5, B2_dimension: 5, vals: 19
+C1_dimension: 5, C2_dimension: 5, vals: 19
+D1_dimension: 5, vals: 5
+
+
+sddmm-spmm execution
+
+-----------------------------------------
+A(i) = B(i,j) * C(j,k) * v(k);
+B1_dimension: 5, B2_dimension: 5, vals: 19
+C1_dimension: 5, C2_dimension: 5, vals: 19
+D1_dimension: 5, vals: 5
+
+
+sddmm-spmm execution
+
+-----------------------------------------
+A(i) = B(i,j) * C(j,k) * v(k);
+B1_dimension: 5, B2_dimension: 5, vals: 19
+C1_dimension: 5, C2_dimension: 5, vals: 19
+D1_dimension: 5, vals: 5
+
+
+sddmm-spmm execution
+
+-----------------------------------------
+A(i) = B(i,j) * C(j,k) * v(k);
+B1_dimension: 5, B2_dimension: 5, vals: 19
+C1_dimension: 5, C2_dimension: 5, vals: 19
+D1_dimension: 5, vals: 5
+
+
+sddmm-spmm execution
+
+-----------------------------------------
+A(i) = B(i,j) * C(j,k) * v(k);
+B1_dimension: 5, B2_dimension: 5, vals: 19
+C1_dimension: 5, C2_dimension: 5, vals: 19
+D1_dimension: 5, vals: 5
+
+
+sddmm-spmm execution
+
+-----------------------------------------
+A(i) = B(i,j) * C(j,k) * v(k);
+B1_dimension: 5, B2_dimension: 5, vals: 19
+C1_dimension: 5, C2_dimension: 5, vals: 19
+D1_dimension: 5, vals: 5
+
+
+sddmm-spmm execution
+
+-----------------------------------------
+A(i) = B(i,j) * C(j,k) * v(k);
+B1_dimension: 5, B2_dimension: 5, vals: 19
+C1_dimension: 5, C2_dimension: 5, vals: 19
+D1_dimension: 5, vals: 5
+
+
+sddmm-spmm execution
+
+-----------------------------------------
+A(i) = B(i,j) * C(j,k) * v(k);
+B1_dimension: 5, B2_dimension: 5, vals: 19
+C1_dimension: 5, C2_dimension: 5, vals: 19
+D1_dimension: 5, vals: 5
+
+
+sddmm-spmm execution
+
+-----------------------------------------
+A(i) = B(i,j) * C(j,k) * v(k);
+B1_dimension: 5, B2_dimension: 5, vals: 19
+C1_dimension: 5, C2_dimension: 5, vals: 19
+D1_dimension: 5, vals: 5
+
+
+sddmm-spmm execution
+
+-----------------------------------------
+/home/min/a/kadhitha/ispc-examples/data/suitesparse/cage3/cage3.mtx
+
+sddmm-spmm execution
+
+-----------------------------------------
+/home/min/a/kadhitha/ispc-examples/data/suitesparse/cage3/cage3.mtx
+ref(i,l)=B(i,j)*C(i,k)*D(j,k)*F(j,l);
+B1_dimension: 5, B2_dimension: 5, vals: 19
+C1_dimension: 5, C2_dimension: 64, vals: 320
+D1_dimension: 5, D2_dimension: 64, vals: 320
+E1_dimension: 64, E2_dimension: 64, vals: 4096
+
+
+sddmm-spmm execution
+
+-----------------------------------------
+/home/min/a/kadhitha/ispc-examples/data/suitesparse/cage3/cage3.mtx
+ref(i,l)=B(i,j)*C(i,k)*D(j,k)*F(j,l);
+B1_dimension: 5, B2_dimension: 5, vals: 19
+C1_dimension: 5, C2_dimension: 64, vals: 320
+D1_dimension: 5, D2_dimension: 64, vals: 320
+E1_dimension: 64, E2_dimension: 64, vals: 4096
+
+
+sddmm-spmm execution
+
+-----------------------------------------
+/home/min/a/kadhitha/ispc-examples/data/suitesparse/pdb1HYS/pdb1HYS.mtx
+ref(i,l)=B(i,j)*C(i,k)*D(j,k)*F(j,l);
+B1_dimension: 36417, B2_dimension: 36417, vals: 4344765
+C1_dimension: 36417, C2_dimension: 64, vals: 2330688
+D1_dimension: 36417, D2_dimension: 64, vals: 2330688
+E1_dimension: 64, E2_dimension: 64, vals: 4096
+
+
+kernel execution time:  115.102 ms
+fused time: 115.803
+
+sddmm-spmm execution
+
+-----------------------------------------
+/home/min/a/kadhitha/ispc-examples/data/suitesparse/consph/consph.mtx
+ref(i,l)=B(i,j)*C(i,k)*D(j,k)*F(j,l);
+B1_dimension: 83334, B2_dimension: 83334, vals: 6010480
+C1_dimension: 83334, C2_dimension: 128, vals: 10666752
+D1_dimension: 83334, D2_dimension: 128, vals: 10666752
+E1_dimension: 83334, E2_dimension: 128, vals: 10666752
+
+
+kernel execution time:  30.977 ms
+fused time: 35.4912
+
+separate execution
+
+kernel execution time:  26.0898 ms
+sddmm time: 26.6915
+
+kernel execution time:  15.4341 ms
+sddmm time: 16.0058
+
+kernel execution time:  17.7466 ms
+spmm time: 18.2995
+
+reference execution 
+
+kernel execution time:  694.171 ms
+taco reference time: 694.888
+/home/min/a/kadhitha/ispc-examples/data/suitesparse/cop20k_A/cop20k_A.mtx
+ref(i,l)=B(i,j)*C(i,k)*D(j,k)*F(j,l);
+B1_dimension: 121192, B2_dimension: 121192, vals: 2624331
+C1_dimension: 121192, C2_dimension: 128, vals: 15512576
+D1_dimension: 121192, D2_dimension: 128, vals: 15512576
+E1_dimension: 121192, E2_dimension: 128, vals: 15512576
+
+
+kernel execution time:  52.5109 ms
+fused time: 56.6803
+
+separate execution
+
+kernel execution time:  41.9638 ms
+sddmm time: 42.5925
+
+kernel execution time:  21.3537 ms
+sddmm time: 21.9855
+
+kernel execution time:  25.1185 ms
+spmm time: 25.7047
+
+reference execution 
+
+kernel execution time:  323.01 ms
+taco reference time: 323.699
+/home/min/a/kadhitha/ispc-examples/data/suitesparse/shipsec1/shipsec1.mtx
+ref(i,l)=B(i,j)*C(i,k)*D(j,k)*F(j,l);
+B1_dimension: 140874, B2_dimension: 140874, vals: 7813404
+C1_dimension: 140874, C2_dimension: 128, vals: 18031872
+D1_dimension: 140874, D2_dimension: 128, vals: 18031872
+E1_dimension: 140874, E2_dimension: 128, vals: 18031872
+
+
+kernel execution time:  45.3128 ms
+fused time: 48.4929
+
+separate execution
+
+kernel execution time:  39.7986 ms
+sddmm time: 40.3901
+
+kernel execution time:  20.8296 ms
+sddmm time: 21.432
+
+kernel execution time:  25.0308 ms
+spmm time: 25.5726
+
+reference execution 
+
+kernel execution time:  867.794 ms
+taco reference time: 868.418
+/home/min/a/kadhitha/ispc-examples/data/suitesparse/scircuit/scircuit.mtx
+ref(i,l)=B(i,j)*C(i,k)*D(j,k)*F(j,l);
+B1_dimension: 170998, B2_dimension: 170998, vals: 958936
+C1_dimension: 170998, C2_dimension: 128, vals: 21887744
+D1_dimension: 170998, D2_dimension: 128, vals: 21887744
+E1_dimension: 170998, E2_dimension: 128, vals: 21887744
+
+
+kernel execution time:  34.2915 ms
+fused time: 38.221
+
+separate execution
+
+kernel execution time:  18.8777 ms
+sddmm time: 19.4859
+
+kernel execution time:  12.8794 ms
+sddmm time: 16.5695
+
+kernel execution time:  19.7876 ms
+spmm time: 23.5933
+
+reference execution 
+
+kernel execution time:  114.374 ms
+taco reference time: 115.03
+
+sddmm-spmm execution
+
+-----------------------------------------
+/home/min/a/kadhitha/ispc-examples/data/suitesparse/consph/consph.mtx
+ref(i,l)=B(i,j)*C(i,k)*D(j,k)*F(j,l);
+B1_dimension: 83334, B2_dimension: 83334, vals: 6010480
+C1_dimension: 83334, C2_dimension: 128, vals: 10666752
+D1_dimension: 83334, D2_dimension: 128, vals: 10666752
+E1_dimension: 83334, E2_dimension: 128, vals: 10666752
+
+
+kernel execution time:  77.2194 ms
+fused time: 78.1408
+
+separate execution
+
+kernel execution time:  28.0545 ms
+sddmm time: 28.625
+
+kernel execution time:  15.7941 ms
+sddmm time: 16.3986
+
+kernel execution time:  18.1167 ms
+spmm time: 18.7055
+
+reference execution 
+
+kernel execution time:  652.088 ms
+taco reference time: 652.794
+/home/min/a/kadhitha/ispc-examples/data/suitesparse/cop20k_A/cop20k_A.mtx
+ref(i,l)=B(i,j)*C(i,k)*D(j,k)*F(j,l);
+B1_dimension: 121192, B2_dimension: 121192, vals: 2624331
+C1_dimension: 121192, C2_dimension: 128, vals: 15512576
+D1_dimension: 121192, D2_dimension: 128, vals: 15512576
+E1_dimension: 121192, E2_dimension: 128, vals: 15512576
+
+
+kernel execution time:  100.999 ms
+fused time: 104.98
+
+separate execution
+
+kernel execution time:  42.4345 ms
+sddmm time: 43.0804
+
+kernel execution time:  21.5005 ms
+sddmm time: 22.1326
+
+kernel execution time:  25.1479 ms
+spmm time: 25.7284
+
+reference execution 
+
+kernel execution time:  303.541 ms
+taco reference time: 304.249
+/home/min/a/kadhitha/ispc-examples/data/suitesparse/shipsec1/shipsec1.mtx
+ref(i,l)=B(i,j)*C(i,k)*D(j,k)*F(j,l);
+B1_dimension: 140874, B2_dimension: 140874, vals: 7813404
+C1_dimension: 140874, C2_dimension: 128, vals: 18031872
+D1_dimension: 140874, D2_dimension: 128, vals: 18031872
+E1_dimension: 140874, E2_dimension: 128, vals: 18031872
+
+
+kernel execution time:  121.702 ms
+fused time: 122.44
+
+separate execution
+
+kernel execution time:  41.1645 ms
+sddmm time: 41.7679
+
+kernel execution time:  21.4454 ms
+sddmm time: 22.062
+
+kernel execution time:  25.7274 ms
+spmm time: 26.3069
+
+reference execution 
+
+kernel execution time:  838.679 ms
+taco reference time: 839.358
+/home/min/a/kadhitha/ispc-examples/data/suitesparse/scircuit/scircuit.mtx
+ref(i,l)=B(i,j)*C(i,k)*D(j,k)*F(j,l);
+B1_dimension: 170998, B2_dimension: 170998, vals: 958936
+C1_dimension: 170998, C2_dimension: 128, vals: 21887744
+D1_dimension: 170998, D2_dimension: 128, vals: 21887744
+E1_dimension: 170998, E2_dimension: 128, vals: 21887744
+
+
+kernel execution time:  49.6789 ms
+fused time: 53.8345
+
+separate execution
+
+kernel execution time:  19.3289 ms
+sddmm time: 19.9476
+
+kernel execution time:  12.9298 ms
+sddmm time: 16.5522
+
+kernel execution time:  19.7859 ms
+spmm time: 23.3756
+
+reference execution 
+
+kernel execution time:  114.935 ms
+taco reference time: 115.594
+
+sddmm-spmm execution
+
+-----------------------------------------
+/home/min/a/kadhitha/ispc-examples/data/suitesparse/consph/consph.mtx
+ref(i,l)=B(i,j)*C(i,k)*D(j,k)*F(j,l);
+B1_dimension: 83334, B2_dimension: 83334, vals: 6010480
+C1_dimension: 83334, C2_dimension: 128, vals: 10666752
+D1_dimension: 83334, D2_dimension: 128, vals: 10666752
+E1_dimension: 83334, E2_dimension: 128, vals: 10666752
+
+
+kernel execution time:  29.3495 ms
+fused time: 32.2304
+
+separate execution
+
+kernel execution time:  23.942 ms
+sddmm time: 24.54
+
+kernel execution time:  14.4886 ms
+sddmm time: 16.5358
+
+kernel execution time:  16.8516 ms
+spmm time: 20.2626
+
+reference execution 
+
+kernel execution time:  709.96 ms
+taco reference time: 710.774
+/home/min/a/kadhitha/ispc-examples/data/suitesparse/cop20k_A/cop20k_A.mtx
+ref(i,l)=B(i,j)*C(i,k)*D(j,k)*F(j,l);
+B1_dimension: 121192, B2_dimension: 121192, vals: 2624331
+C1_dimension: 121192, C2_dimension: 128, vals: 15512576
+D1_dimension: 121192, D2_dimension: 128, vals: 15512576
+E1_dimension: 121192, E2_dimension: 128, vals: 15512576
+
+
+kernel execution time:  58.2762 ms
+fused time: 62.5278
+
+separate execution
+
+kernel execution time:  42.1594 ms
+sddmm time: 42.7262
+
+kernel execution time:  22.1442 ms
+sddmm time: 23.0064
+
+kernel execution time:  25.7924 ms
+spmm time: 26.3623
+
+reference execution 
+
+kernel execution time:  329.572 ms
+taco reference time: 330.27
+/home/min/a/kadhitha/ispc-examples/data/suitesparse/shipsec1/shipsec1.mtx
+ref(i,l)=B(i,j)*C(i,k)*D(j,k)*F(j,l);
+B1_dimension: 140874, B2_dimension: 140874, vals: 7813404
+C1_dimension: 140874, C2_dimension: 128, vals: 18031872
+D1_dimension: 140874, D2_dimension: 128, vals: 18031872
+E1_dimension: 140874, E2_dimension: 128, vals: 18031872
+
+
+kernel execution time:  46.007 ms
+fused time: 50.2274
+
+separate execution
+
+kernel execution time:  41.4699 ms
+sddmm time: 42.0415
+
+kernel execution time:  21.559 ms
+sddmm time: 22.136
+
+kernel execution time:  25.525 ms
+spmm time: 26.0801
+
+reference execution 
+
+kernel execution time:  869.823 ms
+taco reference time: 873.823
+/home/min/a/kadhitha/ispc-examples/data/suitesparse/scircuit/scircuit.mtx
+ref(i,l)=B(i,j)*C(i,k)*D(j,k)*F(j,l);
+B1_dimension: 170998, B2_dimension: 170998, vals: 958936
+C1_dimension: 170998, C2_dimension: 128, vals: 21887744
+D1_dimension: 170998, D2_dimension: 128, vals: 21887744
+E1_dimension: 170998, E2_dimension: 128, vals: 21887744
+
+
+kernel execution time:  33.3907 ms
+fused time: 37.2851
+
+separate execution
+
+kernel execution time:  19.369 ms
+sddmm time: 19.9378
+
+kernel execution time:  12.956 ms
+sddmm time: 15.1889
+
+kernel execution time:  19.8054 ms
+spmm time: 23.5126
+
+reference execution 
+
+kernel execution time:  115.104 ms
+taco reference time: 115.684
+
+sddmm-spmm execution
+
+-----------------------------------------
+/home/min/a/kadhitha/ispc-examples/data/suitesparse/mac_econ_fwd500/mac_econ_fwd500.mtx
+ref(i,l)=B(i,j)*C(i,k)*D(j,k)*F(j,l);
+B1_dimension: 206500, B2_dimension: 206500, vals: 1273389
+C1_dimension: 206500, C2_dimension: 128, vals: 26432000
+D1_dimension: 206500, D2_dimension: 128, vals: 26432000
+E1_dimension: 206500, E2_dimension: 128, vals: 26432000
+
+
+kernel execution time:  45.2869 ms
+fused time: 49.074
+
+separate execution
+
+kernel execution time:  20.8037 ms
+sddmm time: 21.3769
+
+kernel execution time:  18.6117 ms
+sddmm time: 19.1765
+
+kernel execution time:  27.6368 ms
+spmm time: 28.2194
+
+reference execution 
+
+kernel execution time:  157.83 ms
+taco reference time: 158.458
+/home/min/a/kadhitha/ispc-examples/data/ufl/webbase-1M/webbase-1M.mtx
+ref(i,l)=B(i,j)*C(i,k)*D(j,k)*F(j,l);
+B1_dimension: 1000005, B2_dimension: 1000005, vals: 3105536
+C1_dimension: 1000005, C2_dimension: 128, vals: 128000640
+D1_dimension: 1000005, D2_dimension: 128, vals: 128000640
+E1_dimension: 1000005, E2_dimension: 128, vals: 128000640
+
+
+kernel execution time:  133.416 ms
+fused time: 137.603
+
+separate execution
+
+kernel execution time:  50.8463 ms
+sddmm time: 51.4255
+
+kernel execution time:  41.2442 ms
+sddmm time: 41.8788
+
+kernel execution time:  83.4032 ms
+spmm time: 84.052
+
+reference execution 
+
+kernel execution time:  569.216 ms
+taco reference time: 570.035
+/home/min/a/kadhitha/ispc-examples/data/suitesparse/circuit5M/circuit5M.mtx
+ref(i,l)=B(i,j)*C(i,k)*D(j,k)*F(j,l);
+B1_dimension: 5558326, B2_dimension: 5558326, vals: 59524291
+C1_dimension: 5558326, C2_dimension: 128, vals: 711465728
+D1_dimension: 5558326, D2_dimension: 128, vals: 711465728
+E1_dimension: 5558326, E2_dimension: 128, vals: 711465728
+
+
+kernel execution time:  1282.76 ms
+fused time: 1287.59
+
+separate execution
+
+kernel execution time:  606.985 ms
+sddmm time: 607.616
+
+kernel execution time:  561.224 ms
+sddmm time: 561.958
+
+kernel execution time:  874.527 ms
+spmm time: 875.232
+
+reference execution 
+
+kernel execution time:  21707 ms
+taco reference time: 21710.6
+
+sddmm-spmm execution
+
+-----------------------------------------
+/home/min/a/kadhitha/ispc-examples/data/suitesparse/bcsstk17/bcsstk17.mtx
+
+sddmm-spmm execution
+
+-----------------------------------------
+/home/min/a/kadhitha/ispc-examples/data/suitesparse/cage3/cage3.mtx
+ref(i,l)=B(i,j)*C(i,k)*D(j,k)*F(j,l);
+B1_dimension: 5, B2_dimension: 5, vals: 19
+C1_dimension: 5, C2_dimension: 128, vals: 640
+D1_dimension: 5, D2_dimension: 128, vals: 640
+E1_dimension: 5, E2_dimension: 128, vals: 640
+
+
+kernel execution time:  3.43602 ms
+fused time: 27.8707
+
+separate execution
+
+kernel execution time:  4107.02 ms
+sddmm time: 4122.77

@@ -138,6 +138,12 @@ string Module::compile() {
     prefix + file_ending + " " + shims_file + " " + 
     "-o " + fullpath + " -lm";
 
+  std::cout << "--- tmpdir: " << tmpdir << std::endl
+    << "--- libname: " << libname << std::endl
+    << "--- prefix: " << prefix << std::endl
+    << "--- fullpath: " << fullpath << std::endl
+    << "--- cmd: " << cmd << std::endl;
+
   // open the output file & write out the source
   compileToSource(tmpdir, libname);
   
@@ -172,6 +178,15 @@ void* Module::getFuncPtr(std::string name) {
   return dlsym(lib_handle, name.data());
 }
 
+void* Module::getFuncPtr(std::string& sofile, std::string name) {
+  std::cout << "opening shared object " << sofile << std::endl;
+  if (so_lib_handle) {
+    dlclose(so_lib_handle);
+  }
+  so_lib_handle = dlopen(sofile.data(), RTLD_NOW | RTLD_LOCAL);
+  return dlsym(so_lib_handle, name.data());
+}
+
 int Module::callFuncPackedRaw(std::string name, void** args) {
   typedef int (*fnptr_t)(void**);
   static_assert(sizeof(void*) == sizeof(fnptr_t),
@@ -201,6 +216,46 @@ int Module::callFuncPackedRaw(std::string name, void** args) {
 #endif
 
   int ret = func_ptr(args);
+
+#if USE_OPENMP
+  omp_set_schedule(existingSched, existingChunkSize);
+  omp_set_num_threads(existingNumThreads);
+#endif
+
+  return ret;
+}
+
+int Module::callFuncPackedRaw(std::string name, std::string& sofile, void** args) {
+  typedef int (*fnptr_t)(void**);
+  static_assert(sizeof(void*) == sizeof(fnptr_t),
+    "Unable to cast dlsym() returned void pointer to function pointer");
+  void* v_func_ptr = getFuncPtr(sofile, name);
+  fnptr_t func_ptr;
+  *reinterpret_cast<void**>(&func_ptr) = v_func_ptr;
+
+#if USE_OPENMP
+  omp_sched_t existingSched;
+  ParallelSchedule tacoSched;
+  int existingChunkSize, tacoChunkSize;
+  int existingNumThreads = omp_get_max_threads();
+  omp_get_schedule(&existingSched, &existingChunkSize);
+  taco_get_parallel_schedule(&tacoSched, &tacoChunkSize);
+  switch (tacoSched) {
+    case ParallelSchedule::Static:
+      omp_set_schedule(omp_sched_static, tacoChunkSize);
+      break;
+    case ParallelSchedule::Dynamic:
+      omp_set_schedule(omp_sched_dynamic, tacoChunkSize);
+      break;
+    default:
+      break;
+  }
+  omp_set_num_threads(taco_get_num_threads());
+#endif
+
+  std::cout << "calling the function\n";
+  int ret = func_ptr(args);
+  std::cout << "function call completed\n";
 
 #if USE_OPENMP
   omp_set_schedule(existingSched, existingChunkSize);

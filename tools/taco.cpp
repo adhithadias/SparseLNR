@@ -308,7 +308,7 @@ static void printCommandLine(ostream& os, int argc, char* argv[]) {
   }
 }
 
-static bool setSchedulingCommands(vector<vector<string>> scheduleCommands, parser::Parser& parser, IndexStmt& stmt) {
+static bool setSchedulingCommands(vector<vector<string>> scheduleCommands, parser::Parser& parser, IndexStmt& stmt, Assignment assignment) {
   auto findVar = [&stmt](string name) {
     ProvenanceGraph graph(stmt);
     for (auto v : graph.getAllIndexVars()) {
@@ -352,6 +352,16 @@ static bool setSchedulingCommands(vector<vector<string>> scheduleCommands, parse
       IndexVar fused(f);
       stmt = stmt.fuse(findVar(i), findVar(j), fused);
 
+    } else if (command == "loopfuse") {
+        taco_uassert(scheduleCommand.size() == 2) 
+        << "'loopfuse' scheduling directive takes 2 parameters: fuse(b, 2)";
+      std::string side = scheduleCommand[0];
+      taco_uassert(side == "b" || side == "f") 
+        << "first parameter must be either 'f' or 'b'";
+
+      int iters = std::stoi(scheduleCommand[1]);
+
+      stmt = loopFusionOverFission(stmt, assignment, side, iters);
     } else if (command == "split") {
       taco_uassert(scheduleCommand.size() == 4)
           << "'split' scheduling directive takes 4 parameters: split(i, i1, i2, splitFactor)";
@@ -1112,12 +1122,18 @@ int main(int argc, char* argv[]) {
   taco_set_parallel_schedule(sched, chunkSize);
   taco_set_num_threads(nthreads);
 
-  IndexStmt stmt =
-      makeConcreteNotation(makeReductionNotation(tensor.getAssignment()));
+
+  Assignment assignment = tensor.getAssignment();
+  IndexStmt reducedStmt = makeReductionNotation(assignment);
+  IndexStmt stmt = makeConcreteNotation(reducedStmt);
+  std::cout << "concrete index statement: " << stmt << std::endl;
+  // IndexStmt stmt =
+  //     makeConcreteNotation(makeReductionNotation(tensor.getAssignment()));
   stmt = reorderLoopsTopologically(stmt);
+  std::cout << "topologically reordered loops statement: " << stmt << std::endl;
 
   if (setSchedule) {
-    cuda |= setSchedulingCommands(scheduleCommands, parser, stmt);
+    cuda |= setSchedulingCommands(scheduleCommands, parser, stmt, assignment);
   }
   else {
     stmt = insertTemporaries(stmt);
@@ -1355,7 +1371,7 @@ int main(int argc, char* argv[]) {
   }
 
   IterationGraph iterationGraph;
-  if (printIterationGraph) {
+  if (printIterationGraph) { // print iteration graph
     iterationGraph = IterationGraph::make(tensor.getAssignment());
   }
 

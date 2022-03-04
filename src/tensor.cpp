@@ -10,6 +10,7 @@
 #include <utility>
 #include <mutex>
 
+#include "../test/util.h"
 #include "taco/cuda.h"
 #include "taco/format.h"
 #include "taco/taco_tensor_t.h"
@@ -817,6 +818,63 @@ void TensorBase::compute() {
 
   auto arguments = packArguments(*this);
   this->content->module->callFuncPacked("compute", arguments.data());
+
+  if (content->assembleWhileCompute) {
+    setNeedsAssemble(false);
+    taco_tensor_t* tensorData = ((taco_tensor_t*)arguments[0]);
+    content->valuesSize = unpackTensorData(*tensorData, *this);
+  }
+}
+
+void TensorBase::compute(std::ofstream& statfile, std::string& sofile) {
+  taco_uassert(!needsCompile()) << error::compute_without_compile;
+  // if (!needsCompute()) {
+  //   return;
+  // }
+  setNeedsCompute(false);
+  // Sync operand tensors if needed.
+  auto operands = getTensors(getAssignment().getRhs());
+  for (auto& operand : operands) {
+    // std::cout << "operand: " << operand.second << std::endl;
+    operand.second.syncValues();
+    operand.second.removeDependentTensor(*this);
+  }
+
+  auto arguments = packArguments(*this);
+
+  taco::util::TimeResults timevalue;
+  bool time                = true;
+  TOOL_BENCHMARK_TIMER2(this->content->module->callFuncPacked("compute", sofile, arguments.data()), 
+      "\nkernel execution time: ", timevalue);
+  // this->content->module->callFuncPacked("compute", arguments.data());
+
+  if (content->assembleWhileCompute) {
+    setNeedsAssemble(false);
+    taco_tensor_t* tensorData = ((taco_tensor_t*)arguments[0]);
+    content->valuesSize = unpackTensorData(*tensorData, *this);
+  }
+}
+
+void TensorBase::compute(std::ofstream& statfile) {
+  taco_uassert(!needsCompile()) << error::compute_without_compile;
+  // if (!needsCompute()) {
+  //   return;
+  // }
+  setNeedsCompute(false);
+  // Sync operand tensors if needed.
+  auto operands = getTensors(getAssignment().getRhs());
+  for (auto& operand : operands) {
+    operand.second.syncValues();
+    operand.second.removeDependentTensor(*this);
+  }
+
+  auto arguments = packArguments(*this);
+
+  taco::util::TimeResults timevalue;
+  bool time                = true;
+  TOOL_BENCHMARK_TIMER2(this->content->module->callFuncPacked("compute", arguments.data()), 
+      "\nkernel execution time: ", timevalue);
+  // this->content->module->callFuncPacked("compute", arguments.data());
 
   if (content->assembleWhileCompute) {
     setNeedsAssemble(false);

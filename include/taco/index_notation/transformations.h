@@ -224,6 +224,19 @@ IndexStmt parallelizeOuterLoop(IndexStmt stmt);
 IndexStmt reorderLoopsTopologically(IndexStmt stmt);
 
 /**
+ * @brief Transform topologically reordered iteration graph to 
+ * a branched version
+ * 
+ * @param stmt topologically sorted index statement
+ * @param assignment assignment statement of the base statement
+ * @param side side in which the operation is performed front/back
+ * @param iters number of iterations
+ * @return IndexStmt 
+ */
+IndexStmt loopFusionOverFission(IndexStmt stmt, Assignment assignment,
+  std::string side, int iters);
+
+/**
  * Performs scalar promotion so that reductions are done by accumulating into 
  * scalar temporaries whenever possible.
  */

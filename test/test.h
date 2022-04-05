@@ -61,6 +61,7 @@ void ASSERT_VECTOR_EQ(std::vector<T> expected,
 
 void ASSERT_STORAGE_EQ(TensorStorage expected, TensorStorage actual);
 void ASSERT_TENSOR_EQ(TensorBase expected, TensorBase actual);
+// void ASSERT_TENSOR_VAL(TensorBase expected, TensorBase actual);
 
 template <typename T>
 void ASSERT_COMPONENTS_EQUALS(vector<vector<vector<int>>> expectedIndices,

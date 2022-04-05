@@ -1,9 +1,16 @@
 #include "taco/index_notation/transformations.h"
 
+#include "lower/iteration_graph.h"
+#include "lower/tensor_path.h"
+#include "taco/cuda.h"
 #include "taco/index_notation/index_notation.h"
+#include "taco/index_notation/index_notation_nodes_abstract.h"
 #include "taco/index_notation/index_notation_rewriter.h"
 #include "taco/index_notation/index_notation_nodes.h"
+#include "taco/index_notation/index_notation_printer.h"
 #include "taco/error/error_messages.h"
+#include "taco/index_notation/intrinsic.h"
+#include "taco/type.h"
 #include "taco/util/collections.h"
 #include "taco/lower/iterator.h"
 #include "taco/lower/merge_lattice.h"
@@ -305,6 +312,7 @@ IndexStmt Precompute::apply(IndexStmt stmt, std::string* reason) const {
         IndexExpr e = precompute.getExpr();
         IndexVar iw = precompute.getiw();
 
+        // these lines of code looks interesting when creating the producer consumer relationship
         IndexStmt consumer = forall(i, replace(s, {{e, ws(i)}}));
         IndexStmt producer = forall(iw, Assignment(ws(iw), replace(e, {{i,iw}}), 
                                                    assign.getOperator()));
@@ -592,7 +600,10 @@ IndexStmt Parallelize::apply(IndexStmt stmt, std::string* reason) const {
     std::string reason = "";
 
     IndexStmt rewriteParallel(IndexStmt stmt) {
+      std::cout << "1 rewriting IndexStmt to support parallelize schedule directive\n--------------------------------------------\n";
+      // std::cout << stmt << std::endl;
       provGraph = ProvenanceGraph(stmt);
+      std::cout << "2 rewriting IndexStmt to support parallelize schedule directive\n--------------------------------------------\n";
 
       const auto reductionVars = getReductionVars(stmt);
       reductionIndexVars.clear();
@@ -607,15 +618,22 @@ IndexStmt Parallelize::apply(IndexStmt stmt, std::string* reason) const {
       tensorVars = createIRTensorVars(stmt);
 
       assembledByUngroupedInsert.clear();
+      std::cout << "3 rewriting IndexStmt to support parallelize schedule directive\n--------------------------------------------\n";
       for (const auto& result : getAssembledByUngroupedInsertion(stmt)) {
         assembledByUngroupedInsert.push_back(tensorVars[result]);
       }
 
+      std::cout << "4 rewriting IndexStmt to support parallelize schedule directive\n--------------------------------------------\n";
+      // std::cout << stmt << std::endl;
       return rewrite(stmt);
     }
 
     void visit(const ForallNode* node) {
+      std::cout << "transformations.cpp void visit(const ForallNode* node)\n";
+      std::cout << "node: \n" << node << std::endl;
       Forall foralli(node);
+      std::cout << "foralli: \n" << foralli << std::endl;
+      std::cout << "before stmt update stmt: \n" << stmt << std::endl;
       IndexVar i = parallelize.geti();
 
       definedIndexVars.insert(foralli.getIndexVar());
@@ -632,6 +650,7 @@ IndexStmt Parallelize::apply(IndexStmt stmt, std::string* reason) const {
         Iterators iterators(foralli, tensorVars);
         MergeLattice lattice = MergeLattice::make(foralli, iterators, provGraph, 
                                                   definedIndexVars);
+        std::cout << "iter: " << i << ", lattice: \n" << lattice << std::endl;
 
         // Precondition 2: No coiteration of modes (i.e., merge lattice has 
         //                 only one iterator)
@@ -660,6 +679,7 @@ IndexStmt Parallelize::apply(IndexStmt stmt, std::string* reason) const {
         MergeLattice underivedLattice = MergeLattice::make(underivedForall, 
                                                            iterators, provGraph, 
                                                            definedIndexVars);
+        std::cout << "iter: " << i << ", underivedLattice: \n" << lattice << std::endl;
 
         // Precondition 3: Every result iterator must have insert capability
         for (Iterator iterator : underivedLattice.results()) {
@@ -721,12 +741,16 @@ IndexStmt Parallelize::apply(IndexStmt stmt, std::string* reason) const {
             // build consumer that writes from temporary to output, mark consumer as parallel reduction
             ParallelUnit reductionUnit = ParallelUnit::CPUThreadGroupReduction;
             if (should_use_CUDA_codegen()) {
+              std::cout << "should_use_CUDA_codegen() true\n";
               if (parentParallelUnits.count(ParallelUnit::GPUWarp)) {
                 reductionUnit = ParallelUnit::GPUWarpReduction;
               }
               else {
                 reductionUnit = ParallelUnit::GPUBlockReduction;
               }
+            }
+            else {
+              std::cout << "should_use_CUDA_codegen() false\n";
             }
             IndexStmt consumer = forall(i, Assignment(assignment->lhs, w(i), assignment->op), reductionUnit, OutputRaceStrategy::ParallelReduction);
             precomputed_stmt = where(consumer, producer);
@@ -746,8 +770,9 @@ IndexStmt Parallelize::apply(IndexStmt stmt, std::string* reason) const {
           return;
         }
 
-
+        std::cout << "updated stmt: \n";
         stmt = forall(i, foralli.getStmt(), parallelize.getParallelUnit(), parallelize.getOutputRaceStrategy(), foralli.getUnrollFactor());
+        std::cout << stmt << std::endl;
         return;
       }
 
@@ -1181,6 +1206,7 @@ std::ostream& operator<<(std::ostream& os,
 
 IndexStmt parallelizeOuterLoop(IndexStmt stmt) {
   // get outer ForAll
+  std::cout << "get outer ForAll ----------------- \n";
   Forall forall;
   bool matched = false;
   match(stmt,
@@ -1215,7 +1241,19 @@ IndexStmt parallelizeOuterLoop(IndexStmt stmt) {
     }
     return parallelized256;
   }
+  else if (should_use_ISPC_codegen()) {
+    std::cout << "outer loop parallelization for ISPC codegen\n";
+    // IndexStmt parallelized = Parallelize(forall.getIndexVar(), ParallelUnit::CPUSpmd, OutputRaceStrategy::NoRaces).apply(stmt, &reason);
+    // if (parallelized == IndexStmt()) {
+    //   // can't parallelize
+    //   return stmt;
+    // }
+    // return parallelized;
+
+    return stmt;
+  }
   else {
+    std::cout << "outer loop parallelization for CPU codgen index statement\n";
     IndexStmt parallelized = Parallelize(forall.getIndexVar(), ParallelUnit::CPUThread, OutputRaceStrategy::NoRaces).apply(stmt, &reason);
     if (parallelized == IndexStmt()) {
       // can't parallelize
@@ -1320,8 +1358,669 @@ topologicallySort(map<IndexVar,set<IndexVar>> hardDeps,
   return sortedVars;
 }
 
+bool checkFromBack(const TensorPath& resultTensorPath, 
+                  const vector<TensorPath>& tensorPaths, 
+                  string& removedAccessNode, 
+                  vector<IndexVar>& producerVars, 
+                  vector<IndexVar>& consumerVars,
+                  vector<IndexVar>& modifiedResultIndexesAccessed, 
+                  vector<IndexVar>& sortedAllIndexes) {
+
+  std::cout << "check from back function execution\n";
+
+  const std::vector<IndexVar>& resultIndexesVisited = resultTensorPath.getVariables();
+  IndexVar lastVisitedIndexVar = resultIndexesVisited.back();
+
+  std::cout << "last visited index variable: " << lastVisitedIndexVar << std::endl;
+
+  bool onlyLastTensorContainLastIndexOfOutput = true;
+  bool fissionFromBack = false;
+
+  // check from the back
+  for (unsigned long i=0; i<tensorPaths.size()-1; i++) { // change tensor paths to recursively use the functionality
+    const TensorPath& otherIndexPaths = tensorPaths.at(i);
+    const vector<IndexVar>& indexesVisited = otherIndexPaths.getVariables();
+    cout << "index paths: " << otherIndexPaths << endl;
+
+    // if (i < tensorPaths.size()-1) { 
+      // check if other tensors also contain last index of output tensor
+      for (auto index : indexesVisited) {
+        cout << "checking " << index << " " << lastVisitedIndexVar << endl;
+        if (index == lastVisitedIndexVar) {
+          onlyLastTensorContainLastIndexOfOutput = false;
+        }
+      }
+    // }
+  }
+
+  if (onlyLastTensorContainLastIndexOfOutput) { // last accessed tensorVariable
+    const TensorPath& otherIndexPaths = tensorPaths.back();
+    const vector<IndexVar>& indexesVisited = otherIndexPaths.getVariables();
+    cout << "index paths: " << otherIndexPaths << endl;
+
+    cout << "index variable maybe removed from the back\n";
+    auto lastTensorLastVisited = indexesVisited.back();
+    cout << "last index last visited " << lastTensorLastVisited << endl;
+
+    if (lastTensorLastVisited == lastVisitedIndexVar) {
+      cout << "we can diffuse from the back\n";
+      fissionFromBack = true;
+      removedAccessNode = otherIndexPaths.getAccess().getTensorVar().getName();
+      cout << "removed access node " << removedAccessNode << endl;
+
+      // mark producer accessed index variables
+      for (auto indexVar : sortedAllIndexes) {
+        if (indexVar != lastVisitedIndexVar) { // add everything except the last accessed index
+          std::cout << "producer vars: " << indexVar << std::endl;
+          producerVars.push_back(indexVar);
+        }
+      }
+
+      for (auto indexVar : sortedAllIndexes) {
+        if (indexVar != lastVisitedIndexVar) {
+          if (
+            find(resultIndexesVisited.begin(), resultIndexesVisited.end(), indexVar) 
+              != resultIndexesVisited.end() ||
+            find(indexesVisited.begin(), indexesVisited.end(), indexVar)
+              != indexesVisited.end()
+          ) {
+            modifiedResultIndexesAccessed.push_back(indexVar);
+          }
+        }
+      }
+
+      // // get modified index for the intermediate calculated tensor expression
+      // for (unsigned long j=0; j<resultIndexesVisited.size(); j++) {
+      //   std::cout << "resultIndexesVisited: " << resultIndexesVisited[j] << std::endl;
+      //   modifiedResultIndexesAccessed.push_back(resultIndexesVisited[j]);
+      // }
+      for (auto& idx : modifiedResultIndexesAccessed) {
+        std::cout << "modifiedResultIndexesAccessed: " << idx << std::endl;
+      }
+
+      // auto it = modifiedResultIndexesAccessed.begin();
+      // for (; it != modifiedResultIndexesAccessed.end(); ++it) {
+      //   cout << "modified index " << *it << ", last visited index var: "  << lastVisitedIndexVar << endl;
+      //   if (*it != lastVisitedIndexVar) {
+      //     std::cout << "modified index is not the last visited index variable\n";
+      //     modifiedResultIndexesAccessed.back() = *it;
+          
+      //   }
+      //   else {
+      //     cout << "modified index " << *it << " is the last visited index var " << lastVisitedIndexVar << endl;
+      //   }
+      // }
+      // for (unsigned long j=0; j<modifiedResultIndexesAccessed.size(); j++) {
+      //   std::cout << "modifiedResultIndexesAccessed: " << modifiedResultIndexesAccessed[j] << std::endl;
+      // }
+
+      // mark consumer accessed index variables
+      for (auto indexVar : sortedAllIndexes) {
+        if (
+          find(modifiedResultIndexesAccessed.begin(), modifiedResultIndexesAccessed.end(), indexVar) 
+            != modifiedResultIndexesAccessed.end() ||
+          find(indexesVisited.begin(), indexesVisited.end(), indexVar) 
+            != indexesVisited.end()
+        ) {
+          std::cout << "consumer var: " << indexVar << std::endl;
+          consumerVars.emplace_back(indexVar);
+        }
+      }
+
+    }
+  }
+
+  return fissionFromBack;
+}
+
+bool checkFromFront(const TensorPath& resultTensorPath, 
+                  const vector<TensorPath>& tensorPaths, 
+                  string& removedAccessNode, 
+                  vector<IndexVar>& producerVars, 
+                  vector<IndexVar>& consumerVars,
+                  vector<IndexVar>& modifiedResultIndexesAccessed, 
+                  vector<IndexVar>& sortedAllIndexes) {
+
+  std::cout << "check from front function execution\n";
+
+  const std::vector<IndexVar>& resultIndexesVisited = resultTensorPath.getVariables();
+  IndexVar firstVisitedIndexVar = resultIndexesVisited.front();
+
+  std::cout << "first fisited index variable: " << firstVisitedIndexVar << std::endl;
+  std::cout << "tensor path size: " << tensorPaths.size() << std::endl;
+
+  bool onlyFirstTensorContainFirstIndexOfOutput = true;
+  bool fissionFromFront = false;
+
+  // check from the front
+  for (long i=tensorPaths.size()-1; i>0; i--) { // change tensor paths to recursively use the functionality
+    std::cout << "i: " << i << std::endl;
+    const TensorPath& otherIndexPaths = tensorPaths.at(i);
+    const vector<IndexVar>& indexesVisited = otherIndexPaths.getVariables();
+    cout << "index paths: " << otherIndexPaths << endl;
+
+    if (i != 0) { // check if other tensors also contain last index of output tensor
+      for (auto index : indexesVisited) {
+        cout << "checking " << index << " " << firstVisitedIndexVar << endl;
+        if (index == firstVisitedIndexVar) {
+          onlyFirstTensorContainFirstIndexOfOutput = false;
+        }
+      }
+    } 
+  }
+
+
+  if (onlyFirstTensorContainFirstIndexOfOutput) { // last accessed tensorVariable
+    const TensorPath& otherIndexPaths = tensorPaths.front();
+    const vector<IndexVar>& indexesVisited = otherIndexPaths.getVariables();
+    cout << "index paths: " << otherIndexPaths << endl;
+
+    cout << "index variable maybe removed from the front\n";
+    auto firstTensorFirstVisited = indexesVisited.front();
+    cout << "first index first visited " << firstTensorFirstVisited << endl;
+
+    if (firstTensorFirstVisited == firstVisitedIndexVar) {
+      cout << "we can diffuse from the front\n";
+      fissionFromFront = true;
+      removedAccessNode = otherIndexPaths.getAccess().getTensorVar().getName();
+      cout << "removed access node " << removedAccessNode << endl;
+
+      // mark producer accessed index variables
+      for (auto indexVar : sortedAllIndexes) {
+        if (indexVar != firstVisitedIndexVar) { // add everything except the first accessed index
+          producerVars.emplace_back(indexVar);
+        }
+      }
+
+      for (auto indexVar : sortedAllIndexes) {
+        if (indexVar != firstVisitedIndexVar) {
+          if (
+            find(resultIndexesVisited.begin(), resultIndexesVisited.end(), indexVar) 
+              != resultIndexesVisited.end() ||
+            find(indexesVisited.begin(), indexesVisited.end(), indexVar)
+              != indexesVisited.end()
+          ) {
+            modifiedResultIndexesAccessed.push_back(indexVar);
+          }
+        }
+      }
+
+      for (auto& idx : modifiedResultIndexesAccessed) {
+        std::cout << "modifiedResultIndexesAccessed: " << idx << std::endl;
+      }
+
+      // get modified index for the intermediate calculated tensor expression
+      // for (unsigned long j=0; j<resultIndexesVisited.size(); j++) {
+      //   std::cout << "modified result indexes accessed: " << resultIndexesVisited[j];
+      //   modifiedResultIndexesAccessed.emplace_back(resultIndexesVisited[j]);
+      // }
+      // auto it = modifiedResultIndexesAccessed.begin();
+      // for (; it != modifiedResultIndexesAccessed.end(); it++) {
+      //   cout << "modified index " << *it << endl;
+      //   if (*it != firstVisitedIndexVar) {
+      //     std::cout << "modifying the last index \n";
+      //     modifiedResultIndexesAccessed.front() = *it;
+      //   }
+      // }
+
+      // mark consumer accessed index variables
+      for (auto indexVar : sortedAllIndexes) {
+        if (
+        find(modifiedResultIndexesAccessed.begin(), modifiedResultIndexesAccessed.end(), indexVar) 
+          != modifiedResultIndexesAccessed.end() ||
+        find(indexesVisited.begin(), indexesVisited.end(), indexVar) != indexesVisited.end()) {
+          consumerVars.emplace_back(indexVar);
+        }
+      }
+
+    }
+  } else {
+    std::cout << "fission from the front is not possible\n";
+  }
+
+  
+  return fissionFromFront;
+
+}
+
+
+// let's assume the user gives the removable index node and 
+// the removable expression from front or end
+
+IndexStmt loopFusionOverFission(IndexStmt stmt, Assignment assignment, 
+  std::string side, int iters) {
+  std::cout << "executing travese operation written by me\n";
+
+  if (iters < 1) {
+    return stmt;
+  }
+
+  // IndexVar keeps i, j, k, l, values.
+  // so if we know what index to remove, the rest defines
+  // the order of the producer
+  struct SortedIndexVars : public IndexNotationVisitor {
+    using IndexNotationVisitor::visit;
+    map <IndexVar, ParallelUnit> forallParallelUnit;
+    map <IndexVar, OutputRaceStrategy> forallOutputRaceStrategy;
+    vector<IndexVar> sortedIndexes;
+    Assignment innerBody;
+
+    SortedIndexVars() {};
+
+    void visit(const ForallNode* node) {
+      Forall forallNode(node);
+      IndexVar i = forallNode.getIndexVar();
+      std::cout << forallNode << std::endl;
+
+      sortedIndexes.push_back(i);
+      forallParallelUnit[i] = forallNode.getParallelUnit();
+      forallOutputRaceStrategy[i] = forallNode.getOutputRaceStrategy();
+
+      if (isa<Assignment>(forallNode.getStmt())) {
+        cout << "assignment node found: " << forallNode.getStmt() << endl;;
+        innerBody = to<Assignment>(forallNode.getStmt());
+        return; // Only reorder first contiguous section of ForAlls
+      }
+
+      IndexNotationVisitor::visit(node);
+    }
+  };
+
+  std::cout << "traversing through the index statement\n";
+  SortedIndexVars sortedIndexVars;
+  stmt.accept(&sortedIndexVars);
+  std::cout << std::endl;
+
+  struct IndexExprBuilder : public IndexNotationVisitor {
+
+    using IndexNotationVisitor::visit;
+    vector<Access> accessLeftToRight;
+    map<IndexVar, vector<pair<Dimension,Type>>> indexDimensionsMap;
+
+    void visit(const AccessNode* node) {
+      Access accessNode(node);
+      std::cout << "access node: " << accessNode << std::endl;
+      accessLeftToRight.push_back(accessNode);
+
+      TensorVar tensorVar = accessNode.getTensorVar();
+
+      for (unsigned long i=0; i < accessNode.getIndexVars().size(); i++) {
+        auto var = accessNode.getIndexVars()[i];
+
+        if (indexDimensionsMap.find(var) != indexDimensionsMap.end()) {
+          indexDimensionsMap[var].emplace_back(
+            pair<Dimension,Type>(tensorVar.getType().getShape().getDimension(i),
+            tensorVar.getType()));
+        }
+        else {
+          indexDimensionsMap[var] = {
+            pair<Dimension,Type>(
+              tensorVar.getType().getShape().getDimension(i),
+              tensorVar.getType())
+          };
+        }
+      }
+
+    }
+
+  };
+
+  IndexExpr rhsExpr = assignment.getRhs();
+  Access lhsAccess = to<Access>(assignment.getLhs());
+  std::cout << "right hand side expression: " << rhsExpr << std::endl;
+  IndexExprBuilder indexExprBuilder;
+  rhsExpr.accept(&indexExprBuilder);
+  TensorVar resultVar = lhsAccess.getTensorVar();
+
+  for (auto item : indexExprBuilder.indexDimensionsMap) {
+    auto indexVar = item.first;
+    cout << "var: " << indexVar << " ";
+    for (auto elem : item.second) {
+      cout << elem.first << " " << elem.second << " " ;
+    }
+    cout << endl;
+  }
+
+
+  // now I have the iteration graph
+  IterationGraph iterationGraph = IterationGraph::make(assignment);
+  std::cout << "/*******************************************/\n";
+  std::cout << "/********** ITERATION GRAPH ****************/\n";
+  std::cout << "/*******************************************/\n";
+  std::cout << iterationGraph << std::endl;
+
+  const TensorPath& resultTensorPath = iterationGraph.getResultTensorPath();
+  const std::vector<TensorPath>& tensorPaths = iterationGraph.getTensorPaths();
+  
+
+  string removedAccessNode;
+  vector<IndexVar> producerVars; // producer accessed index variables
+  vector<IndexVar> consumerVars; // consumer accessed index variables
+  vector<IndexVar> fusedVars;
+  vector<IndexVar> modifiedResultIndexesAccessed;
+  bool fissionFromBack = false;
+  if (side == "b") {
+    fissionFromBack = true;
+  }
+
+  if (fissionFromBack) {
+    fissionFromBack = checkFromBack(resultTensorPath, tensorPaths, 
+      removedAccessNode, producerVars, consumerVars,
+      modifiedResultIndexesAccessed, sortedIndexVars.sortedIndexes
+    );
+  }
+
+  vector<Dimension> newAccessDims{};
+  for (auto var : modifiedResultIndexesAccessed) {
+    auto item = indexExprBuilder.indexDimensionsMap[var];
+    cout << "shared vars: " << var << endl;
+    newAccessDims.emplace_back(item[0].first);
+  }
+  TensorVar newAccessVar(resultVar.getName() + "_inner", 
+              Type(resultVar.getType().getDataType(), newAccessDims));
+  Access newResultAccess(newAccessVar, modifiedResultIndexesAccessed);
+  cout << "new access variable for iterative apply: " << newResultAccess << std::endl;
+
+  bool fissionFromFront = false;
+  if (side == "f") {
+    fissionFromFront = true;
+  }
+  if (fissionFromBack == false && fissionFromFront) {
+      fissionFromFront = checkFromFront(resultTensorPath, tensorPaths, 
+        removedAccessNode, producerVars, consumerVars,
+        modifiedResultIndexesAccessed, sortedIndexVars.sortedIndexes
+      );
+  }  
+
+  if (!fissionFromBack && !fissionFromFront) {
+    cout << "fission operation cannot be performed from the back\n";
+    return stmt;
+  }
+
+  if (fissionFromBack) {
+    std::cout << "fission from the back is possible\n";
+  }
+  if (fissionFromFront) {
+    std::cout << "fission from the front is possible\n";
+  }
+
+  // // check from the front
+  // struct IndexExprSeparator : public IndexNotationVisitor {
+
+  //   using IndexNotationVisitor::visit;
+  //   vector<Access> accessLeftToRight;
+
+  //   void visit(const MulNode* node) {
+  //     Mul mulNode(node);
+  //     IndexExpr lhs = mulNode.getA();
+  //     IndexExpr rhs = mulNode.getB();
+  //     std::cout << "access node: " << accessNode << std::endl;
+  //     accessLeftToRight.push_back(accessNode);
+  //   }
+
+  // };
+
+
+  cout << "\n\nProducer accessed index variables\n";
+  auto it = producerVars.begin();
+  for (; it != producerVars.end(); it++) {
+    cout << *it << endl;
+  }
+  cout << "\n\nConsumer accessed index variables\n";
+  it = consumerVars.begin();
+  for (; it != consumerVars.end(); it++) {
+    cout << *it << endl;
+  }
+  cout << endl << endl;
+
+  // check common vars that can be fused
+  for (auto var : sortedIndexVars.sortedIndexes) {
+    if (find(producerVars.begin(), producerVars.end(), var) != producerVars.end() &&
+    find(consumerVars.begin(), consumerVars.end(), var) != consumerVars.end()) {
+      fusedVars.emplace_back(var);
+    }
+    else {
+      break;
+    }
+  }
+
+  for (auto& fv : fusedVars) {
+    std::cout << "fusable vars: " << fv << std::endl;
+  }
+
+  vector<IndexVar> sharedVars;
+  for (auto var : sortedIndexVars.sortedIndexes) {
+    if (find(fusedVars.begin(), fusedVars.end(), var) == fusedVars.end() &&
+      find(producerVars.begin(), producerVars.end(), var) != producerVars.end() &&
+      find(consumerVars.begin(), consumerVars.end(), var) != consumerVars.end()
+    ) {
+      sharedVars.emplace_back(var);
+    }
+  }
+
+  for (auto& sv : sharedVars) {
+    std::cout << "shared vars: " << sv << std::endl;
+  }
+
+  vector<Dimension> sharedDims{};
+  for (auto var : sharedVars) {
+    auto item = indexExprBuilder.indexDimensionsMap[var];
+    cout << "shared vars: " << var << endl;
+    sharedDims.emplace_back(item[0].first);
+  }
+
+
+  // get removing tensorvars and workspace dimension
+  const Type& type = resultTensorPath.getAccess().getTensorVar().getType();
+  const Format& format = resultTensorPath.getAccess().getTensorVar().getFormat();
+  TensorVar intermediateTensor("ws", type, format);
+  cout << intermediateTensor << endl;
+
+  // TensorVar A("A", Type(), taco::dense);
+  TensorVar tempVar("t" + resultVar.getName(), 
+                Type(resultVar.getType().getDataType(), sharedDims));
+  cout << "tensor order: " << tempVar.getOrder() << endl;
+  cout << "tensor format: " << tempVar.getFormat() << endl;
+  cout << "format order: " << tempVar.getFormat().getOrder() << endl;
+  
+  // TensorVar* a = new TensorVar("A", Type());
+  // TensorVar ws("ws", Type(type<double>(), {jdim}) );
+
+  // get removing indexExpr and the rest of the indexExpr
+  Access workspace(tempVar, sharedVars);
+  std::cout << "workspace access tensor: " << workspace << std::endl;
+
+
+  
+  // construct producer expression right hand side
+  cout << "generating consumer expression\n";
+  IndexExpr producerExpr;
+  int num_muls = 0;
+  for (Access accessNode : indexExprBuilder.accessLeftToRight) {
+    std::cout << "accessNodes: " << accessNode << endl;
+    if (removedAccessNode != accessNode.getTensorVar().getName()) {
+      if (producerExpr == NULL) {
+        std::cout << "index expression is null";
+        producerExpr = accessNode;
+        std::cout << "producerExpr: " << producerExpr << std::endl;
+      } else {
+        num_muls++;
+        producerExpr = producerExpr * accessNode;
+        std::cout << "producerExpr: " << producerExpr << std::endl;
+      }
+    }
+  }
+  std::cout << producerExpr << std::endl;
+  Assignment producerAssignment(newResultAccess,
+    producerExpr);
+  std::cout << "new inner assignment statement: " << producerAssignment << std::endl;
+  Assignment producerInnerBody(workspace,
+    producerExpr,
+    sortedIndexVars.innerBody.getOperator()
+  );
+  std::cout << "producerInnerBody: " << producerInnerBody << std::endl;
+
+  // construct consumer expression right hand side
+  IndexExpr consumerExpr;
+  if (fissionFromBack) {
+    consumerExpr = workspace;
+  }
+  cout << "generating consumer expression: " << consumerExpr << std::endl;
+  for (Access accessNode : indexExprBuilder.accessLeftToRight) {
+    TensorVar tv = accessNode.getTensorVar();
+    std::cout << "accessNodes: " << accessNode << endl;
+    if (removedAccessNode == accessNode.getTensorVar().getName()) {
+      if (consumerExpr == NULL) {
+        std::cout << "index expression is null";
+        consumerExpr = accessNode;
+        std::cout << "consumerExpr: " << consumerExpr << std::endl;
+      } else {
+        consumerExpr = consumerExpr * accessNode;
+        std::cout << "consumerExpr: " << consumerExpr << std::endl;
+      }
+    }
+  }
+  if (fissionFromFront) {
+    consumerExpr = consumerExpr * workspace;
+  }
+  Assignment consumerInnerBody(lhsAccess,
+    consumerExpr,
+    sortedIndexVars.innerBody.getOperator()
+  );
+
+  cout << "Producer inner body: " << producerInnerBody << endl;
+  cout << "Consumer inner body: " << consumerInnerBody << endl;
+
+  // rewrite indexstmt
+  // Reorder Foralls use a rewriter in case new nodes introduced outside of Forall
+  struct ProducerConsumerRewriter : public IndexNotationRewriter {
+    using IndexNotationRewriter::visit;
+
+    const vector<IndexVar>& producerConsumerVars;
+    const vector<IndexVar>& fusedVars;
+    IndexStmt innerBody;
+    const map <IndexVar, ParallelUnit> forallParallelUnit;
+    const map <IndexVar, OutputRaceStrategy> forallOutputRaceStrategy;
+
+    ProducerConsumerRewriter(const vector<IndexVar>& producerConsumerVars, 
+                    const vector<IndexVar>& fusedVars, IndexStmt innerBody,
+                    const map <IndexVar, ParallelUnit> forallParallelUnit,
+                    const map <IndexVar, OutputRaceStrategy> forallOutputRaceStrategy)
+        : producerConsumerVars(producerConsumerVars), fusedVars(fusedVars), innerBody(innerBody),
+        forallParallelUnit(forallParallelUnit), forallOutputRaceStrategy(forallOutputRaceStrategy)  {
+    }
+
+    void visit(const ForallNode* node) {
+      Forall foralli(node);
+      IndexVar i = foralli.getIndexVar();
+      cout << "going through var: " << i << endl;
+
+      // first forall must be in collected variables
+      // taco_iassert(util::contains(producerVars, i));
+      // std::cout << "\ninner body of the statement\n" << innerBody;
+      // // done in reverse order?
+      // for (auto it = sortedVars.rbegin(); it != sortedVars.rend(); ++it) {
+      //   stmt = forall(*it, stmt, forallParallelUnit.at(*it), forallOutputRaceStrategy.at(*it), foralli.getUnrollFactor());
+      // }
+      stmt = rewrite(foralli.getStmt());
+      cout << "after rewrite statement: " << stmt << endl;
+
+      // omit the index variables in the fusedVar list
+      if (find(fusedVars.begin(), fusedVars.end(), i) == fusedVars.end() &&
+          find(producerConsumerVars.begin(), producerConsumerVars.end(), i) != producerConsumerVars.end()) {
+        stmt = forall(i, stmt, forallParallelUnit.at(i), forallOutputRaceStrategy.at(i), foralli.getUnrollFactor());
+      }
+    }
+
+    void visit (const AssignmentNode* node) {
+      cout << "assignment node: " << node << endl;
+      stmt = innerBody;
+      cout << "producerStmt: " << innerBody << endl;
+      cout << "stmt: " << stmt << endl;
+    }
+
+  };
+  ProducerConsumerRewriter producerRewriter(producerVars, fusedVars, 
+              producerInnerBody, 
+              sortedIndexVars.forallParallelUnit, 
+              sortedIndexVars.forallOutputRaceStrategy);
+  IndexStmt producerStmt = producerRewriter.rewrite(stmt);
+  std::cout << "\nAfter Producer rewriter\n";
+  std::cout << producerStmt << std::endl;
+  if (num_muls > 1) {
+    producerStmt = loopFusionOverFission(producerStmt, producerInnerBody, 
+      side, iters-1);
+  }
+  
+
+  ProducerConsumerRewriter consumerRewriter(consumerVars, fusedVars, 
+              consumerInnerBody, 
+              sortedIndexVars.forallParallelUnit, 
+              sortedIndexVars.forallOutputRaceStrategy);
+  IndexStmt consumerStmt = consumerRewriter.rewrite(stmt);
+  std::cout << "\nAfter Consumer rewriter\n";
+  std::cout << consumerStmt << std::endl;
+
+
+  struct CombineProducerConsumerRewriter : public IndexNotationRewriter {
+
+    const vector<IndexVar>& fusedVars;
+    IndexStmt consumerStmt;
+    IndexStmt producerStmt;
+    const map <IndexVar, ParallelUnit> forallParallelUnit;
+    const map <IndexVar, OutputRaceStrategy> forallOutputRaceStrategy;
+
+    CombineProducerConsumerRewriter(const vector<IndexVar>& fusedVars, 
+      IndexStmt producerStmt, IndexStmt consumerStmt, 
+      const map <IndexVar, ParallelUnit> forallParallelUnit,
+      const map <IndexVar, OutputRaceStrategy> forallOutputRaceStrategy)
+      : fusedVars(fusedVars), consumerStmt(consumerStmt), producerStmt(producerStmt),
+      forallParallelUnit(forallParallelUnit), 
+      forallOutputRaceStrategy(forallOutputRaceStrategy) {}
+  
+    using IndexNotationRewriter::visit;
+
+    void visit(const ForallNode* node) {
+      Forall foralli(node);
+      IndexVar i = foralli.getIndexVar();
+      cout << "going through var: " << i << endl;
+      
+      // omit the index variables in the fusedVar list
+      if (find(fusedVars.begin(), fusedVars.end(), i) != fusedVars.end()) {
+        cout << "fused var in stmt\n";
+        stmt = rewrite(foralli.getStmt());
+        cout << "rewritten stmt: " << stmt << endl;
+        stmt = forall(i, stmt, forallParallelUnit.at(i), forallOutputRaceStrategy.at(i), foralli.getUnrollFactor());
+      }
+      else {
+        cout << "fused var not in  stmt\n";
+        cout << "producerStmt: " << producerStmt << endl;
+        cout << "consumerStmt: " << consumerStmt << endl;
+        stmt = where(consumerStmt, producerStmt);
+        cout << "where stmt: " << stmt << endl;
+      }
+
+      cout << "after rewrite statement: " << stmt << endl;
+    }
+  
+  };
+
+  CombineProducerConsumerRewriter combineRewriter(fusedVars, 
+              producerStmt, consumerStmt, 
+              sortedIndexVars.forallParallelUnit, 
+              sortedIndexVars.forallOutputRaceStrategy);
+  IndexStmt combinedStmt = combineRewriter.rewrite(stmt);
+  std::cout << "\nAfter Combine rewriter\n";
+  std::cout << combinedStmt << std::endl;
+
+
+  return combinedStmt;
+  
+}
+
 
 IndexStmt reorderLoopsTopologically(IndexStmt stmt) {
+  std::cout << "executing reorderLoopsTopologically\n";
   // Collect tensorLevelVars which stores the pairs of IndexVar and tensor
   // level that each tensor is accessed at
   struct DAGBuilder : public IndexNotationVisitor {
@@ -1382,8 +2081,11 @@ IndexStmt reorderLoopsTopologically(IndexStmt stmt) {
   };
 
   Iterators iterators(stmt);
+  std::cout << "DAG builder with iterators" << std::endl;
   DAGBuilder dagBuilder(iterators);
   stmt.accept(&dagBuilder);
+  std::cout << "After DAGBuilder\n";
+  std::cout << stmt << std::endl;
 
   // Construct tensor dependencies (sorted list of IndexVars) from tensorLevelVars
   map<string, vector<pair<IndexVar, bool>>> tensorVarOrders;
@@ -1391,6 +2093,7 @@ IndexStmt reorderLoopsTopologically(IndexStmt stmt) {
     tensorVarOrders[tensorLevelVar.first] = 
         varOrderFromTensorLevels(tensorLevelVar.second);
   }
+  // hard dependencies
   const auto hardDeps = depsFromVarOrders(tensorVarOrders);
 
   struct CollectSoftDependencies : public IndexNotationVisitor {
@@ -1412,12 +2115,17 @@ IndexStmt reorderLoopsTopologically(IndexStmt stmt) {
       }
     }
   };
+  // soft dependencies
   CollectSoftDependencies collectSoftDeps;
   stmt.accept(&collectSoftDeps);
+  std::cout << "After CollectSoftDependencies\n";
+  std::cout << stmt << std::endl;
 
+  // topological sort
   const auto sortedVars = topologicallySort(hardDeps, collectSoftDeps.softDeps, 
                                             dagBuilder.indexVarOriginalOrder);
 
+  // rewrite indexstmt
   // Reorder Foralls use a rewriter in case new nodes introduced outside of Forall
   struct TopoReorderRewriter : public IndexNotationRewriter {
     using IndexNotationRewriter::visit;
@@ -1440,7 +2148,9 @@ IndexStmt reorderLoopsTopologically(IndexStmt stmt) {
 
       // first forall must be in collected variables
       taco_iassert(util::contains(sortedVars, i));
+      std::cout << "\ninner body of the statement\n" << innerBody;
       stmt = innerBody;
+      // done in reverse order?
       for (auto it = sortedVars.rbegin(); it != sortedVars.rend(); ++it) {
         stmt = forall(*it, stmt, forallParallelUnit.at(*it), forallOutputRaceStrategy.at(*it), foralli.getUnrollFactor());
       }
@@ -1450,7 +2160,11 @@ IndexStmt reorderLoopsTopologically(IndexStmt stmt) {
   };
   TopoReorderRewriter rewriter(sortedVars, dagBuilder.innerBody, 
                                dagBuilder.forallParallelUnit, dagBuilder.forallOutputRaceStrategy);
-  return rewriter.rewrite(stmt);
+  IndexStmt stmtChanged = rewriter.rewrite(stmt);
+  std::cout << "After TopoReorderRewriter\n";
+  std::cout << stmtChanged << std::endl;
+
+  return stmtChanged;
 }
 
 IndexStmt scalarPromote(IndexStmt stmt, ProvenanceGraph provGraph, 
@@ -1478,6 +2192,7 @@ IndexStmt scalarPromote(IndexStmt stmt, ProvenanceGraph provGraph,
 
     void visit(const ForallNode* node) {
       Forall foralli(node);
+      std::cout << "scalar promote: " << foralli << std::endl;
       IndexVar i = foralli.getIndexVar();
 
       // Don't allow hoisting out of forall's for GPU warp and block reduction

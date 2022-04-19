@@ -1,0 +1,878 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?><svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" contentScriptType="application/ecmascript" contentStyleType="text/css" height="1823px" preserveAspectRatio="none" style="width:3568px;height:1823px;background:#FFFFFF;" version="1.1" viewBox="0 0 3568 1823" width="3568px" zoomAndPan="magnify"><defs><filter height="300%" id="fujoep6dbpit" width="300%" x="-1" y="-1"><feGaussianBlur result="blurOut" stdDeviation="2.0"/><feColorMatrix in="blurOut" result="blurOut2" type="matrix" values="0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 .4 0"/><feOffset dx="4.0" dy="4.0" in="blurOut2" result="blurOut3"/><feBlend in="SourceGraphic" in2="blurOut3" mode="normal"/></filter></defs><g><!--MD5=[d414847e5e8717ca0c3531bdd138c8ba]
+class IntrusivePtr--><rect codeLine="4" fill="#FEFECE" filter="url(#fujoep6dbpit)" height="60.8047" id="IntrusivePtr" style="stroke:#A80036;stroke-width:1.5;" width="103" x="632" y="7"/><ellipse cx="647" cy="23" fill="#ADD1B2" rx="11" ry="11" style="stroke:#A80036;stroke-width:1.0;"/><path d="M649.9688,28.6406 Q649.3906,28.9375 648.75,29.0781 Q648.1094,29.2344 647.4063,29.2344 Q644.9063,29.2344 643.5781,27.5938 Q642.2656,25.9375 642.2656,22.8125 Q642.2656,19.6875 643.5781,18.0313 Q644.9063,16.375 647.4063,16.375 Q648.1094,16.375 648.75,16.5313 Q649.4063,16.6875 649.9688,16.9844 L649.9688,19.7031 Q649.3438,19.125 648.75,18.8594 Q648.1563,18.5781 647.5313,18.5781 Q646.1875,18.5781 645.5,19.6563 Q644.8125,20.7188 644.8125,22.8125 Q644.8125,24.9063 645.5,25.9844 Q646.1875,27.0469 647.5313,27.0469 Q648.1563,27.0469 648.75,26.7813 Q649.3438,26.5 649.9688,25.9219 L649.9688,28.6406 Z " fill="#000000"/><text fill="#000000" font-family="sans-serif" font-size="12" lengthAdjust="spacing" textLength="71" x="661" y="27.1543">IntrusivePtr</text><line style="stroke:#A80036;stroke-width:1.5;" x1="633" x2="734" y1="39" y2="39"/><ellipse cx="643" cy="50" rx="3" ry="3" style="stroke:#038048;stroke-width:1.0;fill:none;"/><text fill="#000000" font-family="sans-serif" font-size="11" lengthAdjust="spacing" textLength="33" x="652" y="53.2104">T *ptr</text><line style="stroke:#A80036;stroke-width:1.5;" x1="633" x2="734" y1="59.8047" y2="59.8047"/><!--MD5=[9fb058d7a838b7ba6ed26398a5e03f68]
+class Uncopyable--><rect codeLine="7" fill="#FEFECE" filter="url(#fujoep6dbpit)" height="48" id="Uncopyable" style="stroke:#A80036;stroke-width:1.5;" width="105" x="786" y="244"/><ellipse cx="801" cy="260" fill="#ADD1B2" rx="11" ry="11" style="stroke:#A80036;stroke-width:1.0;"/><path d="M803.9688,265.6406 Q803.3906,265.9375 802.75,266.0781 Q802.1094,266.2344 801.4063,266.2344 Q798.9063,266.2344 797.5781,264.5938 Q796.2656,262.9375 796.2656,259.8125 Q796.2656,256.6875 797.5781,255.0313 Q798.9063,253.375 801.4063,253.375 Q802.1094,253.375 802.75,253.5313 Q803.4063,253.6875 803.9688,253.9844 L803.9688,256.7031 Q803.3438,256.125 802.75,255.8594 Q802.1563,255.5781 801.5313,255.5781 Q800.1875,255.5781 799.5,256.6563 Q798.8125,257.7188 798.8125,259.8125 Q798.8125,261.9063 799.5,262.9844 Q800.1875,264.0469 801.5313,264.0469 Q802.1563,264.0469 802.75,263.7813 Q803.3438,263.5 803.9688,262.9219 L803.9688,265.6406 Z " fill="#000000"/><text fill="#000000" font-family="sans-serif" font-size="12" lengthAdjust="spacing" textLength="73" x="815" y="264.1543">Uncopyable</text><line style="stroke:#A80036;stroke-width:1.5;" x1="787" x2="890" y1="276" y2="276"/><line style="stroke:#A80036;stroke-width:1.5;" x1="787" x2="890" y1="284" y2="284"/><!--MD5=[f38687c19e1720eba4a1ab1343a37015]
+class IRNode--><rect codeLine="9" fill="#FEFECE" filter="url(#fujoep6dbpit)" height="73.6094" id="IRNode" style="stroke:#A80036;stroke-width:1.5;" width="288" x="197.5" y="548"/><ellipse cx="315.25" cy="564" fill="#ADD1B2" rx="11" ry="11" style="stroke:#A80036;stroke-width:1.0;"/><path d="M318.2188,569.6406 Q317.6406,569.9375 317,570.0781 Q316.3594,570.2344 315.6563,570.2344 Q313.1563,570.2344 311.8281,568.5938 Q310.5156,566.9375 310.5156,563.8125 Q310.5156,560.6875 311.8281,559.0313 Q313.1563,557.375 315.6563,557.375 Q316.3594,557.375 317,557.5313 Q317.6563,557.6875 318.2188,557.9844 L318.2188,560.7031 Q317.5938,560.125 317,559.8594 Q316.4063,559.5781 315.7813,559.5781 Q314.4375,559.5781 313.75,560.6563 Q313.0625,561.7188 313.0625,563.8125 Q313.0625,565.9063 313.75,566.9844 Q314.4375,568.0469 315.7813,568.0469 Q316.4063,568.0469 317,567.7813 Q317.5938,567.5 318.2188,566.9219 L318.2188,569.6406 Z " fill="#000000"/><text fill="#000000" font-family="sans-serif" font-size="12" lengthAdjust="spacing" textLength="44" x="335.75" y="568.1543">IRNode</text><line style="stroke:#A80036;stroke-width:1.5;" x1="198.5" x2="484.5" y1="580" y2="580"/><line style="stroke:#A80036;stroke-width:1.5;" x1="198.5" x2="484.5" y1="588" y2="588"/><ellipse cx="208.5" cy="599" fill="#84BE84" rx="3" ry="3" style="stroke:#038048;stroke-width:1.0;"/><text fill="#000000" font-family="sans-serif" font-size="11" lengthAdjust="spacing" textLength="262" x="217.5" y="602.2104">virtual void accept(IRVisitorStrict *v) const = 0</text><ellipse cx="208.5" cy="611.8047" fill="#84BE84" rx="3" ry="3" style="stroke:#038048;stroke-width:1.0;"/><text fill="#000000" font-family="sans-serif" font-size="11" lengthAdjust="spacing" textLength="231" x="217.5" y="615.0151">virtual IRNodeType type_info() const = 0;</text><!--MD5=[bc9d8c255d7fbd519a9f6a6cf76a7a1b]
+class BaseStmtNode--><rect codeLine="14" fill="#FEFECE" filter="url(#fujoep6dbpit)" height="48" id="BaseStmtNode" style="stroke:#A80036;stroke-width:1.5;" width="125" x="110" y="830"/><ellipse cx="125" cy="846" fill="#ADD1B2" rx="11" ry="11" style="stroke:#A80036;stroke-width:1.0;"/><path d="M127.9688,851.6406 Q127.3906,851.9375 126.75,852.0781 Q126.1094,852.2344 125.4063,852.2344 Q122.9063,852.2344 121.5781,850.5938 Q120.2656,848.9375 120.2656,845.8125 Q120.2656,842.6875 121.5781,841.0313 Q122.9063,839.375 125.4063,839.375 Q126.1094,839.375 126.75,839.5313 Q127.4063,839.6875 127.9688,839.9844 L127.9688,842.7031 Q127.3438,842.125 126.75,841.8594 Q126.1563,841.5781 125.5313,841.5781 Q124.1875,841.5781 123.5,842.6563 Q122.8125,843.7188 122.8125,845.8125 Q122.8125,847.9063 123.5,848.9844 Q124.1875,850.0469 125.5313,850.0469 Q126.1563,850.0469 126.75,849.7813 Q127.3438,849.5 127.9688,848.9219 L127.9688,851.6406 Z " fill="#000000"/><text fill="#000000" font-family="sans-serif" font-size="12" lengthAdjust="spacing" textLength="93" x="139" y="850.1543">BaseStmtNode</text><line style="stroke:#A80036;stroke-width:1.5;" x1="111" x2="234" y1="862" y2="862"/><line style="stroke:#A80036;stroke-width:1.5;" x1="111" x2="234" y1="870" y2="870"/><!--MD5=[27b83928eb4ae87e2fc2e82e735e02cd]
+class BaseExprNode--><rect codeLine="15" fill="#FEFECE" filter="url(#fujoep6dbpit)" height="60.8047" id="BaseExprNode" style="stroke:#A80036;stroke-width:1.5;" width="123" x="315" y="823.5"/><ellipse cx="330" cy="839.5" fill="#ADD1B2" rx="11" ry="11" style="stroke:#A80036;stroke-width:1.0;"/><path d="M332.9688,845.1406 Q332.3906,845.4375 331.75,845.5781 Q331.1094,845.7344 330.4063,845.7344 Q327.9063,845.7344 326.5781,844.0938 Q325.2656,842.4375 325.2656,839.3125 Q325.2656,836.1875 326.5781,834.5313 Q327.9063,832.875 330.4063,832.875 Q331.1094,832.875 331.75,833.0313 Q332.4063,833.1875 332.9688,833.4844 L332.9688,836.2031 Q332.3438,835.625 331.75,835.3594 Q331.1563,835.0781 330.5313,835.0781 Q329.1875,835.0781 328.5,836.1563 Q327.8125,837.2188 327.8125,839.3125 Q327.8125,841.4063 328.5,842.4844 Q329.1875,843.5469 330.5313,843.5469 Q331.1563,843.5469 331.75,843.2813 Q332.3438,843 332.9688,842.4219 L332.9688,845.1406 Z " fill="#000000"/><text fill="#000000" font-family="sans-serif" font-size="12" lengthAdjust="spacing" textLength="91" x="344" y="843.6543">BaseExprNode</text><line style="stroke:#A80036;stroke-width:1.5;" x1="316" x2="437" y1="855.5" y2="855.5"/><ellipse cx="326" cy="866.5" rx="3" ry="3" style="stroke:#038048;stroke-width:1.0;fill:none;"/><text fill="#000000" font-family="sans-serif" font-size="11" lengthAdjust="spacing" textLength="78" x="335" y="869.7104">Datatype type</text><line style="stroke:#A80036;stroke-width:1.5;" x1="316" x2="437" y1="876.3047" y2="876.3047"/><!--MD5=[d94a4fdce57fa90edc62507e0f6859c0]
+class StmtNode--><rect codeLine="19" fill="#FEFECE" filter="url(#fujoep6dbpit)" height="60.8047" id="StmtNode" style="stroke:#A80036;stroke-width:1.5;" width="225" x="15" y="1198"/><ellipse cx="92.25" cy="1214" fill="#ADD1B2" rx="11" ry="11" style="stroke:#A80036;stroke-width:1.0;"/><path d="M95.2188,1219.6406 Q94.6406,1219.9375 94,1220.0781 Q93.3594,1220.2344 92.6563,1220.2344 Q90.1563,1220.2344 88.8281,1218.5938 Q87.5156,1216.9375 87.5156,1213.8125 Q87.5156,1210.6875 88.8281,1209.0313 Q90.1563,1207.375 92.6563,1207.375 Q93.3594,1207.375 94,1207.5313 Q94.6563,1207.6875 95.2188,1207.9844 L95.2188,1210.7031 Q94.5938,1210.125 94,1209.8594 Q93.4063,1209.5781 92.7813,1209.5781 Q91.4375,1209.5781 90.75,1210.6563 Q90.0625,1211.7188 90.0625,1213.8125 Q90.0625,1215.9063 90.75,1216.9844 Q91.4375,1218.0469 92.7813,1218.0469 Q93.4063,1218.0469 94,1217.7813 Q94.5938,1217.5 95.2188,1216.9219 L95.2188,1219.6406 Z " fill="#000000"/><text fill="#000000" font-family="sans-serif" font-size="12" lengthAdjust="spacing" textLength="62" x="112.75" y="1218.1543">StmtNode</text><line style="stroke:#A80036;stroke-width:1.5;" x1="16" x2="239" y1="1230" y2="1230"/><line style="stroke:#A80036;stroke-width:1.5;" x1="16" x2="239" y1="1238" y2="1238"/><ellipse cx="26" cy="1249" fill="#84BE84" rx="3" ry="3" style="stroke:#038048;stroke-width:1.0;"/><text fill="#000000" font-family="sans-serif" font-size="11" lengthAdjust="spacing" textLength="199" x="35" y="1252.2104">void accept(IRVisitorStrict *v) const</text><!--MD5=[475d6310b0690b98eac8d3436b0f8c3b]
+class ExprNode--><rect codeLine="22" fill="#FEFECE" filter="url(#fujoep6dbpit)" height="60.8047" id="ExprNode" style="stroke:#A80036;stroke-width:1.5;" width="225" x="275" y="1198"/><ellipse cx="353.25" cy="1214" fill="#ADD1B2" rx="11" ry="11" style="stroke:#A80036;stroke-width:1.0;"/><path d="M356.2188,1219.6406 Q355.6406,1219.9375 355,1220.0781 Q354.3594,1220.2344 353.6563,1220.2344 Q351.1563,1220.2344 349.8281,1218.5938 Q348.5156,1216.9375 348.5156,1213.8125 Q348.5156,1210.6875 349.8281,1209.0313 Q351.1563,1207.375 353.6563,1207.375 Q354.3594,1207.375 355,1207.5313 Q355.6563,1207.6875 356.2188,1207.9844 L356.2188,1210.7031 Q355.5938,1210.125 355,1209.8594 Q354.4063,1209.5781 353.7813,1209.5781 Q352.4375,1209.5781 351.75,1210.6563 Q351.0625,1211.7188 351.0625,1213.8125 Q351.0625,1215.9063 351.75,1216.9844 Q352.4375,1218.0469 353.7813,1218.0469 Q354.4063,1218.0469 355,1217.7813 Q355.5938,1217.5 356.2188,1216.9219 L356.2188,1219.6406 Z " fill="#000000"/><text fill="#000000" font-family="sans-serif" font-size="12" lengthAdjust="spacing" textLength="60" x="373.75" y="1218.1543">ExprNode</text><line style="stroke:#A80036;stroke-width:1.5;" x1="276" x2="499" y1="1230" y2="1230"/><line style="stroke:#A80036;stroke-width:1.5;" x1="276" x2="499" y1="1238" y2="1238"/><ellipse cx="286" cy="1249" fill="#84BE84" rx="3" ry="3" style="stroke:#038048;stroke-width:1.0;"/><text fill="#000000" font-family="sans-serif" font-size="11" lengthAdjust="spacing" textLength="199" x="295" y="1252.2104">void accept(IRVisitorStrict *v) const</text><!--MD5=[a8ff5e7d622655153c4b3f7a4e4aeffe]
+class IRHandle--><rect codeLine="32" fill="#FEFECE" filter="url(#fujoep6dbpit)" height="60.8047" id="IRHandle" style="stroke:#A80036;stroke-width:1.5;" width="225" x="72" y="237.5"/><ellipse cx="152.75" cy="253.5" fill="#ADD1B2" rx="11" ry="11" style="stroke:#A80036;stroke-width:1.0;"/><path d="M155.7188,259.1406 Q155.1406,259.4375 154.5,259.5781 Q153.8594,259.7344 153.1563,259.7344 Q150.6563,259.7344 149.3281,258.0938 Q148.0156,256.4375 148.0156,253.3125 Q148.0156,250.1875 149.3281,248.5313 Q150.6563,246.875 153.1563,246.875 Q153.8594,246.875 154.5,247.0313 Q155.1563,247.1875 155.7188,247.4844 L155.7188,250.2031 Q155.0938,249.625 154.5,249.3594 Q153.9063,249.0781 153.2813,249.0781 Q151.9375,249.0781 151.25,250.1563 Q150.5625,251.2188 150.5625,253.3125 Q150.5625,255.4063 151.25,256.4844 Q151.9375,257.5469 153.2813,257.5469 Q153.9063,257.5469 154.5,257.2813 Q155.0938,257 155.7188,256.4219 L155.7188,259.1406 Z " fill="#000000"/><text fill="#000000" font-family="sans-serif" font-size="12" lengthAdjust="spacing" textLength="55" x="173.25" y="257.6543">IRHandle</text><line style="stroke:#A80036;stroke-width:1.5;" x1="73" x2="296" y1="269.5" y2="269.5"/><line style="stroke:#A80036;stroke-width:1.5;" x1="73" x2="296" y1="277.5" y2="277.5"/><ellipse cx="83" cy="288.5" fill="#84BE84" rx="3" ry="3" style="stroke:#038048;stroke-width:1.0;"/><text fill="#000000" font-family="sans-serif" font-size="11" lengthAdjust="spacing" textLength="199" x="92" y="291.7104">void accept(IRVisitorStrict *v) const</text><!--MD5=[45d7a04dc863bc0ed8f0c57430a02d4a]
+class Expr--><rect codeLine="35" fill="#FEFECE" filter="url(#fujoep6dbpit)" height="48" id="Expr" style="stroke:#A80036;stroke-width:1.5;" width="59" x="7" y="561"/><ellipse cx="22" cy="577" fill="#ADD1B2" rx="11" ry="11" style="stroke:#A80036;stroke-width:1.0;"/><path d="M24.9688,582.6406 Q24.3906,582.9375 23.75,583.0781 Q23.1094,583.2344 22.4063,583.2344 Q19.9063,583.2344 18.5781,581.5938 Q17.2656,579.9375 17.2656,576.8125 Q17.2656,573.6875 18.5781,572.0313 Q19.9063,570.375 22.4063,570.375 Q23.1094,570.375 23.75,570.5313 Q24.4063,570.6875 24.9688,570.9844 L24.9688,573.7031 Q24.3438,573.125 23.75,572.8594 Q23.1563,572.5781 22.5313,572.5781 Q21.1875,572.5781 20.5,573.6563 Q19.8125,574.7188 19.8125,576.8125 Q19.8125,578.9063 20.5,579.9844 Q21.1875,581.0469 22.5313,581.0469 Q23.1563,581.0469 23.75,580.7813 Q24.3438,580.5 24.9688,579.9219 L24.9688,582.6406 Z " fill="#000000"/><text fill="#000000" font-family="sans-serif" font-size="12" lengthAdjust="spacing" textLength="27" x="36" y="581.1543">Expr</text><line style="stroke:#A80036;stroke-width:1.5;" x1="8" x2="65" y1="593" y2="593"/><line style="stroke:#A80036;stroke-width:1.5;" x1="8" x2="65" y1="601" y2="601"/><!--MD5=[add513dd89cf3f02144ebc6704fab9f7]
+class Stmt--><rect codeLine="36" fill="#FEFECE" filter="url(#fujoep6dbpit)" height="48" id="Stmt" style="stroke:#A80036;stroke-width:1.5;" width="61" x="101" y="561"/><ellipse cx="116" cy="577" fill="#ADD1B2" rx="11" ry="11" style="stroke:#A80036;stroke-width:1.0;"/><path d="M118.9688,582.6406 Q118.3906,582.9375 117.75,583.0781 Q117.1094,583.2344 116.4063,583.2344 Q113.9063,583.2344 112.5781,581.5938 Q111.2656,579.9375 111.2656,576.8125 Q111.2656,573.6875 112.5781,572.0313 Q113.9063,570.375 116.4063,570.375 Q117.1094,570.375 117.75,570.5313 Q118.4063,570.6875 118.9688,570.9844 L118.9688,573.7031 Q118.3438,573.125 117.75,572.8594 Q117.1563,572.5781 116.5313,572.5781 Q115.1875,572.5781 114.5,573.6563 Q113.8125,574.7188 113.8125,576.8125 Q113.8125,578.9063 114.5,579.9844 Q115.1875,581.0469 116.5313,581.0469 Q117.1563,581.0469 117.75,580.7813 Q118.3438,580.5 118.9688,579.9219 L118.9688,582.6406 Z " fill="#000000"/><text fill="#000000" font-family="sans-serif" font-size="12" lengthAdjust="spacing" textLength="29" x="130" y="581.1543">Stmt</text><line style="stroke:#A80036;stroke-width:1.5;" x1="102" x2="161" y1="593" y2="593"/><line style="stroke:#A80036;stroke-width:1.5;" x1="102" x2="161" y1="601" y2="601"/><!--MD5=[927685d34b77cdaffb6bcd7c2ecdcc1a]
+class IRVisitorStrict--><rect codeLine="47" fill="#FEFECE" filter="url(#fujoep6dbpit)" height="60.8047" id="IRVisitorStrict" style="stroke:#A80036;stroke-width:1.5;" width="262" x="2676.5" y="7"/><ellipse cx="2761.75" cy="23" fill="#B4A7E5" rx="11" ry="11" style="stroke:#A80036;stroke-width:1.0;"/><path d="M2757.6719,18.7656 L2757.6719,16.6094 L2765.0625,16.6094 L2765.0625,18.7656 L2762.5938,18.7656 L2762.5938,26.8438 L2765.0625,26.8438 L2765.0625,29 L2757.6719,29 L2757.6719,26.8438 L2760.1406,26.8438 L2760.1406,18.7656 L2757.6719,18.7656 Z " fill="#000000"/><text fill="#000000" font-family="sans-serif" font-size="12" font-style="italic" lengthAdjust="spacing" textLength="83" x="2782.25" y="27.1543">IRVisitorStrict</text><line style="stroke:#A80036;stroke-width:1.5;" x1="2677.5" x2="2937.5" y1="39" y2="39"/><line style="stroke:#A80036;stroke-width:1.5;" x1="2677.5" x2="2937.5" y1="47" y2="47"/><ellipse cx="2687.5" cy="58" fill="#84BE84" rx="3" ry="3" style="stroke:#038048;stroke-width:1.0;"/><text fill="#000000" font-family="sans-serif" font-size="11" lengthAdjust="spacing" textLength="236" x="2696.5" y="61.2104">virtual void visit(const IRNode*) const = 0</text><!--MD5=[b78282c203133343885c01c420157c8a]
+class IRVisitor--><rect codeLine="55" fill="#FEFECE" filter="url(#fujoep6dbpit)" height="60.8047" id="IRVisitor" style="stroke:#A80036;stroke-width:1.5;" width="203" x="2387" y="237.5"/><ellipse cx="2459.25" cy="253.5" fill="#ADD1B2" rx="11" ry="11" style="stroke:#A80036;stroke-width:1.0;"/><path d="M2462.2188,259.1406 Q2461.6406,259.4375 2461,259.5781 Q2460.3594,259.7344 2459.6563,259.7344 Q2457.1563,259.7344 2455.8281,258.0938 Q2454.5156,256.4375 2454.5156,253.3125 Q2454.5156,250.1875 2455.8281,248.5313 Q2457.1563,246.875 2459.6563,246.875 Q2460.3594,246.875 2461,247.0313 Q2461.6563,247.1875 2462.2188,247.4844 L2462.2188,250.2031 Q2461.5938,249.625 2461,249.3594 Q2460.4063,249.0781 2459.7813,249.0781 Q2458.4375,249.0781 2457.75,250.1563 Q2457.0625,251.2188 2457.0625,253.3125 Q2457.0625,255.4063 2457.75,256.4844 Q2458.4375,257.5469 2459.7813,257.5469 Q2460.4063,257.5469 2461,257.2813 Q2461.5938,257 2462.2188,256.4219 L2462.2188,259.1406 Z " fill="#000000"/><text fill="#000000" font-family="sans-serif" font-size="12" lengthAdjust="spacing" textLength="50" x="2479.75" y="257.6543">IRVisitor</text><line style="stroke:#A80036;stroke-width:1.5;" x1="2388" x2="2589" y1="269.5" y2="269.5"/><line style="stroke:#A80036;stroke-width:1.5;" x1="2388" x2="2589" y1="277.5" y2="277.5"/><ellipse cx="2398" cy="288.5" fill="#84BE84" rx="3" ry="3" style="stroke:#038048;stroke-width:1.0;"/><text fill="#000000" font-family="sans-serif" font-size="11" lengthAdjust="spacing" textLength="177" x="2407" y="291.7104">virtual void visit(const IRNode*)</text><!--MD5=[e7ea7c5d2ec9672a3f65e9628a854185]
+class IRRewriter--><rect codeLine="59" fill="#FEFECE" filter="url(#fujoep6dbpit)" height="137.6328" id="IRRewriter" style="stroke:#A80036;stroke-width:1.5;" width="238" x="2688.5" y="199"/><ellipse cx="2772.25" cy="215" fill="#ADD1B2" rx="11" ry="11" style="stroke:#A80036;stroke-width:1.0;"/><path d="M2775.2188,220.6406 Q2774.6406,220.9375 2774,221.0781 Q2773.3594,221.2344 2772.6563,221.2344 Q2770.1563,221.2344 2768.8281,219.5938 Q2767.5156,217.9375 2767.5156,214.8125 Q2767.5156,211.6875 2768.8281,210.0313 Q2770.1563,208.375 2772.6563,208.375 Q2773.3594,208.375 2774,208.5313 Q2774.6563,208.6875 2775.2188,208.9844 L2775.2188,211.7031 Q2774.5938,211.125 2774,210.8594 Q2773.4063,210.5781 2772.7813,210.5781 Q2771.4375,210.5781 2770.75,211.6563 Q2770.0625,212.7188 2770.0625,214.8125 Q2770.0625,216.9063 2770.75,217.9844 Q2771.4375,219.0469 2772.7813,219.0469 Q2773.4063,219.0469 2774,218.7813 Q2774.5938,218.5 2775.2188,217.9219 L2775.2188,220.6406 Z " fill="#000000"/><text fill="#000000" font-family="sans-serif" font-size="12" lengthAdjust="spacing" textLength="62" x="2792.75" y="219.1543">IRRewriter</text><line style="stroke:#A80036;stroke-width:1.5;" x1="2689.5" x2="2925.5" y1="231" y2="231"/><polygon fill="none" points="2699.5,237,2703.5,241,2699.5,245,2695.5,241" style="stroke:#B38D22;stroke-width:1.0;"/><text fill="#000000" font-family="sans-serif" font-size="11" lengthAdjust="spacing" textLength="54" x="2708.5" y="245.2104">Expr expr</text><polygon fill="none" points="2699.5,249.8047,2703.5,253.8047,2699.5,257.8047,2695.5,253.8047" style="stroke:#B38D22;stroke-width:1.0;"/><text fill="#000000" font-family="sans-serif" font-size="11" lengthAdjust="spacing" textLength="57" x="2708.5" y="258.0151">Stmt stmt</text><line style="stroke:#A80036;stroke-width:1.5;" x1="2689.5" x2="2925.5" y1="264.6094" y2="264.6094"/><polygon fill="#FFFF44" points="2699.5,270.6094,2703.5,274.6094,2699.5,278.6094,2695.5,274.6094" style="stroke:#B38D22;stroke-width:1.0;"/><text fill="#000000" font-family="sans-serif" font-size="11" lengthAdjust="spacing" textLength="210" x="2708.5" y="278.8198">virtual void visit(const ExprNode* op)</text><polygon fill="#FFFF44" points="2699.5,283.4141,2703.5,287.4141,2699.5,291.4141,2695.5,287.4141" style="stroke:#B38D22;stroke-width:1.0;"/><text fill="#000000" font-family="sans-serif" font-size="11" lengthAdjust="spacing" textLength="212" x="2708.5" y="291.6245">virtual void visit(const StmtNode* op)</text><text fill="#000000" font-family="sans-serif" font-size="11" lengthAdjust="spacing" textLength="0" x="2712.5" y="304.4292"/><ellipse cx="2699.5" cy="314.0234" fill="#84BE84" rx="3" ry="3" style="stroke:#038048;stroke-width:1.0;"/><text fill="#000000" font-family="sans-serif" font-size="11" lengthAdjust="spacing" textLength="102" x="2708.5" y="317.2339">Expr rewrite(Expr)</text><ellipse cx="2699.5" cy="326.8281" fill="#84BE84" rx="3" ry="3" style="stroke:#038048;stroke-width:1.0;"/><text fill="#000000" font-family="sans-serif" font-size="11" lengthAdjust="spacing" textLength="106" x="2708.5" y="330.0386">Stmt rewrite(Stmt)</text><!--MD5=[fc5b2d51c8ad612433d8a39d4bdd37c4]
+class IRPrinter--><rect codeLine="71" fill="#FEFECE" filter="url(#fujoep6dbpit)" height="278.4844" id="IRPrinter" style="stroke:#A80036;stroke-width:1.5;" width="430" x="3008.5" y="129"/><ellipse cx="3192.75" cy="145" fill="#ADD1B2" rx="11" ry="11" style="stroke:#A80036;stroke-width:1.0;"/><path d="M3195.7188,150.6406 Q3195.1406,150.9375 3194.5,151.0781 Q3193.8594,151.2344 3193.1563,151.2344 Q3190.6563,151.2344 3189.3281,149.5938 Q3188.0156,147.9375 3188.0156,144.8125 Q3188.0156,141.6875 3189.3281,140.0313 Q3190.6563,138.375 3193.1563,138.375 Q3193.8594,138.375 3194.5,138.5313 Q3195.1563,138.6875 3195.7188,138.9844 L3195.7188,141.7031 Q3195.0938,141.125 3194.5,140.8594 Q3193.9063,140.5781 3193.2813,140.5781 Q3191.9375,140.5781 3191.25,141.6563 Q3190.5625,142.7188 3190.5625,144.8125 Q3190.5625,146.9063 3191.25,147.9844 Q3191.9375,149.0469 3193.2813,149.0469 Q3193.9063,149.0469 3194.5,148.7813 Q3195.0938,148.5 3195.7188,147.9219 L3195.7188,150.6406 Z " fill="#000000"/><text fill="#000000" font-family="sans-serif" font-size="12" lengthAdjust="spacing" textLength="53" x="3213.25" y="149.1543">IRPrinter</text><line style="stroke:#A80036;stroke-width:1.5;" x1="3009.5" x2="3437.5" y1="161" y2="161"/><polygon fill="none" points="3019.5,167,3023.5,171,3019.5,175,3015.5,171" style="stroke:#B38D22;stroke-width:1.0;"/><text fill="#000000" font-family="sans-serif" font-size="11" lengthAdjust="spacing" textLength="129" x="3028.5" y="175.2104">std::ostream &amp;stream</text><polygon fill="none" points="3019.5,179.8047,3023.5,183.8047,3019.5,187.8047,3015.5,183.8047" style="stroke:#B38D22;stroke-width:1.0;"/><text fill="#000000" font-family="sans-serif" font-size="11" lengthAdjust="spacing" textLength="136" x="3028.5" y="188.0151">std::ostream &amp;stream2</text><polygon fill="none" points="3019.5,192.6094,3023.5,196.6094,3019.5,200.6094,3015.5,196.6094" style="stroke:#B38D22;stroke-width:1.0;"/><text fill="#000000" font-family="sans-serif" font-size="11" lengthAdjust="spacing" textLength="53" x="3028.5" y="200.8198">int indent</text><polygon fill="none" points="3019.5,205.4141,3023.5,209.4141,3019.5,213.4141,3015.5,209.4141" style="stroke:#B38D22;stroke-width:1.0;"/><text fill="#000000" font-family="sans-serif" font-size="11" lengthAdjust="spacing" textLength="56" x="3028.5" y="213.6245">bool color</text><polygon fill="none" points="3019.5,218.2188,3023.5,222.2188,3019.5,226.2188,3015.5,222.2188" style="stroke:#B38D22;stroke-width:1.0;"/><text fill="#000000" font-family="sans-serif" font-size="11" lengthAdjust="spacing" textLength="72" x="3028.5" y="226.4292">bool simplify</text><polygon fill="none" points="3019.5,231.0234,3023.5,235.0234,3019.5,239.0234,3015.5,235.0234" style="stroke:#B38D22;stroke-width:1.0;"/><text fill="#000000" font-family="sans-serif" font-size="11" lengthAdjust="spacing" textLength="102" x="3028.5" y="239.2339">enum Precedence</text><polygon fill="none" points="3019.5,243.8281,3023.5,247.8281,3019.5,251.8281,3015.5,247.8281" style="stroke:#B38D22;stroke-width:1.0;"/><text fill="#000000" font-family="sans-serif" font-size="11" lengthAdjust="spacing" textLength="239" x="3028.5" y="252.0386">Precedence parentPrecedence = BOTTOM</text><polygon fill="none" points="3019.5,256.6328,3023.5,260.6328,3019.5,264.6328,3015.5,260.6328" style="stroke:#B38D22;stroke-width:1.0;"/><text fill="#000000" font-family="sans-serif" font-size="11" lengthAdjust="spacing" textLength="204" x="3028.5" y="264.8433">NameGenerator varNameGenerator</text><polygon fill="none" points="3019.5,269.4375,3023.5,273.4375,3019.5,277.4375,3015.5,273.4375" style="stroke:#B38D22;stroke-width:1.0;"/><text fill="#000000" font-family="sans-serif" font-size="11" lengthAdjust="spacing" textLength="237" x="3028.5" y="277.6479">scopedMap&lt;Expr, std::String&gt; varNames</text><line style="stroke:#A80036;stroke-width:1.5;" x1="3009.5" x2="3437.5" y1="284.2422" y2="284.2422"/><polygon fill="#FFFF44" points="3019.5,290.2422,3023.5,294.2422,3019.5,298.2422,3015.5,294.2422" style="stroke:#B38D22;stroke-width:1.0;"/><text fill="#000000" font-family="sans-serif" font-size="11" lengthAdjust="spacing" textLength="84" x="3028.5" y="298.4526">void doIndent()</text><polygon fill="#FFFF44" points="3019.5,303.0469,3023.5,307.0469,3019.5,311.0469,3015.5,307.0469" style="stroke:#B38D22;stroke-width:1.0;"/><text fill="#000000" font-family="sans-serif" font-size="11" lengthAdjust="spacing" textLength="404" x="3028.5" y="311.2573">void printBinOp(Expr a, Expr b, std::string op, Precedence precedence)</text><polygon fill="#FFFF44" points="3019.5,315.8516,3023.5,319.8516,3019.5,323.8516,3015.5,319.8516" style="stroke:#B38D22;stroke-width:1.0;"/><text fill="#000000" font-family="sans-serif" font-size="11" lengthAdjust="spacing" textLength="131" x="3028.5" y="324.062">void fewMoreMethods()</text><text fill="#000000" font-family="sans-serif" font-size="11" lengthAdjust="spacing" textLength="0" x="3032.5" y="336.8667"/><polygon fill="#FFFF44" points="3019.5,341.4609,3023.5,345.4609,3019.5,349.4609,3015.5,345.4609" style="stroke:#B38D22;stroke-width:1.0;"/><text fill="#000000" font-family="sans-serif" font-size="11" lengthAdjust="spacing" textLength="192" x="3028.5" y="349.6714">virtual void visit(const ExprNode*)</text><polygon fill="#FFFF44" points="3019.5,354.2656,3023.5,358.2656,3019.5,362.2656,3015.5,358.2656" style="stroke:#B38D22;stroke-width:1.0;"/><text fill="#000000" font-family="sans-serif" font-size="11" lengthAdjust="spacing" textLength="194" x="3028.5" y="362.4761">virtual void visit(const StmtNode*)</text><text fill="#000000" font-family="sans-serif" font-size="11" lengthAdjust="spacing" textLength="0" x="3032.5" y="375.2808"/><ellipse cx="3019.5" cy="384.875" fill="#84BE84" rx="3" ry="3" style="stroke:#038048;stroke-width:1.0;"/><text fill="#000000" font-family="sans-serif" font-size="11" lengthAdjust="spacing" textLength="112" x="3028.5" y="388.0854">setColor(bool color)</text><ellipse cx="3019.5" cy="397.6797" fill="#84BE84" rx="3" ry="3" style="stroke:#038048;stroke-width:1.0;"/><text fill="#000000" font-family="sans-serif" font-size="11" lengthAdjust="spacing" textLength="61" x="3028.5" y="400.8901">print(Stmt)</text><!--MD5=[5f8d54360f7c21960948de60fa30257d]
+class IRVerifier--><rect codeLine="92" fill="#FEFECE" filter="url(#fujoep6dbpit)" height="48" id="IRVerifier" style="stroke:#A80036;stroke-width:1.5;" width="87" x="2288" y="561"/><ellipse cx="2303" cy="577" fill="#ADD1B2" rx="11" ry="11" style="stroke:#A80036;stroke-width:1.0;"/><path d="M2305.9688,582.6406 Q2305.3906,582.9375 2304.75,583.0781 Q2304.1094,583.2344 2303.4063,583.2344 Q2300.9063,583.2344 2299.5781,581.5938 Q2298.2656,579.9375 2298.2656,576.8125 Q2298.2656,573.6875 2299.5781,572.0313 Q2300.9063,570.375 2303.4063,570.375 Q2304.1094,570.375 2304.75,570.5313 Q2305.4063,570.6875 2305.9688,570.9844 L2305.9688,573.7031 Q2305.3438,573.125 2304.75,572.8594 Q2304.1563,572.5781 2303.5313,572.5781 Q2302.1875,572.5781 2301.5,573.6563 Q2300.8125,574.7188 2300.8125,576.8125 Q2300.8125,578.9063 2301.5,579.9844 Q2302.1875,581.0469 2303.5313,581.0469 Q2304.1563,581.0469 2304.75,580.7813 Q2305.3438,580.5 2305.9688,579.9219 L2305.9688,582.6406 Z " fill="#000000"/><text fill="#000000" font-family="sans-serif" font-size="12" lengthAdjust="spacing" textLength="55" x="2317" y="581.1543">IRVerifier</text><line style="stroke:#A80036;stroke-width:1.5;" x1="2289" x2="2374" y1="593" y2="593"/><line style="stroke:#A80036;stroke-width:1.5;" x1="2289" x2="2374" y1="601" y2="601"/><!--MD5=[1e59d9c8d5cb32d21caddc96a281f60c]
+class ExpressionSimplifier--><rect codeLine="101" fill="#FEFECE" filter="url(#fujoep6dbpit)" height="48" id="ExpressionSimplifier" style="stroke:#A80036;stroke-width:1.5;" width="156" x="2410.5" y="561"/><ellipse cx="2425.5" cy="577" fill="#ADD1B2" rx="11" ry="11" style="stroke:#A80036;stroke-width:1.0;"/><path d="M2428.4688,582.6406 Q2427.8906,582.9375 2427.25,583.0781 Q2426.6094,583.2344 2425.9063,583.2344 Q2423.4063,583.2344 2422.0781,581.5938 Q2420.7656,579.9375 2420.7656,576.8125 Q2420.7656,573.6875 2422.0781,572.0313 Q2423.4063,570.375 2425.9063,570.375 Q2426.6094,570.375 2427.25,570.5313 Q2427.9063,570.6875 2428.4688,570.9844 L2428.4688,573.7031 Q2427.8438,573.125 2427.25,572.8594 Q2426.6563,572.5781 2426.0313,572.5781 Q2424.6875,572.5781 2424,573.6563 Q2423.3125,574.7188 2423.3125,576.8125 Q2423.3125,578.9063 2424,579.9844 Q2424.6875,581.0469 2426.0313,581.0469 Q2426.6563,581.0469 2427.25,580.7813 Q2427.8438,580.5 2428.4688,579.9219 L2428.4688,582.6406 Z " fill="#000000"/><text fill="#000000" font-family="sans-serif" font-size="12" lengthAdjust="spacing" textLength="124" x="2439.5" y="581.1543">ExpressionSimplifier</text><line style="stroke:#A80036;stroke-width:1.5;" x1="2411.5" x2="2565.5" y1="593" y2="593"/><line style="stroke:#A80036;stroke-width:1.5;" x1="2411.5" x2="2565.5" y1="601" y2="601"/><!--MD5=[09d0ace23740abc72ce7e8b4f8ae65c7]
+class RemoveRedundantStatements--><rect codeLine="105" fill="#FEFECE" filter="url(#fujoep6dbpit)" height="48" id="RemoveRedundantStatements" style="stroke:#A80036;stroke-width:1.5;" width="223" x="2602" y="561"/><ellipse cx="2617" cy="577" fill="#ADD1B2" rx="11" ry="11" style="stroke:#A80036;stroke-width:1.0;"/><path d="M2619.9688,582.6406 Q2619.3906,582.9375 2618.75,583.0781 Q2618.1094,583.2344 2617.4063,583.2344 Q2614.9063,583.2344 2613.5781,581.5938 Q2612.2656,579.9375 2612.2656,576.8125 Q2612.2656,573.6875 2613.5781,572.0313 Q2614.9063,570.375 2617.4063,570.375 Q2618.1094,570.375 2618.75,570.5313 Q2619.4063,570.6875 2619.9688,570.9844 L2619.9688,573.7031 Q2619.3438,573.125 2618.75,572.8594 Q2618.1563,572.5781 2617.5313,572.5781 Q2616.1875,572.5781 2615.5,573.6563 Q2614.8125,574.7188 2614.8125,576.8125 Q2614.8125,578.9063 2615.5,579.9844 Q2616.1875,581.0469 2617.5313,581.0469 Q2618.1563,581.0469 2618.75,580.7813 Q2619.3438,580.5 2619.9688,579.9219 L2619.9688,582.6406 Z " fill="#000000"/><text fill="#000000" font-family="sans-serif" font-size="12" lengthAdjust="spacing" textLength="191" x="2631" y="581.1543">RemoveRedundantStatements</text><line style="stroke:#A80036;stroke-width:1.5;" x1="2603" x2="2824" y1="593" y2="593"/><line style="stroke:#A80036;stroke-width:1.5;" x1="2603" x2="2824" y1="601" y2="601"/><!--MD5=[8dd11208bc782b9bc4fe9a727775ac71]
+class RemoveRedundantLoops--><rect codeLine="106" fill="#FEFECE" filter="url(#fujoep6dbpit)" height="48" id="RemoveRedundantLoops" style="stroke:#A80036;stroke-width:1.5;" width="187" x="2860" y="561"/><ellipse cx="2875" cy="577" fill="#ADD1B2" rx="11" ry="11" style="stroke:#A80036;stroke-width:1.0;"/><path d="M2877.9688,582.6406 Q2877.3906,582.9375 2876.75,583.0781 Q2876.1094,583.2344 2875.4063,583.2344 Q2872.9063,583.2344 2871.5781,581.5938 Q2870.2656,579.9375 2870.2656,576.8125 Q2870.2656,573.6875 2871.5781,572.0313 Q2872.9063,570.375 2875.4063,570.375 Q2876.1094,570.375 2876.75,570.5313 Q2877.4063,570.6875 2877.9688,570.9844 L2877.9688,573.7031 Q2877.3438,573.125 2876.75,572.8594 Q2876.1563,572.5781 2875.5313,572.5781 Q2874.1875,572.5781 2873.5,573.6563 Q2872.8125,574.7188 2872.8125,576.8125 Q2872.8125,578.9063 2873.5,579.9844 Q2874.1875,581.0469 2875.5313,581.0469 Q2876.1563,581.0469 2876.75,580.7813 Q2877.3438,580.5 2877.9688,579.9219 L2877.9688,582.6406 Z " fill="#000000"/><text fill="#000000" font-family="sans-serif" font-size="12" lengthAdjust="spacing" textLength="155" x="2889" y="581.1543">RemoveRedundantLoops</text><line style="stroke:#A80036;stroke-width:1.5;" x1="2861" x2="3046" y1="593" y2="593"/><line style="stroke:#A80036;stroke-width:1.5;" x1="2861" x2="3046" y1="601" y2="601"/><!--MD5=[85eaa2c6ee966b219cfed7e8ed27a206]
+class RemoveDuplicateBody--><rect codeLine="107" fill="#FEFECE" filter="url(#fujoep6dbpit)" height="48" id="RemoveDuplicateBody" style="stroke:#A80036;stroke-width:1.5;" width="170" x="3082.5" y="561"/><ellipse cx="3097.5" cy="577" fill="#ADD1B2" rx="11" ry="11" style="stroke:#A80036;stroke-width:1.0;"/><path d="M3100.4688,582.6406 Q3099.8906,582.9375 3099.25,583.0781 Q3098.6094,583.2344 3097.9063,583.2344 Q3095.4063,583.2344 3094.0781,581.5938 Q3092.7656,579.9375 3092.7656,576.8125 Q3092.7656,573.6875 3094.0781,572.0313 Q3095.4063,570.375 3097.9063,570.375 Q3098.6094,570.375 3099.25,570.5313 Q3099.9063,570.6875 3100.4688,570.9844 L3100.4688,573.7031 Q3099.8438,573.125 3099.25,572.8594 Q3098.6563,572.5781 3098.0313,572.5781 Q3096.6875,572.5781 3096,573.6563 Q3095.3125,574.7188 3095.3125,576.8125 Q3095.3125,578.9063 3096,579.9844 Q3096.6875,581.0469 3098.0313,581.0469 Q3098.6563,581.0469 3099.25,580.7813 Q3099.8438,580.5 3100.4688,579.9219 L3100.4688,582.6406 Z " fill="#000000"/><text fill="#000000" font-family="sans-serif" font-size="12" lengthAdjust="spacing" textLength="138" x="3111.5" y="581.1543">RemoveDuplicateBody</text><line style="stroke:#A80036;stroke-width:1.5;" x1="3083.5" x2="3251.5" y1="593" y2="593"/><line style="stroke:#A80036;stroke-width:1.5;" x1="3083.5" x2="3251.5" y1="601" y2="601"/><!--MD5=[781eb37a56bb69dce1ac0e85789010ac]
+class CodeGen--><rect codeLine="115" fill="#FEFECE" filter="url(#fujoep6dbpit)" height="48" id="CodeGen" style="stroke:#A80036;stroke-width:1.5;" width="89" x="3288" y="561"/><ellipse cx="3303" cy="577" fill="#ADD1B2" rx="11" ry="11" style="stroke:#A80036;stroke-width:1.0;"/><path d="M3305.9688,582.6406 Q3305.3906,582.9375 3304.75,583.0781 Q3304.1094,583.2344 3303.4063,583.2344 Q3300.9063,583.2344 3299.5781,581.5938 Q3298.2656,579.9375 3298.2656,576.8125 Q3298.2656,573.6875 3299.5781,572.0313 Q3300.9063,570.375 3303.4063,570.375 Q3304.1094,570.375 3304.75,570.5313 Q3305.4063,570.6875 3305.9688,570.9844 L3305.9688,573.7031 Q3305.3438,573.125 3304.75,572.8594 Q3304.1563,572.5781 3303.5313,572.5781 Q3302.1875,572.5781 3301.5,573.6563 Q3300.8125,574.7188 3300.8125,576.8125 Q3300.8125,578.9063 3301.5,579.9844 Q3302.1875,581.0469 3303.5313,581.0469 Q3304.1563,581.0469 3304.75,580.7813 Q3305.3438,580.5 3305.9688,579.9219 L3305.9688,582.6406 Z " fill="#000000"/><text fill="#000000" font-family="sans-serif" font-size="12" lengthAdjust="spacing" textLength="57" x="3317" y="581.1543">CodeGen</text><line style="stroke:#A80036;stroke-width:1.5;" x1="3289" x2="3376" y1="593" y2="593"/><line style="stroke:#A80036;stroke-width:1.5;" x1="3289" x2="3376" y1="601" y2="601"/><!--MD5=[1c66665a05557eaba0ef54dbe8329f75]
+class CodeGen_C--><rect codeLine="116" fill="#FEFECE" filter="url(#fujoep6dbpit)" height="48" id="CodeGen_C" style="stroke:#A80036;stroke-width:1.5;" width="103" x="3130" y="830"/><ellipse cx="3145" cy="846" fill="#ADD1B2" rx="11" ry="11" style="stroke:#A80036;stroke-width:1.0;"/><path d="M3147.9688,851.6406 Q3147.3906,851.9375 3146.75,852.0781 Q3146.1094,852.2344 3145.4063,852.2344 Q3142.9063,852.2344 3141.5781,850.5938 Q3140.2656,848.9375 3140.2656,845.8125 Q3140.2656,842.6875 3141.5781,841.0313 Q3142.9063,839.375 3145.4063,839.375 Q3146.1094,839.375 3146.75,839.5313 Q3147.4063,839.6875 3147.9688,839.9844 L3147.9688,842.7031 Q3147.3438,842.125 3146.75,841.8594 Q3146.1563,841.5781 3145.5313,841.5781 Q3144.1875,841.5781 3143.5,842.6563 Q3142.8125,843.7188 3142.8125,845.8125 Q3142.8125,847.9063 3143.5,848.9844 Q3144.1875,850.0469 3145.5313,850.0469 Q3146.1563,850.0469 3146.75,849.7813 Q3147.3438,849.5 3147.9688,848.9219 L3147.9688,851.6406 Z " fill="#000000"/><text fill="#000000" font-family="sans-serif" font-size="12" lengthAdjust="spacing" textLength="71" x="3159" y="850.1543">CodeGen_C</text><line style="stroke:#A80036;stroke-width:1.5;" x1="3131" x2="3232" y1="862" y2="862"/><line style="stroke:#A80036;stroke-width:1.5;" x1="3131" x2="3232" y1="870" y2="870"/><!--MD5=[b05ffbf1810bcc29bd244a8644dcab5e]
+class CodeGen_CUDA--><rect codeLine="117" fill="#FEFECE" filter="url(#fujoep6dbpit)" height="48" id="CodeGen_CUDA" style="stroke:#A80036;stroke-width:1.5;" width="129" x="3268" y="830"/><ellipse cx="3283" cy="846" fill="#ADD1B2" rx="11" ry="11" style="stroke:#A80036;stroke-width:1.0;"/><path d="M3285.9688,851.6406 Q3285.3906,851.9375 3284.75,852.0781 Q3284.1094,852.2344 3283.4063,852.2344 Q3280.9063,852.2344 3279.5781,850.5938 Q3278.2656,848.9375 3278.2656,845.8125 Q3278.2656,842.6875 3279.5781,841.0313 Q3280.9063,839.375 3283.4063,839.375 Q3284.1094,839.375 3284.75,839.5313 Q3285.4063,839.6875 3285.9688,839.9844 L3285.9688,842.7031 Q3285.3438,842.125 3284.75,841.8594 Q3284.1563,841.5781 3283.5313,841.5781 Q3282.1875,841.5781 3281.5,842.6563 Q3280.8125,843.7188 3280.8125,845.8125 Q3280.8125,847.9063 3281.5,848.9844 Q3282.1875,850.0469 3283.5313,850.0469 Q3284.1563,850.0469 3284.75,849.7813 Q3285.3438,849.5 3285.9688,848.9219 L3285.9688,851.6406 Z " fill="#000000"/><text fill="#000000" font-family="sans-serif" font-size="12" lengthAdjust="spacing" textLength="97" x="3297" y="850.1543">CodeGen_CUDA</text><line style="stroke:#A80036;stroke-width:1.5;" x1="3269" x2="3396" y1="862" y2="862"/><line style="stroke:#A80036;stroke-width:1.5;" x1="3269" x2="3396" y1="870" y2="870"/><!--MD5=[e6fabe1c34e0f779d9281ebc64edf122]
+class CodeGen_ISPC--><rect codeLine="118" fill="#FEFECE" filter="url(#fujoep6dbpit)" height="48" id="CodeGen_ISPC" style="stroke:#A80036;stroke-width:1.5;" width="122" x="3432.5" y="830"/><ellipse cx="3447.5" cy="846" fill="#ADD1B2" rx="11" ry="11" style="stroke:#A80036;stroke-width:1.0;"/><path d="M3450.4688,851.6406 Q3449.8906,851.9375 3449.25,852.0781 Q3448.6094,852.2344 3447.9063,852.2344 Q3445.4063,852.2344 3444.0781,850.5938 Q3442.7656,848.9375 3442.7656,845.8125 Q3442.7656,842.6875 3444.0781,841.0313 Q3445.4063,839.375 3447.9063,839.375 Q3448.6094,839.375 3449.25,839.5313 Q3449.9063,839.6875 3450.4688,839.9844 L3450.4688,842.7031 Q3449.8438,842.125 3449.25,841.8594 Q3448.6563,841.5781 3448.0313,841.5781 Q3446.6875,841.5781 3446,842.6563 Q3445.3125,843.7188 3445.3125,845.8125 Q3445.3125,847.9063 3446,848.9844 Q3446.6875,850.0469 3448.0313,850.0469 Q3448.6563,850.0469 3449.25,849.7813 Q3449.8438,849.5 3450.4688,848.9219 L3450.4688,851.6406 Z " fill="#000000"/><text fill="#000000" font-family="sans-serif" font-size="12" lengthAdjust="spacing" textLength="90" x="3461.5" y="850.1543">CodeGen_ISPC</text><line style="stroke:#A80036;stroke-width:1.5;" x1="3433.5" x2="3553.5" y1="862" y2="862"/><line style="stroke:#A80036;stroke-width:1.5;" x1="3433.5" x2="3553.5" y1="870" y2="870"/><!--MD5=[a8e9f8a103380e23aa8687dbc5a94fb7]
+class Manageable--><rect codeLine="126" fill="#FEFECE" filter="url(#fujoep6dbpit)" height="48" id="Manageable" style="stroke:#A80036;stroke-width:1.5;" width="109" x="1221" y="244"/><ellipse cx="1236" cy="260" fill="#ADD1B2" rx="11" ry="11" style="stroke:#A80036;stroke-width:1.0;"/><path d="M1238.9688,265.6406 Q1238.3906,265.9375 1237.75,266.0781 Q1237.1094,266.2344 1236.4063,266.2344 Q1233.9063,266.2344 1232.5781,264.5938 Q1231.2656,262.9375 1231.2656,259.8125 Q1231.2656,256.6875 1232.5781,255.0313 Q1233.9063,253.375 1236.4063,253.375 Q1237.1094,253.375 1237.75,253.5313 Q1238.4063,253.6875 1238.9688,253.9844 L1238.9688,256.7031 Q1238.3438,256.125 1237.75,255.8594 Q1237.1563,255.5781 1236.5313,255.5781 Q1235.1875,255.5781 1234.5,256.6563 Q1233.8125,257.7188 1233.8125,259.8125 Q1233.8125,261.9063 1234.5,262.9844 Q1235.1875,264.0469 1236.5313,264.0469 Q1237.1563,264.0469 1237.75,263.7813 Q1238.3438,263.5 1238.9688,262.9219 L1238.9688,265.6406 Z " fill="#000000"/><text fill="#000000" font-family="sans-serif" font-size="12" lengthAdjust="spacing" textLength="77" x="1250" y="264.1543">Manageable</text><line style="stroke:#A80036;stroke-width:1.5;" x1="1222" x2="1329" y1="276" y2="276"/><line style="stroke:#A80036;stroke-width:1.5;" x1="1222" x2="1329" y1="284" y2="284"/><!--MD5=[b230114a6dc80ef25a3e5e6e95ae886a]
+class IndexStmtNode--><rect codeLine="127" fill="#FEFECE" filter="url(#fujoep6dbpit)" height="60.8047" id="IndexStmtNode" style="stroke:#A80036;stroke-width:1.5;" width="325" x="521" y="554.5"/><ellipse cx="631.75" cy="570.5" fill="#ADD1B2" rx="11" ry="11" style="stroke:#A80036;stroke-width:1.0;"/><path d="M634.7188,576.1406 Q634.1406,576.4375 633.5,576.5781 Q632.8594,576.7344 632.1563,576.7344 Q629.6563,576.7344 628.3281,575.0938 Q627.0156,573.4375 627.0156,570.3125 Q627.0156,567.1875 628.3281,565.5313 Q629.6563,563.875 632.1563,563.875 Q632.8594,563.875 633.5,564.0313 Q634.1563,564.1875 634.7188,564.4844 L634.7188,567.2031 Q634.0938,566.625 633.5,566.3594 Q632.9063,566.0781 632.2813,566.0781 Q630.9375,566.0781 630.25,567.1563 Q629.5625,568.2188 629.5625,570.3125 Q629.5625,572.4063 630.25,573.4844 Q630.9375,574.5469 632.2813,574.5469 Q632.9063,574.5469 633.5,574.2813 Q634.0938,574 634.7188,573.4219 L634.7188,576.1406 Z " fill="#000000"/><text fill="#000000" font-family="sans-serif" font-size="12" lengthAdjust="spacing" textLength="95" x="652.25" y="574.6543">IndexStmtNode</text><line style="stroke:#A80036;stroke-width:1.5;" x1="522" x2="845" y1="586.5" y2="586.5"/><line style="stroke:#A80036;stroke-width:1.5;" x1="522" x2="845" y1="594.5" y2="594.5"/><rect fill="#F24D5C" height="6" style="stroke:#C82930;stroke-width:1.0;" width="6" x="529" y="602.5"/><text fill="#000000" font-family="sans-serif" font-size="11" lengthAdjust="spacing" textLength="299" x="541" y="608.7104">virtual void accept(IndexStmtVisitorStrict*) const = 0</text><!--MD5=[d94a097bbd14b86b446d6c306c6327b3]
+class IndexExprNode--><rect codeLine="130" fill="#FEFECE" filter="url(#fujoep6dbpit)" height="60.8047" id="IndexExprNode" style="stroke:#A80036;stroke-width:1.5;" width="325" x="1281" y="554.5"/><ellipse cx="1392.75" cy="570.5" fill="#ADD1B2" rx="11" ry="11" style="stroke:#A80036;stroke-width:1.0;"/><path d="M1395.7188,576.1406 Q1395.1406,576.4375 1394.5,576.5781 Q1393.8594,576.7344 1393.1563,576.7344 Q1390.6563,576.7344 1389.3281,575.0938 Q1388.0156,573.4375 1388.0156,570.3125 Q1388.0156,567.1875 1389.3281,565.5313 Q1390.6563,563.875 1393.1563,563.875 Q1393.8594,563.875 1394.5,564.0313 Q1395.1563,564.1875 1395.7188,564.4844 L1395.7188,567.2031 Q1395.0938,566.625 1394.5,566.3594 Q1393.9063,566.0781 1393.2813,566.0781 Q1391.9375,566.0781 1391.25,567.1563 Q1390.5625,568.2188 1390.5625,570.3125 Q1390.5625,572.4063 1391.25,573.4844 Q1391.9375,574.5469 1393.2813,574.5469 Q1393.9063,574.5469 1394.5,574.2813 Q1395.0938,574 1395.7188,573.4219 L1395.7188,576.1406 Z " fill="#000000"/><text fill="#000000" font-family="sans-serif" font-size="12" lengthAdjust="spacing" textLength="93" x="1413.25" y="574.6543">IndexExprNode</text><line style="stroke:#A80036;stroke-width:1.5;" x1="1282" x2="1605" y1="586.5" y2="586.5"/><line style="stroke:#A80036;stroke-width:1.5;" x1="1282" x2="1605" y1="594.5" y2="594.5"/><rect fill="#F24D5C" height="6" style="stroke:#C82930;stroke-width:1.0;" width="6" x="1289" y="602.5"/><text fill="#000000" font-family="sans-serif" font-size="11" lengthAdjust="spacing" textLength="299" x="1301" y="608.7104">virtual void accept(IndexStmtVisitorStrict*) const = 0</text><!--MD5=[2ae3d0d839308205eb4a3976239628b6]
+class IndexStmt--><rect codeLine="140" fill="#FEFECE" filter="url(#fujoep6dbpit)" height="48" id="IndexStmt" style="stroke:#A80036;stroke-width:1.5;" width="94" x="636.5" y="244"/><ellipse cx="651.5" cy="260" fill="#ADD1B2" rx="11" ry="11" style="stroke:#A80036;stroke-width:1.0;"/><path d="M654.4688,265.6406 Q653.8906,265.9375 653.25,266.0781 Q652.6094,266.2344 651.9063,266.2344 Q649.4063,266.2344 648.0781,264.5938 Q646.7656,262.9375 646.7656,259.8125 Q646.7656,256.6875 648.0781,255.0313 Q649.4063,253.375 651.9063,253.375 Q652.6094,253.375 653.25,253.5313 Q653.9063,253.6875 654.4688,253.9844 L654.4688,256.7031 Q653.8438,256.125 653.25,255.8594 Q652.6563,255.5781 652.0313,255.5781 Q650.6875,255.5781 650,256.6563 Q649.3125,257.7188 649.3125,259.8125 Q649.3125,261.9063 650,262.9844 Q650.6875,264.0469 652.0313,264.0469 Q652.6563,264.0469 653.25,263.7813 Q653.8438,263.5 654.4688,262.9219 L654.4688,265.6406 Z " fill="#000000"/><text fill="#000000" font-family="sans-serif" font-size="12" lengthAdjust="spacing" textLength="62" x="665.5" y="264.1543">IndexStmt</text><line style="stroke:#A80036;stroke-width:1.5;" x1="637.5" x2="729.5" y1="276" y2="276"/><line style="stroke:#A80036;stroke-width:1.5;" x1="637.5" x2="729.5" y1="284" y2="284"/><!--MD5=[97c64a8910e96953a95fad8b92c83bb0]
+class IndexExpr--><rect codeLine="141" fill="#FEFECE" filter="url(#fujoep6dbpit)" height="48" id="IndexExpr" style="stroke:#A80036;stroke-width:1.5;" width="92" x="1374.5" y="244"/><ellipse cx="1389.5" cy="260" fill="#ADD1B2" rx="11" ry="11" style="stroke:#A80036;stroke-width:1.0;"/><path d="M1392.4688,265.6406 Q1391.8906,265.9375 1391.25,266.0781 Q1390.6094,266.2344 1389.9063,266.2344 Q1387.4063,266.2344 1386.0781,264.5938 Q1384.7656,262.9375 1384.7656,259.8125 Q1384.7656,256.6875 1386.0781,255.0313 Q1387.4063,253.375 1389.9063,253.375 Q1390.6094,253.375 1391.25,253.5313 Q1391.9063,253.6875 1392.4688,253.9844 L1392.4688,256.7031 Q1391.8438,256.125 1391.25,255.8594 Q1390.6563,255.5781 1390.0313,255.5781 Q1388.6875,255.5781 1388,256.6563 Q1387.3125,257.7188 1387.3125,259.8125 Q1387.3125,261.9063 1388,262.9844 Q1388.6875,264.0469 1390.0313,264.0469 Q1390.6563,264.0469 1391.25,263.7813 Q1391.8438,263.5 1392.4688,262.9219 L1392.4688,265.6406 Z " fill="#000000"/><text fill="#000000" font-family="sans-serif" font-size="12" lengthAdjust="spacing" textLength="60" x="1403.5" y="264.1543">IndexExpr</text><line style="stroke:#A80036;stroke-width:1.5;" x1="1375.5" x2="1465.5" y1="276" y2="276"/><line style="stroke:#A80036;stroke-width:1.5;" x1="1375.5" x2="1465.5" y1="284" y2="284"/><!--MD5=[28b0f4e593c8487512a9debc1bac1917]
+class IndexExprVisitorStrict--><rect codeLine="149" fill="#FEFECE" filter="url(#fujoep6dbpit)" height="201.6563" id="IndexExprVisitorStrict" style="stroke:#A80036;stroke-width:1.5;" width="283" x="1641" y="484"/><ellipse cx="1711.25" cy="500" fill="#A9DCDF" rx="11" ry="11" style="stroke:#A80036;stroke-width:1.0;"/><path d="M1711.3594,495.3438 L1710.2031,500.4219 L1712.5313,500.4219 L1711.3594,495.3438 Z M1709.875,493.1094 L1712.8594,493.1094 L1716.2188,505.5 L1713.7656,505.5 L1713,502.4375 L1709.7188,502.4375 L1708.9688,505.5 L1706.5313,505.5 L1709.875,493.1094 Z " fill="#000000"/><text fill="#000000" font-family="sans-serif" font-size="12" font-style="italic" lengthAdjust="spacing" textLength="134" x="1731.75" y="504.1543">IndexExprVisitorStrict</text><line style="stroke:#A80036;stroke-width:1.5;" x1="1642" x2="1923" y1="516" y2="516"/><line style="stroke:#A80036;stroke-width:1.5;" x1="1642" x2="1923" y1="524" y2="524"/><ellipse cx="1652" cy="535" fill="#84BE84" rx="3" ry="3" style="stroke:#038048;stroke-width:1.0;"/><text fill="#000000" font-family="sans-serif" font-size="11" lengthAdjust="spacing" textLength="160" x="1661" y="538.2104">void visit(const IndexStmt&amp;)</text><ellipse cx="1652" cy="547.8047" fill="#84BE84" rx="3" ry="3" style="stroke:#038048;stroke-width:1.0;"/><text fill="#000000" font-family="sans-serif" font-size="11" lengthAdjust="spacing" textLength="231" x="1661" y="551.0151">virtual void visit(const AccessNode*) = 0</text><ellipse cx="1652" cy="560.6094" fill="#84BE84" rx="3" ry="3" style="stroke:#038048;stroke-width:1.0;"/><text fill="#000000" font-family="sans-serif" font-size="11" lengthAdjust="spacing" textLength="226" x="1661" y="563.8198">virtual void visit(const LiteralNode*) = 0</text><ellipse cx="1652" cy="573.4141" fill="#84BE84" rx="3" ry="3" style="stroke:#038048;stroke-width:1.0;"/><text fill="#000000" font-family="sans-serif" font-size="11" lengthAdjust="spacing" textLength="213" x="1661" y="576.6245">virtual void visit(const NegNode*) = 0</text><ellipse cx="1652" cy="586.2188" fill="#84BE84" rx="3" ry="3" style="stroke:#038048;stroke-width:1.0;"/><text fill="#000000" font-family="sans-serif" font-size="11" lengthAdjust="spacing" textLength="212" x="1661" y="589.4292">virtual void visit(const AddNode*) = 0</text><ellipse cx="1652" cy="599.0234" fill="#84BE84" rx="3" ry="3" style="stroke:#038048;stroke-width:1.0;"/><text fill="#000000" font-family="sans-serif" font-size="11" lengthAdjust="spacing" textLength="213" x="1661" y="602.2339">virtual void visit(const SubNode*) = 0</text><ellipse cx="1652" cy="611.8281" fill="#84BE84" rx="3" ry="3" style="stroke:#038048;stroke-width:1.0;"/><text fill="#000000" font-family="sans-serif" font-size="11" lengthAdjust="spacing" textLength="210" x="1661" y="615.0386">virtual void visit(const MulNode*) = 0</text><ellipse cx="1652" cy="624.6328" fill="#84BE84" rx="3" ry="3" style="stroke:#038048;stroke-width:1.0;"/><text fill="#000000" font-family="sans-serif" font-size="11" lengthAdjust="spacing" textLength="208" x="1661" y="627.8433">virtual void visit(const DivNode*) = 0</text><ellipse cx="1652" cy="637.4375" fill="#84BE84" rx="3" ry="3" style="stroke:#038048;stroke-width:1.0;"/><text fill="#000000" font-family="sans-serif" font-size="11" lengthAdjust="spacing" textLength="215" x="1661" y="640.6479">virtual void visit(const SqrtNode*) = 0</text><ellipse cx="1652" cy="650.2422" fill="#84BE84" rx="3" ry="3" style="stroke:#038048;stroke-width:1.0;"/><text fill="#000000" font-family="sans-serif" font-size="11" lengthAdjust="spacing" textLength="217" x="1661" y="653.4526">virtual void visit(const CastNode*) = 0</text><ellipse cx="1652" cy="663.0469" fill="#84BE84" rx="3" ry="3" style="stroke:#038048;stroke-width:1.0;"/><text fill="#000000" font-family="sans-serif" font-size="11" lengthAdjust="spacing" textLength="257" x="1661" y="666.2573">virtual void visit(const CallIntrinsicNode*) = 0</text><ellipse cx="1652" cy="675.8516" fill="#84BE84" rx="3" ry="3" style="stroke:#038048;stroke-width:1.0;"/><text fill="#000000" font-family="sans-serif" font-size="11" lengthAdjust="spacing" textLength="246" x="1661" y="679.062">virtual void visit(const ReductionNode*) = 0</text><!--MD5=[a89aadb6ea0d27c41410991969988628]
+class IndexStmtVisitorStrict--><rect codeLine="163" fill="#FEFECE" filter="url(#fujoep6dbpit)" height="163.2422" id="IndexStmtVisitorStrict" style="stroke:#A80036;stroke-width:1.5;" width="284" x="1968.5" y="503.5"/><ellipse cx="2038.75" cy="519.5" fill="#A9DCDF" rx="11" ry="11" style="stroke:#A80036;stroke-width:1.0;"/><path d="M2038.8594,514.8438 L2037.7031,519.9219 L2040.0313,519.9219 L2038.8594,514.8438 Z M2037.375,512.6094 L2040.3594,512.6094 L2043.7188,525 L2041.2656,525 L2040.5,521.9375 L2037.2188,521.9375 L2036.4688,525 L2034.0313,525 L2037.375,512.6094 Z " fill="#000000"/><text fill="#000000" font-family="sans-serif" font-size="12" font-style="italic" lengthAdjust="spacing" textLength="135" x="2059.25" y="523.6543">IndexStmtVisitorStrict</text><line style="stroke:#A80036;stroke-width:1.5;" x1="1969.5" x2="2251.5" y1="535.5" y2="535.5"/><line style="stroke:#A80036;stroke-width:1.5;" x1="1969.5" x2="2251.5" y1="543.5" y2="543.5"/><ellipse cx="1979.5" cy="554.5" fill="#84BE84" rx="3" ry="3" style="stroke:#038048;stroke-width:1.0;"/><text fill="#000000" font-family="sans-serif" font-size="11" lengthAdjust="spacing" textLength="160" x="1988.5" y="557.7104">void visit(const IndexStmt&amp;)</text><ellipse cx="1979.5" cy="567.3047" fill="#84BE84" rx="3" ry="3" style="stroke:#038048;stroke-width:1.0;"/><text fill="#000000" font-family="sans-serif" font-size="11" lengthAdjust="spacing" textLength="258" x="1988.5" y="570.5151">virtual void visit(const AssignmentNode*) = 0</text><ellipse cx="1979.5" cy="580.1094" fill="#84BE84" rx="3" ry="3" style="stroke:#038048;stroke-width:1.0;"/><text fill="#000000" font-family="sans-serif" font-size="11" lengthAdjust="spacing" textLength="218" x="1988.5" y="583.3198">virtual void visit(const YieldNode*) = 0</text><ellipse cx="1979.5" cy="592.9141" fill="#84BE84" rx="3" ry="3" style="stroke:#038048;stroke-width:1.0;"/><text fill="#000000" font-family="sans-serif" font-size="11" lengthAdjust="spacing" textLength="222" x="1988.5" y="596.1245">virtual void visit(const ForallNode*) = 0</text><ellipse cx="1979.5" cy="605.7188" fill="#84BE84" rx="3" ry="3" style="stroke:#038048;stroke-width:1.0;"/><text fill="#000000" font-family="sans-serif" font-size="11" lengthAdjust="spacing" textLength="226" x="1988.5" y="608.9292">virtual void visit(const WhereNode*) = 0</text><ellipse cx="1979.5" cy="618.5234" fill="#84BE84" rx="3" ry="3" style="stroke:#038048;stroke-width:1.0;"/><text fill="#000000" font-family="sans-serif" font-size="11" lengthAdjust="spacing" textLength="247" x="1988.5" y="621.7339">virtual void visit(const SequenceNode*) = 0</text><ellipse cx="1979.5" cy="631.3281" fill="#84BE84" rx="3" ry="3" style="stroke:#038048;stroke-width:1.0;"/><text fill="#000000" font-family="sans-serif" font-size="11" lengthAdjust="spacing" textLength="247" x="1988.5" y="634.5386">virtual void visit(const AssembleNode*) = 0</text><ellipse cx="1979.5" cy="644.1328" fill="#84BE84" rx="3" ry="3" style="stroke:#038048;stroke-width:1.0;"/><text fill="#000000" font-family="sans-serif" font-size="11" lengthAdjust="spacing" textLength="217" x="1988.5" y="647.3433">virtual void visit(const MultiNode*) = 0</text><ellipse cx="1979.5" cy="656.9375" fill="#84BE84" rx="3" ry="3" style="stroke:#038048;stroke-width:1.0;"/><text fill="#000000" font-family="sans-serif" font-size="11" lengthAdjust="spacing" textLength="244" x="1988.5" y="660.1479">virtual void visit(const SuchThatNode*) = 0</text><!--MD5=[b74718248e125c8ad329889fd2a32c16]
+class IndexNotationVisitorStrict--><rect codeLine="175" fill="#FEFECE" filter="url(#fujoep6dbpit)" height="48" id="IndexNotationVisitorStrict" style="stroke:#A80036;stroke-width:1.5;" width="192" x="1404.5" y="830"/><ellipse cx="1419.5" cy="846" fill="#A9DCDF" rx="11" ry="11" style="stroke:#A80036;stroke-width:1.0;"/><path d="M1419.6094,841.3438 L1418.4531,846.4219 L1420.7813,846.4219 L1419.6094,841.3438 Z M1418.125,839.1094 L1421.1094,839.1094 L1424.4688,851.5 L1422.0156,851.5 L1421.25,848.4375 L1417.9688,848.4375 L1417.2188,851.5 L1414.7813,851.5 L1418.125,839.1094 Z " fill="#000000"/><text fill="#000000" font-family="sans-serif" font-size="12" font-style="italic" lengthAdjust="spacing" textLength="160" x="1433.5" y="850.1543">IndexNotationVisitorStrict</text><line style="stroke:#A80036;stroke-width:1.5;" x1="1405.5" x2="1595.5" y1="862" y2="862"/><line style="stroke:#A80036;stroke-width:1.5;" x1="1405.5" x2="1595.5" y1="870" y2="870"/><!--MD5=[cb464207dbcea0ece296242645495747]
+class IndexNotationPrinter--><rect codeLine="176" fill="#FEFECE" filter="url(#fujoep6dbpit)" height="368.1172" id="IndexNotationPrinter" style="stroke:#A80036;stroke-width:1.5;" width="253" x="1301" y="1044.5"/><ellipse cx="1358.75" cy="1060.5" fill="#ADD1B2" rx="11" ry="11" style="stroke:#A80036;stroke-width:1.0;"/><path d="M1361.7188,1066.1406 Q1361.1406,1066.4375 1360.5,1066.5781 Q1359.8594,1066.7344 1359.1563,1066.7344 Q1356.6563,1066.7344 1355.3281,1065.0938 Q1354.0156,1063.4375 1354.0156,1060.3125 Q1354.0156,1057.1875 1355.3281,1055.5313 Q1356.6563,1053.875 1359.1563,1053.875 Q1359.8594,1053.875 1360.5,1054.0313 Q1361.1563,1054.1875 1361.7188,1054.4844 L1361.7188,1057.2031 Q1361.0938,1056.625 1360.5,1056.3594 Q1359.9063,1056.0781 1359.2813,1056.0781 Q1357.9375,1056.0781 1357.25,1057.1563 Q1356.5625,1058.2188 1356.5625,1060.3125 Q1356.5625,1062.4063 1357.25,1063.4844 Q1357.9375,1064.5469 1359.2813,1064.5469 Q1359.9063,1064.5469 1360.5,1064.2813 Q1361.0938,1064 1361.7188,1063.4219 L1361.7188,1066.1406 Z " fill="#000000"/><text fill="#000000" font-family="sans-serif" font-size="12" lengthAdjust="spacing" textLength="129" x="1379.25" y="1064.6543">IndexNotationPrinter</text><line style="stroke:#A80036;stroke-width:1.5;" x1="1302" x2="1553" y1="1076.5" y2="1076.5"/><line style="stroke:#A80036;stroke-width:1.5;" x1="1302" x2="1553" y1="1084.5" y2="1084.5"/><ellipse cx="1312" cy="1095.5" fill="#84BE84" rx="3" ry="3" style="stroke:#038048;stroke-width:1.0;"/><text fill="#000000" font-family="sans-serif" font-size="11" lengthAdjust="spacing" textLength="190" x="1321" y="1098.7104">void print(const IndexExpr&amp; expr)</text><ellipse cx="1312" cy="1108.3047" fill="#84BE84" rx="3" ry="3" style="stroke:#038048;stroke-width:1.0;"/><text fill="#000000" font-family="sans-serif" font-size="11" lengthAdjust="spacing" textLength="192" x="1321" y="1111.5151">void print(const IndexStmt&amp; expr)</text><text fill="#000000" font-family="sans-serif" font-size="11" lengthAdjust="spacing" textLength="0" x="1325" y="1124.3198"/><ellipse cx="1312" cy="1133.9141" fill="#84BE84" rx="3" ry="3" style="stroke:#038048;stroke-width:1.0;"/><text fill="#000000" font-family="sans-serif" font-size="11" lengthAdjust="spacing" textLength="200" x="1321" y="1137.1245">void visit(const AccessNode* node)</text><ellipse cx="1312" cy="1146.7188" fill="#84BE84" rx="3" ry="3" style="stroke:#038048;stroke-width:1.0;"/><text fill="#000000" font-family="sans-serif" font-size="11" lengthAdjust="spacing" textLength="195" x="1321" y="1149.9292">void visit(const LiteralNode* node)</text><ellipse cx="1312" cy="1159.5234" fill="#84BE84" rx="3" ry="3" style="stroke:#038048;stroke-width:1.0;"/><text fill="#000000" font-family="sans-serif" font-size="11" lengthAdjust="spacing" textLength="182" x="1321" y="1162.7339">void visit(const NegNode* node)</text><ellipse cx="1312" cy="1172.3281" fill="#84BE84" rx="3" ry="3" style="stroke:#038048;stroke-width:1.0;"/><text fill="#000000" font-family="sans-serif" font-size="11" lengthAdjust="spacing" textLength="181" x="1321" y="1175.5386">void visit(const AddNode* node)</text><ellipse cx="1312" cy="1185.1328" fill="#84BE84" rx="3" ry="3" style="stroke:#038048;stroke-width:1.0;"/><text fill="#000000" font-family="sans-serif" font-size="11" lengthAdjust="spacing" textLength="182" x="1321" y="1188.3433">void visit(const SubNode* node)</text><ellipse cx="1312" cy="1197.9375" fill="#84BE84" rx="3" ry="3" style="stroke:#038048;stroke-width:1.0;"/><text fill="#000000" font-family="sans-serif" font-size="11" lengthAdjust="spacing" textLength="179" x="1321" y="1201.1479">void visit(const MulNode* node)</text><ellipse cx="1312" cy="1210.7422" fill="#84BE84" rx="3" ry="3" style="stroke:#038048;stroke-width:1.0;"/><text fill="#000000" font-family="sans-serif" font-size="11" lengthAdjust="spacing" textLength="177" x="1321" y="1213.9526">void visit(const DivNode* node)</text><ellipse cx="1312" cy="1223.5469" fill="#84BE84" rx="3" ry="3" style="stroke:#038048;stroke-width:1.0;"/><text fill="#000000" font-family="sans-serif" font-size="11" lengthAdjust="spacing" textLength="184" x="1321" y="1226.7573">void visit(const SqrtNode* node)</text><ellipse cx="1312" cy="1236.3516" fill="#84BE84" rx="3" ry="3" style="stroke:#038048;stroke-width:1.0;"/><text fill="#000000" font-family="sans-serif" font-size="11" lengthAdjust="spacing" textLength="186" x="1321" y="1239.562">void visit(const CastNode* node)</text><ellipse cx="1312" cy="1249.1563" fill="#84BE84" rx="3" ry="3" style="stroke:#038048;stroke-width:1.0;"/><text fill="#000000" font-family="sans-serif" font-size="11" lengthAdjust="spacing" textLength="226" x="1321" y="1252.3667">void visit(const CallIntrinsicNode* node)</text><ellipse cx="1312" cy="1261.9609" fill="#84BE84" rx="3" ry="3" style="stroke:#038048;stroke-width:1.0;"/><text fill="#000000" font-family="sans-serif" font-size="11" lengthAdjust="spacing" textLength="218" x="1321" y="1265.1714">void visit(const UnaryExprNode* node)</text><ellipse cx="1312" cy="1274.7656" fill="#84BE84" rx="3" ry="3" style="stroke:#038048;stroke-width:1.0;"/><text fill="#000000" font-family="sans-serif" font-size="11" lengthAdjust="spacing" textLength="221" x="1321" y="1277.9761">void visit(const BinaryExprNode* node)</text><ellipse cx="1312" cy="1287.5703" fill="#84BE84" rx="3" ry="3" style="stroke:#038048;stroke-width:1.0;"/><text fill="#000000" font-family="sans-serif" font-size="11" lengthAdjust="spacing" textLength="215" x="1321" y="1290.7808">void visit(const ReductionNode* node)</text><text fill="#000000" font-family="sans-serif" font-size="11" lengthAdjust="spacing" textLength="0" x="1325" y="1303.5854"/><ellipse cx="1312" cy="1313.1797" fill="#84BE84" rx="3" ry="3" style="stroke:#038048;stroke-width:1.0;"/><text fill="#000000" font-family="sans-serif" font-size="11" lengthAdjust="spacing" textLength="227" x="1321" y="1316.3901">void visit(const AssignmentNode* node)</text><ellipse cx="1312" cy="1325.9844" fill="#84BE84" rx="3" ry="3" style="stroke:#038048;stroke-width:1.0;"/><text fill="#000000" font-family="sans-serif" font-size="11" lengthAdjust="spacing" textLength="187" x="1321" y="1329.1948">void visit(const YieldNode* node)</text><ellipse cx="1312" cy="1338.7891" fill="#84BE84" rx="3" ry="3" style="stroke:#038048;stroke-width:1.0;"/><text fill="#000000" font-family="sans-serif" font-size="11" lengthAdjust="spacing" textLength="191" x="1321" y="1341.9995">void visit(const ForallNode* node)</text><ellipse cx="1312" cy="1351.5938" fill="#84BE84" rx="3" ry="3" style="stroke:#038048;stroke-width:1.0;"/><text fill="#000000" font-family="sans-serif" font-size="11" lengthAdjust="spacing" textLength="195" x="1321" y="1354.8042">void visit(const WhereNode* node)</text><ellipse cx="1312" cy="1364.3984" fill="#84BE84" rx="3" ry="3" style="stroke:#038048;stroke-width:1.0;"/><text fill="#000000" font-family="sans-serif" font-size="11" lengthAdjust="spacing" textLength="216" x="1321" y="1367.6089">void visit(const SequenceNode* node)</text><ellipse cx="1312" cy="1377.2031" fill="#84BE84" rx="3" ry="3" style="stroke:#038048;stroke-width:1.0;"/><text fill="#000000" font-family="sans-serif" font-size="11" lengthAdjust="spacing" textLength="216" x="1321" y="1380.4136">void visit(const AssembleNode* node)</text><ellipse cx="1312" cy="1390.0078" fill="#84BE84" rx="3" ry="3" style="stroke:#038048;stroke-width:1.0;"/><text fill="#000000" font-family="sans-serif" font-size="11" lengthAdjust="spacing" textLength="186" x="1321" y="1393.2183">void visit(const MultiNode* node)</text><ellipse cx="1312" cy="1402.8125" fill="#84BE84" rx="3" ry="3" style="stroke:#038048;stroke-width:1.0;"/><text fill="#000000" font-family="sans-serif" font-size="11" lengthAdjust="spacing" textLength="213" x="1321" y="1406.0229">void visit(const SuchThatNode* node)</text><!--MD5=[1889949f301ae6d76cb20e56f2d1d951]
+class IndexNotationVisitor--><rect codeLine="205" fill="#FEFECE" filter="url(#fujoep6dbpit)" height="329.7031" id="IndexNotationVisitor" style="stroke:#A80036;stroke-width:1.5;" width="292" x="1589.5" y="1063.5"/><ellipse cx="1668.25" cy="1079.5" fill="#ADD1B2" rx="11" ry="11" style="stroke:#A80036;stroke-width:1.0;"/><path d="M1671.2188,1085.1406 Q1670.6406,1085.4375 1670,1085.5781 Q1669.3594,1085.7344 1668.6563,1085.7344 Q1666.1563,1085.7344 1664.8281,1084.0938 Q1663.5156,1082.4375 1663.5156,1079.3125 Q1663.5156,1076.1875 1664.8281,1074.5313 Q1666.1563,1072.875 1668.6563,1072.875 Q1669.3594,1072.875 1670,1073.0313 Q1670.6563,1073.1875 1671.2188,1073.4844 L1671.2188,1076.2031 Q1670.5938,1075.625 1670,1075.3594 Q1669.4063,1075.0781 1668.7813,1075.0781 Q1667.4375,1075.0781 1666.75,1076.1563 Q1666.0625,1077.2188 1666.0625,1079.3125 Q1666.0625,1081.4063 1666.75,1082.4844 Q1667.4375,1083.5469 1668.7813,1083.5469 Q1669.4063,1083.5469 1670,1083.2813 Q1670.5938,1083 1671.2188,1082.4219 L1671.2188,1085.1406 Z " fill="#000000"/><text fill="#000000" font-family="sans-serif" font-size="12" lengthAdjust="spacing" textLength="126" x="1688.75" y="1083.6543">IndexNotationVisitor</text><line style="stroke:#A80036;stroke-width:1.5;" x1="1590.5" x2="1880.5" y1="1095.5" y2="1095.5"/><line style="stroke:#A80036;stroke-width:1.5;" x1="1590.5" x2="1880.5" y1="1103.5" y2="1103.5"/><ellipse cx="1600.5" cy="1114.5" fill="#84BE84" rx="3" ry="3" style="stroke:#038048;stroke-width:1.0;"/><text fill="#000000" font-family="sans-serif" font-size="11" lengthAdjust="spacing" textLength="239" x="1609.5" y="1117.7104">virtual void visit(const AccessNode* node)</text><ellipse cx="1600.5" cy="1127.3047" fill="#84BE84" rx="3" ry="3" style="stroke:#038048;stroke-width:1.0;"/><text fill="#000000" font-family="sans-serif" font-size="11" lengthAdjust="spacing" textLength="234" x="1609.5" y="1130.5151">virtual void visit(const LiteralNode* node)</text><ellipse cx="1600.5" cy="1140.1094" fill="#84BE84" rx="3" ry="3" style="stroke:#038048;stroke-width:1.0;"/><text fill="#000000" font-family="sans-serif" font-size="11" lengthAdjust="spacing" textLength="221" x="1609.5" y="1143.3198">virtual void visit(const NegNode* node)</text><ellipse cx="1600.5" cy="1152.9141" fill="#84BE84" rx="3" ry="3" style="stroke:#038048;stroke-width:1.0;"/><text fill="#000000" font-family="sans-serif" font-size="11" lengthAdjust="spacing" textLength="220" x="1609.5" y="1156.1245">virtual void visit(const AddNode* node)</text><ellipse cx="1600.5" cy="1165.7188" fill="#84BE84" rx="3" ry="3" style="stroke:#038048;stroke-width:1.0;"/><text fill="#000000" font-family="sans-serif" font-size="11" lengthAdjust="spacing" textLength="221" x="1609.5" y="1168.9292">virtual void visit(const SubNode* node)</text><ellipse cx="1600.5" cy="1178.5234" fill="#84BE84" rx="3" ry="3" style="stroke:#038048;stroke-width:1.0;"/><text fill="#000000" font-family="sans-serif" font-size="11" lengthAdjust="spacing" textLength="218" x="1609.5" y="1181.7339">virtual void visit(const MulNode* node)</text><ellipse cx="1600.5" cy="1191.3281" fill="#84BE84" rx="3" ry="3" style="stroke:#038048;stroke-width:1.0;"/><text fill="#000000" font-family="sans-serif" font-size="11" lengthAdjust="spacing" textLength="216" x="1609.5" y="1194.5386">virtual void visit(const DivNode* node)</text><ellipse cx="1600.5" cy="1204.1328" fill="#84BE84" rx="3" ry="3" style="stroke:#038048;stroke-width:1.0;"/><text fill="#000000" font-family="sans-serif" font-size="11" lengthAdjust="spacing" textLength="223" x="1609.5" y="1207.3433">virtual void visit(const SqrtNode* node)</text><ellipse cx="1600.5" cy="1216.9375" fill="#84BE84" rx="3" ry="3" style="stroke:#038048;stroke-width:1.0;"/><text fill="#000000" font-family="sans-serif" font-size="11" lengthAdjust="spacing" textLength="225" x="1609.5" y="1220.1479">virtual void visit(const CastNode* node)</text><ellipse cx="1600.5" cy="1229.7422" fill="#84BE84" rx="3" ry="3" style="stroke:#038048;stroke-width:1.0;"/><text fill="#000000" font-family="sans-serif" font-size="11" lengthAdjust="spacing" textLength="265" x="1609.5" y="1232.9526">virtual void visit(const CallIntrinsicNode* node)</text><ellipse cx="1600.5" cy="1242.5469" fill="#84BE84" rx="3" ry="3" style="stroke:#038048;stroke-width:1.0;"/><text fill="#000000" font-family="sans-serif" font-size="11" lengthAdjust="spacing" textLength="257" x="1609.5" y="1245.7573">virtual void visit(const UnaryExprNode* node)</text><ellipse cx="1600.5" cy="1255.3516" fill="#84BE84" rx="3" ry="3" style="stroke:#038048;stroke-width:1.0;"/><text fill="#000000" font-family="sans-serif" font-size="11" lengthAdjust="spacing" textLength="260" x="1609.5" y="1258.562">virtual void visit(const BinaryExprNode* node)</text><ellipse cx="1600.5" cy="1268.1563" fill="#84BE84" rx="3" ry="3" style="stroke:#038048;stroke-width:1.0;"/><text fill="#000000" font-family="sans-serif" font-size="11" lengthAdjust="spacing" textLength="254" x="1609.5" y="1271.3667">virtual void visit(const ReductionNode* node)</text><text fill="#000000" font-family="sans-serif" font-size="11" lengthAdjust="spacing" textLength="0" x="1613.5" y="1284.1714"/><ellipse cx="1600.5" cy="1293.7656" fill="#84BE84" rx="3" ry="3" style="stroke:#038048;stroke-width:1.0;"/><text fill="#000000" font-family="sans-serif" font-size="11" lengthAdjust="spacing" textLength="266" x="1609.5" y="1296.9761">virtual void visit(const AssignmentNode* node)</text><ellipse cx="1600.5" cy="1306.5703" fill="#84BE84" rx="3" ry="3" style="stroke:#038048;stroke-width:1.0;"/><text fill="#000000" font-family="sans-serif" font-size="11" lengthAdjust="spacing" textLength="226" x="1609.5" y="1309.7808">virtual void visit(const YieldNode* node)</text><ellipse cx="1600.5" cy="1319.375" fill="#84BE84" rx="3" ry="3" style="stroke:#038048;stroke-width:1.0;"/><text fill="#000000" font-family="sans-serif" font-size="11" lengthAdjust="spacing" textLength="230" x="1609.5" y="1322.5854">virtual void visit(const ForallNode* node)</text><ellipse cx="1600.5" cy="1332.1797" fill="#84BE84" rx="3" ry="3" style="stroke:#038048;stroke-width:1.0;"/><text fill="#000000" font-family="sans-serif" font-size="11" lengthAdjust="spacing" textLength="234" x="1609.5" y="1335.3901">virtual void visit(const WhereNode* node)</text><ellipse cx="1600.5" cy="1344.9844" fill="#84BE84" rx="3" ry="3" style="stroke:#038048;stroke-width:1.0;"/><text fill="#000000" font-family="sans-serif" font-size="11" lengthAdjust="spacing" textLength="255" x="1609.5" y="1348.1948">virtual void visit(const SequenceNode* node)</text><ellipse cx="1600.5" cy="1357.7891" fill="#84BE84" rx="3" ry="3" style="stroke:#038048;stroke-width:1.0;"/><text fill="#000000" font-family="sans-serif" font-size="11" lengthAdjust="spacing" textLength="255" x="1609.5" y="1360.9995">virtual void visit(const AssembleNode* node)</text><ellipse cx="1600.5" cy="1370.5938" fill="#84BE84" rx="3" ry="3" style="stroke:#038048;stroke-width:1.0;"/><text fill="#000000" font-family="sans-serif" font-size="11" lengthAdjust="spacing" textLength="225" x="1609.5" y="1373.8042">virtual void visit(const MultiNode* node)</text><ellipse cx="1600.5" cy="1383.3984" fill="#84BE84" rx="3" ry="3" style="stroke:#038048;stroke-width:1.0;"/><text fill="#000000" font-family="sans-serif" font-size="11" lengthAdjust="spacing" textLength="252" x="1609.5" y="1386.6089">virtual void visit(const SuchThatNode* node)</text><!--MD5=[c249847c086044a14a4ecd1d09905030]
+class Matcher--><rect codeLine="231" fill="#FEFECE" filter="url(#fujoep6dbpit)" height="48" id="Matcher" style="stroke:#A80036;stroke-width:1.5;" width="83" x="1694" y="1621"/><ellipse cx="1709" cy="1637" fill="#ADD1B2" rx="11" ry="11" style="stroke:#A80036;stroke-width:1.0;"/><path d="M1711.9688,1642.6406 Q1711.3906,1642.9375 1710.75,1643.0781 Q1710.1094,1643.2344 1709.4063,1643.2344 Q1706.9063,1643.2344 1705.5781,1641.5938 Q1704.2656,1639.9375 1704.2656,1636.8125 Q1704.2656,1633.6875 1705.5781,1632.0313 Q1706.9063,1630.375 1709.4063,1630.375 Q1710.1094,1630.375 1710.75,1630.5313 Q1711.4063,1630.6875 1711.9688,1630.9844 L1711.9688,1633.7031 Q1711.3438,1633.125 1710.75,1632.8594 Q1710.1563,1632.5781 1709.5313,1632.5781 Q1708.1875,1632.5781 1707.5,1633.6563 Q1706.8125,1634.7188 1706.8125,1636.8125 Q1706.8125,1638.9063 1707.5,1639.9844 Q1708.1875,1641.0469 1709.5313,1641.0469 Q1710.1563,1641.0469 1710.75,1640.7813 Q1711.3438,1640.5 1711.9688,1639.9219 L1711.9688,1642.6406 Z " fill="#000000"/><text fill="#000000" font-family="sans-serif" font-size="12" lengthAdjust="spacing" textLength="51" x="1723" y="1641.1543">Matcher</text><line style="stroke:#A80036;stroke-width:1.5;" x1="1695" x2="1776" y1="1653" y2="1653"/><line style="stroke:#A80036;stroke-width:1.5;" x1="1695" x2="1776" y1="1661" y2="1661"/><!--MD5=[ea8f53988b378f12e96f95ad2b8e8e7e]
+class IndexExprRewriterStrict--><rect codeLine="235" fill="#FEFECE" filter="url(#fujoep6dbpit)" height="214.4609" id="IndexExprRewriterStrict" style="stroke:#A80036;stroke-width:1.5;" width="301" x="1632" y="747"/><ellipse cx="1704.25" cy="763" fill="#A9DCDF" rx="11" ry="11" style="stroke:#A80036;stroke-width:1.0;"/><path d="M1704.3594,758.3438 L1703.2031,763.4219 L1705.5313,763.4219 L1704.3594,758.3438 Z M1702.875,756.1094 L1705.8594,756.1094 L1709.2188,768.5 L1706.7656,768.5 L1706,765.4375 L1702.7188,765.4375 L1701.9688,768.5 L1699.5313,768.5 L1702.875,756.1094 Z " fill="#000000"/><text fill="#000000" font-family="sans-serif" font-size="12" font-style="italic" lengthAdjust="spacing" textLength="148" x="1724.75" y="767.1543">IndexExprRewriterStrict</text><line style="stroke:#A80036;stroke-width:1.5;" x1="1633" x2="1932" y1="779" y2="779"/><polygon fill="none" points="1643,785,1647,789,1643,793,1639,789" style="stroke:#B38D22;stroke-width:1.0;"/><text fill="#000000" font-family="sans-serif" font-size="11" lengthAdjust="spacing" textLength="84" x="1652" y="793.2104">IndexExpr expr</text><line style="stroke:#A80036;stroke-width:1.5;" x1="1633" x2="1932" y1="799.8047" y2="799.8047"/><ellipse cx="1643" cy="810.8047" fill="#84BE84" rx="3" ry="3" style="stroke:#038048;stroke-width:1.0;"/><text fill="#000000" font-family="sans-serif" font-size="11" lengthAdjust="spacing" textLength="162" x="1652" y="814.0151">IndexExpr rewrite(IndexExpr)</text><polygon fill="#FFFF44" points="1643,818.6094,1647,822.6094,1643,826.6094,1639,822.6094" style="stroke:#B38D22;stroke-width:1.0;"/><text fill="#000000" font-family="sans-serif" font-size="11" lengthAdjust="spacing" textLength="249" x="1652" y="826.8198">virtual void visit(const AccessNode* op) = 0</text><polygon fill="#FFFF44" points="1643,831.4141,1647,835.4141,1643,839.4141,1639,835.4141" style="stroke:#B38D22;stroke-width:1.0;"/><text fill="#000000" font-family="sans-serif" font-size="11" lengthAdjust="spacing" textLength="244" x="1652" y="839.6245">virtual void visit(const LiteralNode* op) = 0</text><polygon fill="#FFFF44" points="1643,844.2188,1647,848.2188,1643,852.2188,1639,848.2188" style="stroke:#B38D22;stroke-width:1.0;"/><text fill="#000000" font-family="sans-serif" font-size="11" lengthAdjust="spacing" textLength="231" x="1652" y="852.4292">virtual void visit(const NegNode* op) = 0</text><polygon fill="#FFFF44" points="1643,857.0234,1647,861.0234,1643,865.0234,1639,861.0234" style="stroke:#B38D22;stroke-width:1.0;"/><text fill="#000000" font-family="sans-serif" font-size="11" lengthAdjust="spacing" textLength="233" x="1652" y="865.2339">virtual void visit(const SqrtNode* op) = 0</text><polygon fill="#FFFF44" points="1643,869.8281,1647,873.8281,1643,877.8281,1639,873.8281" style="stroke:#B38D22;stroke-width:1.0;"/><text fill="#000000" font-family="sans-serif" font-size="11" lengthAdjust="spacing" textLength="230" x="1652" y="878.0386">virtual void visit(const AddNode* op) = 0</text><polygon fill="#FFFF44" points="1643,882.6328,1647,886.6328,1643,890.6328,1639,886.6328" style="stroke:#B38D22;stroke-width:1.0;"/><text fill="#000000" font-family="sans-serif" font-size="11" lengthAdjust="spacing" textLength="231" x="1652" y="890.8433">virtual void visit(const SubNode* op) = 0</text><polygon fill="#FFFF44" points="1643,895.4375,1647,899.4375,1643,903.4375,1639,899.4375" style="stroke:#B38D22;stroke-width:1.0;"/><text fill="#000000" font-family="sans-serif" font-size="11" lengthAdjust="spacing" textLength="228" x="1652" y="903.6479">virtual void visit(const MulNode* op) = 0</text><polygon fill="#FFFF44" points="1643,908.2422,1647,912.2422,1643,916.2422,1639,912.2422" style="stroke:#B38D22;stroke-width:1.0;"/><text fill="#000000" font-family="sans-serif" font-size="11" lengthAdjust="spacing" textLength="226" x="1652" y="916.4526">virtual void visit(const DivNode* op) = 0</text><polygon fill="#FFFF44" points="1643,921.0469,1647,925.0469,1643,929.0469,1639,925.0469" style="stroke:#B38D22;stroke-width:1.0;"/><text fill="#000000" font-family="sans-serif" font-size="11" lengthAdjust="spacing" textLength="235" x="1652" y="929.2573">virtual void visit(const CastNode* op) = 0</text><polygon fill="#FFFF44" points="1643,933.8516,1647,937.8516,1643,941.8516,1639,937.8516" style="stroke:#B38D22;stroke-width:1.0;"/><text fill="#000000" font-family="sans-serif" font-size="11" lengthAdjust="spacing" textLength="275" x="1652" y="942.062">virtual void visit(const CallIntrinsicNode* op) = 0</text><polygon fill="#FFFF44" points="1643,946.6563,1647,950.6563,1643,954.6563,1639,950.6563" style="stroke:#B38D22;stroke-width:1.0;"/><text fill="#000000" font-family="sans-serif" font-size="11" lengthAdjust="spacing" textLength="264" x="1652" y="954.8667">virtual void visit(const ReductionNode* op) = 0</text><!--MD5=[fce5a5c177cad31ce6c931f148bb8f55]
+class IndexStmtRewriterStrict--><rect codeLine="252" fill="#FEFECE" filter="url(#fujoep6dbpit)" height="176.0469" id="IndexStmtRewriterStrict" style="stroke:#A80036;stroke-width:1.5;" width="302" x="1968.5" y="766"/><ellipse cx="2040.75" cy="782" fill="#A9DCDF" rx="11" ry="11" style="stroke:#A80036;stroke-width:1.0;"/><path d="M2040.8594,777.3438 L2039.7031,782.4219 L2042.0313,782.4219 L2040.8594,777.3438 Z M2039.375,775.1094 L2042.3594,775.1094 L2045.7188,787.5 L2043.2656,787.5 L2042.5,784.4375 L2039.2188,784.4375 L2038.4688,787.5 L2036.0313,787.5 L2039.375,775.1094 Z " fill="#000000"/><text fill="#000000" font-family="sans-serif" font-size="12" font-style="italic" lengthAdjust="spacing" textLength="149" x="2061.25" y="786.1543">IndexStmtRewriterStrict</text><line style="stroke:#A80036;stroke-width:1.5;" x1="1969.5" x2="2269.5" y1="798" y2="798"/><polygon fill="none" points="1979.5,804,1983.5,808,1979.5,812,1975.5,808" style="stroke:#B38D22;stroke-width:1.0;"/><text fill="#000000" font-family="sans-serif" font-size="11" lengthAdjust="spacing" textLength="87" x="1988.5" y="812.2104">IndexStmt stmt</text><line style="stroke:#A80036;stroke-width:1.5;" x1="1969.5" x2="2269.5" y1="818.8047" y2="818.8047"/><ellipse cx="1979.5" cy="829.8047" fill="#84BE84" rx="3" ry="3" style="stroke:#038048;stroke-width:1.0;"/><text fill="#000000" font-family="sans-serif" font-size="11" lengthAdjust="spacing" textLength="166" x="1988.5" y="833.0151">IndexStmt rewrite(IndexStmt)</text><polygon fill="#FFFF44" points="1979.5,837.6094,1983.5,841.6094,1979.5,845.6094,1975.5,841.6094" style="stroke:#B38D22;stroke-width:1.0;"/><text fill="#000000" font-family="sans-serif" font-size="11" lengthAdjust="spacing" textLength="276" x="1988.5" y="845.8198">virtual void visit(const AssignmentNode* op) = 0</text><polygon fill="#FFFF44" points="1979.5,850.4141,1983.5,854.4141,1979.5,858.4141,1975.5,854.4141" style="stroke:#B38D22;stroke-width:1.0;"/><text fill="#000000" font-family="sans-serif" font-size="11" lengthAdjust="spacing" textLength="236" x="1988.5" y="858.6245">virtual void visit(const YieldNode* op) = 0</text><polygon fill="#FFFF44" points="1979.5,863.2188,1983.5,867.2188,1979.5,871.2188,1975.5,867.2188" style="stroke:#B38D22;stroke-width:1.0;"/><text fill="#000000" font-family="sans-serif" font-size="11" lengthAdjust="spacing" textLength="240" x="1988.5" y="871.4292">virtual void visit(const ForallNode* op) = 0</text><polygon fill="#FFFF44" points="1979.5,876.0234,1983.5,880.0234,1979.5,884.0234,1975.5,880.0234" style="stroke:#B38D22;stroke-width:1.0;"/><text fill="#000000" font-family="sans-serif" font-size="11" lengthAdjust="spacing" textLength="244" x="1988.5" y="884.2339">virtual void visit(const WhereNode* op) = 0</text><polygon fill="#FFFF44" points="1979.5,888.8281,1983.5,892.8281,1979.5,896.8281,1975.5,892.8281" style="stroke:#B38D22;stroke-width:1.0;"/><text fill="#000000" font-family="sans-serif" font-size="11" lengthAdjust="spacing" textLength="265" x="1988.5" y="897.0386">virtual void visit(const SequenceNode* op) = 0</text><polygon fill="#FFFF44" points="1979.5,901.6328,1983.5,905.6328,1979.5,909.6328,1975.5,905.6328" style="stroke:#B38D22;stroke-width:1.0;"/><text fill="#000000" font-family="sans-serif" font-size="11" lengthAdjust="spacing" textLength="265" x="1988.5" y="909.8433">virtual void visit(const AssembleNode* op) = 0</text><polygon fill="#FFFF44" points="1979.5,914.4375,1983.5,918.4375,1979.5,922.4375,1975.5,918.4375" style="stroke:#B38D22;stroke-width:1.0;"/><text fill="#000000" font-family="sans-serif" font-size="11" lengthAdjust="spacing" textLength="235" x="1988.5" y="922.6479">virtual void visit(const MultiNode* op) = 0</text><polygon fill="#FFFF44" points="1979.5,927.2422,1983.5,931.2422,1979.5,935.2422,1975.5,931.2422" style="stroke:#B38D22;stroke-width:1.0;"/><text fill="#000000" font-family="sans-serif" font-size="11" lengthAdjust="spacing" textLength="262" x="1988.5" y="935.4526">virtual void visit(const SuchThatNode* op) = 0</text><!--MD5=[c34474f968cd689ed26c36a6e449f9a5]
+class IndexNotationRewriterStrict--><rect codeLine="266" fill="#FEFECE" filter="url(#fujoep6dbpit)" height="48" id="IndexNotationRewriterStrict" style="stroke:#A80036;stroke-width:1.5;" width="206" x="1966.5" y="1204.5"/><ellipse cx="1981.5" cy="1220.5" fill="#A9DCDF" rx="11" ry="11" style="stroke:#A80036;stroke-width:1.0;"/><path d="M1981.6094,1215.8438 L1980.4531,1220.9219 L1982.7813,1220.9219 L1981.6094,1215.8438 Z M1980.125,1213.6094 L1983.1094,1213.6094 L1986.4688,1226 L1984.0156,1226 L1983.25,1222.9375 L1979.9688,1222.9375 L1979.2188,1226 L1976.7813,1226 L1980.125,1213.6094 Z " fill="#000000"/><text fill="#000000" font-family="sans-serif" font-size="12" font-style="italic" lengthAdjust="spacing" textLength="174" x="1995.5" y="1224.6543">IndexNotationRewriterStrict</text><line style="stroke:#A80036;stroke-width:1.5;" x1="1967.5" x2="2171.5" y1="1236.5" y2="1236.5"/><line style="stroke:#A80036;stroke-width:1.5;" x1="1967.5" x2="2171.5" y1="1244.5" y2="1244.5"/><!--MD5=[f43b50a501af9b122d481161df5564ac]
+class IndexNotationRewriter--><rect codeLine="267" fill="#FEFECE" filter="url(#fujoep6dbpit)" height="329.7031" id="IndexNotationRewriter" style="stroke:#A80036;stroke-width:1.5;" width="292" x="1923.5" y="1480"/><ellipse cx="1996.25" cy="1496" fill="#ADD1B2" rx="11" ry="11" style="stroke:#A80036;stroke-width:1.0;"/><path d="M1999.2188,1501.6406 Q1998.6406,1501.9375 1998,1502.0781 Q1997.3594,1502.2344 1996.6563,1502.2344 Q1994.1563,1502.2344 1992.8281,1500.5938 Q1991.5156,1498.9375 1991.5156,1495.8125 Q1991.5156,1492.6875 1992.8281,1491.0313 Q1994.1563,1489.375 1996.6563,1489.375 Q1997.3594,1489.375 1998,1489.5313 Q1998.6563,1489.6875 1999.2188,1489.9844 L1999.2188,1492.7031 Q1998.5938,1492.125 1998,1491.8594 Q1997.4063,1491.5781 1996.7813,1491.5781 Q1995.4375,1491.5781 1994.75,1492.6563 Q1994.0625,1493.7188 1994.0625,1495.8125 Q1994.0625,1497.9063 1994.75,1498.9844 Q1995.4375,1500.0469 1996.7813,1500.0469 Q1997.4063,1500.0469 1998,1499.7813 Q1998.5938,1499.5 1999.2188,1498.9219 L1999.2188,1501.6406 Z " fill="#000000"/><text fill="#000000" font-family="sans-serif" font-size="12" lengthAdjust="spacing" textLength="138" x="2016.75" y="1500.1543">IndexNotationRewriter</text><line style="stroke:#A80036;stroke-width:1.5;" x1="1924.5" x2="2214.5" y1="1512" y2="1512"/><line style="stroke:#A80036;stroke-width:1.5;" x1="1924.5" x2="2214.5" y1="1520" y2="1520"/><ellipse cx="1934.5" cy="1531" fill="#84BE84" rx="3" ry="3" style="stroke:#038048;stroke-width:1.0;"/><text fill="#000000" font-family="sans-serif" font-size="11" lengthAdjust="spacing" textLength="239" x="1943.5" y="1534.2104">virtual void visit(const AccessNode* node)</text><ellipse cx="1934.5" cy="1543.8047" fill="#84BE84" rx="3" ry="3" style="stroke:#038048;stroke-width:1.0;"/><text fill="#000000" font-family="sans-serif" font-size="11" lengthAdjust="spacing" textLength="234" x="1943.5" y="1547.0151">virtual void visit(const LiteralNode* node)</text><ellipse cx="1934.5" cy="1556.6094" fill="#84BE84" rx="3" ry="3" style="stroke:#038048;stroke-width:1.0;"/><text fill="#000000" font-family="sans-serif" font-size="11" lengthAdjust="spacing" textLength="221" x="1943.5" y="1559.8198">virtual void visit(const NegNode* node)</text><ellipse cx="1934.5" cy="1569.4141" fill="#84BE84" rx="3" ry="3" style="stroke:#038048;stroke-width:1.0;"/><text fill="#000000" font-family="sans-serif" font-size="11" lengthAdjust="spacing" textLength="220" x="1943.5" y="1572.6245">virtual void visit(const AddNode* node)</text><ellipse cx="1934.5" cy="1582.2188" fill="#84BE84" rx="3" ry="3" style="stroke:#038048;stroke-width:1.0;"/><text fill="#000000" font-family="sans-serif" font-size="11" lengthAdjust="spacing" textLength="221" x="1943.5" y="1585.4292">virtual void visit(const SubNode* node)</text><ellipse cx="1934.5" cy="1595.0234" fill="#84BE84" rx="3" ry="3" style="stroke:#038048;stroke-width:1.0;"/><text fill="#000000" font-family="sans-serif" font-size="11" lengthAdjust="spacing" textLength="218" x="1943.5" y="1598.2339">virtual void visit(const MulNode* node)</text><ellipse cx="1934.5" cy="1607.8281" fill="#84BE84" rx="3" ry="3" style="stroke:#038048;stroke-width:1.0;"/><text fill="#000000" font-family="sans-serif" font-size="11" lengthAdjust="spacing" textLength="216" x="1943.5" y="1611.0386">virtual void visit(const DivNode* node)</text><ellipse cx="1934.5" cy="1620.6328" fill="#84BE84" rx="3" ry="3" style="stroke:#038048;stroke-width:1.0;"/><text fill="#000000" font-family="sans-serif" font-size="11" lengthAdjust="spacing" textLength="223" x="1943.5" y="1623.8433">virtual void visit(const SqrtNode* node)</text><ellipse cx="1934.5" cy="1633.4375" fill="#84BE84" rx="3" ry="3" style="stroke:#038048;stroke-width:1.0;"/><text fill="#000000" font-family="sans-serif" font-size="11" lengthAdjust="spacing" textLength="225" x="1943.5" y="1636.6479">virtual void visit(const CastNode* node)</text><ellipse cx="1934.5" cy="1646.2422" fill="#84BE84" rx="3" ry="3" style="stroke:#038048;stroke-width:1.0;"/><text fill="#000000" font-family="sans-serif" font-size="11" lengthAdjust="spacing" textLength="265" x="1943.5" y="1649.4526">virtual void visit(const CallIntrinsicNode* node)</text><ellipse cx="1934.5" cy="1659.0469" fill="#84BE84" rx="3" ry="3" style="stroke:#038048;stroke-width:1.0;"/><text fill="#000000" font-family="sans-serif" font-size="11" lengthAdjust="spacing" textLength="257" x="1943.5" y="1662.2573">virtual void visit(const UnaryExprNode* node)</text><ellipse cx="1934.5" cy="1671.8516" fill="#84BE84" rx="3" ry="3" style="stroke:#038048;stroke-width:1.0;"/><text fill="#000000" font-family="sans-serif" font-size="11" lengthAdjust="spacing" textLength="260" x="1943.5" y="1675.062">virtual void visit(const BinaryExprNode* node)</text><ellipse cx="1934.5" cy="1684.6563" fill="#84BE84" rx="3" ry="3" style="stroke:#038048;stroke-width:1.0;"/><text fill="#000000" font-family="sans-serif" font-size="11" lengthAdjust="spacing" textLength="254" x="1943.5" y="1687.8667">virtual void visit(const ReductionNode* node)</text><text fill="#000000" font-family="sans-serif" font-size="11" lengthAdjust="spacing" textLength="0" x="1947.5" y="1700.6714"/><ellipse cx="1934.5" cy="1710.2656" fill="#84BE84" rx="3" ry="3" style="stroke:#038048;stroke-width:1.0;"/><text fill="#000000" font-family="sans-serif" font-size="11" lengthAdjust="spacing" textLength="266" x="1943.5" y="1713.4761">virtual void visit(const AssignmentNode* node)</text><ellipse cx="1934.5" cy="1723.0703" fill="#84BE84" rx="3" ry="3" style="stroke:#038048;stroke-width:1.0;"/><text fill="#000000" font-family="sans-serif" font-size="11" lengthAdjust="spacing" textLength="226" x="1943.5" y="1726.2808">virtual void visit(const YieldNode* node)</text><ellipse cx="1934.5" cy="1735.875" fill="#84BE84" rx="3" ry="3" style="stroke:#038048;stroke-width:1.0;"/><text fill="#000000" font-family="sans-serif" font-size="11" lengthAdjust="spacing" textLength="230" x="1943.5" y="1739.0854">virtual void visit(const ForallNode* node)</text><ellipse cx="1934.5" cy="1748.6797" fill="#84BE84" rx="3" ry="3" style="stroke:#038048;stroke-width:1.0;"/><text fill="#000000" font-family="sans-serif" font-size="11" lengthAdjust="spacing" textLength="234" x="1943.5" y="1751.8901">virtual void visit(const WhereNode* node)</text><ellipse cx="1934.5" cy="1761.4844" fill="#84BE84" rx="3" ry="3" style="stroke:#038048;stroke-width:1.0;"/><text fill="#000000" font-family="sans-serif" font-size="11" lengthAdjust="spacing" textLength="255" x="1943.5" y="1764.6948">virtual void visit(const SequenceNode* node)</text><ellipse cx="1934.5" cy="1774.2891" fill="#84BE84" rx="3" ry="3" style="stroke:#038048;stroke-width:1.0;"/><text fill="#000000" font-family="sans-serif" font-size="11" lengthAdjust="spacing" textLength="255" x="1943.5" y="1777.4995">virtual void visit(const AssembleNode* node)</text><ellipse cx="1934.5" cy="1787.0938" fill="#84BE84" rx="3" ry="3" style="stroke:#038048;stroke-width:1.0;"/><text fill="#000000" font-family="sans-serif" font-size="11" lengthAdjust="spacing" textLength="225" x="1943.5" y="1790.3042">virtual void visit(const MultiNode* node)</text><ellipse cx="1934.5" cy="1799.8984" fill="#84BE84" rx="3" ry="3" style="stroke:#038048;stroke-width:1.0;"/><text fill="#000000" font-family="sans-serif" font-size="11" lengthAdjust="spacing" textLength="252" x="1943.5" y="1803.1089">virtual void visit(const SuchThatNode* node)</text><!--MD5=[2bd6b9bd378d282739bad95694e0395c]
+class Lowerer--><rect codeLine="317" fill="#FEFECE" filter="url(#fujoep6dbpit)" height="60.8047" id="Lowerer" style="stroke:#A80036;stroke-width:1.5;" width="234" x="946.5" y="237.5"/><ellipse cx="1034.75" cy="253.5" fill="#ADD1B2" rx="11" ry="11" style="stroke:#A80036;stroke-width:1.0;"/><path d="M1037.7188,259.1406 Q1037.1406,259.4375 1036.5,259.5781 Q1035.8594,259.7344 1035.1563,259.7344 Q1032.6563,259.7344 1031.3281,258.0938 Q1030.0156,256.4375 1030.0156,253.3125 Q1030.0156,250.1875 1031.3281,248.5313 Q1032.6563,246.875 1035.1563,246.875 Q1035.8594,246.875 1036.5,247.0313 Q1037.1563,247.1875 1037.7188,247.4844 L1037.7188,250.2031 Q1037.0938,249.625 1036.5,249.3594 Q1035.9063,249.0781 1035.2813,249.0781 Q1033.9375,249.0781 1033.25,250.1563 Q1032.5625,251.2188 1032.5625,253.3125 Q1032.5625,255.4063 1033.25,256.4844 Q1033.9375,257.5469 1035.2813,257.5469 Q1035.9063,257.5469 1036.5,257.2813 Q1037.0938,257 1037.7188,256.4219 L1037.7188,259.1406 Z " fill="#000000"/><text fill="#000000" font-family="sans-serif" font-size="12" lengthAdjust="spacing" textLength="49" x="1055.25" y="257.6543">Lowerer</text><line style="stroke:#A80036;stroke-width:1.5;" x1="947.5" x2="1179.5" y1="269.5" y2="269.5"/><ellipse cx="957.5" cy="280.5" rx="3" ry="3" style="stroke:#038048;stroke-width:1.0;fill:none;"/><text fill="#000000" font-family="sans-serif" font-size="11" lengthAdjust="spacing" textLength="208" x="966.5" y="283.7104">std::shared_ptr&lt;LowererImpl&gt; impl;</text><line style="stroke:#A80036;stroke-width:1.5;" x1="947.5" x2="1179.5" y1="290.3047" y2="290.3047"/><!--MD5=[b7b8bc7e8eb8ee18eadc3b8fd556bfb2]
+class LowererImpl--><rect codeLine="320" fill="#FEFECE" filter="url(#fujoep6dbpit)" height="188.8516" id="LowererImpl" style="stroke:#A80036;stroke-width:1.5;" width="365" x="881" y="490.5"/><ellipse cx="1020.75" cy="506.5" fill="#A9DCDF" rx="11" ry="11" style="stroke:#A80036;stroke-width:1.0;"/><path d="M1020.8594,501.8438 L1019.7031,506.9219 L1022.0313,506.9219 L1020.8594,501.8438 Z M1019.375,499.6094 L1022.3594,499.6094 L1025.7188,512 L1023.2656,512 L1022.5,508.9375 L1019.2188,508.9375 L1018.4688,512 L1016.0313,512 L1019.375,499.6094 Z " fill="#000000"/><text fill="#000000" font-family="sans-serif" font-size="12" font-style="italic" lengthAdjust="spacing" textLength="77" x="1041.25" y="510.6543">LowererImpl</text><line style="stroke:#A80036;stroke-width:1.5;" x1="882" x2="1245" y1="522.5" y2="522.5"/><polygon fill="none" points="892,528.5,896,532.5,892,536.5,888,532.5" style="stroke:#B38D22;stroke-width:1.0;"/><text fill="#000000" font-family="sans-serif" font-size="11" lengthAdjust="spacing" textLength="74" x="901" y="536.7104">class Visitor;</text><polygon fill="none" points="892,541.3047,896,545.3047,892,549.3047,888,545.3047" style="stroke:#B38D22;stroke-width:1.0;"/><text fill="#000000" font-family="sans-serif" font-size="11" lengthAdjust="spacing" textLength="111" x="901" y="549.5151">friend class Visitor;</text><polygon fill="none" points="892,554.1094,896,558.1094,892,562.1094,888,558.1094" style="stroke:#B38D22;stroke-width:1.0;"/><text fill="#000000" font-family="sans-serif" font-size="11" lengthAdjust="spacing" textLength="185" x="901" y="562.3198">std::shared_ptr&lt;Visitor&gt; visitor;</text><line style="stroke:#A80036;stroke-width:1.5;" x1="882" x2="1245" y1="568.9141" y2="568.9141"/><polygon fill="#FFFF44" points="892,574.9141,896,578.9141,892,582.9141,888,578.9141" style="stroke:#B38D22;stroke-width:1.0;"/><text fill="#000000" font-family="sans-serif" font-size="11" lengthAdjust="spacing" textLength="216" x="901" y="583.1245">virtual ir::Stmt lower(IndexStmt stmt);</text><polygon fill="#FFFF44" points="892,587.7188,896,591.7188,892,595.7188,888,591.7188" style="stroke:#B38D22;stroke-width:1.0;"/><text fill="#000000" font-family="sans-serif" font-size="11" lengthAdjust="spacing" textLength="211" x="901" y="595.9292">virtual ir::Expr lower(IndexExpr expr);</text><text fill="#000000" font-family="sans-serif" font-size="11" lengthAdjust="spacing" textLength="0" x="905" y="608.7339"/><polygon fill="#FFFF44" points="892,613.3281,896,617.3281,892,621.3281,888,617.3281" style="stroke:#B38D22;stroke-width:1.0;"/><text fill="#000000" font-family="sans-serif" font-size="11" lengthAdjust="spacing" textLength="260" x="901" y="621.5386">virtual ir::Expr lowerExpr(IndexExpr expr) = 0;</text><polygon fill="#FFFF44" points="892,626.1328,896,630.1328,892,634.1328,888,630.1328" style="stroke:#B38D22;stroke-width:1.0;"/><text fill="#000000" font-family="sans-serif" font-size="11" lengthAdjust="spacing" textLength="267" x="901" y="634.3433">virtual ir::Stmt lowerStmt(IndexStmt stmt) = 0;</text><text fill="#000000" font-family="sans-serif" font-size="11" lengthAdjust="spacing" textLength="0" x="905" y="647.1479"/><ellipse cx="892" cy="656.7422" fill="#84BE84" rx="3" ry="3" style="stroke:#038048;stroke-width:1.0;"/><text fill="#000000" font-family="sans-serif" font-size="11" lengthAdjust="spacing" textLength="315" x="901" y="659.9526">virtual ir::Stmt lower(IndexStmt stmt, std::string name,</text><text fill="#000000" font-family="sans-serif" font-size="11" lengthAdjust="spacing" textLength="339" x="901" y="672.7573">bool assemble, bool compute, bool pack, bool unpack) = 0;</text><!--MD5=[cf3b4bcfbe7bc4015089b336f3e5ed76]
+class LowererImplImperative--><rect codeLine="337" fill="#FEFECE" filter="url(#fujoep6dbpit)" height="188.8516" id="LowererImplImperative" style="stroke:#A80036;stroke-width:1.5;" width="337" x="691" y="759.5"/><ellipse cx="785.75" cy="775.5" fill="#ADD1B2" rx="11" ry="11" style="stroke:#A80036;stroke-width:1.0;"/><path d="M788.7188,781.1406 Q788.1406,781.4375 787.5,781.5781 Q786.8594,781.7344 786.1563,781.7344 Q783.6563,781.7344 782.3281,780.0938 Q781.0156,778.4375 781.0156,775.3125 Q781.0156,772.1875 782.3281,770.5313 Q783.6563,768.875 786.1563,768.875 Q786.8594,768.875 787.5,769.0313 Q788.1563,769.1875 788.7188,769.4844 L788.7188,772.2031 Q788.0938,771.625 787.5,771.3594 Q786.9063,771.0781 786.2813,771.0781 Q784.9375,771.0781 784.25,772.1563 Q783.5625,773.2188 783.5625,775.3125 Q783.5625,777.4063 784.25,778.4844 Q784.9375,779.5469 786.2813,779.5469 Q786.9063,779.5469 787.5,779.2813 Q788.0938,779 788.7188,778.4219 L788.7188,781.1406 Z " fill="#000000"/><text fill="#000000" font-family="sans-serif" font-size="12" lengthAdjust="spacing" textLength="139" x="806.25" y="779.6543">LowererImplImperative</text><line style="stroke:#A80036;stroke-width:1.5;" x1="692" x2="1027" y1="791.5" y2="791.5"/><rect fill="none" height="6" style="stroke:#C82930;stroke-width:1.0;" width="6" x="699" y="799.5"/><text fill="#000000" font-family="sans-serif" font-size="11" lengthAdjust="spacing" textLength="70" x="711" y="805.7104">class Visitor</text><rect fill="none" height="6" style="stroke:#C82930;stroke-width:1.0;" width="6" x="699" y="812.3047"/><text fill="#000000" font-family="sans-serif" font-size="11" lengthAdjust="spacing" textLength="102" x="711" y="818.5151">fiend class Visitor</text><rect fill="none" height="6" style="stroke:#C82930;stroke-width:1.0;" width="6" x="699" y="825.1094"/><text fill="#000000" font-family="sans-serif" font-size="11" lengthAdjust="spacing" textLength="181" x="711" y="831.3198">std::shared_ptr&lt;Visitor&gt; visitor</text><rect fill="none" height="6" style="stroke:#C82930;stroke-width:1.0;" width="6" x="699" y="837.9141"/><text fill="#000000" font-family="sans-serif" font-size="11" lengthAdjust="spacing" textLength="84" x="711" y="844.1245">bool assemble</text><rect fill="none" height="6" style="stroke:#C82930;stroke-width:1.0;" width="6" x="699" y="850.7188"/><text fill="#000000" font-family="sans-serif" font-size="11" lengthAdjust="spacing" textLength="77" x="711" y="856.9292">bool compute</text><rect fill="none" height="6" style="stroke:#C82930;stroke-width:1.0;" width="6" x="699" y="863.5234"/><text fill="#000000" font-family="sans-serif" font-size="11" lengthAdjust="spacing" textLength="166" x="711" y="869.7339">vars a_bunch_of_other_fields</text><line style="stroke:#A80036;stroke-width:1.5;" x1="692" x2="1027" y1="876.3281" y2="876.3281"/><polygon fill="#FFFF44" points="702,882.3281,706,886.3281,702,890.3281,698,886.3281" style="stroke:#B38D22;stroke-width:1.0;"/><text fill="#000000" font-family="sans-serif" font-size="11" lengthAdjust="spacing" textLength="238" x="711" y="890.5386">virtual ir::Stmt lowerExpr(IndexExpr expr);</text><polygon fill="#FFFF44" points="702,895.1328,706,899.1328,702,903.1328,698,899.1328" style="stroke:#B38D22;stroke-width:1.0;"/><text fill="#000000" font-family="sans-serif" font-size="11" lengthAdjust="spacing" textLength="243" x="711" y="903.3433">virtual ir::Stmt lowerStmt(IndexStmt stmt);</text><text fill="#000000" font-family="sans-serif" font-size="11" lengthAdjust="spacing" textLength="0" x="715" y="916.1479"/><ellipse cx="702" cy="925.7422" fill="#84BE84" rx="3" ry="3" style="stroke:#038048;stroke-width:1.0;"/><text fill="#000000" font-family="sans-serif" font-size="11" lengthAdjust="spacing" textLength="276" x="711" y="928.9526">ir::Stmt lower(IndexStmt stmt, std::string name,</text><text fill="#000000" font-family="sans-serif" font-size="11" lengthAdjust="spacing" textLength="311" x="711" y="941.7573">bool assemble, bool compute, bool pack, bool unpack)</text><path d="M581,1201 L581,1256.3984 A0,0 0 0 0 581,1256.3984 L946,1256.3984 A0,0 0 0 0 946,1256.3984 L946,1211 L936,1201 L774.6103,1201 L835.2751,948.5022 L766.6103,1201 L581,1201 A0,0 0 0 0 581,1201 " fill="#FBFB77" filter="url(#fujoep6dbpit)" style="stroke:#A80036;stroke-width:1.0;"/><path d="M936,1201 L936,1211 L946,1211 L936,1201 " fill="#FBFB77" style="stroke:#A80036;stroke-width:1.0;"/><text fill="#000000" font-family="sans-serif" font-size="13" lengthAdjust="spacing" textLength="344" x="587" y="1218.0669">Stmt LowererImplImperative::lower(IndexStmt stmt) {</text><text fill="#000000" font-family="sans-serif" font-size="13" lengthAdjust="spacing" textLength="174" x="595" y="1233.1997">return visitor-&gt;lower(stmt);</text><text fill="#000000" font-family="sans-serif" font-size="13" lengthAdjust="spacing" textLength="8" x="587" y="1248.3325">}</text><!--MD5=[53bf68ed638bcf4718423098b3d480ea]
+class Visitor--><rect codeLine="362" fill="#FEFECE" filter="url(#fujoep6dbpit)" height="380.9219" id="Visitor" style="stroke:#A80036;stroke-width:1.5;" width="253" x="981" y="1038"/><ellipse cx="1083.75" cy="1054" fill="#ADD1B2" rx="11" ry="11" style="stroke:#A80036;stroke-width:1.0;"/><path d="M1086.7188,1059.6406 Q1086.1406,1059.9375 1085.5,1060.0781 Q1084.8594,1060.2344 1084.1563,1060.2344 Q1081.6563,1060.2344 1080.3281,1058.5938 Q1079.0156,1056.9375 1079.0156,1053.8125 Q1079.0156,1050.6875 1080.3281,1049.0313 Q1081.6563,1047.375 1084.1563,1047.375 Q1084.8594,1047.375 1085.5,1047.5313 Q1086.1563,1047.6875 1086.7188,1047.9844 L1086.7188,1050.7031 Q1086.0938,1050.125 1085.5,1049.8594 Q1084.9063,1049.5781 1084.2813,1049.5781 Q1082.9375,1049.5781 1082.25,1050.6563 Q1081.5625,1051.7188 1081.5625,1053.8125 Q1081.5625,1055.9063 1082.25,1056.9844 Q1082.9375,1058.0469 1084.2813,1058.0469 Q1084.9063,1058.0469 1085.5,1057.7813 Q1086.0938,1057.5 1086.7188,1056.9219 L1086.7188,1059.6406 Z " fill="#000000"/><text fill="#000000" font-family="sans-serif" font-size="12" lengthAdjust="spacing" textLength="39" x="1104.25" y="1058.1543">Visitor</text><line style="stroke:#A80036;stroke-width:1.5;" x1="982" x2="1233" y1="1070" y2="1070"/><rect fill="none" height="6" style="stroke:#C82930;stroke-width:1.0;" width="6" x="989" y="1078"/><text fill="#000000" font-family="sans-serif" font-size="11" lengthAdjust="spacing" textLength="104" x="1001" y="1084.2104">LowererImpl* impl</text><rect fill="none" height="6" style="stroke:#C82930;stroke-width:1.0;" width="6" x="989" y="1090.8047"/><text fill="#000000" font-family="sans-serif" font-size="11" lengthAdjust="spacing" textLength="54" x="1001" y="1097.0151">Expr expr</text><rect fill="none" height="6" style="stroke:#C82930;stroke-width:1.0;" width="6" x="989" y="1103.6094"/><text fill="#000000" font-family="sans-serif" font-size="11" lengthAdjust="spacing" textLength="57" x="1001" y="1109.8198">Stmt stmt</text><line style="stroke:#A80036;stroke-width:1.5;" x1="982" x2="1233" y1="1116.4141" y2="1116.4141"/><rect fill="#F24D5C" height="6" style="stroke:#C82930;stroke-width:1.0;" width="6" x="989" y="1124.4141"/><text fill="#000000" font-family="sans-serif" font-size="11" lengthAdjust="spacing" textLength="227" x="1001" y="1130.6245">void visit(const AssignmentNode* node)</text><rect fill="#F24D5C" height="6" style="stroke:#C82930;stroke-width:1.0;" width="6" x="989" y="1137.2188"/><text fill="#000000" font-family="sans-serif" font-size="11" lengthAdjust="spacing" textLength="187" x="1001" y="1143.4292">void visit(const YieldNode* node)</text><rect fill="#F24D5C" height="6" style="stroke:#C82930;stroke-width:1.0;" width="6" x="989" y="1150.0234"/><text fill="#000000" font-family="sans-serif" font-size="11" lengthAdjust="spacing" textLength="191" x="1001" y="1156.2339">void visit(const ForallNode* node)</text><rect fill="#F24D5C" height="6" style="stroke:#C82930;stroke-width:1.0;" width="6" x="989" y="1162.8281"/><text fill="#000000" font-family="sans-serif" font-size="11" lengthAdjust="spacing" textLength="195" x="1001" y="1169.0386">void visit(const WhereNode* node)</text><rect fill="#F24D5C" height="6" style="stroke:#C82930;stroke-width:1.0;" width="6" x="989" y="1175.6328"/><text fill="#000000" font-family="sans-serif" font-size="11" lengthAdjust="spacing" textLength="186" x="1001" y="1181.8433">void visit(const MultiNode* node)</text><rect fill="#F24D5C" height="6" style="stroke:#C82930;stroke-width:1.0;" width="6" x="989" y="1188.4375"/><text fill="#000000" font-family="sans-serif" font-size="11" lengthAdjust="spacing" textLength="213" x="1001" y="1194.6479">void visit(const SuchThatNode* node)</text><rect fill="#F24D5C" height="6" style="stroke:#C82930;stroke-width:1.0;" width="6" x="989" y="1201.2422"/><text fill="#000000" font-family="sans-serif" font-size="11" lengthAdjust="spacing" textLength="216" x="1001" y="1207.4526">void visit(const SequenceNode* node)</text><rect fill="#F24D5C" height="6" style="stroke:#C82930;stroke-width:1.0;" width="6" x="989" y="1214.0469"/><text fill="#000000" font-family="sans-serif" font-size="11" lengthAdjust="spacing" textLength="216" x="1001" y="1220.2573">void visit(const AssembleNode* node)</text><rect fill="#F24D5C" height="6" style="stroke:#C82930;stroke-width:1.0;" width="6" x="989" y="1226.8516"/><text fill="#000000" font-family="sans-serif" font-size="11" lengthAdjust="spacing" textLength="200" x="1001" y="1233.062">void visit(const AccessNode* node)</text><rect fill="#F24D5C" height="6" style="stroke:#C82930;stroke-width:1.0;" width="6" x="989" y="1239.6563"/><text fill="#000000" font-family="sans-serif" font-size="11" lengthAdjust="spacing" textLength="195" x="1001" y="1245.8667">void visit(const LiteralNode* node)</text><rect fill="#F24D5C" height="6" style="stroke:#C82930;stroke-width:1.0;" width="6" x="989" y="1252.4609"/><text fill="#000000" font-family="sans-serif" font-size="11" lengthAdjust="spacing" textLength="182" x="1001" y="1258.6714">void visit(const NegNode* node)</text><rect fill="#F24D5C" height="6" style="stroke:#C82930;stroke-width:1.0;" width="6" x="989" y="1265.2656"/><text fill="#000000" font-family="sans-serif" font-size="11" lengthAdjust="spacing" textLength="181" x="1001" y="1271.4761">void visit(const AddNode* node)</text><rect fill="#F24D5C" height="6" style="stroke:#C82930;stroke-width:1.0;" width="6" x="989" y="1278.0703"/><text fill="#000000" font-family="sans-serif" font-size="11" lengthAdjust="spacing" textLength="182" x="1001" y="1284.2808">void visit(const SubNode* node)</text><rect fill="#F24D5C" height="6" style="stroke:#C82930;stroke-width:1.0;" width="6" x="989" y="1290.875"/><text fill="#000000" font-family="sans-serif" font-size="11" lengthAdjust="spacing" textLength="179" x="1001" y="1297.0854">void visit(const MulNode* node)</text><rect fill="#F24D5C" height="6" style="stroke:#C82930;stroke-width:1.0;" width="6" x="989" y="1303.6797"/><text fill="#000000" font-family="sans-serif" font-size="11" lengthAdjust="spacing" textLength="177" x="1001" y="1309.8901">void visit(const DivNode* node)</text><rect fill="#F24D5C" height="6" style="stroke:#C82930;stroke-width:1.0;" width="6" x="989" y="1316.4844"/><text fill="#000000" font-family="sans-serif" font-size="11" lengthAdjust="spacing" textLength="184" x="1001" y="1322.6948">void visit(const SqrtNode* node)</text><rect fill="#F24D5C" height="6" style="stroke:#C82930;stroke-width:1.0;" width="6" x="989" y="1329.2891"/><text fill="#000000" font-family="sans-serif" font-size="11" lengthAdjust="spacing" textLength="186" x="1001" y="1335.4995">void visit(const CastNode* node)</text><rect fill="#F24D5C" height="6" style="stroke:#C82930;stroke-width:1.0;" width="6" x="989" y="1342.0938"/><text fill="#000000" font-family="sans-serif" font-size="11" lengthAdjust="spacing" textLength="226" x="1001" y="1348.3042">void visit(const CallIntrinsicNode* node)</text><rect fill="#F24D5C" height="6" style="stroke:#C82930;stroke-width:1.0;" width="6" x="989" y="1354.8984"/><text fill="#000000" font-family="sans-serif" font-size="11" lengthAdjust="spacing" textLength="215" x="1001" y="1361.1089">void visit(const ReductionNode* node)</text><text fill="#000000" font-family="sans-serif" font-size="11" lengthAdjust="spacing" textLength="0" x="1005" y="1373.9136"/><ellipse cx="992" cy="1383.5078" fill="#84BE84" rx="3" ry="3" style="stroke:#038048;stroke-width:1.0;"/><text fill="#000000" font-family="sans-serif" font-size="11" lengthAdjust="spacing" textLength="208" x="1001" y="1386.7183">Visitor(LowererImplImperative* impl)</text><ellipse cx="992" cy="1396.3125" fill="#84BE84" rx="3" ry="3" style="stroke:#038048;stroke-width:1.0;"/><text fill="#000000" font-family="sans-serif" font-size="11" lengthAdjust="spacing" textLength="157" x="1001" y="1399.5229">Stmt lower(IndexStmt stmt)</text><ellipse cx="992" cy="1409.1172" fill="#84BE84" rx="3" ry="3" style="stroke:#038048;stroke-width:1.0;"/><text fill="#000000" font-family="sans-serif" font-size="11" lengthAdjust="spacing" textLength="152" x="1001" y="1412.3276">Expr lower(IndexExpr expr)</text><path d="M975.5,1587 L975.5,1702.9297 A0,0 0 0 0 975.5,1702.9297 L1239.5,1702.9297 A0,0 0 0 0 1239.5,1702.9297 L1239.5,1597 L1229.5,1587 L1111.5,1587 L1107.5,1419.0758 L1103.5,1587 L975.5,1587 A0,0 0 0 0 975.5,1587 " fill="#FBFB77" filter="url(#fujoep6dbpit)" style="stroke:#A80036;stroke-width:1.0;"/><path d="M1229.5,1587 L1229.5,1597 L1239.5,1597 L1229.5,1587 " fill="#FBFB77" style="stroke:#A80036;stroke-width:1.0;"/><text fill="#000000" font-family="sans-serif" font-size="13" lengthAdjust="spacing" textLength="191" x="981.5" y="1604.0669">Stmt lower(IndexStmt stmt) {</text><text fill="#000000" font-family="sans-serif" font-size="13" lengthAdjust="spacing" textLength="134" x="989.5" y="1619.1997">this-&gt;stmt = Stmt();</text><text fill="#000000" font-family="sans-serif" font-size="13" lengthAdjust="spacing" textLength="219" x="989.5" y="1634.3325">impl-&gt;accessibleIterators.scope();</text><text fill="#000000" font-family="sans-serif" font-size="13" lengthAdjust="spacing" textLength="217" x="989.5" y="1649.4653">IndexStmtVisitorStrict::visit(stmt);</text><text fill="#000000" font-family="sans-serif" font-size="13" lengthAdjust="spacing" textLength="235" x="989.5" y="1664.5981">impl-&gt;accessibleIterators.unscope();</text><text fill="#000000" font-family="sans-serif" font-size="13" lengthAdjust="spacing" textLength="116" x="989.5" y="1679.731">return this-&gt;stmt;</text><text fill="#000000" font-family="sans-serif" font-size="13" lengthAdjust="spacing" textLength="8" x="981.5" y="1694.8638">}</text><!--MD5=[ae51cb2269b8d9d23f4eb16ba4c021c2]
+reverse link Uncopyable to IRNode--><path codeLine="26" d="M820.4411,310.2452 C805.2002,341.1699 780.565,381.9466 747.5,407 C656.8632,475.6756 606.7888,436.4312 503.5,484 C464.9666,501.7462 424.4666,526.9962 393.5999,547.8097 " fill="none" id="Uncopyable-backto-IRNode" style="stroke:#A80036;stroke-width:1.0;"/><polygon fill="none" points="814.1208,307.2354,828.901,292.0517,826.8155,313.1384,814.1208,307.2354" style="stroke:#A80036;stroke-width:1.0;"/><!--MD5=[910d35d02fd37b100f27db676215561a]
+reverse link IRNode to BaseStmtNode--><path codeLine="27" d="M307.5211,639.0848 C270.9373,697.3157 214.3898,787.3234 187.5844,829.9899 " fill="none" id="IRNode-backto-BaseStmtNode" style="stroke:#A80036;stroke-width:1.0;"/><polygon fill="none" points="301.6118,635.3322,318.1787,622.1209,313.4664,642.7799,301.6118,635.3322" style="stroke:#A80036;stroke-width:1.0;"/><!--MD5=[d15399140a2ba01317e3af6505b2f237]
+reverse link IRNode to BaseExprNode--><path codeLine="28" d="M348.9536,642.2864 C356.1642,697.705 366.8158,779.5704 372.5311,823.496 " fill="none" id="IRNode-backto-BaseExprNode" style="stroke:#A80036;stroke-width:1.0;"/><polygon fill="none" points="341.9689,642.8569,346.3299,622.1209,355.8519,641.0505,341.9689,642.8569" style="stroke:#A80036;stroke-width:1.0;"/><!--MD5=[6fc58d354eb039aa71a812145e71cc51]
+reverse link BaseStmtNode to StmtNode--><path codeLine="29" d="M167.1367,898.6343 C157.8757,975.7069 139.117,1131.8206 131.1797,1197.8764 " fill="none" id="BaseStmtNode-backto-StmtNode" style="stroke:#A80036;stroke-width:1.0;"/><polygon fill="none" points="160.246,897.3055,169.5821,878.2834,174.146,898.9757,160.246,897.3055" style="stroke:#A80036;stroke-width:1.0;"/><!--MD5=[b34aab7e28a3dad0196efbcf2402ad4b]
+reverse link BaseExprNode to ExprNode--><path codeLine="30" d="M377.9886,904.6786 C380.3078,983.6383 384.7133,1133.6261 386.6028,1197.9549 " fill="none" id="BaseExprNode-backto-ExprNode" style="stroke:#A80036;stroke-width:1.0;"/><polygon fill="none" points="370.9905,904.8438,377.4002,884.6469,384.9845,904.4327,370.9905,904.8438" style="stroke:#A80036;stroke-width:1.0;"/><!--MD5=[6982bf9bb66925c6ba3afaae707aa75e]
+reverse link IntrusivePtr to IRHandle--><path codeLine="38" d="M613.7823,69.7043 C517.4991,114.1798 345.0472,193.8394 250.6748,237.4323 " fill="none" id="IntrusivePtr-backto-IRHandle" style="stroke:#A80036;stroke-width:1.0;"/><polygon fill="none" points="610.8857,63.3316,631.9777,61.2994,616.7566,76.0412,610.8857,63.3316" style="stroke:#A80036;stroke-width:1.0;"/><!--MD5=[59037bcbfab734c29d5f29f29345990a]
+reverse link IRHandle to Expr--><path codeLine="39" d="M161.5974,316.9128 C141.1096,360.6844 110.2697,426.612 83.5,484 C71.2362,510.2908 57.2078,540.4477 47.6932,560.9138 " fill="none" id="IRHandle-backto-Expr" style="stroke:#A80036;stroke-width:1.0;"/><polygon fill="none" points="155.2791,313.8992,170.0982,298.7534,167.9586,319.8347,155.2791,313.8992" style="stroke:#A80036;stroke-width:1.0;"/><!--MD5=[2e3a655b6bb23e034db67107221f412a]
+reverse link IRHandle to Stmt--><path codeLine="40" d="M176.0078,318.793 C164.419,388.1073 144.1107,509.5737 135.5197,560.9576 " fill="none" id="IRHandle-backto-Stmt" style="stroke:#A80036;stroke-width:1.0;"/><polygon fill="none" points="169.1677,317.2552,179.37,298.6833,182.976,319.5639,169.1677,317.2552" style="stroke:#A80036;stroke-width:1.0;"/><!--MD5=[2a0bead0c725d8d45864c262e97ce783]
+reverse link IRHandle to IRNode--><path codeLine="42" d="M205.5204,310.4425 C236.4803,372.9538 293.8347,488.7585 323.1741,547.998 " fill="none" id="IRHandle-backto-IRNode" style="stroke:#A80036;stroke-width:1.0;"/><polygon fill="#A80036" points="199.6965,298.6833,198.7749,305.8353,205.0223,309.4367,205.9439,302.2848,199.6965,298.6833" style="stroke:#A80036;stroke-width:1.0;"/><text fill="#000000" font-family="sans-serif" font-size="13" lengthAdjust="spacing" textLength="54" x="273.5" y="450.0669">contains</text><text fill="#000000" font-family="sans-serif" font-size="13" lengthAdjust="spacing" textLength="8" x="193.9008" y="318.2998">1</text><text fill="#000000" font-family="sans-serif" font-size="13" lengthAdjust="spacing" textLength="8" x="311.0578" y="536.9081">1</text><!--MD5=[58cf07e15c029e621d8edfba03fa64a2]
+reverse link IRVisitorStrict to IRVisitor--><path codeLine="94" d="M2743.085,79.3089 C2719.9753,94.626 2693.8639,112.3013 2670.5,129 C2620.0401,165.0649 2563.4947,208.7917 2527.0182,237.4501 " fill="none" id="IRVisitorStrict-backto-IRVisitor" style="stroke:#A80036;stroke-width:1.0;"/><polygon fill="none" points="2739.5252,73.2715,2760.0768,68.1107,2747.2291,84.9613,2739.5252,73.2715" style="stroke:#A80036;stroke-width:1.0;"/><!--MD5=[75bfe22e38cc091da0fbb6f74406d06e]
+reverse link IRVisitorStrict to IRPrinter--><path codeLine="95" d="M2880.6802,78.0481 C2916.73,98.0228 2962.2732,123.2577 3008.2876,148.7537 " fill="none" id="IRVisitorStrict-backto-IRPrinter" style="stroke:#A80036;stroke-width:1.0;"/><polygon fill="none" points="2876.843,83.9248,2862.7416,68.1086,2883.6283,71.679,2876.843,83.9248" style="stroke:#A80036;stroke-width:1.0;"/><!--MD5=[85c48ab67ed60544567d89d58f94870d]
+reverse link IRVisitorStrict to IRRewriter--><path codeLine="96" d="M2807.5,88.3035 C2807.5,120.7899 2807.5,163.3447 2807.5,198.8875 " fill="none" id="IRVisitorStrict-backto-IRRewriter" style="stroke:#A80036;stroke-width:1.0;"/><polygon fill="none" points="2800.5001,88.1087,2807.5,68.1086,2814.5001,88.1086,2800.5001,88.1087" style="stroke:#A80036;stroke-width:1.0;"/><!--MD5=[4028845cddf1255230d8af57eef922a1]
+reverse link IRVisitor to IRVerifier--><path codeLine="97" d="M2464.2278,317.0083 C2430.0567,386.0033 2369.0761,509.1298 2343.4074,560.9576 " fill="none" id="IRVisitor-backto-IRVerifier" style="stroke:#A80036;stroke-width:1.0;"/><polygon fill="none" points="2458.1543,313.4989,2473.3035,298.6833,2470.6999,319.7124,2458.1543,313.4989" style="stroke:#A80036;stroke-width:1.0;"/><!--MD5=[4a94ddfc410010d5e6723affae8cc10d]
+reverse link IRRewriter to ExpressionSimplifier--><path codeLine="102" d="M2720.1218,351.0244 C2678.6358,390.8516 2628.5995,439.4826 2584.5,484 C2558.962,509.78 2530.3923,540.0247 2511.1115,560.6511 " fill="none" id="IRRewriter-backto-ExpressionSimplifier" style="stroke:#A80036;stroke-width:1.0;"/><polygon fill="none" points="2715.4205,345.8343,2734.7035,337.0499,2725.1073,355.9421,2715.4205,345.8343" style="stroke:#A80036;stroke-width:1.0;"/><!--MD5=[949c6b7bfd4235ac14da91ff0f1abad4]
+reverse link IRRewriter to RemoveRedundantStatements--><path codeLine="109" d="M2781.238,356.5644 C2760.6434,426.0163 2733.4041,517.8765 2720.6551,560.8705 " fill="none" id="IRRewriter-backto-RemoveRedundantStatements" style="stroke:#A80036;stroke-width:1.0;"/><polygon fill="none" points="2774.5903,354.3599,2786.9875,337.1753,2788.0127,358.3401,2774.5903,354.3599" style="stroke:#A80036;stroke-width:1.0;"/><!--MD5=[429f4895fdac785b3cbc97ff72ee188d]
+reverse link IRRewriter to RemoveRedundantLoops--><path codeLine="110" d="M2847.8795,355.6733 C2879.9145,425.2286 2922.5003,517.6924 2942.3867,560.8705 " fill="none" id="IRRewriter-backto-RemoveRedundantLoops" style="stroke:#A80036;stroke-width:1.0;"/><polygon fill="none" points="2841.3685,358.2695,2839.3599,337.1753,2854.0847,352.4128,2841.3685,358.2695" style="stroke:#A80036;stroke-width:1.0;"/><!--MD5=[68110a92c5ea6b91d77066a3850c99de]
+reverse link IRRewriter to RemoveDuplicateBody--><path codeLine="111" d="M2908.6453,349.9792 C2956.6158,389.6232 3014.286,438.4014 3064.5,484 C3092.4965,509.4232 3123.3012,539.9945 3143.8609,560.7956 " fill="none" id="IRRewriter-backto-RemoveDuplicateBody" style="stroke:#A80036;stroke-width:1.0;"/><polygon fill="none" points="2904.088,355.2943,2893.1039,337.1739,2912.9906,344.4895,2904.088,355.2943" style="stroke:#A80036;stroke-width:1.0;"/><!--MD5=[ae50f65b4cbe15dbcd3dbdd752b04bad]
+reverse link IRPrinter to CodeGen--><path codeLine="120" d="M3277.8266,425.9959 C3295.9202,478.6165 3314.0392,531.3112 3324.2066,560.8807 " fill="none" id="IRPrinter-backto-CodeGen" style="stroke:#A80036;stroke-width:1.0;"/><polygon fill="none" points="3271.1927,428.2301,3271.309,407.0408,3284.4319,423.6778,3271.1927,428.2301" style="stroke:#A80036;stroke-width:1.0;"/><!--MD5=[319cfb8dc735ef16cddbcdc70ff637f3]
+reverse link CodeGen to CodeGen_C--><path codeLine="121" d="M3308.9871,626.8873 C3276.9808,683.9051 3220.7457,784.0854 3195.0269,829.9024 " fill="none" id="CodeGen-backto-CodeGen_C" style="stroke:#A80036;stroke-width:1.0;"/><polygon fill="none" points="3302.9395,623.3601,3318.8334,609.3464,3315.1476,630.213,3302.9395,623.3601" style="stroke:#A80036;stroke-width:1.0;"/><!--MD5=[aa96aa54faae34d6ca9ace804ab720b5]
+reverse link CodeGen to CodeGen_ISPC--><path codeLine="122" d="M3357.3479,626.516 C3391.4351,683.4693 3451.5956,783.9858 3479.0773,829.9024 " fill="none" id="CodeGen-backto-CodeGen_ISPC" style="stroke:#A80036;stroke-width:1.0;"/><polygon fill="none" points="3351.3364,630.1024,3347.0716,609.3464,3363.3492,622.9126,3351.3364,630.1024" style="stroke:#A80036;stroke-width:1.0;"/><!--MD5=[442ed43531516b32839cb3faf9b2f28c]
+reverse link CodeGen to CodeGen_CUDA--><path codeLine="123" d="M3332.5,629.5199 C3332.5,686.9415 3332.5,784.7827 3332.5,829.9024 " fill="none" id="CodeGen-backto-CodeGen_CUDA" style="stroke:#A80036;stroke-width:1.0;"/><polygon fill="none" points="3325.5001,629.3464,3332.5,609.3464,3339.5001,629.3464,3325.5001,629.3464" style="stroke:#A80036;stroke-width:1.0;"/><!--MD5=[e163d187ef5eaf663efea2335f5ab426]
+reverse link Manageable to IndexStmtNode--><path codeLine="135" d="M1257.9638,310.6351 C1244.4457,339.9959 1223.6542,378.6672 1197.5,407 C1172.0822,434.5351 1162.6727,441.0723 1127.5,454 C1016.6611,494.7386 975.8786,447.724 863.5,484 C813.372,500.1814 761.462,531.0819 726.345,554.4621 " fill="none" id="Manageable-backto-IndexStmtNode" style="stroke:#A80036;stroke-width:1.0;"/><polygon fill="none" points="1251.6817,307.531,1266.1369,292.0374,1264.4987,313.1636,1251.6817,307.531" style="stroke:#A80036;stroke-width:1.0;"/><!--MD5=[d7ac6dc268d898e1c32d87af860f66f6]
+reverse link Uncopyable to IndexStmtNode--><path codeLine="136" d="M817.879,310.1732 C786.2624,374.8344 726.5439,496.9683 698.6147,554.088 " fill="none" id="Uncopyable-backto-IndexStmtNode" style="stroke:#A80036;stroke-width:1.0;"/><polygon fill="none" points="811.6488,306.9791,826.7226,292.0867,824.2258,313.1288,811.6488,306.9791" style="stroke:#A80036;stroke-width:1.0;"/><!--MD5=[648f85c83359671aa27d8bdab5afe684]
+reverse link Manageable to IndexExprNode--><path codeLine="137" d="M1297.8505,310.1732 C1332.1189,374.8344 1396.846,496.9683 1427.1176,554.088 " fill="none" id="Manageable-backto-IndexExprNode" style="stroke:#A80036;stroke-width:1.0;"/><polygon fill="none" points="1291.4456,313.0363,1288.2652,292.0867,1303.8158,306.4805,1291.4456,313.0363" style="stroke:#A80036;stroke-width:1.0;"/><!--MD5=[81b6c5025c45f10b02aba636448b0629]
+reverse link Uncopyable to IndexExprNode--><path codeLine="138" d="M854.8121,310.9496 C869.2284,342.7749 893.4553,384.3933 928.5,407 C1003.6621,455.4857 1040.645,415.6362 1127.5,437 C1189.6011,452.2751 1205.1592,457.804 1263.5,484 C1309.4283,504.6226 1359.1614,533.0311 1394.6887,554.4675 " fill="none" id="Uncopyable-backto-IndexExprNode" style="stroke:#A80036;stroke-width:1.0;"/><polygon fill="none" points="848.2286,313.3522,846.9174,292.2032,861.1311,307.9185,848.2286,313.3522" style="stroke:#A80036;stroke-width:1.0;"/><!--MD5=[4a1ee9a433488db7e06ed4f91810d452]
+reverse link IntrusivePtr to IndexStmt--><path codeLine="143" d="M683.5,88.2338 C683.5,136.5801 683.5,207.2721 683.5,243.9383 " fill="none" id="IntrusivePtr-backto-IndexStmt" style="stroke:#A80036;stroke-width:1.0;"/><polygon fill="none" points="676.5001,88.1087,683.5,68.1086,690.5001,88.1086,676.5001,88.1087" style="stroke:#A80036;stroke-width:1.0;"/><!--MD5=[be16824624a74e7da7bb67b6f377f820]
+reverse link IndexStmt to IndexStmtNode--><path codeLine="144" d="M683.5,305.2739 C683.5,368.4736 683.5,495.4911 683.5,554.088 " fill="none" id="IndexStmt-backto-IndexStmtNode" style="stroke:#A80036;stroke-width:1.0;"/><polygon fill="#A80036" points="683.5,292.0867,679.5,298.0867,683.5,304.0867,687.5,298.0867,683.5,292.0867" style="stroke:#A80036;stroke-width:1.0;"/><text fill="#000000" font-family="sans-serif" font-size="13" lengthAdjust="spacing" textLength="8" x="674.475" y="312.2647">1</text><text fill="#000000" font-family="sans-serif" font-size="13" lengthAdjust="spacing" textLength="8" x="674.675" y="543.2663">1</text><!--MD5=[8120730d6b32269f0970ddfe15f91d14]
+reverse link IntrusivePtr to IndexExpr--><path codeLine="145" d="M755.3761,39.2555 C906.9425,44.2375 1253.1256,62.7483 1347.5,129 C1386.7641,156.5638 1406.5439,211.9266 1415.072,243.8366 " fill="none" id="IntrusivePtr-backto-IndexExpr" style="stroke:#A80036;stroke-width:1.0;"/><polygon fill="none" points="755.1028,46.2505,735.3276,38.6387,755.5334,32.2571,755.1028,46.2505" style="stroke:#A80036;stroke-width:1.0;"/><!--MD5=[1972b08ae664b2d2310d03537cd7a5e1]
+reverse link IndexExpr to IndexExprNode--><path codeLine="146" d="M1423.2044,305.2739 C1427.7899,368.4736 1437.0057,495.4911 1441.2572,554.088 " fill="none" id="IndexExpr-backto-IndexExprNode" style="stroke:#A80036;stroke-width:1.0;"/><polygon fill="#A80036" points="1422.2476,292.0867,1418.6923,298.3605,1423.1161,304.0552,1426.6714,297.7815,1422.2476,292.0867" style="stroke:#A80036;stroke-width:1.0;"/><text fill="#000000" font-family="sans-serif" font-size="13" lengthAdjust="spacing" textLength="8" x="1413.6704" y="312.2647">1</text><text fill="#000000" font-family="sans-serif" font-size="13" lengthAdjust="spacing" textLength="8" x="1431.9696" y="543.2663">1</text><!--MD5=[b26c9c8d3a5b29d8271f45d68507eadd]
+reverse link IndexExprVisitorStrict to IndexNotationVisitorStrict--><path codeLine="295" d="M1632.9995,699.6227 C1626.9972,705.0539 1621.1388,710.5255 1615.5,716 C1577.5728,752.8222 1539.4548,801.3814 1518.0255,829.9928 " fill="none" id="IndexExprVisitorStrict-backto-IndexNotationVisitorStrict" style="stroke:#A80036;stroke-width:1.0;"/><polygon fill="none" points="1628.5467,694.2161,1648.1726,686.2269,1637.8124,704.7112,1628.5467,694.2161" style="stroke:#A80036;stroke-width:1.0;"/><!--MD5=[7234130c38761532599f2f7b36911e2f]
+reverse link IndexStmtVisitorStrict to IndexNotationVisitorStrict--><path codeLine="296" d="M1966.5197,675.467 C1958.1897,679.3054 1949.8174,682.8546 1941.5,686 C1803.2176,738.2949 1746.3714,680.1665 1614.5,747 C1575.0345,767.0014 1539.609,804.9113 1519.0786,829.8154 " fill="none" id="IndexStmtVisitorStrict-backto-IndexNotationVisitorStrict" style="stroke:#A80036;stroke-width:1.0;"/><polygon fill="none" points="1963.6036,669.1012,1984.6506,666.6464,1969.7282,681.6905,1963.6036,669.1012" style="stroke:#A80036;stroke-width:1.0;"/><!--MD5=[d405f4886b031ffa84d6c62850f61924]
+reverse link IndexNotationVisitorStrict to IndexNotationVisitor--><path codeLine="297" d="M1526.3846,895.2501 C1552.042,936.1383 1593.0382,1001.4705 1631.9613,1063.499 " fill="none" id="IndexNotationVisitorStrict-backto-IndexNotationVisitor" style="stroke:#A80036;stroke-width:1.0;"/><polygon fill="none" points="1520.4391,898.945,1515.7379,878.2834,1532.2978,891.5037,1520.4391,898.945" style="stroke:#A80036;stroke-width:1.0;"/><!--MD5=[9298265fb9c2b46a51654cec95663d88]
+reverse link IndexNotationVisitorStrict to IndexNotationPrinter--><path codeLine="298" d="M1491.8998,898.1203 C1484.7524,934.7873 1474.0689,989.595 1463.4478,1044.0828 " fill="none" id="IndexNotationVisitorStrict-backto-IndexNotationPrinter" style="stroke:#A80036;stroke-width:1.0;"/><polygon fill="none" points="1485.0692,896.5747,1495.7665,878.2834,1498.8106,899.2533,1485.0692,896.5747" style="stroke:#A80036;stroke-width:1.0;"/><!--MD5=[2164c356666f1a365c7584220eeab5ce]
+reverse link IndexNotationVisitor to Matcher--><path codeLine="299" d="M1735.5,1413.8401 C1735.5,1494.6098 1735.5,1580.0329 1735.5,1620.7139 " fill="none" id="IndexNotationVisitor-backto-Matcher" style="stroke:#A80036;stroke-width:1.0;"/><polygon fill="none" points="1728.5001,1413.7101,1735.5,1393.71,1742.5001,1413.71,1728.5001,1413.7101" style="stroke:#A80036;stroke-width:1.0;"/><!--MD5=[81658007f5a451634c394e4129ce2328]
+reverse link IndexExprVisitorStrict to IndexExprRewriterStrict--><path codeLine="301" d="M1782.5,706.5527 C1782.5,720.0234 1782.5,733.669 1782.5,746.9421 " fill="none" id="IndexExprVisitorStrict-backto-IndexExprRewriterStrict" style="stroke:#A80036;stroke-width:1.0;"/><polygon fill="none" points="1775.5001,706.3141,1782.5,686.3141,1789.5001,706.314,1775.5001,706.3141" style="stroke:#A80036;stroke-width:1.0;"/><!--MD5=[ad82d38a65963623a4dbc072e2395c0a]
+reverse link IndexStmtVisitorStrict to IndexStmtRewriterStrict--><path codeLine="302" d="M2113.9155,687.085 C2114.78,712.9253 2115.7014,740.463 2116.5412,765.5657 " fill="none" id="IndexStmtVisitorStrict-backto-IndexStmtRewriterStrict" style="stroke:#A80036;stroke-width:1.0;"/><polygon fill="none" points="2106.9097,687.0274,2113.237,666.8045,2120.9019,686.5592,2106.9097,687.0274" style="stroke:#A80036;stroke-width:1.0;"/><!--MD5=[17cef803f955afc58233a06ff8ed6ced]
+reverse link IndexExprRewriterStrict to IndexNotationRewriterStrict--><path codeLine="303" d="M1876.8558,977.1228 C1939.4095,1058.7478 2016.1337,1158.8635 2050.856,1204.1719 " fill="none" id="IndexExprRewriterStrict-backto-IndexNotationRewriterStrict" style="stroke:#A80036;stroke-width:1.0;"/><polygon fill="none" points="1871.16,981.1985,1864.5506,961.066,1882.2722,972.6826,1871.16,981.1985" style="stroke:#A80036;stroke-width:1.0;"/><!--MD5=[f1a4c69017cc3acf68d02aa5998e72c7]
+reverse link IndexStmtRewriterStrict to IndexNotationRewriterStrict--><path codeLine="304" d="M2105.0534,962.205 C2093.838,1046.2084 2079.1518,1156.2078 2072.7352,1204.2683 " fill="none" id="IndexStmtRewriterStrict-backto-IndexNotationRewriterStrict" style="stroke:#A80036;stroke-width:1.0;"/><polygon fill="none" points="2098.1288,961.1748,2107.714,942.277,2112.0056,963.0275,2098.1288,961.1748" style="stroke:#A80036;stroke-width:1.0;"/><!--MD5=[ea60607216d1741e9a004dc3b2ad9bc4]
+reverse link IndexNotationRewriterStrict to IndexNotationRewriter--><path codeLine="306" d="M2069.5,1272.8869 C2069.5,1322.2639 2069.5,1404.9692 2069.5,1479.8852 " fill="none" id="IndexNotationRewriterStrict-backto-IndexNotationRewriter" style="stroke:#A80036;stroke-width:1.0;"/><polygon fill="none" points="2062.5001,1272.6931,2069.5,1252.6931,2076.5001,1272.693,2062.5001,1272.6931" style="stroke:#A80036;stroke-width:1.0;"/><!--MD5=[ce0e28a833df6d388c2232cca949e33a]
+reverse link Uncopyable to LowererImpl--><path codeLine="357" d="M864.1964,309.4349 C881.7851,337.3534 905.9227,374.8161 928.5,407 C947.767,434.4652 969.4267,463.6921 989.6625,490.3547 " fill="none" id="Uncopyable-backto-LowererImpl" style="stroke:#A80036;stroke-width:1.0;"/><polygon fill="none" points="858.0963,312.8828,853.4161,292.2165,869.9625,305.4535,858.0963,312.8828" style="stroke:#A80036;stroke-width:1.0;"/><!--MD5=[595f18298affe1361dad6c88d07b3ae8]
+reverse link Lowerer to LowererImpl--><path codeLine="358" d="M1063.5,311.7072 C1063.5,357.6007 1063.5,431.1895 1063.5,490.4492 " fill="none" id="Lowerer-backto-LowererImpl" style="stroke:#A80036;stroke-width:1.0;"/><polygon fill="#A80036" points="1063.5,298.6833,1059.5,304.6833,1063.5,310.6833,1067.5,304.6833,1063.5,298.6833" style="stroke:#A80036;stroke-width:1.0;"/><text fill="#000000" font-family="sans-serif" font-size="13" lengthAdjust="spacing" textLength="54" x="1064.5" y="450.0669">contains</text><text fill="#000000" font-family="sans-serif" font-size="13" lengthAdjust="spacing" textLength="8" x="1054.7125" y="318.2998">1</text><text fill="#000000" font-family="sans-serif" font-size="13" lengthAdjust="spacing" textLength="8" x="1055.1813" y="479.3951">1</text><!--MD5=[76c844881f8770258bad5028aba6ca47]
+reverse link IndexNotationVisitorStrict to Visitor--><path codeLine="396" d="M1453.9953,890.688 C1409.0705,926.7585 1339.7531,984.0918 1283.5,1038 C1267.164,1053.655 1250.4599,1070.5041 1234.1618,1087.4753 " fill="none" id="IndexNotationVisitorStrict-backto-Visitor" style="stroke:#A80036;stroke-width:1.0;"/><polygon fill="none" points="1449.6605,885.1915,1469.657,878.1815,1458.3965,896.1315,1449.6605,885.1915" style="stroke:#A80036;stroke-width:1.0;"/><!--MD5=[f3857c0b64c12f6416059a5dcd8ca3ae]
+reverse link LowererImpl to Visitor--><path codeLine="397" d="M1070.9927,694.5811 C1077.4133,788.4824 1086.8084,925.8861 1094.4598,1037.7864 " fill="none" id="LowererImpl-backto-Visitor" style="stroke:#A80036;stroke-width:1.0;"/><ellipse cx="1070.5145" cy="687.5863" fill="#FFFFFF" rx="8" ry="8" style="stroke:#A80036;stroke-width:1.0;"/><line style="stroke:#A80036;stroke-width:1.0;" x1="1071.0602" x2="1069.9687" y1="695.5676" y2="679.6049"/><line style="stroke:#A80036;stroke-width:1.0;" x1="1062.5331" x2="1078.4958" y1="688.132" y2="687.0405"/><text fill="#000000" font-family="sans-serif" font-size="13" lengthAdjust="spacing" textLength="54" x="1090.5" y="858.5669">contains</text><text fill="#000000" font-family="sans-serif" font-size="13" lengthAdjust="spacing" textLength="8" x="1062.1577" y="699.5">1</text><text fill="#000000" font-family="sans-serif" font-size="13" lengthAdjust="spacing" textLength="8" x="1085.7942" y="1027.1147">1</text><!--MD5=[44db9126e684c102525c4f7b853b119b]
+reverse link Visitor to LowererImpl--><path codeLine="398" d="M1157.8948,1024.7712 C1171.4272,938.063 1176.6901,836.4934 1153.5,747 C1147.5682,724.1083 1137.6236,701.0075 1126.4596,679.7046 " fill="none" id="Visitor-backto-LowererImpl" style="stroke:#A80036;stroke-width:1.0;"/><polygon fill="#A80036" points="1155.7945,1037.728,1160.703,1032.4454,1157.7146,1025.8826,1152.8061,1031.1653,1155.7945,1037.728" style="stroke:#A80036;stroke-width:1.0;"/><text fill="#000000" font-family="sans-serif" font-size="13" lengthAdjust="spacing" textLength="54" x="1170.5" y="858.5669">contains</text><text fill="#000000" font-family="sans-serif" font-size="13" lengthAdjust="spacing" textLength="8" x="1149.5248" y="1027.054">1</text><text fill="#000000" font-family="sans-serif" font-size="13" lengthAdjust="spacing" textLength="8" x="1122.7894" y="699.2875">1</text><!--MD5=[7cec337d4232ea69c4a4e115b7f1c391]
+reverse link LowererImpl to LowererImplImperative--><path codeLine="400" d="M979.2866,696.0461 C963.4034,716.9902 946.9263,738.7172 931.4609,759.1104 " fill="none" id="LowererImpl-backto-LowererImplImperative" style="stroke:#A80036;stroke-width:1.0;"/><polygon fill="none" points="973.9145,691.5453,991.5772,679.8393,985.0696,700.005,973.9145,691.5453" style="stroke:#A80036;stroke-width:1.0;"/><!--MD5=[d416585c3fdacb879af8752baa2327bb]
+reverse link LowererImplImperative to Visitor--><path codeLine="401" d="M879.1422,963.0891 C885.3942,979.2794 893.6358,994.8993 904.5,1008 C923.2784,1030.6441 940.9429,1019.1172 963.5,1038 C969.3812,1042.9232 975.1644,1048.1297 980.833,1053.5529 " fill="none" id="LowererImplImperative-backto-Visitor" style="stroke:#A80036;stroke-width:1.0;"/><ellipse cx="876.7795" cy="956.3169" fill="#FFFFFF" rx="8" ry="8" style="stroke:#A80036;stroke-width:1.0;"/><line style="stroke:#A80036;stroke-width:1.0;" x1="879.4147" x2="874.1442" y1="963.8704" y2="948.7634"/><line style="stroke:#A80036;stroke-width:1.0;" x1="869.226" x2="884.333" y1="958.9522" y2="953.6816"/><text fill="#000000" font-family="sans-serif" font-size="13" lengthAdjust="spacing" textLength="54" x="905.5" y="1004.0669">contains</text><text fill="#000000" font-family="sans-serif" font-size="13" lengthAdjust="spacing" textLength="8" x="866.9259" y="968.3506">1</text><text fill="#000000" font-family="sans-serif" font-size="13" lengthAdjust="spacing" textLength="8" x="964.8705" y="1039.5084">1</text><!--MD5=[cd8dd7ca9f18b6220f591f64794d3d39]
+reverse link Visitor to LowererImplImperative--><path codeLine="402" d="M988.0443,1026.5409 C980.2164,1014.4253 972.331,1002.497 964.5,991 C955.0529,977.1302 944.7145,962.7728 934.3268,948.8048 " fill="none" id="Visitor-backto-LowererImplImperative" style="stroke:#A80036;stroke-width:1.0;"/><polygon fill="#A80036" points="995.2137,1037.7132,995.3397,1030.5032,988.7328,1027.6138,988.6068,1034.8238,995.2137,1037.7132" style="stroke:#A80036;stroke-width:1.0;"/><text fill="#000000" font-family="sans-serif" font-size="13" lengthAdjust="spacing" textLength="54" x="974.5" y="1004.0669">contains</text><text fill="#000000" font-family="sans-serif" font-size="13" lengthAdjust="spacing" textLength="8" x="982.6713" y="1027.0386">1</text><text fill="#000000" font-family="sans-serif" font-size="13" lengthAdjust="spacing" textLength="8" x="931.5281" y="968.395">1</text><!--MD5=[59ff6f047f3ce21caa7eb37a22acd23c]
+@startuml taco
+scale 1
+
+
+class IntrusivePtr {
+    +T *ptr
+}
+class Uncopyable {}
+
+class IRNode {
+    +virtual void accept(IRVisitorStrict *v) const = 0
+    +virtual IRNodeType type_info() const = 0;
+}
+
+class BaseStmtNode {}
+class BaseExprNode {
+    +Datatype type
+}
+
+class StmtNode {
+    +void accept(IRVisitorStrict *v) const
+}
+class ExprNode {
+    +void accept(IRVisitorStrict *v) const
+}
+
+Uncopyable <|- - IRNode
+IRNode <|- - BaseStmtNode
+IRNode <|- - BaseExprNode
+BaseStmtNode <|- - StmtNode
+BaseExprNode <|- - ExprNode
+
+class IRHandle {
+    +void accept(IRVisitorStrict *v) const
+}
+class Expr {}
+class Stmt {}
+
+IntrusivePtr <|- - IRHandle
+IRHandle <|- - Expr
+IRHandle <|- - Stmt
+
+IRHandle "1" *- - "1" IRNode : contains
+
+
+
+' this class is abstract but plantuml version does not support interface keyword
+interface IRVisitorStrict {
+    +virtual void visit(const IRNode*) const = 0
+}
+
+/' 
+IRVisitor is not an interface or abstract because it 
+has not pure virtual methods
+'/
+class IRVisitor {
+    +virtual void visit(const IRNode*)
+}
+
+class IRRewriter {
+    ' protected fields and methods
+    #Expr expr 
+    #Stmt stmt
+
+    #virtual void visit(const ExprNode* op)
+    #virtual void visit(const StmtNode* op)
+
+    ' public fields and methods
+    +Expr rewrite(Expr)
+    +Stmt rewrite(Stmt)
+}
+class IRPrinter {
+    #std::ostream &stream
+    #std::ostream &stream2
+    #int indent
+    #bool color
+    #bool simplify
+    #enum Precedence
+    #Precedence parentPrecedence = BOTTOM
+    #NameGenerator varNameGenerator
+    #scopedMap<Expr, std::String> varNames
+
+    #void doIndent()
+    #void printBinOp(Expr a, Expr b, std::string op, Precedence precedence)
+    #void fewMoreMethods()
+    
+    #virtual void visit(const ExprNode*)
+    #virtual void visit(const StmtNode*)
+
+    +setColor(bool color)
+    +print(Stmt)
+}
+class IRVerifier {}
+
+IRVisitorStrict <|- - IRVisitor
+IRVisitorStrict <|- - IRPrinter
+IRVisitorStrict <|- - IRRewriter
+IRVisitor <|- - IRVerifier
+
+' Inheritance from IRRewriter
+' simplifier for ir::Expr
+class ExpressionSimplifier {}
+IRRewriter <|- - ExpressionSimplifier
+
+' simplifiers for ir::Stmt
+class RemoveRedundantStatements {}
+class RemoveRedundantLoops {}
+class RemoveDuplicateBody {}
+
+IRRewriter <|- - RemoveRedundantStatements
+IRRewriter <|- - RemoveRedundantLoops
+IRRewriter <|- - RemoveDuplicateBody
+
+
+' Inheritance from IRPrinter
+class CodeGen {}
+class CodeGen_C {}
+class CodeGen_CUDA {}
+class CodeGen_ISPC {}
+
+IRPrinter <|- - CodeGen
+CodeGen <|- - CodeGen_C
+CodeGen <|- - CodeGen_ISPC
+CodeGen <|- - CodeGen_CUDA
+
+
+class Manageable {}
+class IndexStmtNode {
+    -virtual void accept(IndexStmtVisitorStrict*) const = 0
+}
+class IndexExprNode {
+    -virtual void accept(IndexStmtVisitorStrict*) const = 0
+}
+
+
+Manageable <|- - IndexStmtNode
+Uncopyable <|- - IndexStmtNode
+Manageable <|- - IndexExprNode
+Uncopyable <|- - IndexExprNode
+
+class IndexStmt {}
+class IndexExpr {}
+
+IntrusivePtr <|- - IndexStmt
+IndexStmt "1" *- - "1" IndexStmtNode
+IntrusivePtr <|- - IndexExpr
+IndexExpr "1" *- - "1" IndexExprNode
+
+
+abstract class IndexExprVisitorStrict {
+    +void visit(const IndexStmt&)
+    +virtual void visit(const AccessNode*) = 0
+    +virtual void visit(const LiteralNode*) = 0
+    +virtual void visit(const NegNode*) = 0
+    +virtual void visit(const AddNode*) = 0
+    +virtual void visit(const SubNode*) = 0
+    +virtual void visit(const MulNode*) = 0
+    +virtual void visit(const DivNode*) = 0
+    +virtual void visit(const SqrtNode*) = 0
+    +virtual void visit(const CastNode*) = 0
+    +virtual void visit(const CallIntrinsicNode*) = 0
+    +virtual void visit(const ReductionNode*) = 0
+}
+abstract class IndexStmtVisitorStrict {
+    +void visit(const IndexStmt&)
+    +virtual void visit(const AssignmentNode*) = 0
+    +virtual void visit(const YieldNode*) = 0
+    +virtual void visit(const ForallNode*) = 0
+    +virtual void visit(const WhereNode*) = 0
+    +virtual void visit(const SequenceNode*) = 0
+    +virtual void visit(const AssembleNode*) = 0
+    +virtual void visit(const MultiNode*) = 0
+    +virtual void visit(const SuchThatNode*) = 0
+}
+
+abstract class IndexNotationVisitorStrict {}
+class IndexNotationPrinter {
+    +void print(const IndexExpr& expr)
+    +void print(const IndexStmt& expr)
+
+    ' Index Expressions visit()
+    +void visit(const AccessNode* node)
+    +void visit(const LiteralNode* node)
+    + void visit(const NegNode* node)
+    + void visit(const AddNode* node)
+    + void visit(const SubNode* node)
+    + void visit(const MulNode* node)
+    + void visit(const DivNode* node)
+    + void visit(const SqrtNode* node)
+    + void visit(const CastNode* node)
+    + void visit(const CallIntrinsicNode* node)
+    + void visit(const UnaryExprNode* node)
+    + void visit(const BinaryExprNode* node)
+    + void visit(const ReductionNode* node)
+
+    ' Index Statement visit()
+    + void visit(const AssignmentNode* node)
+    + void visit(const YieldNode* node)
+    + void visit(const ForallNode* node)
+    + void visit(const WhereNode* node)
+    + void visit(const SequenceNode* node)
+    + void visit(const AssembleNode* node)
+    + void visit(const MultiNode* node)
+    + void visit(const SuchThatNode* node)
+}
+class IndexNotationVisitor {
+    ' Index Expressions visit()
+    +virtual void visit(const AccessNode* node)
+    +virtual void visit(const LiteralNode* node)
+    +virtual void visit(const NegNode* node)
+    +virtual void visit(const AddNode* node)
+    +virtual void visit(const SubNode* node)
+    +virtual void visit(const MulNode* node)
+    +virtual void visit(const DivNode* node)
+    +virtual void visit(const SqrtNode* node)
+    +virtual void visit(const CastNode* node)
+    +virtual void visit(const CallIntrinsicNode* node)
+    +virtual void visit(const UnaryExprNode* node)
+    +virtual void visit(const BinaryExprNode* node)
+    +virtual void visit(const ReductionNode* node)
+
+    ' Index Statement visit()
+    +virtual void visit(const AssignmentNode* node)
+    +virtual void visit(const YieldNode* node)
+    +virtual void visit(const ForallNode* node)
+    +virtual void visit(const WhereNode* node)
+    +virtual void visit(const SequenceNode* node)
+    +virtual void visit(const AssembleNode* node)
+    +virtual void visit(const MultiNode* node)
+    +virtual void visit(const SuchThatNode* node)
+}
+class Matcher {
+
+}
+
+abstract class IndexExprRewriterStrict {
+    +IndexExpr rewrite(IndexExpr)
+
+    #IndexExpr expr
+
+    #virtual void visit(const AccessNode* op) = 0
+    #virtual void visit(const LiteralNode* op) = 0
+    #virtual void visit(const NegNode* op) = 0
+    #virtual void visit(const SqrtNode* op) = 0
+    #virtual void visit(const AddNode* op) = 0
+    #virtual void visit(const SubNode* op) = 0
+    #virtual void visit(const MulNode* op) = 0
+    #virtual void visit(const DivNode* op) = 0
+    #virtual void visit(const CastNode* op) = 0
+    #virtual void visit(const CallIntrinsicNode* op) = 0
+    #virtual void visit(const ReductionNode* op) = 0
+}
+abstract class IndexStmtRewriterStrict {
+    +IndexStmt rewrite(IndexStmt)
+
+    #IndexStmt stmt
+
+    #virtual void visit(const AssignmentNode* op) = 0
+    #virtual void visit(const YieldNode* op) = 0
+    #virtual void visit(const ForallNode* op) = 0
+    #virtual void visit(const WhereNode* op) = 0
+    #virtual void visit(const SequenceNode* op) = 0
+    #virtual void visit(const AssembleNode* op) = 0
+    #virtual void visit(const MultiNode* op) = 0
+    #virtual void visit(const SuchThatNode* op) = 0
+}
+abstract class IndexNotationRewriterStrict {}
+class IndexNotationRewriter {
+    ' Index Expressions visit()
+    +virtual void visit(const AccessNode* node)
+    +virtual void visit(const LiteralNode* node)
+    +virtual void visit(const NegNode* node)
+    +virtual void visit(const AddNode* node)
+    +virtual void visit(const SubNode* node)
+    +virtual void visit(const MulNode* node)
+    +virtual void visit(const DivNode* node)
+    +virtual void visit(const SqrtNode* node)
+    +virtual void visit(const CastNode* node)
+    +virtual void visit(const CallIntrinsicNode* node)
+    +virtual void visit(const UnaryExprNode* node)
+    +virtual void visit(const BinaryExprNode* node)
+    +virtual void visit(const ReductionNode* node)
+
+    ' Index Statement visit()
+    +virtual void visit(const AssignmentNode* node)
+    +virtual void visit(const YieldNode* node)
+    +virtual void visit(const ForallNode* node)
+    +virtual void visit(const WhereNode* node)
+    +virtual void visit(const SequenceNode* node)
+    +virtual void visit(const AssembleNode* node)
+    +virtual void visit(const MultiNode* node)
+    +virtual void visit(const SuchThatNode* node)
+}
+
+
+IndexExprVisitorStrict <|- - IndexNotationVisitorStrict
+IndexStmtVisitorStrict <|- - IndexNotationVisitorStrict
+IndexNotationVisitorStrict <|- - IndexNotationVisitor
+IndexNotationVisitorStrict <|- - IndexNotationPrinter
+IndexNotationVisitor <|- - Matcher
+
+IndexExprVisitorStrict <|- - IndexExprRewriterStrict
+IndexStmtVisitorStrict <|- - IndexStmtRewriterStrict
+IndexExprRewriterStrict <|- - IndexNotationRewriterStrict
+IndexStmtRewriterStrict <|- - IndexNotationRewriterStrict
+
+IndexNotationRewriterStrict <|- - IndexNotationRewriter
+
+' - private
+' # protected
+' ~ package private
+' + public
+
+' {static}
+' {abstract} virtual methods
+
+' lowering part - - convertion from IndexExpr and IndexStmt to ir::Expr and ir::Stmt
+class Lowerer {
+    +std::shared_ptr<LowererImpl> impl;
+}
+abstract class LowererImpl {
+    ' protected fields and methods
+    #class Visitor;
+    #friend class Visitor;
+    #std::shared_ptr<Visitor> visitor;
+
+    #virtual ir::Stmt lower(IndexStmt stmt);
+    #virtual ir::Expr lower(IndexExpr expr);
+
+    #virtual ir::Expr lowerExpr(IndexExpr expr) = 0;
+    #virtual ir::Stmt lowerStmt(IndexStmt stmt) = 0;
+
+    ' public fields and methods
+    +virtual ir::Stmt lower(IndexStmt stmt, std::string name, 
+                 bool assemble, bool compute, bool pack, bool unpack) = 0;
+}
+
+class LowererImplImperative {
+    ' private fields and methods
+    -class Visitor
+    -fiend class Visitor
+    -std::shared_ptr<Visitor> visitor
+    -bool assemble
+    -bool compute
+    -vars a_bunch_of_other_fields
+
+    ' protected fields and methods
+    #virtual ir::Stmt lowerExpr(IndexExpr expr);
+    #virtual ir::Stmt lowerStmt(IndexStmt stmt);
+
+    ' public fields and methods
+    +ir::Stmt lower(IndexStmt stmt, std::string name, 
+                 bool assemble, bool compute, bool pack, bool unpack)
+
+}
+note bottom of LowererImplImperative : Stmt LowererImplImperative::lower(IndexStmt stmt) {\n  return visitor->lower(stmt);\n}
+
+Uncopyable <|- - LowererImpl
+Lowerer "1" *- - "1" LowererImpl : contains
+
+
+' visitor that does the lowering
+class Visitor {
+    ' private fields and methods
+    -LowererImpl* impl
+    -Expr expr
+    -Stmt stmt
+
+    -void visit(const AssignmentNode* node)
+    -void visit(const YieldNode* node)
+    -void visit(const ForallNode* node) 
+    -void visit(const WhereNode* node) 
+    -void visit(const MultiNode* node) 
+    -void visit(const SuchThatNode* node) 
+    -void visit(const SequenceNode* node) 
+    -void visit(const AssembleNode* node) 
+    -void visit(const AccessNode* node) 
+    -void visit(const LiteralNode* node) 
+    -void visit(const NegNode* node) 
+    -void visit(const AddNode* node) 
+    -void visit(const SubNode* node) 
+    -void visit(const MulNode* node) 
+    -void visit(const DivNode* node) 
+    -void visit(const SqrtNode* node) 
+    -void visit(const CastNode* node) 
+    -void visit(const CallIntrinsicNode* node) 
+    -void visit(const ReductionNode* node) 
+
+    ' public fields and methods
+    +Visitor(LowererImplImperative* impl)
+    +Stmt lower(IndexStmt stmt)
+    +Expr lower(IndexExpr expr)
+}
+
+note bottom of Visitor:   Stmt lower(IndexStmt stmt) {\n  this->stmt = Stmt();\n  impl->accessibleIterators.scope();\n  IndexStmtVisitorStrict::visit(stmt);\n  impl->accessibleIterators.unscope();\n  return this->stmt;\n}
+
+IndexNotationVisitorStrict <|- - Visitor
+LowererImpl "1" +- - "1" Visitor : contains
+Visitor "1" *- - "1" LowererImpl : contains
+
+LowererImpl <|- - LowererImplImperative
+LowererImplImperative "1" +- - "1" Visitor : contains
+Visitor "1" *- - "1" LowererImplImperative : contains
+
+@enduml
+
+@startuml taco
+scale 1
+
+
+class IntrusivePtr {
+    +T *ptr
+}
+class Uncopyable {}
+
+class IRNode {
+    +virtual void accept(IRVisitorStrict *v) const = 0
+    +virtual IRNodeType type_info() const = 0;
+}
+
+class BaseStmtNode {}
+class BaseExprNode {
+    +Datatype type
+}
+
+class StmtNode {
+    +void accept(IRVisitorStrict *v) const
+}
+class ExprNode {
+    +void accept(IRVisitorStrict *v) const
+}
+
+Uncopyable <|- - IRNode
+IRNode <|- - BaseStmtNode
+IRNode <|- - BaseExprNode
+BaseStmtNode <|- - StmtNode
+BaseExprNode <|- - ExprNode
+
+class IRHandle {
+    +void accept(IRVisitorStrict *v) const
+}
+class Expr {}
+class Stmt {}
+
+IntrusivePtr <|- - IRHandle
+IRHandle <|- - Expr
+IRHandle <|- - Stmt
+
+IRHandle "1" *- - "1" IRNode : contains
+
+
+
+interface IRVisitorStrict {
+    +virtual void visit(const IRNode*) const = 0
+}
+
+class IRVisitor {
+    +virtual void visit(const IRNode*)
+}
+
+class IRRewriter {
+    #Expr expr 
+    #Stmt stmt
+
+    #virtual void visit(const ExprNode* op)
+    #virtual void visit(const StmtNode* op)
+
+    +Expr rewrite(Expr)
+    +Stmt rewrite(Stmt)
+}
+class IRPrinter {
+    #std::ostream &stream
+    #std::ostream &stream2
+    #int indent
+    #bool color
+    #bool simplify
+    #enum Precedence
+    #Precedence parentPrecedence = BOTTOM
+    #NameGenerator varNameGenerator
+    #scopedMap<Expr, std::String> varNames
+
+    #void doIndent()
+    #void printBinOp(Expr a, Expr b, std::string op, Precedence precedence)
+    #void fewMoreMethods()
+    
+    #virtual void visit(const ExprNode*)
+    #virtual void visit(const StmtNode*)
+
+    +setColor(bool color)
+    +print(Stmt)
+}
+class IRVerifier {}
+
+IRVisitorStrict <|- - IRVisitor
+IRVisitorStrict <|- - IRPrinter
+IRVisitorStrict <|- - IRRewriter
+IRVisitor <|- - IRVerifier
+
+class ExpressionSimplifier {}
+IRRewriter <|- - ExpressionSimplifier
+
+class RemoveRedundantStatements {}
+class RemoveRedundantLoops {}
+class RemoveDuplicateBody {}
+
+IRRewriter <|- - RemoveRedundantStatements
+IRRewriter <|- - RemoveRedundantLoops
+IRRewriter <|- - RemoveDuplicateBody
+
+
+class CodeGen {}
+class CodeGen_C {}
+class CodeGen_CUDA {}
+class CodeGen_ISPC {}
+
+IRPrinter <|- - CodeGen
+CodeGen <|- - CodeGen_C
+CodeGen <|- - CodeGen_ISPC
+CodeGen <|- - CodeGen_CUDA
+
+
+class Manageable {}
+class IndexStmtNode {
+    -virtual void accept(IndexStmtVisitorStrict*) const = 0
+}
+class IndexExprNode {
+    -virtual void accept(IndexStmtVisitorStrict*) const = 0
+}
+
+
+Manageable <|- - IndexStmtNode
+Uncopyable <|- - IndexStmtNode
+Manageable <|- - IndexExprNode
+Uncopyable <|- - IndexExprNode
+
+class IndexStmt {}
+class IndexExpr {}
+
+IntrusivePtr <|- - IndexStmt
+IndexStmt "1" *- - "1" IndexStmtNode
+IntrusivePtr <|- - IndexExpr
+IndexExpr "1" *- - "1" IndexExprNode
+
+
+abstract class IndexExprVisitorStrict {
+    +void visit(const IndexStmt&)
+    +virtual void visit(const AccessNode*) = 0
+    +virtual void visit(const LiteralNode*) = 0
+    +virtual void visit(const NegNode*) = 0
+    +virtual void visit(const AddNode*) = 0
+    +virtual void visit(const SubNode*) = 0
+    +virtual void visit(const MulNode*) = 0
+    +virtual void visit(const DivNode*) = 0
+    +virtual void visit(const SqrtNode*) = 0
+    +virtual void visit(const CastNode*) = 0
+    +virtual void visit(const CallIntrinsicNode*) = 0
+    +virtual void visit(const ReductionNode*) = 0
+}
+abstract class IndexStmtVisitorStrict {
+    +void visit(const IndexStmt&)
+    +virtual void visit(const AssignmentNode*) = 0
+    +virtual void visit(const YieldNode*) = 0
+    +virtual void visit(const ForallNode*) = 0
+    +virtual void visit(const WhereNode*) = 0
+    +virtual void visit(const SequenceNode*) = 0
+    +virtual void visit(const AssembleNode*) = 0
+    +virtual void visit(const MultiNode*) = 0
+    +virtual void visit(const SuchThatNode*) = 0
+}
+
+abstract class IndexNotationVisitorStrict {}
+class IndexNotationPrinter {
+    +void print(const IndexExpr& expr)
+    +void print(const IndexStmt& expr)
+
+    +void visit(const AccessNode* node)
+    +void visit(const LiteralNode* node)
+    + void visit(const NegNode* node)
+    + void visit(const AddNode* node)
+    + void visit(const SubNode* node)
+    + void visit(const MulNode* node)
+    + void visit(const DivNode* node)
+    + void visit(const SqrtNode* node)
+    + void visit(const CastNode* node)
+    + void visit(const CallIntrinsicNode* node)
+    + void visit(const UnaryExprNode* node)
+    + void visit(const BinaryExprNode* node)
+    + void visit(const ReductionNode* node)
+
+    + void visit(const AssignmentNode* node)
+    + void visit(const YieldNode* node)
+    + void visit(const ForallNode* node)
+    + void visit(const WhereNode* node)
+    + void visit(const SequenceNode* node)
+    + void visit(const AssembleNode* node)
+    + void visit(const MultiNode* node)
+    + void visit(const SuchThatNode* node)
+}
+class IndexNotationVisitor {
+    +virtual void visit(const AccessNode* node)
+    +virtual void visit(const LiteralNode* node)
+    +virtual void visit(const NegNode* node)
+    +virtual void visit(const AddNode* node)
+    +virtual void visit(const SubNode* node)
+    +virtual void visit(const MulNode* node)
+    +virtual void visit(const DivNode* node)
+    +virtual void visit(const SqrtNode* node)
+    +virtual void visit(const CastNode* node)
+    +virtual void visit(const CallIntrinsicNode* node)
+    +virtual void visit(const UnaryExprNode* node)
+    +virtual void visit(const BinaryExprNode* node)
+    +virtual void visit(const ReductionNode* node)
+
+    +virtual void visit(const AssignmentNode* node)
+    +virtual void visit(const YieldNode* node)
+    +virtual void visit(const ForallNode* node)
+    +virtual void visit(const WhereNode* node)
+    +virtual void visit(const SequenceNode* node)
+    +virtual void visit(const AssembleNode* node)
+    +virtual void visit(const MultiNode* node)
+    +virtual void visit(const SuchThatNode* node)
+}
+class Matcher {
+
+}
+
+abstract class IndexExprRewriterStrict {
+    +IndexExpr rewrite(IndexExpr)
+
+    #IndexExpr expr
+
+    #virtual void visit(const AccessNode* op) = 0
+    #virtual void visit(const LiteralNode* op) = 0
+    #virtual void visit(const NegNode* op) = 0
+    #virtual void visit(const SqrtNode* op) = 0
+    #virtual void visit(const AddNode* op) = 0
+    #virtual void visit(const SubNode* op) = 0
+    #virtual void visit(const MulNode* op) = 0
+    #virtual void visit(const DivNode* op) = 0
+    #virtual void visit(const CastNode* op) = 0
+    #virtual void visit(const CallIntrinsicNode* op) = 0
+    #virtual void visit(const ReductionNode* op) = 0
+}
+abstract class IndexStmtRewriterStrict {
+    +IndexStmt rewrite(IndexStmt)
+
+    #IndexStmt stmt
+
+    #virtual void visit(const AssignmentNode* op) = 0
+    #virtual void visit(const YieldNode* op) = 0
+    #virtual void visit(const ForallNode* op) = 0
+    #virtual void visit(const WhereNode* op) = 0
+    #virtual void visit(const SequenceNode* op) = 0
+    #virtual void visit(const AssembleNode* op) = 0
+    #virtual void visit(const MultiNode* op) = 0
+    #virtual void visit(const SuchThatNode* op) = 0
+}
+abstract class IndexNotationRewriterStrict {}
+class IndexNotationRewriter {
+    +virtual void visit(const AccessNode* node)
+    +virtual void visit(const LiteralNode* node)
+    +virtual void visit(const NegNode* node)
+    +virtual void visit(const AddNode* node)
+    +virtual void visit(const SubNode* node)
+    +virtual void visit(const MulNode* node)
+    +virtual void visit(const DivNode* node)
+    +virtual void visit(const SqrtNode* node)
+    +virtual void visit(const CastNode* node)
+    +virtual void visit(const CallIntrinsicNode* node)
+    +virtual void visit(const UnaryExprNode* node)
+    +virtual void visit(const BinaryExprNode* node)
+    +virtual void visit(const ReductionNode* node)
+
+    +virtual void visit(const AssignmentNode* node)
+    +virtual void visit(const YieldNode* node)
+    +virtual void visit(const ForallNode* node)
+    +virtual void visit(const WhereNode* node)
+    +virtual void visit(const SequenceNode* node)
+    +virtual void visit(const AssembleNode* node)
+    +virtual void visit(const MultiNode* node)
+    +virtual void visit(const SuchThatNode* node)
+}
+
+
+IndexExprVisitorStrict <|- - IndexNotationVisitorStrict
+IndexStmtVisitorStrict <|- - IndexNotationVisitorStrict
+IndexNotationVisitorStrict <|- - IndexNotationVisitor
+IndexNotationVisitorStrict <|- - IndexNotationPrinter
+IndexNotationVisitor <|- - Matcher
+
+IndexExprVisitorStrict <|- - IndexExprRewriterStrict
+IndexStmtVisitorStrict <|- - IndexStmtRewriterStrict
+IndexExprRewriterStrict <|- - IndexNotationRewriterStrict
+IndexStmtRewriterStrict <|- - IndexNotationRewriterStrict
+
+IndexNotationRewriterStrict <|- - IndexNotationRewriter
+
+
+
+class Lowerer {
+    +std::shared_ptr<LowererImpl> impl;
+}
+abstract class LowererImpl {
+    #class Visitor;
+    #friend class Visitor;
+    #std::shared_ptr<Visitor> visitor;
+
+    #virtual ir::Stmt lower(IndexStmt stmt);
+    #virtual ir::Expr lower(IndexExpr expr);
+
+    #virtual ir::Expr lowerExpr(IndexExpr expr) = 0;
+    #virtual ir::Stmt lowerStmt(IndexStmt stmt) = 0;
+
+    +virtual ir::Stmt lower(IndexStmt stmt, std::string name, 
+                 bool assemble, bool compute, bool pack, bool unpack) = 0;
+}
+
+class LowererImplImperative {
+    -class Visitor
+    -fiend class Visitor
+    -std::shared_ptr<Visitor> visitor
+    -bool assemble
+    -bool compute
+    -vars a_bunch_of_other_fields
+
+    #virtual ir::Stmt lowerExpr(IndexExpr expr);
+    #virtual ir::Stmt lowerStmt(IndexStmt stmt);
+
+    +ir::Stmt lower(IndexStmt stmt, std::string name, 
+                 bool assemble, bool compute, bool pack, bool unpack)
+
+}
+note bottom of LowererImplImperative : Stmt LowererImplImperative::lower(IndexStmt stmt) {\n  return visitor->lower(stmt);\n}
+
+Uncopyable <|- - LowererImpl
+Lowerer "1" *- - "1" LowererImpl : contains
+
+
+class Visitor {
+    -LowererImpl* impl
+    -Expr expr
+    -Stmt stmt
+
+    -void visit(const AssignmentNode* node)
+    -void visit(const YieldNode* node)
+    -void visit(const ForallNode* node) 
+    -void visit(const WhereNode* node) 
+    -void visit(const MultiNode* node) 
+    -void visit(const SuchThatNode* node) 
+    -void visit(const SequenceNode* node) 
+    -void visit(const AssembleNode* node) 
+    -void visit(const AccessNode* node) 
+    -void visit(const LiteralNode* node) 
+    -void visit(const NegNode* node) 
+    -void visit(const AddNode* node) 
+    -void visit(const SubNode* node) 
+    -void visit(const MulNode* node) 
+    -void visit(const DivNode* node) 
+    -void visit(const SqrtNode* node) 
+    -void visit(const CastNode* node) 
+    -void visit(const CallIntrinsicNode* node) 
+    -void visit(const ReductionNode* node) 
+
+    +Visitor(LowererImplImperative* impl)
+    +Stmt lower(IndexStmt stmt)
+    +Expr lower(IndexExpr expr)
+}
+
+note bottom of Visitor:   Stmt lower(IndexStmt stmt) {\n  this->stmt = Stmt();\n  impl->accessibleIterators.scope();\n  IndexStmtVisitorStrict::visit(stmt);\n  impl->accessibleIterators.unscope();\n  return this->stmt;\n}
+
+IndexNotationVisitorStrict <|- - Visitor
+LowererImpl "1" +- - "1" Visitor : contains
+Visitor "1" *- - "1" LowererImpl : contains
+
+LowererImpl <|- - LowererImplImperative
+LowererImplImperative "1" +- - "1" Visitor : contains
+Visitor "1" *- - "1" LowererImplImperative : contains
+
+@enduml
+
+PlantUML version 1.2021.7(Sun May 23 08:40:07 EDT 2021)
+(GPL source distribution)
+Java Runtime: OpenJDK Runtime Environment
+JVM: OpenJDK 64-Bit Server VM
+Default Encoding: ANSI_X3.4-1968
+Language: en
+Country: US
+--></g></svg>

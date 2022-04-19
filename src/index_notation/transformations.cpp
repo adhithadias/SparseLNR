@@ -1,8 +1,10 @@
 #include "taco/index_notation/transformations.h"
 
+#include "taco/cuda.h"
 #include "taco/index_notation/index_notation.h"
 #include "taco/index_notation/index_notation_rewriter.h"
 #include "taco/index_notation/index_notation_nodes.h"
+#include "taco/index_notation/index_notation_printer.h"
 #include "taco/error/error_messages.h"
 #include "taco/util/collections.h"
 #include "taco/lower/iterator.h"
@@ -592,7 +594,10 @@ IndexStmt Parallelize::apply(IndexStmt stmt, std::string* reason) const {
     std::string reason = "";
 
     IndexStmt rewriteParallel(IndexStmt stmt) {
+      std::cout << "1 rewriting IndexStmt to support parallelize schedule directive\n--------------------------------------------\n";
+      std::cout << stmt << std::endl;
       provGraph = ProvenanceGraph(stmt);
+      std::cout << "2 rewriting IndexStmt to support parallelize schedule directive\n--------------------------------------------\n";
 
       const auto reductionVars = getReductionVars(stmt);
       reductionIndexVars.clear();
@@ -607,15 +612,22 @@ IndexStmt Parallelize::apply(IndexStmt stmt, std::string* reason) const {
       tensorVars = createIRTensorVars(stmt);
 
       assembledByUngroupedInsert.clear();
+      std::cout << "3 rewriting IndexStmt to support parallelize schedule directive\n--------------------------------------------\n";
       for (const auto& result : getAssembledByUngroupedInsertion(stmt)) {
         assembledByUngroupedInsert.push_back(tensorVars[result]);
       }
 
+      std::cout << "4 rewriting IndexStmt to support parallelize schedule directive\n--------------------------------------------\n";
+      std::cout << stmt << std::endl;
       return rewrite(stmt);
     }
 
     void visit(const ForallNode* node) {
+      std::cout << "transformations.cpp void visit(const ForallNode* node)\n";
+      std::cout << "node: \n" << node << std::endl;
       Forall foralli(node);
+      std::cout << "foralli: \n" << foralli << std::endl;
+      std::cout << "before stmt update stmt: \n" << stmt << std::endl;
       IndexVar i = parallelize.geti();
 
       definedIndexVars.insert(foralli.getIndexVar());
@@ -632,6 +644,7 @@ IndexStmt Parallelize::apply(IndexStmt stmt, std::string* reason) const {
         Iterators iterators(foralli, tensorVars);
         MergeLattice lattice = MergeLattice::make(foralli, iterators, provGraph, 
                                                   definedIndexVars);
+        std::cout << "iter: " << i << ", lattice: \n" << lattice << std::endl;
 
         // Precondition 2: No coiteration of modes (i.e., merge lattice has 
         //                 only one iterator)
@@ -660,6 +673,7 @@ IndexStmt Parallelize::apply(IndexStmt stmt, std::string* reason) const {
         MergeLattice underivedLattice = MergeLattice::make(underivedForall, 
                                                            iterators, provGraph, 
                                                            definedIndexVars);
+        std::cout << "iter: " << i << ", underivedLattice: \n" << lattice << std::endl;
 
         // Precondition 3: Every result iterator must have insert capability
         for (Iterator iterator : underivedLattice.results()) {
@@ -721,12 +735,16 @@ IndexStmt Parallelize::apply(IndexStmt stmt, std::string* reason) const {
             // build consumer that writes from temporary to output, mark consumer as parallel reduction
             ParallelUnit reductionUnit = ParallelUnit::CPUThreadGroupReduction;
             if (should_use_CUDA_codegen()) {
+              std::cout << "should_use_CUDA_codegen() true\n";
               if (parentParallelUnits.count(ParallelUnit::GPUWarp)) {
                 reductionUnit = ParallelUnit::GPUWarpReduction;
               }
               else {
                 reductionUnit = ParallelUnit::GPUBlockReduction;
               }
+            }
+            else {
+              std::cout << "should_use_CUDA_codegen() false\n";
             }
             IndexStmt consumer = forall(i, Assignment(assignment->lhs, w(i), assignment->op), reductionUnit, OutputRaceStrategy::ParallelReduction);
             precomputed_stmt = where(consumer, producer);
@@ -746,8 +764,9 @@ IndexStmt Parallelize::apply(IndexStmt stmt, std::string* reason) const {
           return;
         }
 
-
+        std::cout << "updated stmt: \n";
         stmt = forall(i, foralli.getStmt(), parallelize.getParallelUnit(), parallelize.getOutputRaceStrategy(), foralli.getUnrollFactor());
+        std::cout << stmt << std::endl;
         return;
       }
 
@@ -1181,6 +1200,7 @@ std::ostream& operator<<(std::ostream& os,
 
 IndexStmt parallelizeOuterLoop(IndexStmt stmt) {
   // get outer ForAll
+  std::cout << "get outer ForAll ----------------- \n";
   Forall forall;
   bool matched = false;
   match(stmt,
@@ -1215,7 +1235,19 @@ IndexStmt parallelizeOuterLoop(IndexStmt stmt) {
     }
     return parallelized256;
   }
+  else if (should_use_ISPC_codegen()) {
+    std::cout << "outer loop parallelization for ISPC codegen\n";
+    // IndexStmt parallelized = Parallelize(forall.getIndexVar(), ParallelUnit::CPUSpmd, OutputRaceStrategy::NoRaces).apply(stmt, &reason);
+    // if (parallelized == IndexStmt()) {
+    //   // can't parallelize
+    //   return stmt;
+    // }
+    // return parallelized;
+
+    return stmt;
+  }
   else {
+    std::cout << "outer loop parallelization for CPU codgen index statement\n";
     IndexStmt parallelized = Parallelize(forall.getIndexVar(), ParallelUnit::CPUThread, OutputRaceStrategy::NoRaces).apply(stmt, &reason);
     if (parallelized == IndexStmt()) {
       // can't parallelize
@@ -1320,8 +1352,25 @@ topologicallySort(map<IndexVar,set<IndexVar>> hardDeps,
   return sortedVars;
 }
 
+IndexStmt justTraverseThroughTheIndexStmt(IndexStmt stmt) {
+  struct IndexStatementTraverse : public IndexNotationPrinter {
+    IndexStatementTraverse(std::ostream& os) : IndexNotationPrinter(os) {};
+    using IndexNotationPrinter::visit;
+    map <IndexVar, ParallelUnit> forallParallelUnit;
+    map <IndexVar, OutputRaceStrategy> forallOutputRaceStrategy;
+  };
+
+  std::cout << "traversing through the index statement\n";
+  IndexNotationPrinter printer(std::cout);
+  std::cout << std::endl;
+  stmt.accept(&printer);
+  return stmt;
+  
+}
+
 
 IndexStmt reorderLoopsTopologically(IndexStmt stmt) {
+  std::cout << "executing reorderLoopsTopologically\n";
   // Collect tensorLevelVars which stores the pairs of IndexVar and tensor
   // level that each tensor is accessed at
   struct DAGBuilder : public IndexNotationVisitor {
@@ -1384,6 +1433,8 @@ IndexStmt reorderLoopsTopologically(IndexStmt stmt) {
   Iterators iterators(stmt);
   DAGBuilder dagBuilder(iterators);
   stmt.accept(&dagBuilder);
+  std::cout << "After DAGBuilder\n";
+  std::cout << stmt << std::endl;
 
   // Construct tensor dependencies (sorted list of IndexVars) from tensorLevelVars
   map<string, vector<pair<IndexVar, bool>>> tensorVarOrders;
@@ -1414,6 +1465,8 @@ IndexStmt reorderLoopsTopologically(IndexStmt stmt) {
   };
   CollectSoftDependencies collectSoftDeps;
   stmt.accept(&collectSoftDeps);
+  std::cout << "After CollectSoftDependencies\n";
+  std::cout << stmt << std::endl;
 
   const auto sortedVars = topologicallySort(hardDeps, collectSoftDeps.softDeps, 
                                             dagBuilder.indexVarOriginalOrder);
@@ -1450,7 +1503,11 @@ IndexStmt reorderLoopsTopologically(IndexStmt stmt) {
   };
   TopoReorderRewriter rewriter(sortedVars, dagBuilder.innerBody, 
                                dagBuilder.forallParallelUnit, dagBuilder.forallOutputRaceStrategy);
-  return rewriter.rewrite(stmt);
+  IndexStmt stmtChanged = rewriter.rewrite(stmt);
+  std::cout << "After TopoReorderRewriter\n";
+  std::cout << stmtChanged << std::endl;
+
+  return stmtChanged;
 }
 
 IndexStmt scalarPromote(IndexStmt stmt, ProvenanceGraph provGraph, 
@@ -1478,6 +1535,7 @@ IndexStmt scalarPromote(IndexStmt stmt, ProvenanceGraph provGraph,
 
     void visit(const ForallNode* node) {
       Forall foralli(node);
+      std::cout << "scalar promote: " << foralli << std::endl;
       IndexVar i = foralli.getIndexVar();
 
       // Don't allow hoisting out of forall's for GPU warp and block reduction

@@ -7,8 +7,8 @@
 #include <cstdint>
 #include <papi.h>
 
-// #define NUM_THREADS_TO_USE 64
-#define NUM_THREADS_TO_USE 32
+#define NUM_THREADS_TO_USE 1
+// #define NUM_THREADS_TO_USE 32
 
 void handle_error (int retval)
 {
@@ -518,13 +518,15 @@ TEST(scheduling_eval, sddmmFused) {
 
   // vector<int> filenums = {2,3,4,5,6,7,8,9,10,12,15};
 
-  vector<int> filenums = {1};
+  vector<int> filenums = {0};
 
   for (auto filenum : filenums) {
 
   // int filenum = 5;
 
   std::vector<std::string> matfiles = {
+    "/home/min/a/kadhitha/workspace/my_taco/taco/net-repo-graph/cora.mtx",
+    "/home/min/a/kadhitha/workspace/my_taco/taco/net-repo-graph/amazon.mtx",
     "/home/min/a/kadhitha/ispc-examples/data/suitesparse/synthetic/synthetic.mtx",
     "/home/min/a/kadhitha/ispc-examples/data/suitesparse/cage3/cage3.mtx",
     "/home/min/a/kadhitha/ispc-examples/data/suitesparse/bcsstk17/bcsstk17.mtx",
@@ -545,6 +547,8 @@ TEST(scheduling_eval, sddmmFused) {
     "/home/min/a/kadhitha/ispc-examples/data/suitesparse/twitter7/twitter7.mtx"
   };
   std::vector<std::string> matfilesrw = {
+    "/home/min/a/kadhitha/workspace/my_taco/taco/net-repo-graph/rw/cora.mtx",
+    "/home/min/a/kadhitha/workspace/my_taco/taco/net-repo-graph/rw/amazon.mtx",
     "/home/min/a/kadhitha/ispc-examples/data/suitesparse/rw/synthetic.mtx",
     "/home/min/a/kadhitha/ispc-examples/data/suitesparse/rw/cage3.mtx",
     "/home/min/a/kadhitha/ispc-examples/data/suitesparse/rw/bcsstk17.mtx",
@@ -688,66 +692,66 @@ TEST(scheduling_eval, sddmmFused) {
 
   statfile << "\nseparate execution\n";
   
-  // // std::string sofile_sddmm = "/home/min/a/kadhitha/workspace/my_taco/taco/test/kernels/sddmm_spmm/csr_dense_spmm.so";
-  // std::string sofile_sddmm = "/home/min/a/kadhitha/workspace/my_taco/taco/test/kernels/sddmm_spmm/csr_dense_dense_sddmm.so";
-  // TOOL_BENCHMARK_TIMER(ref1.compute(statfile, sofile_sddmm), "\n\nSDDMM Kernel: ", timevalue);
-  // if (statfile.is_open()) {
-  //   statfile << "sddmm time: ";
-  //   statfile << timevalue.mean << std::endl;
-  // } else { std::cout << " stat file is not open\n"; }
+  // std::string sofile_sddmm = "/home/min/a/kadhitha/workspace/my_taco/taco/test/kernels/sddmm_spmm/csr_dense_spmm.so";
+  std::string sofile_sddmm = "/home/min/a/kadhitha/workspace/my_taco/taco/test/kernels/sddmm_spmm/csr_dense_dense_sddmm.so";
+  TOOL_BENCHMARK_TIMER(ref1.compute(statfile, sofile_sddmm), "\n\nSDDMM Kernel: ", timevalue);
+  if (statfile.is_open()) {
+    statfile << "sddmm time: ";
+    statfile << timevalue.mean << std::endl;
+  } else { std::cout << " stat file is not open\n"; }
 
-  // std::string sofile_sddmm_ryan = "/home/min/a/kadhitha/workspace/my_taco/taco/test/kernels/sddmm_spmm/sddmm_ryan.so";
-  // TOOL_BENCHMARK_TIMER(ref1.compute(statfile, sofile_sddmm_ryan), "\n\nSDDMM Kernel: ", timevalue);
-  // if (statfile.is_open()) {
-  //   statfile << "sddmm time: ";
-  //   statfile << timevalue.mean << std::endl;
-  // } else { std::cout << " stat file is not open\n"; }
+  std::string sofile_sddmm_ryan = "/home/min/a/kadhitha/workspace/my_taco/taco/test/kernels/sddmm_spmm/sddmm_ryan.so";
+  TOOL_BENCHMARK_TIMER(ref1.compute(statfile, sofile_sddmm_ryan), "\n\nSDDMM Kernel: ", timevalue);
+  if (statfile.is_open()) {
+    statfile << "sddmm time: ";
+    statfile << timevalue.mean << std::endl;
+  } else { std::cout << " stat file is not open\n"; }
   
-  // std::string sofile_spmm = "/home/min/a/kadhitha/workspace/my_taco/taco/test/kernels/sddmm_spmm/csr_dense_spmm.so";
-  // TOOL_BENCHMARK_TIMER(ref2.compute(statfile, sofile_spmm), "\n\nSpMM Kernel: ", timevalue);
-  // if (statfile.is_open()) {
-  //   statfile << "spmm time: ";
-  //   statfile << timevalue.mean << std::endl;
-  // } else { std::cout << " stat file is not open\n"; }
+  std::string sofile_spmm = "/home/min/a/kadhitha/workspace/my_taco/taco/test/kernels/sddmm_spmm/csr_dense_spmm.so";
+  TOOL_BENCHMARK_TIMER(ref2.compute(statfile, sofile_spmm), "\n\nSpMM Kernel: ", timevalue);
+  if (statfile.is_open()) {
+    statfile << "spmm time: ";
+    statfile << timevalue.mean << std::endl;
+  } else { std::cout << " stat file is not open\n"; }
 
-  // statfile << "\nreference execution \n";
+  statfile << "\nreference execution \n";
 
-  // std::string sofile_original = "/home/min/a/kadhitha/workspace/my_taco/taco/test/kernels/sddmm_spmm/taco_original.so";
-  // TOOL_BENCHMARK_TIMER(ref.compute(statfile, sofile_original), "\n\nReference Kernel: ", timevalue);
-  // if (statfile.is_open()) {
-  //   statfile << "taco reference time: ";
-  //   statfile << timevalue << std::endl;
-  // } else { std::cout << " stat file is not open\n"; }
+  std::string sofile_original = "/home/min/a/kadhitha/workspace/my_taco/taco/test/kernels/sddmm_spmm/taco_original.so";
+  TOOL_BENCHMARK_TIMER(ref.compute(statfile, sofile_original), "\n\nReference Kernel: ", timevalue);
+  if (statfile.is_open()) {
+    statfile << "taco reference time: ";
+    statfile << timevalue << std::endl;
+  } else { std::cout << " stat file is not open\n"; }
 
-  // double* A_vals = (double*) (A.getTacoTensorT()->vals);
-  // double* ref_vals = (double*) (ref.getTacoTensorT()->vals);
-  // double* ref2_vals = (double*) (ref2.getTacoTensorT()->vals);
+  double* A_vals = (double*) (A.getTacoTensorT()->vals);
+  double* ref_vals = (double*) (ref.getTacoTensorT()->vals);
+  double* ref2_vals = (double*) (ref2.getTacoTensorT()->vals);
 
-  // // int* A2_pos = (double*) (ref.getTacoTensorT()->vals);
+  // int* A2_pos = (double*) (ref.getTacoTensorT()->vals);
 
-  // // for (size_t q=0; q < B.getStorage().getValues().getSize(); q++) {
-  // //   if ( abs(A_vals[q] - ref_vals[q])/abs(ref_vals[q]) > ERROR_MARGIN) {
-  // //     std::cout << "error: results don't match i: " << q << ", avals: " << A_vals[q] << " "
-  // //       << "refvals: " << ref_vals[q] << std::endl;
-  // //     ASSERT_TRUE(false);
-  // //   }
-  // // }
-
-  // for (size_t q=0; q < A.getDimension(0)* A.getDimension(1); q++) {
+  // for (size_t q=0; q < B.getStorage().getValues().getSize(); q++) {
   //   if ( abs(A_vals[q] - ref_vals[q])/abs(ref_vals[q]) > ERROR_MARGIN) {
   //     std::cout << "error: results don't match i: " << q << ", avals: " << A_vals[q] << " "
   //       << "refvals: " << ref_vals[q] << std::endl;
   //     ASSERT_TRUE(false);
   //   }
   // }
-  // for (size_t q=0; q < A.getDimension(0)* A.getDimension(1); q++) {
-  //   if ( abs(A_vals[q] - ref2_vals[q])/abs(ref2_vals[q]) > ERROR_MARGIN) {
-  //     std::cout << "error: results don't match i: " << q << ", avals: " << A_vals[q] << " "
-  //       << "refvals: " << ref2_vals[q] << std::endl;
-  //     ASSERT_TRUE(false);
-  //   }
-  // }
-  // for (int q= 0; q< A_vals
+
+  for (size_t q=0; q < A.getDimension(0)* A.getDimension(1); q++) {
+    if ( abs(A_vals[q] - ref_vals[q])/abs(ref_vals[q]) > ERROR_MARGIN) {
+      std::cout << "error: results don't match i: " << q << ", avals: " << A_vals[q] << " "
+        << "refvals: " << ref_vals[q] << std::endl;
+      ASSERT_TRUE(false);
+    }
+  }
+  for (size_t q=0; q < A.getDimension(0)* A.getDimension(1); q++) {
+    if ( abs(A_vals[q] - ref2_vals[q])/abs(ref2_vals[q]) > ERROR_MARGIN) {
+      std::cout << "error: results don't match i: " << q << ", avals: " << A_vals[q] << " "
+        << "refvals: " << ref2_vals[q] << std::endl;
+      ASSERT_TRUE(false);
+    }
+  }
+  // // for (int q= 0; q< A_vals
   // for (int q = 0; q < A.getDimension(0); ++q) {
   //   for (int w = 0; w < A.getDimension(1); ++w) {
   //     if ( abs(A(q,w) - ref(q,w))/abs(ref(q,w)) > ERROR_MARGIN) {
@@ -775,6 +779,8 @@ TEST(scheduling_eval, hadamardFused) {
     return;
   }
 
+  taco_set_num_threads(NUM_THREADS_TO_USE);
+
   ofstream statfile;
   statfile.open(
     "/home/min/a/kadhitha/workspace/my_taco/taco/test/stats/hadamard-gemm.txt", std::ios::app);
@@ -791,14 +797,16 @@ TEST(scheduling_eval, hadamardFused) {
   int kdim = 128;
   int ldim = 128;
 
-  vector<int> filenums = {2,3,4,5,6,7,8,9,10,12,15};
-  // vector<int> filenums = {8,9,10,12};
+  // vector<int> filenums = {2,3,4,5,6,7,8,9,10,12,15};
+  vector<int> filenums = {0};
 
   for (auto filenum : filenums) {
 
   // int filenum = 15;
 
   std::vector<std::string> matfiles = {
+    "/home/min/a/kadhitha/workspace/my_taco/taco/net-repo-graph/cora.mtx",
+    "/home/min/a/kadhitha/workspace/my_taco/taco/net-repo-graph/amazon.mtx",
     "/home/min/a/kadhitha/ispc-examples/data/suitesparse/synthetic/synthetic.mtx",
     "/home/min/a/kadhitha/ispc-examples/data/suitesparse/cage3/cage3.mtx",
     "/home/min/a/kadhitha/ispc-examples/data/suitesparse/bcsstk17/bcsstk17.mtx", // 2
@@ -819,6 +827,8 @@ TEST(scheduling_eval, hadamardFused) {
     "/home/min/a/kadhitha/ispc-examples/data/suitesparse/twitter7/twitter7.mtx"
   };
   std::vector<std::string> matfilesrw = {
+    "/home/min/a/kadhitha/workspace/my_taco/taco/net-repo-graph/rw/cora.mtx",
+    "/home/min/a/kadhitha/workspace/my_taco/taco/net-repo-graph/rw/amazon.mtx",
     "/home/min/a/kadhitha/ispc-examples/data/suitesparse/rw/synthetic.mtx",
     "/home/min/a/kadhitha/ispc-examples/data/suitesparse/rw/cage3.mtx",
     "/home/min/a/kadhitha/ispc-examples/data/suitesparse/rw/bcsstk17.mtx",
@@ -2121,20 +2131,20 @@ TEST(scheduling_eval, spmmFused) {
     return;
   }
 
-  int retval, EventSet = PAPI_NULL;
-  retval = PAPI_hl_region_begin("dummy");
-  if ( retval != PAPI_OK ) handle_error(1);
+  // int retval, EventSet = PAPI_NULL;
+  // retval = PAPI_hl_region_begin("dummy");
+  // if ( retval != PAPI_OK ) handle_error(1);
 
   /* Do some computation */
 
-  retval = PAPI_hl_region_end("dummy");
-  if ( retval != PAPI_OK ) handle_error(1);
+  // retval = PAPI_hl_region_end("dummy");
+  // if ( retval != PAPI_OK ) handle_error(1);
 
   taco_set_num_threads(NUM_THREADS_TO_USE);
 
   ofstream statfile;
   statfile.open(
-    "/home/min/a/kadhitha/workspace/my_taco/taco/test/stats/spmm-spmm.txt", std::ios::app);
+    "/home/min/a/kadhitha/workspace/my_taco/taco/test/stats/spmm-gemm.txt", std::ios::app);
   if (statfile.is_open()) {
     statfile << "\nspmm-spmm execution\n";
     statfile << "\n-----------------------------------------\n";
@@ -2149,7 +2159,7 @@ TEST(scheduling_eval, spmmFused) {
   int ldim = 64;
 
   // vector<int> filenums = {2,3,4,5,6,7,8,9,10,12,15};
-  vector<int> filenums = {3};
+  vector<int> filenums = {0};
 
   for (auto filenum : filenums) {
 
@@ -2159,6 +2169,8 @@ TEST(scheduling_eval, spmmFused) {
     // int filenum = 7;
 
     std::vector<std::string> matfiles = {
+      "/home/min/a/kadhitha/workspace/my_taco/taco/net-repo-graph/cora.mtx",
+      "/home/min/a/kadhitha/workspace/my_taco/taco/net-repo-graph/amazon.mtx",
       "/home/min/a/kadhitha/ispc-examples/data/suitesparse/synthetic/synthetic.mtx",
       "/home/min/a/kadhitha/ispc-examples/data/suitesparse/cage3/cage3.mtx",
       "/home/min/a/kadhitha/ispc-examples/data/suitesparse/bcsstk17/bcsstk17.mtx", // 2
@@ -2180,6 +2192,8 @@ TEST(scheduling_eval, spmmFused) {
       "/home/min/a/kadhitha/ispc-examples/data/suitesparse/cop20k_A/cop20k.mtx",
     };
     std::vector<std::string> matfilesrw = {
+      "/home/min/a/kadhitha/workspace/my_taco/taco/net-repo-graph/rw/cora.mtx",
+      "/home/min/a/kadhitha/workspace/my_taco/taco/net-repo-graph/rw/amazon.mtx",
       "/home/min/a/kadhitha/ispc-examples/data/suitesparse/rw/synthetic.mtx",
       "/home/min/a/kadhitha/ispc-examples/data/suitesparse/rw/cage3.mtx",
       "/home/min/a/kadhitha/ispc-examples/data/suitesparse/rw/bcsstk17.mtx",
@@ -2377,42 +2391,42 @@ TEST(scheduling_eval, spmmFused) {
 
     statfile << "\n--------- 1st pattern computation TTM, GEMM\n";
     
-    retval = PAPI_hl_region_begin("spmm");
-    if ( retval != PAPI_OK ) handle_error(1);
+    // retval = PAPI_hl_region_begin("spmm");
+    // if ( retval != PAPI_OK ) handle_error(1);
     TOOL_BENCHMARK_TIMER(ref1.compute(statfile), "\n\nSpMM Kernel: ", timevalue);
-    retval = PAPI_hl_region_end("spmm");
-    if ( retval != PAPI_OK ) handle_error(1);
+    // retval = PAPI_hl_region_end("spmm");
+    // if ( retval != PAPI_OK ) handle_error(1);
     if (statfile.is_open()) {
       statfile << "SpMM time: ";
       statfile << timevalue.mean << std::endl;
     } else { std::cout << " stat file is not open\n"; }
 
     std::string sofile_spmm_template = "/home/min/a/kadhitha/workspace/my_taco/taco/test/kernels/sddmm_spmm/csr_dense_spmm.so";
-    retval = PAPI_hl_region_begin("spmmtemplate");
-    if ( retval != PAPI_OK ) handle_error(1);   
+    // retval = PAPI_hl_region_begin("spmmtemplate");
+    // if ( retval != PAPI_OK ) handle_error(1);   
     TOOL_BENCHMARK_TIMER(ref1.compute(statfile, sofile_spmm_template), "\n\nSpMM template Kernel: ", timevalue);
-    retval = PAPI_hl_region_end("spmmtemplate");
-    if ( retval != PAPI_OK ) handle_error(1);
+    // retval = PAPI_hl_region_end("spmmtemplate");
+    // if ( retval != PAPI_OK ) handle_error(1);
     if (statfile.is_open()) {
       statfile << "SpMM template time: ";
       statfile << timevalue.mean << std::endl;
     } else { std::cout << " stat file is not open\n"; }
     
-    retval = PAPI_hl_region_begin("gemm");
-    if ( retval != PAPI_OK ) handle_error(1); 
+    // retval = PAPI_hl_region_begin("gemm");
+    // if ( retval != PAPI_OK ) handle_error(1); 
     TOOL_BENCHMARK_TIMER(ref2.compute(statfile), "\n\nGeMM Kernel: ", timevalue);
-    retval = PAPI_hl_region_end("gemm");
-    if ( retval != PAPI_OK ) handle_error(1);
+    // retval = PAPI_hl_region_end("gemm");
+    // if ( retval != PAPI_OK ) handle_error(1);
     if (statfile.is_open()) {
       statfile << "GeMM time: ";
       statfile << timevalue.mean << std::endl;
     } else { std::cout << " stat file is not open\n"; }
 
-    retval = PAPI_hl_region_begin("gemmtemplate");
-    if ( retval != PAPI_OK ) handle_error(1);
+    // retval = PAPI_hl_region_begin("gemmtemplate");
+    // if ( retval != PAPI_OK ) handle_error(1);
     TOOL_BENCHMARK_TIMER(ref2_2.compute(statfile), "\n\nref GeMM template Kernel: ", timevalue);
-    retval = PAPI_hl_region_end("gemmtemplate");
-    if ( retval != PAPI_OK ) handle_error(1);    
+    // retval = PAPI_hl_region_end("gemmtemplate");
+    // if ( retval != PAPI_OK ) handle_error(1);    
     if (statfile.is_open()) {
       statfile << "ref 2 GeMM template time: ";
       statfile << timevalue.mean << std::endl;
@@ -2420,21 +2434,21 @@ TEST(scheduling_eval, spmmFused) {
 
     // std::string sofile_gemm_template = "/home/min/a/kadhitha/workspace/my_taco/taco/test/kernels/spmm_gemm/spmm_template.so";
     statfile << "\n--------- 2nd pattern computation GEMM, SpMM\n";
-    retval = PAPI_hl_region_begin("gemmtemplate2");
-    if ( retval != PAPI_OK ) handle_error(1);
+    // retval = PAPI_hl_region_begin("gemmtemplate2");
+    // if ( retval != PAPI_OK ) handle_error(1);
     TOOL_BENCHMARK_TIMER(ref3.compute(statfile), "\n\nGeMM template ref3 Kernel: ", timevalue);
-    retval = PAPI_hl_region_end("gemmtemplate2");
-    if ( retval != PAPI_OK ) handle_error(1);  
+    // retval = PAPI_hl_region_end("gemmtemplate2");
+    // if ( retval != PAPI_OK ) handle_error(1);  
     if (statfile.is_open()) {
       statfile << "ref3 GeMM template time: ";
       statfile << timevalue.mean << std::endl;
     } else { std::cout << " stat file is not open\n"; }
 
-    retval = PAPI_hl_region_begin("spmm2");
-    if ( retval != PAPI_OK ) handle_error(1);
+    // retval = PAPI_hl_region_begin("spmm2");
+    // if ( retval != PAPI_OK ) handle_error(1);
     TOOL_BENCHMARK_TIMER(ref4.compute(statfile, sofile_spmm_template), "\n\nSpMM template Kernel ref4: ", timevalue);
-    retval = PAPI_hl_region_end("spmm2");
-    if ( retval != PAPI_OK ) handle_error(1);  
+    // retval = PAPI_hl_region_end("spmm2");
+    // if ( retval != PAPI_OK ) handle_error(1);  
     if (statfile.is_open()) {
       statfile << "SpMM template time ref4: ";
       statfile << timevalue.mean << std::endl;
@@ -2443,32 +2457,32 @@ TEST(scheduling_eval, spmmFused) {
 
     statfile << "\n-------- reference pattern computation\n";
 
-    retval = PAPI_hl_region_begin("ref");
-    if ( retval != PAPI_OK ) handle_error(1);
+    // retval = PAPI_hl_region_begin("ref");
+    // if ( retval != PAPI_OK ) handle_error(1);
     TOOL_BENCHMARK_TIMER(ref.compute(statfile), "\n\nReference Kernel: ", timevalue);
-    retval = PAPI_hl_region_end("ref");
-    if ( retval != PAPI_OK ) handle_error(1);     
+    // retval = PAPI_hl_region_end("ref");
+    // if ( retval != PAPI_OK ) handle_error(1);     
     if (statfile.is_open()) {
       statfile << "taco reference time: ";
       statfile << timevalue << std::endl;
     } else { std::cout << " stat file is not open\n"; }
 
-    retval = PAPI_hl_region_begin("refnew");
-    if ( retval != PAPI_OK ) handle_error(1);
+    // retval = PAPI_hl_region_begin("refnew");
+    // if ( retval != PAPI_OK ) handle_error(1);
     TOOL_BENCHMARK_TIMER(refn.compute(statfile), "\n\nReference new Kernel: ", timevalue);
-    retval = PAPI_hl_region_end("refnew");
-    if ( retval != PAPI_OK ) handle_error(1);     
+    // retval = PAPI_hl_region_end("refnew");
+    // if ( retval != PAPI_OK ) handle_error(1);     
     if (statfile.is_open()) {
       statfile << "taco reference new time: ";
       statfile << timevalue << std::endl;
     } else { std::cout << " stat file is not open\n"; }
 
 
-    retval = PAPI_hl_region_begin("sparselnr");
-    if ( retval != PAPI_OK ) handle_error(1);
+    // retval = PAPI_hl_region_begin("sparselnr");
+    // if ( retval != PAPI_OK ) handle_error(1);
     TOOL_BENCHMARK_TIMER(A.compute(statfile), "\n\nFused Kernel: ", timevalue);
-    retval = PAPI_hl_region_end("sparselnr");
-    if ( retval != PAPI_OK ) handle_error(1);
+    // retval = PAPI_hl_region_end("sparselnr");
+    // if ( retval != PAPI_OK ) handle_error(1);
     if (statfile.is_open()) {
       statfile << "fused time: ";
       statfile << timevalue.mean << std::endl;
@@ -2537,25 +2551,25 @@ TEST(scheduling_eval, spmmFused) {
   // /* Add the native event */
   // native = ()
 
-    retval = PAPI_hl_region_begin("computation1");
-    if ( retval != PAPI_OK )
-        handle_error(1);
+    // retval = PAPI_hl_region_begin("computation1");
+    // if ( retval != PAPI_OK )
+    //     handle_error(1);
 
-    /* Do some computation */
+    // /* Do some computation */
 
-    retval = PAPI_hl_region_end("computation1");
-    if ( retval != PAPI_OK )
-        handle_error(1);
+    // retval = PAPI_hl_region_end("computation1");
+    // if ( retval != PAPI_OK )
+    //     handle_error(1);
 
-    retval = PAPI_hl_region_begin("computation2");
-    if ( retval != PAPI_OK )
-        handle_error(1);
+    // retval = PAPI_hl_region_begin("computation2");
+    // if ( retval != PAPI_OK )
+    //     handle_error(1);
 
-    /* Do some computation */
+    // /* Do some computation */
 
-    retval = PAPI_hl_region_end("computation2");
-    if ( retval != PAPI_OK )
-        handle_error(1);
+    // retval = PAPI_hl_region_end("computation2");
+    // if ( retval != PAPI_OK )
+    //     handle_error(1);
 }
 
 
@@ -2588,12 +2602,15 @@ TEST(scheduling_eval, sddmmspmmFused) {
   int ldim = 64;
   int mdim = 64;
 
-  vector<int> filenums{2, 3,4,5,6,7,8,9,10,12,15};
+  // vector<int> filenums{2, 3,4,5,6,7,8,9,10,12,15};
+  vector<int> filenums{0};
 
   for (auto filenum : filenums) {
 
 
   std::vector<std::string> matfiles = {
+    "/home/min/a/kadhitha/workspace/my_taco/taco/net-repo-graph/cora.mtx",
+    "/home/min/a/kadhitha/workspace/my_taco/taco/net-repo-graph/amazon.mtx",
     "/home/min/a/kadhitha/ispc-examples/data/suitesparse/synthetic/synthetic.mtx",
     "/home/min/a/kadhitha/ispc-examples/data/suitesparse/cage3/cage3.mtx",
     "/home/min/a/kadhitha/ispc-examples/data/suitesparse/bcsstk17/bcsstk17.mtx",
@@ -2614,6 +2631,8 @@ TEST(scheduling_eval, sddmmspmmFused) {
     "/home/min/a/kadhitha/ispc-examples/data/suitesparse/twitter7/twitter7.mtx"
   };
   std::vector<std::string> matfilesrw = {
+    "/home/min/a/kadhitha/workspace/my_taco/taco/net-repo-graph/rw/cora.mtx",
+    "/home/min/a/kadhitha/workspace/my_taco/taco/net-repo-graph/rw/amazon.mtx",
     "/home/min/a/kadhitha/ispc-examples/data/suitesparse/rw/synthetic.mtx",
     "/home/min/a/kadhitha/ispc-examples/data/suitesparse/rw/cage3.mtx",
     "/home/min/a/kadhitha/ispc-examples/data/suitesparse/rw/bcsstk17.mtx",

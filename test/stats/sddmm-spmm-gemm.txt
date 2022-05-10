@@ -1151,3 +1151,321 @@ gemm time: 421.26
 
 kernel execution time:  326305 ms
 taco reference time: 326311
+
+sddmm-spmm-gemm execution
+
+-----------------------------------------
+/home/min/a/kadhitha/workspace/my_taco/taco/net-repo-graph/cora.mtx
+ref(i,m)=B(i,j)*C(i,k)*D(j,k)*F(j,l)*G(l,m);
+B1_dimension: 2708, B2_dimension: 2708, vals: 5429
+C1_dimension: 2708, C2_dimension: 64, vals: 173312
+D1_dimension: 2708, D2_dimension: 64, vals: 173312
+E1_dimension: 2708, E2_dimension: 64, vals: 173312
+G1_dimension: 2708, G2_dimension: 64, vals: 4096
+
+
+kernel execution time:  5.08607 ms
+fused time: 5.61989
+
+kernel execution time:  0.557608 ms
+sddmm time: 0.871642
+
+kernel execution time:  0.465526 ms
+sddmm ryan time: 0.7713
+
+kernel execution time:  0.498686 ms
+spmm ryan time: 0.739309
+
+kernel execution time:  0.7957 ms
+gemm time: 1.05919
+
+kernel execution time:  42.447 ms
+taco reference time: 42.885
+/home/min/a/kadhitha/workspace/my_taco/taco/net-repo-graph/amazon.mtx
+ref(i,m)=B(i,j)*C(i,k)*D(j,k)*F(j,l)*G(l,m);
+B1_dimension: 548551, B2_dimension: 548551, vals: 1851744
+C1_dimension: 548551, C2_dimension: 64, vals: 35107264
+D1_dimension: 548551, D2_dimension: 64, vals: 35107264
+E1_dimension: 548551, E2_dimension: 64, vals: 35107264
+G1_dimension: 548551, G2_dimension: 64, vals: 4096
+
+
+kernel execution time:  89.9099 ms
+fused time: 90.5117
+
+kernel execution time:  29.9086 ms
+sddmm time: 30.4936
+
+kernel execution time:  29.1529 ms
+sddmm ryan time: 29.7063
+
+kernel execution time:  34.6318 ms
+spmm ryan time: 35.1535
+
+kernel execution time:  66.4663 ms
+gemm time: 67.0316
+
+kernel execution time:  6272.25 ms
+taco reference time: 6273.42
+
+sddmm-spmm-gemm execution
+
+-----------------------------------------
+/home/min/a/kadhitha/workspace/my_taco/taco/net-repo-graph/cora.mtx
+ref(i,m)=B(i,j)*C(i,k)*D(j,k)*F(j,l)*G(l,m);
+B1_dimension: 2708, B2_dimension: 2708, vals: 5429
+C1_dimension: 2708, C2_dimension: 64, vals: 173312
+D1_dimension: 2708, D2_dimension: 64, vals: 173312
+E1_dimension: 2708, E2_dimension: 64, vals: 173312
+G1_dimension: 2708, G2_dimension: 64, vals: 4096
+
+
+kernel execution time:  3.72391 ms
+fused time: 4.19698
+
+kernel execution time:  0.585647 ms
+sddmm time: 0.893112
+
+kernel execution time:  0.483056 ms
+sddmm ryan time: 0.79108
+
+kernel execution time:  0.567518 ms
+spmm ryan time: 0.808711
+
+kernel execution time:  0.929183 ms
+gemm time: 1.32543
+
+kernel execution time:  35.7066 ms
+taco reference time: 36.3331
+/home/min/a/kadhitha/workspace/my_taco/taco/net-repo-graph/amazon.mtx
+ref(i,m)=B(i,j)*C(i,k)*D(j,k)*F(j,l)*G(l,m);
+B1_dimension: 548551, B2_dimension: 548551, vals: 1851744
+C1_dimension: 548551, C2_dimension: 64, vals: 35107264
+D1_dimension: 548551, D2_dimension: 64, vals: 35107264
+E1_dimension: 548551, E2_dimension: 64, vals: 35107264
+G1_dimension: 548551, G2_dimension: 64, vals: 4096
+
+
+kernel execution time:  94.9377 ms
+fused time: 95.7687
+
+kernel execution time:  32.2051 ms
+sddmm time: 32.7881
+
+kernel execution time:  30.3982 ms
+sddmm ryan time: 30.95
+
+kernel execution time:  34.4172 ms
+spmm ryan time: 34.9049
+
+kernel execution time:  67.2709 ms
+gemm time: 67.8035
+
+kernel execution time:  6215.08 ms
+taco reference time: 6216.26
+
+sddmm-spmm-gemm execution
+
+-----------------------------------------
+/home/min/a/kadhitha/workspace/my_taco/taco/net-repo-graph/cora.mtx
+ref(i,m)=B(i,j)*C(i,k)*D(j,k)*F(j,l)*G(l,m);
+B1_dimension: 2708, B2_dimension: 2708, vals: 5429
+C1_dimension: 2708, C2_dimension: 64, vals: 173312
+D1_dimension: 2708, D2_dimension: 64, vals: 173312
+E1_dimension: 2708, E2_dimension: 64, vals: 173312
+G1_dimension: 2708, G2_dimension: 64, vals: 4096
+
+
+kernel execution time:  6.99173 ms
+fused time: 7.86448
+
+kernel execution time:  0.78061 ms
+sddmm time: 1.28867
+
+kernel execution time:  0.554227 ms
+sddmm ryan time: 0.837111
+
+kernel execution time:  0.909912 ms
+spmm ryan time: 1.12908
+
+kernel execution time:  7.60724 ms
+gemm time: 7.85047
+
+kernel execution time:  652.888 ms
+taco reference time: 653.271
+/home/min/a/kadhitha/workspace/my_taco/taco/net-repo-graph/amazon.mtx
+ref(i,m)=B(i,j)*C(i,k)*D(j,k)*F(j,l)*G(l,m);
+B1_dimension: 548551, B2_dimension: 548551, vals: 1851744
+C1_dimension: 548551, C2_dimension: 64, vals: 35107264
+D1_dimension: 548551, D2_dimension: 64, vals: 35107264
+E1_dimension: 548551, E2_dimension: 64, vals: 35107264
+G1_dimension: 548551, G2_dimension: 64, vals: 4096
+
+
+kernel execution time:  1236.33 ms
+fused time: 1236.87
+
+kernel execution time:  249.805 ms
+sddmm time: 250.356
+
+kernel execution time:  247.195 ms
+sddmm ryan time: 247.729
+
+kernel execution time:  285.764 ms
+spmm ryan time: 286.235
+
+kernel execution time:  1529.34 ms
+gemm time: 1529.83
+
+kernel execution time:  190620 ms
+taco reference time: 190621
+
+sddmm-spmm-gemm execution
+
+-----------------------------------------
+/home/min/a/kadhitha/workspace/my_taco/taco/net-repo-graph/cora.mtx
+ref(i,m)=B(i,j)*C(i,k)*D(j,k)*F(j,l)*G(l,m);
+B1_dimension: 2708, B2_dimension: 2708, vals: 5429
+C1_dimension: 2708, C2_dimension: 64, vals: 173312
+D1_dimension: 2708, D2_dimension: 64, vals: 173312
+E1_dimension: 2708, E2_dimension: 64, vals: 173312
+G1_dimension: 2708, G2_dimension: 64, vals: 4096
+
+
+kernel execution time:  1.86163 ms
+fused time: 2.34746
+
+kernel execution time:  0.542927 ms
+sddmm time: 1.05528
+
+kernel execution time:  0.541998 ms
+sddmm ryan time: 1.07672
+
+kernel execution time:  0.524767 ms
+spmm ryan time: 0.944293
+
+kernel execution time:  0.75947 ms
+gemm time: 1.2162
+
+kernel execution time:  36.3755 ms
+taco reference time: 37.0989
+
+sddmm-spmm-gemm execution
+
+-----------------------------------------
+/home/min/a/kadhitha/workspace/my_taco/taco/net-repo-graph/cora.mtx
+ref(i,m)=B(i,j)*C(i,k)*D(j,k)*F(j,l)*G(l,m);
+B1_dimension: 2708, B2_dimension: 2708, vals: 5429
+C1_dimension: 2708, C2_dimension: 64, vals: 173312
+D1_dimension: 2708, D2_dimension: 64, vals: 173312
+E1_dimension: 2708, E2_dimension: 64, vals: 173312
+G1_dimension: 2708, G2_dimension: 64, vals: 4096
+
+
+kernel execution time:  1.97375 ms
+fused time: 2.84436
+
+kernel execution time:  0.881212 ms
+sddmm time: 1.38907
+
+kernel execution time:  0.545557 ms
+sddmm ryan time: 1.0807
+
+kernel execution time:  0.548488 ms
+spmm ryan time: 0.978813
+
+kernel execution time:  0.72955 ms
+gemm time: 1.2023
+
+kernel execution time:  34.867 ms
+taco reference time: 35.5819
+
+sddmm-spmm-gemm execution
+
+-----------------------------------------
+/home/min/a/kadhitha/workspace/my_taco/taco/net-repo-graph/cora.mtx
+ref(i,m)=B(i,j)*C(i,k)*D(j,k)*F(j,l)*G(l,m);
+B1_dimension: 2708, B2_dimension: 2708, vals: 5429
+C1_dimension: 2708, C2_dimension: 64, vals: 173312
+D1_dimension: 2708, D2_dimension: 64, vals: 173312
+E1_dimension: 2708, E2_dimension: 64, vals: 173312
+G1_dimension: 2708, G2_dimension: 64, vals: 4096
+
+
+kernel execution time:  1.69165 ms
+fused time: 2.2114
+
+kernel execution time:  0.908102 ms
+sddmm time: 1.19792
+
+kernel execution time:  0.513137 ms
+sddmm ryan time: 0.807571
+
+kernel execution time:  0.510327 ms
+spmm ryan time: 0.76134
+
+kernel execution time:  0.803101 ms
+gemm time: 1.0684
+
+kernel execution time:  45.9784 ms
+taco reference time: 46.3901
+
+sddmm-spmm-gemm execution
+
+-----------------------------------------
+/home/min/a/kadhitha/workspace/my_taco/taco/net-repo-graph/cora.mtx
+ref(i,m)=B(i,j)*C(i,k)*D(j,k)*F(j,l)*G(l,m);
+B1_dimension: 2708, B2_dimension: 2708, vals: 5429
+C1_dimension: 2708, C2_dimension: 64, vals: 173312
+D1_dimension: 2708, D2_dimension: 64, vals: 173312
+E1_dimension: 2708, E2_dimension: 64, vals: 173312
+G1_dimension: 2708, G2_dimension: 64, vals: 4096
+
+
+kernel execution time:  1.82354 ms
+fused time: 2.81223
+
+kernel execution time:  0.926052 ms
+sddmm time: 1.48292
+
+kernel execution time:  0.564157 ms
+sddmm ryan time: 1.14611
+
+kernel execution time:  0.512447 ms
+spmm ryan time: 0.925102
+
+kernel execution time:  0.689109 ms
+gemm time: 1.08196
+
+kernel execution time:  34.7847 ms
+taco reference time: 35.4182
+
+sddmm-spmm-gemm execution
+
+-----------------------------------------
+/home/min/a/kadhitha/workspace/my_taco/taco/net-repo-graph/cora.mtx
+ref(i,m)=B(i,j)*C(i,k)*D(j,k)*F(j,l)*G(l,m);
+B1_dimension: 2708, B2_dimension: 2708, vals: 5429
+C1_dimension: 2708, C2_dimension: 64, vals: 173312
+D1_dimension: 2708, D2_dimension: 64, vals: 173312
+E1_dimension: 2708, E2_dimension: 64, vals: 173312
+G1_dimension: 2708, G2_dimension: 64, vals: 4096
+
+
+kernel execution time:  6.8174 ms
+fused time: 7.69061
+
+kernel execution time:  0.935843 ms
+sddmm time: 1.46847
+
+kernel execution time:  0.612468 ms
+sddmm ryan time: 0.880662
+
+kernel execution time:  0.831351 ms
+spmm ryan time: 1.05745
+
+kernel execution time:  7.58342 ms
+gemm time: 7.82297
+
+kernel execution time:  566.881 ms
+taco reference time: 567.264

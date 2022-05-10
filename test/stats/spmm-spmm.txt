@@ -3430,3 +3430,175 @@ spmm-spmm execution
 -----------------------------------------
 filenum: 3
 ---------------------------------
+
+spmm-spmm execution
+
+-----------------------------------------
+filenum: 0
+---------------------------------
+/home/min/a/kadhitha/workspace/my_taco/taco/net-repo-graph/cora.mtx
+ref(i,l)=B(i,j)*C(i,k)*D(j,k);
+B1_dimension: 2708, B2_dimension: 2708, vals: 5429
+C1_dimension: 2708, C2_dimension: 128, vals: 346624
+D1_dimension: 128, D2_dimension: 64, vals: 8192
+
+
+--------- 1st pattern computation TTM, GEMM
+
+kernel execution time:  0.924512 ms
+SpMM time: 1.22967
+
+kernel execution time:  1.23287 ms
+SpMM template time: 1.51353
+
+kernel execution time:  20.7805 ms
+GeMM time: 21.0769
+
+kernel execution time:  19.6116 ms
+ref 2 GeMM template time: 19.8379
+
+--------- 2nd pattern computation GEMM, SpMM
+
+kernel execution time:  14.7563 ms
+ref3 GeMM template time: 15.0245
+
+kernel execution time:  0.823641 ms
+SpMM template time ref4: 1.05233
+
+-------- reference pattern computation
+
+kernel execution time:  34.1041 ms
+taco reference time: 34.4607
+
+kernel execution time:  41.9195 ms
+taco reference new time: 42.2061
+
+kernel execution time:  4.76242 ms
+fused time: 5.04101
+filenum: 1
+---------------------------------
+/home/min/a/kadhitha/workspace/my_taco/taco/net-repo-graph/amazon.mtx
+ref(i,l)=B(i,j)*C(i,k)*D(j,k);
+B1_dimension: 548551, B2_dimension: 548551, vals: 1851744
+C1_dimension: 548551, C2_dimension: 128, vals: 70214528
+D1_dimension: 128, D2_dimension: 64, vals: 8192
+
+
+--------- 1st pattern computation TTM, GEMM
+
+kernel execution time:  394.8 ms
+SpMM time: 395.503
+
+kernel execution time:  473.148 ms
+SpMM template time: 473.684
+
+kernel execution time:  4117.68 ms
+GeMM time: 4118.6
+
+kernel execution time:  3957.31 ms
+ref 2 GeMM template time: 3958.16
+
+--------- 2nd pattern computation GEMM, SpMM
+
+kernel execution time:  3017.13 ms
+ref3 GeMM template time: 3017.67
+
+kernel execution time:  314.652 ms
+SpMM template time ref4: 315.164
+
+-------- reference pattern computation
+
+kernel execution time:  11644.6 ms
+taco reference time: 11645.6
+
+kernel execution time:  14402.6 ms
+taco reference new time: 14403.6
+
+kernel execution time:  1261.33 ms
+fused time: 1261.88
+
+spmm-spmm execution
+
+-----------------------------------------
+filenum: 0
+---------------------------------
+/home/min/a/kadhitha/workspace/my_taco/taco/net-repo-graph/cora.mtx
+ref(i,l)=B(i,j)*C(i,k)*D(j,k);
+B1_dimension: 2708, B2_dimension: 2708, vals: 5429
+C1_dimension: 2708, C2_dimension: 128, vals: 346624
+D1_dimension: 128, D2_dimension: 64, vals: 8192
+
+
+--------- 1st pattern computation TTM, GEMM
+
+kernel execution time:  0.209133 ms
+SpMM time: 0.517016
+
+kernel execution time:  0.579748 ms
+SpMM template time: 0.864251
+
+kernel execution time:  1.0574 ms
+GeMM time: 1.37727
+
+kernel execution time:  19.621 ms
+ref 2 GeMM template time: 19.8504
+
+--------- 2nd pattern computation GEMM, SpMM
+
+kernel execution time:  1.44618 ms
+ref3 GeMM template time: 1.72243
+
+kernel execution time:  0.384425 ms
+SpMM template time ref4: 0.610708
+
+-------- reference pattern computation
+
+kernel execution time:  3.59893 ms
+taco reference time: 3.95508
+
+kernel execution time:  4.81855 ms
+taco reference new time: 5.10349
+
+kernel execution time:  1.47107 ms
+fused time: 1.90463
+filenum: 1
+---------------------------------
+/home/min/a/kadhitha/workspace/my_taco/taco/net-repo-graph/amazon.mtx
+ref(i,l)=B(i,j)*C(i,k)*D(j,k);
+B1_dimension: 548551, B2_dimension: 548551, vals: 1851744
+C1_dimension: 548551, C2_dimension: 128, vals: 70214528
+D1_dimension: 128, D2_dimension: 64, vals: 8192
+
+
+--------- 1st pattern computation TTM, GEMM
+
+kernel execution time:  50.1795 ms
+SpMM time: 50.5567
+
+kernel execution time:  64.2504 ms
+SpMM template time: 64.8179
+
+kernel execution time:  96.8464 ms
+GeMM time: 97.4123
+
+kernel execution time:  3949.87 ms
+ref 2 GeMM template time: 3950.93
+
+--------- 2nd pattern computation GEMM, SpMM
+
+kernel execution time:  123.802 ms
+ref3 GeMM template time: 124.342
+
+kernel execution time:  39.2723 ms
+SpMM template time ref4: 39.8322
+
+-------- reference pattern computation
+
+kernel execution time:  457.271 ms
+taco reference time: 457.979
+
+kernel execution time:  427.194 ms
+taco reference new time: 427.789
+
+kernel execution time:  93.1417 ms
+fused time: 93.7188

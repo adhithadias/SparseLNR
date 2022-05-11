@@ -1,6 +1,7 @@
 #include <sstream>
 #include <iostream>
 
+#include "taco/cuda.h"
 #include "taco/ir/ir.h"
 #include "taco/ir/ir_printer.h"
 #include "taco/ir/simplify.h"
@@ -59,10 +60,13 @@ void IRPrinter::print(Stmt stmt) {
 }
 
 void IRPrinter::visit(const Literal* op) {
+
   if (color) {
     stream << blue ;
   }
 
+  // It seems this is where all the types get printed in the final code generation.
+  // Come up with a way to generate different values if stream2 is used to generate ispc code
   switch (op->type.getKind()) {
     case Datatype::Bool:
       stream << op->getValue<bool>();
@@ -99,11 +103,11 @@ void IRPrinter::visit(const Literal* op) {
     break;
     case Datatype::Float32:
       stream << ((op->getValue<float>() != 0.0)
-                 ? util::toString(op->getValue<float>()) : "0.0");
+                ? util::toString(op->getValue<float>()) : "0.0");
     break;
     case Datatype::Float64:
       stream << ((op->getValue<double>()!=0.0)
-                 ? util::toString(op->getValue<double>()) : "0.0");
+                ? util::toString(op->getValue<double>()) : "0.0");
     break;
     case Datatype::Complex64: {
       std::complex<float> val = op->getValue<std::complex<float>>();
@@ -123,6 +127,10 @@ void IRPrinter::visit(const Literal* op) {
   if (color) {
     stream << nc;
   }
+
+    
+
+  
 }
 
 void IRPrinter::visit(const Var* op) {
@@ -132,6 +140,7 @@ void IRPrinter::visit(const Var* op) {
   else {
     stream << op->name;
   }
+
 }
 
 void IRPrinter::visit(const Neg* op) {
@@ -283,6 +292,7 @@ void IRPrinter::visit(const IfThenElse* op) {
     stream << "}";
   }
   stream << endl;
+
 }
 
 void IRPrinter::visit(const Case* op) {
@@ -377,12 +387,13 @@ void IRPrinter::visit(const Store* op) {
   op->data.accept(this);
   stream << ";";
   stream << endl;
+
 }
 
 void IRPrinter::visit(const For* op) {
   doIndent();
   stream << keywordString("for") << " (" 
-         << keywordString(util::toString(op->var.type())) << " ";
+        << keywordString(util::toString(op->var.type())) << " ";
   op->var.accept(this);
   stream << " = ";
   op->start.accept(this);
@@ -396,7 +407,7 @@ void IRPrinter::visit(const For* op) {
 
   auto lit = op->increment.as<Literal>();
   if (lit != nullptr && ((lit->type.isInt()  && lit->equalsScalar(1)) ||
-                         (lit->type.isUInt() && lit->equalsScalar(1)))) {
+                        (lit->type.isUInt() && lit->equalsScalar(1)))) {
     stream << "++";
   }
   else {
@@ -408,7 +419,8 @@ void IRPrinter::visit(const For* op) {
   op->contents.accept(this);
   doIndent();
   stream << "}";
-  stream << endl;
+  stream << endl;    
+
 }
 
 void IRPrinter::visit(const While* op) {
@@ -452,6 +464,7 @@ void IRPrinter::visit(const Function* op) {
 
   doIndent();
   stream << "}";
+
 }
 
 void IRPrinter::visit(const VarDecl* op) {
@@ -470,6 +483,7 @@ void IRPrinter::visit(const VarDecl* op) {
   op->rhs.accept(this);
   stream << ";";
   stream << endl;
+
 }
 
 void IRPrinter::visit(const Assign* op) {
@@ -483,7 +497,7 @@ void IRPrinter::visit(const Assign* op) {
       if (add->a == op->lhs) {
         const Literal* lit = add->b.as<Literal>();
         if (lit != nullptr && ((lit->type.isInt()  && lit->equalsScalar(1)) ||
-                               (lit->type.isUInt() && lit->equalsScalar(1)))) {
+                              (lit->type.isUInt() && lit->equalsScalar(1)))) {
           stream << "++";
         }
         else {

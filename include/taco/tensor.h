@@ -413,6 +413,8 @@ public:
 
   /// Compile the tensor expression.
   void compile();
+  void compute(std::ofstream& statfile);
+  void compute(std::ofstream& statfile, std::string& sofile);
 
   void compile(IndexStmt stmt, bool assembleWhileCompute=false);
 

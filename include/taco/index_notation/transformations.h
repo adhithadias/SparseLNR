@@ -223,6 +223,9 @@ IndexStmt parallelizeOuterLoop(IndexStmt stmt);
  */
 IndexStmt reorderLoopsTopologically(IndexStmt stmt);
 
+IndexStmt loopFusionOverFission(IndexStmt stmt, Assignment assignment,
+  std::string side, int iters);
+
 /**
  * Performs scalar promotion so that reductions are done by accumulating into 
  * scalar temporaries whenever possible.

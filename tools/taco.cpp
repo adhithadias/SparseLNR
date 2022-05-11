@@ -9,6 +9,7 @@
 #include "taco.h"
 
 #include "taco/error.h"
+#include "taco/index_notation/index_notation.h"
 #include "taco/parser/lexer.h"
 #include "taco/parser/parser.h"
 #include "taco/parser/schedule_parser.h"
@@ -308,7 +309,9 @@ static void printCommandLine(ostream& os, int argc, char* argv[]) {
   }
 }
 
-static bool setSchedulingCommands(vector<vector<string>> scheduleCommands, parser::Parser& parser, IndexStmt& stmt) {
+static int setSchedulingCommands(vector<vector<string>> scheduleCommands, 
+  parser::Parser& parser, IndexStmt& stmt, Assignment assignment) {
+
   auto findVar = [&stmt](string name) {
     ProvenanceGraph graph(stmt);
     for (auto v : graph.getAllIndexVars()) {
@@ -352,6 +355,16 @@ static bool setSchedulingCommands(vector<vector<string>> scheduleCommands, parse
       IndexVar fused(f);
       stmt = stmt.fuse(findVar(i), findVar(j), fused);
 
+    } else if (command == "loopfuse") {
+      taco_uassert(scheduleCommand.size() == 2) 
+        << "'loopfuse' scheduling directive takes 2 parameters: fuse(b, 2)";
+      std::string side = scheduleCommand[0];
+      taco_uassert(side == "b" || side == "f") 
+        << "first parameter must be either 'f' or 'b'";
+
+      int iters = std::stoi(scheduleCommand[1]);
+
+      stmt = loopFusionOverFission(stmt, assignment, side, iters);
     } else if (command == "split") {
       taco_uassert(scheduleCommand.size() == 4)
           << "'split' scheduling directive takes 4 parameters: split(i, i1, i2, splitFactor)";
@@ -536,7 +549,8 @@ static bool setSchedulingCommands(vector<vector<string>> scheduleCommands, parse
         parallel_unit = ParallelUnit::CPUThread;
       } else if (unit == "CPUVector") {
         parallel_unit = ParallelUnit::CPUVector;
-      } else {
+      }
+      else {
         taco_uerror << "Parallel hardware not defined.";
         goto end;
       }
@@ -1009,9 +1023,11 @@ int main(int argc, char* argv[]) {
   }
 
   // pre-parse expression, to determine existence and order of loaded tensors
+  std::cout << "pre-parse expression, to determine existence and order of loaded tensors\n";
   map<string,TensorBase> loadedTensors;
   TensorBase temp_tensor;
   parser::Parser temp_parser(exprStr, formats, dataTypes, tensorsDimensions, loadedTensors, 42);
+  std::cout << exprStr << std::endl;
   try {
     temp_parser.parse();
     temp_tensor = temp_parser.getResultTensor();
@@ -1112,17 +1128,29 @@ int main(int argc, char* argv[]) {
   taco_set_parallel_schedule(sched, chunkSize);
   taco_set_num_threads(nthreads);
 
-  IndexStmt stmt =
-      makeConcreteNotation(makeReductionNotation(tensor.getAssignment()));
+  Assignment assignment = tensor.getAssignment();
+  std::cout << "tensor.getAssignment(): " << assignment << std::endl;
+
+  IndexStmt stmt2 = makeReductionNotation(tensor.getAssignment());
+  std::cout << "reducedNotation: " << stmt2 << std::endl;
+  // IndexStmt stmt = 
+  //     makeConcreteNotation(makeReductionNotation(tensor.getAssignment()));
+  IndexStmt stmt = makeConcreteNotation(stmt2);
+  std::cout << "concrete index statement: " << stmt << std::endl;
   stmt = reorderLoopsTopologically(stmt);
 
+  std::cout << "topologically reordered loops statement: " << stmt << std::endl;
+
   if (setSchedule) {
-    cuda |= setSchedulingCommands(scheduleCommands, parser, stmt);
+    cuda |= setSchedulingCommands(scheduleCommands, parser, stmt, tensor.getAssignment());
   }
   else {
+    // stmt = loopFusionOverFission(stmt, tensor.getAssignment());
     stmt = insertTemporaries(stmt);
     stmt = parallelizeOuterLoop(stmt);
   }
+  std::cout << "after setting the scheduling commands\n";
+  std::cout << stmt << std::endl;
 
   if (cuda) {
     if (!CUDA_BUILT && benchmark) {
@@ -1134,7 +1162,10 @@ int main(int argc, char* argv[]) {
     set_CUDA_codegen_enabled(false);
   }
 
+  std::cout << "running scalar promote\n" << std::endl; //
   stmt = scalarPromote(stmt);
+  std::cout << "\nafter scalar promote: \n" << stmt << std::endl << std::endl;
+
   if (printConcrete) {
     cout << stmt << endl;
   }

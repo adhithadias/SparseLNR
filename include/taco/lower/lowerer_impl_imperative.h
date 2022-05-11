@@ -499,13 +499,10 @@ private:
 
   bool emitUnderivedGuards = true;
 
-  int loopDepth = 0;
   int inParallelLoopDepth = 0;
 
   std::map<ParallelUnit, ir::Expr> parallelUnitSizes;
   std::map<ParallelUnit, IndexVar> parallelUnitIndexVars;
-  std::map<int, ParallelUnit> forUnits; // <loopdepth, ParallelUnit>
-  std::map<TensorVar,int> whereTempsWithLoopDepth;
 
   /// Keep track of what IndexVars have already been defined
   std::set<IndexVar> definedIndexVars;

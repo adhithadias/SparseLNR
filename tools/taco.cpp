@@ -21,7 +21,6 @@
 #include "taco/lower/lower.h"
 #include "taco/codegen/module.h"
 #include "codegen/codegen_c.h"
-#include "codegen/codegen_ispc.h"
 #include "codegen/codegen_cuda.h"
 #include "codegen/codegen.h"
 #include "taco/util/strings.h"
@@ -190,8 +189,6 @@ static void printUsageInfo() {
   cout << endl;
   printFlag("print-nocolor", "Print without colors.");
   cout << endl;
-  printFlag("ispc", "Generate ISPC code for Intel CPUs");
-  cout << endl;
   printFlag("cuda", "Generate CUDA code for NVIDIA GPUs");
   cout << endl;
   printFlag("schedule", "Specify parallel execution schedule");
@@ -266,7 +263,7 @@ static void printSchedulingHelp() {
               "an output race strategy `strat`. Since the other transformations "
               "expect serial code, parallelize must come last in a series of "
               "transformations.  Possible parallel hardware units are: "
-              "NotParallel, GPUBlock, GPUWarp, GPUThread, CPUThread, CPUVector, CPUSimd, CPUSimd. "
+              "NotParallel, GPUBlock, GPUWarp, GPUThread, CPUThread, CPUVector. "
               "Possible output race strategies are: "
               "IgnoreRaces, NoRaces, Atomics, Temporary, ParallelReduction.");
 }
@@ -283,8 +280,6 @@ static void printVersionInfo() {
     cout << "Built with Python support." << endl;
   if(TACO_FEATURE_CUDA)
     cout << "Built with CUDA support." << endl;
-  if(TACO_FEATURE_ISPC)
-    cout << "Built with ISPC support." << endl;
   cout << endl;
   cout << "Built on: " << TACO_BUILD_DATE << endl;
   cout << "CMake build type: " << TACO_BUILD_TYPE << endl;
@@ -317,7 +312,6 @@ static void printCommandLine(ostream& os, int argc, char* argv[]) {
 static int setSchedulingCommands(vector<vector<string>> scheduleCommands, 
   parser::Parser& parser, IndexStmt& stmt, Assignment assignment) {
 
-  std::cout << "setting scheduling commands\n";
   auto findVar = [&stmt](string name) {
     ProvenanceGraph graph(stmt);
     for (auto v : graph.getAllIndexVars()) {
@@ -330,15 +324,9 @@ static int setSchedulingCommands(vector<vector<string>> scheduleCommands,
     abort(); // to silence a warning: control reaches end of non-void function
   };
 
-  int isGPU = 0;
-  int isISPC = 0;
+  bool isGPU = false;
 
   for(vector<string> scheduleCommand : scheduleCommands) {
-    std::cout << "running schedluing command: ";
-    for (auto &command : scheduleCommand) {
-      std::cout << command << " ";
-    }
-    std::cout << std::endl;
     string command = scheduleCommand[0];
     scheduleCommand.erase(scheduleCommand.begin());
 
@@ -561,13 +549,6 @@ static int setSchedulingCommands(vector<vector<string>> scheduleCommands,
         parallel_unit = ParallelUnit::CPUThread;
       } else if (unit == "CPUVector") {
         parallel_unit = ParallelUnit::CPUVector;
-      } else if (unit == "CPUSimd") {
-        isISPC = true;
-        parallel_unit = ParallelUnit::CPUSimd;
-      } 
-      else if (unit == "CPUSpmd") {
-        parallel_unit = ParallelUnit::CPUSpmd;
-        isISPC = true;
       }
       else {
         taco_uerror << "Parallel hardware not defined.";
@@ -590,8 +571,6 @@ static int setSchedulingCommands(vector<vector<string>> scheduleCommands,
         goto end;
       }
 
-      std::cout << "stmt before parallelizing the statement: " << stmt << endl;
-      std::cout << "ParallelUnit: " << ParallelUnit_NAMES[(int) parallel_unit] << ", outputRaceStrategy: " << OutputRaceStrategy_NAMES[(int) output_race_strategy] << std::endl;
       stmt = stmt.parallelize(findVar(i), parallel_unit, output_race_strategy);
 
     } else if (command == "assemble") {
@@ -647,13 +626,7 @@ static int setSchedulingCommands(vector<vector<string>> scheduleCommands,
     end:;
   }
 
-  if (isGPU) {
-    return 1;
-  }
-  else if (isISPC) {
-    return 2;
-  }
-  return 0;
+  return isGPU;
 }
 
 int main(int argc, char* argv[]) {
@@ -682,7 +655,6 @@ int main(int argc, char* argv[]) {
   bool color               = true;
   bool readKernels         = false;
   bool cuda                = false;
-  bool ispc                = false;
 
   bool setSchedule         = false;
 
@@ -991,10 +963,6 @@ int main(int argc, char* argv[]) {
     else if ("-cuda" == argName) {
       cuda = true;
     }
-    else if ("-ispc" == argName) {
-      std::cout << "ispc true\n";
-      ispc = true;
-    }
     else if ("-schedule" == argName) {
       vector<string> descriptor = util::split(argValue, ",");
       if (descriptor.size() > 2 || descriptor.empty()) {
@@ -1046,8 +1014,6 @@ int main(int argc, char* argv[]) {
       exprStr = argv[i];
     }
   }
-
-  std::cout << "cuda: " << cuda << ", ispc: " << ispc << std::endl;
 
   // Print compute is the default if nothing else was asked for
   if (!printAssemble && !printEvaluate && !printIterationGraph &&
@@ -1176,10 +1142,7 @@ int main(int argc, char* argv[]) {
   std::cout << "topologically reordered loops statement: " << stmt << std::endl;
 
   if (setSchedule) {
-    int val = setSchedulingCommands(scheduleCommands, parser, stmt, tensor.getAssignment());
-    // stmt = loopFusionOverFission(stmt, tensor.getAssignment());
-    cuda |= (val==1);
-    ispc |= (val==2);
+    cuda |= setSchedulingCommands(scheduleCommands, parser, stmt, tensor.getAssignment());
   }
   else {
     // stmt = loopFusionOverFission(stmt, tensor.getAssignment());
@@ -1194,18 +1157,9 @@ int main(int argc, char* argv[]) {
       return reportError("TACO must be built for CUDA (cmake -DCUDA=ON ..) to benchmark", 2);
     }
     set_CUDA_codegen_enabled(true);
-    set_ISPC_codegen_enabled(false);
-  }
-  else if (ispc) {
-    if (!ISPC_BUILT && benchmark) {
-      return reportError("TACO must be built for ISPC (cmake -DISPC=ON .. to benchmark", 2);
-    }
-    set_CUDA_codegen_enabled(false);
-    set_ISPC_codegen_enabled(true);
   }
   else {
     set_CUDA_codegen_enabled(false);
-    set_ISPC_codegen_enabled(false);
   }
 
   std::cout << "running scalar promote\n" << std::endl; //
@@ -1216,7 +1170,6 @@ int main(int argc, char* argv[]) {
     cout << stmt << endl;
   }
 
-  // lower index statement to ir statement
   Kernel kernel;
   if (benchmark) {
     if (time) cout << endl;
@@ -1299,15 +1252,9 @@ int main(int argc, char* argv[]) {
     }
   }
   else {
-    std::cout << "lowering stmt: " << stmt << std::endl;
     compute = lower(stmt, prefix+"compute",  computeWithAssemble, true);
     assemble = lower(stmt, prefix+"assemble", true, false);
     evaluate = lower(stmt, prefix+"evaluate", true, true);
-
-    std::cout << "\n\ncompute kernel\n------------\n" << compute << std::endl << std::endl;
-    // compute kernel is the most basic kernel after lowering phase
-
-    std::cout << "\n\nevaluate kernel\n------------\n" << evaluate << std::endl << std::endl;
   }
 
   string packComment =
@@ -1362,7 +1309,6 @@ int main(int argc, char* argv[]) {
   }
 
   bool hasPrinted = false;
-
   std::shared_ptr<ir::CodeGen> codegen = ir::CodeGen::init_default(cout, ir::CodeGen::ImplementationGen);
   codegen->setColor(color);
   if (printAssemble) {
@@ -1383,7 +1329,6 @@ int main(int argc, char* argv[]) {
     }
 
     if (compute.defined()) {
-      std::cout << "Code generation\n";
       codegen->compile(compute, false);
     }
     else {
@@ -1441,7 +1386,7 @@ int main(int argc, char* argv[]) {
   }
 
   IterationGraph iterationGraph;
-  if (printIterationGraph) { // print iteration graph
+  if (printIterationGraph) {
     iterationGraph = IterationGraph::make(tensor.getAssignment());
   }
 

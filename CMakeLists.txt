@@ -104,8 +104,7 @@ if(COVERAGE)
   message("-- Code coverage analysis (gcovr) enabled")
 endif(COVERAGE)
 
-set(C_CXX_FLAGS "${C_CXX_FLAGS} -I/${PAPI_DIR}/include -L/${PAPI_DIR}/lib")
-# set(C_CXX_FLAGS "${C_CXX_FLAGS}")
+set(C_CXX_FLAGS "${C_CXX_FLAGS}")
 set(CMAKE_C_FLAGS "${C_CXX_FLAGS}")
 set(CMAKE_CXX_FLAGS "${C_CXX_FLAGS} -std=c++14")
 
@@ -118,9 +117,6 @@ set(TACO_INCLUDE_DIR ${TACO_PROJECT_DIR}/include)
 
 enable_testing()
 include_directories(${TACO_INCLUDE_DIR})
-# include_directories("/home/min/a/kadhitha/workspace/my_taco/valgrind")
-# project (ValgrindExample)
-# include (CTest)
 
 set(TACO_LIBRARY_DIR ${CMAKE_LIBRARY_OUTPUT_DIRECTORY})
 

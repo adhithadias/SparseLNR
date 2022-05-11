@@ -11,7 +11,6 @@ add_executable(taco-test ${TEST_SOURCES} ${TEST_HEADERS})
 target_link_libraries(taco-test taco-gtest)
 target_link_libraries(taco-test pthread)
 target_link_libraries(taco-test taco)
-target_link_libraries(taco-test papi)
 
 if(${CMAKE_VERSION} VERSION_LESS "3.9.0")
   add_test(NAME taco-test COMMAND taco-test)

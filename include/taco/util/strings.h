@@ -1,6 +1,7 @@
 #ifndef TACO_UTIL_STRINGS_H
 #define TACO_UTIL_STRINGS_H
 
+#include "taco/cuda.h"
 #include <string>
 #include <sstream>
 #include <vector>
@@ -8,12 +9,33 @@
 #include <iomanip>
 #include <limits>
 
+#include "taco/type.h"
+
 // To get the value of a compiler macro variable
 #define STRINGIFY(x) #x
 #define TO_STRING(x) STRINGIFY(x)
 
 namespace taco {
 namespace util {
+
+// /// Turn anything except floating points that can be written to a stream
+// /// into a string.
+// template <class T>
+// typename std::enable_if<!std::is_floating_point<T>::value, std::string>::type
+// toStringISPC(const T &val) {
+
+//   std::stringstream sstream;
+//   if (val == Int32) {
+//     sstream << "int32";
+//   }
+//   else if (val == Int64) {
+//     sstream << "int64";
+//   }
+//   else {
+//     sstream << val;
+//   }
+//   return sstream.str();
+// }
 
 /// Turn anything except floating points that can be written to a stream
 /// into a string.

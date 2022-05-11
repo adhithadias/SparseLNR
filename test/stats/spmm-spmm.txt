@@ -1,0 +1,3604 @@
+
+spmm-spmm execution
+
+-----------------------------------------
+/home/min/a/kadhitha/ispc-examples/data/suitesparse/cop20k_A/cop20k_A.mtx
+ref(i,l)=B(i,j)*C(i,k)*D(j,k);
+B1_dimension: 121192, B2_dimension: 121192, vals: 2624331
+C1_dimension: 121192, C2_dimension: 121192, vals: 2624331
+D1_dimension: 121192, D2_dimension: 64, vals: 7756288
+
+
+spmm-spmm execution
+
+-----------------------------------------
+/home/min/a/kadhitha/ispc-examples/data/suitesparse/cop20k_A/cop20k_A.mtx
+ref(i,l)=B(i,j)*C(i,k)*D(j,k);
+B1_dimension: 121192, B2_dimension: 121192, vals: 2624331
+C1_dimension: 121192, C2_dimension: 121192, vals: 2624331
+D1_dimension: 121192, D2_dimension: 64, vals: 7756288
+
+
+spmm-spmm execution
+
+-----------------------------------------
+/home/min/a/kadhitha/ispc-examples/data/suitesparse/cop20k_A/cop20k_A.mtx
+ref(i,l)=B(i,j)*C(i,k)*D(j,k);
+B1_dimension: 121192, B2_dimension: 121192, vals: 2624331
+C1_dimension: 121192, C2_dimension: 121192, vals: 2624331
+D1_dimension: 121192, D2_dimension: 64, vals: 7756288
+
+
+spmm-spmm execution
+
+-----------------------------------------
+/home/min/a/kadhitha/ispc-examples/data/suitesparse/cop20k_A/cop20k_A.mtx
+ref(i,l)=B(i,j)*C(i,k)*D(j,k);
+B1_dimension: 121192, B2_dimension: 121192, vals: 2624331
+C1_dimension: 121192, C2_dimension: 64, vals: 7756288
+D1_dimension: 64, D2_dimension: 64, vals: 4096
+
+
+kernel execution time:  303.084 ms
+fused time: 303.842
+
+kernel execution time:  8140.55 ms
+taco reference time: 8141.59
+
+spmm-spmm execution
+
+-----------------------------------------
+/home/min/a/kadhitha/ispc-examples/data/suitesparse/cop20k_A/cop20k_A.mtx
+ref(i,l)=B(i,j)*C(i,k)*D(j,k);
+B1_dimension: 121192, B2_dimension: 121192, vals: 2624331
+C1_dimension: 121192, C2_dimension: 64, vals: 7756288
+D1_dimension: 64, D2_dimension: 64, vals: 4096
+
+
+kernel execution time:  269.44 ms
+fused time: 270.181
+
+kernel execution time:  1612.62 ms
+taco reference time: 1613.21
+
+spmm-spmm execution
+
+-----------------------------------------
+/home/min/a/kadhitha/ispc-examples/data/suitesparse/cop20k_A/cop20k_A.mtx
+ref(i,l)=B(i,j)*C(i,k)*D(j,k);
+B1_dimension: 121192, B2_dimension: 121192, vals: 2624331
+C1_dimension: 121192, C2_dimension: 121192, vals: 2624331
+D1_dimension: 121192, D2_dimension: 64, vals: 7756288
+
+
+spmm-spmm execution
+
+-----------------------------------------
+/home/min/a/kadhitha/ispc-examples/data/suitesparse/cop20k_A/cop20k_A.mtx
+ref(i,l)=B(i,j)*C(i,k)*D(j,k);
+B1_dimension: 121192, B2_dimension: 121192, vals: 2624331
+C1_dimension: 121192, C2_dimension: 121192, vals: 2624331
+D1_dimension: 121192, D2_dimension: 64, vals: 7756288
+
+
+spmm-spmm execution
+
+-----------------------------------------
+/home/min/a/kadhitha/ispc-examples/data/suitesparse/cop20k_A/cop20k_A.mtx
+ref(i,l)=B(i,j)*C(i,k)*D(j,k);
+B1_dimension: 121192, B2_dimension: 121192, vals: 2624331
+C1_dimension: 121192, C2_dimension: 121192, vals: 2624331
+D1_dimension: 121192, D2_dimension: 64, vals: 7756288
+
+
+spmm-spmm execution
+
+-----------------------------------------
+/home/min/a/kadhitha/ispc-examples/data/suitesparse/cop20k_A/cop20k_A.mtx
+ref(i,l)=B(i,j)*C(i,k)*D(j,k);
+B1_dimension: 121192, B2_dimension: 121192, vals: 2624331
+C1_dimension: 121192, C2_dimension: 121192, vals: 2624331
+D1_dimension: 121192, D2_dimension: 64, vals: 7756288
+
+
+spmm-spmm execution
+
+-----------------------------------------
+/home/min/a/kadhitha/ispc-examples/data/suitesparse/cage3/cage3.mtx
+ref(i,l)=B(i,j)*C(i,k)*D(j,k);
+B1_dimension: 5, B2_dimension: 5, vals: 19
+C1_dimension: 5, C2_dimension: 5, vals: 19
+D1_dimension: 5, D2_dimension: 64, vals: 320
+
+
+kernel execution time:  0.125431 ms
+fused time: 0.815671
+
+kernel execution time:  0.03254 ms
+taco reference time: 0.828291
+
+spmm-spmm execution
+
+-----------------------------------------
+/home/min/a/kadhitha/ispc-examples/data/suitesparse/bcsstk17/bcsstk17.mtx
+ref(i,l)=B(i,j)*C(i,k)*D(j,k);
+B1_dimension: 10974, B2_dimension: 10974, vals: 428650
+C1_dimension: 10974, C2_dimension: 10974, vals: 428650
+D1_dimension: 10974, D2_dimension: 64, vals: 702336
+
+
+spmm-spmm execution
+
+-----------------------------------------
+/home/min/a/kadhitha/ispc-examples/data/suitesparse/bcsstk17/bcsstk17.mtx
+ref(i,l)=B(i,j)*C(i,k)*D(j,k);
+B1_dimension: 10974, B2_dimension: 10974, vals: 428650
+C1_dimension: 10974, C2_dimension: 10974, vals: 428650
+D1_dimension: 10974, D2_dimension: 8, vals: 87792
+
+
+kernel execution time:  783.639 ms
+fused time: 784.413
+
+kernel execution time:  25.6025 ms
+taco reference time: 25.9422
+
+spmm-spmm execution
+
+-----------------------------------------
+/home/min/a/kadhitha/ispc-examples/data/suitesparse/bcsstk17/bcsstk17.mtx
+ref(i,l)=B(i,j)*C(i,k)*D(j,k);
+B1_dimension: 10974, B2_dimension: 10974, vals: 428650
+C1_dimension: 10974, C2_dimension: 10974, vals: 428650
+D1_dimension: 10974, D2_dimension: 8, vals: 87792
+
+
+kernel execution time:  3538.49 ms
+fused time: 3539.6
+
+kernel execution time:  544.057 ms
+taco reference time: 544.496
+
+spmm-spmm execution
+
+-----------------------------------------
+/home/min/a/kadhitha/ispc-examples/data/suitesparse/bcsstk17/bcsstk17.mtx
+ref(i,l)=B(i,j)*C(i,k)*D(j,k);
+B1_dimension: 10974, B2_dimension: 10974, vals: 428650
+C1_dimension: 10974, C2_dimension: 10974, vals: 428650
+D1_dimension: 10974, D2_dimension: 8, vals: 87792
+
+
+kernel execution time:  3451.46 ms
+fused time: 3452.59
+
+kernel execution time:  540.889 ms
+taco reference time: 541.34
+
+spmm-spmm execution
+
+-----------------------------------------
+/home/min/a/kadhitha/ispc-examples/data/suitesparse/bcsstk17/bcsstk17.mtx
+ref(i,l)=B(i,j)*C(i,k)*D(j,k);
+B1_dimension: 10974, B2_dimension: 10974, vals: 428650
+C1_dimension: 10974, C2_dimension: 8, vals: 87792
+D1_dimension: 8, D2_dimension: 8, vals: 64
+
+
+kernel execution time:  23.9997 ms
+fused time: 24.715
+
+kernel execution time:  116.717 ms
+taco reference time: 117.038
+
+spmm-spmm execution
+
+-----------------------------------------
+/home/min/a/kadhitha/ispc-examples/data/suitesparse/bcsstk17/bcsstk17.mtx
+ref(i,l)=B(i,j)*C(i,k)*D(j,k);
+B1_dimension: 10974, B2_dimension: 10974, vals: 428650
+C1_dimension: 10974, C2_dimension: 8, vals: 87792
+D1_dimension: 8, D2_dimension: 8, vals: 64
+
+
+kernel execution time:  2.19466 ms
+fused time: 2.91615
+
+kernel execution time:  9.4728 ms
+taco reference time: 10.0292
+
+spmm-spmm execution
+
+-----------------------------------------
+/home/min/a/kadhitha/ispc-examples/data/suitesparse/cop20k_A/cop20k_A.mtx
+ref(i,l)=B(i,j)*C(i,k)*D(j,k);
+B1_dimension: 121192, B2_dimension: 121192, vals: 2624331
+C1_dimension: 121192, C2_dimension: 8, vals: 969536
+D1_dimension: 8, D2_dimension: 8, vals: 64
+
+
+kernel execution time:  30.5327 ms
+fused time: 31.2749
+
+kernel execution time:  35.9838 ms
+taco reference time: 36.52
+
+spmm-spmm execution
+
+-----------------------------------------
+/home/min/a/kadhitha/ispc-examples/data/ufl/webbase-1M/webbase-1M.mtx
+ref(i,l)=B(i,j)*C(i,k)*D(j,k);
+B1_dimension: 1000005, B2_dimension: 1000005, vals: 3105536
+C1_dimension: 1000005, C2_dimension: 64, vals: 64000320
+D1_dimension: 64, D2_dimension: 64, vals: 4096
+
+
+kernel execution time:  1803.51 ms
+fused time: 1804.27
+
+kernel execution time:  1976.12 ms
+taco reference time: 1976.69
+
+spmm-spmm execution
+
+-----------------------------------------
+/home/min/a/kadhitha/ispc-examples/data/suitesparse/mac_econ_fwd500/mac_econ_fwd500.mtx
+ref(i,l)=B(i,j)*C(i,k)*D(j,k);
+B1_dimension: 206500, B2_dimension: 206500, vals: 1273389
+C1_dimension: 206500, C2_dimension: 64, vals: 13216000
+D1_dimension: 64, D2_dimension: 128, vals: 8192
+
+
+kernel execution time:  484.907 ms
+fused time: 485.835
+
+kernel execution time:  1567.31 ms
+taco reference time: 1567.89
+
+spmm-spmm execution
+
+-----------------------------------------
+/home/min/a/kadhitha/ispc-examples/data/ufl/webbase-1M/webbase-1M.mtx
+ref(i,l)=B(i,j)*C(i,k)*D(j,k);
+B1_dimension: 1000005, B2_dimension: 1000005, vals: 3105536
+C1_dimension: 1000005, C2_dimension: 64, vals: 64000320
+D1_dimension: 64, D2_dimension: 128, vals: 8192
+
+
+kernel execution time:  2301.83 ms
+fused time: 2302.58
+
+kernel execution time:  3904.01 ms
+taco reference time: 3905
+
+spmm-spmm execution
+
+-----------------------------------------
+/home/min/a/kadhitha/ispc-examples/data/suitesparse/bcsstk17/bcsstk17.mtx
+ref(i,l)=B(i,j)*C(i,k)*D(j,k);
+B1_dimension: 10974, B2_dimension: 10974, vals: 428650
+C1_dimension: 10974, C2_dimension: 64, vals: 702336
+D1_dimension: 64, D2_dimension: 128, vals: 8192
+
+
+spmm-spmm execution
+
+-----------------------------------------
+/home/min/a/kadhitha/ispc-examples/data/suitesparse/bcsstk17/bcsstk17.mtx
+ref(i,l)=B(i,j)*C(i,k)*D(j,k);
+B1_dimension: 10974, B2_dimension: 10974, vals: 428650
+C1_dimension: 10974, C2_dimension: 64, vals: 702336
+D1_dimension: 64, D2_dimension: 128, vals: 8192
+
+
+spmm-spmm execution
+
+-----------------------------------------
+/home/min/a/kadhitha/ispc-examples/data/suitesparse/bcsstk17/bcsstk17.mtx
+ref(i,l)=B(i,j)*C(i,k)*D(j,k);
+B1_dimension: 10974, B2_dimension: 10974, vals: 428650
+C1_dimension: 10974, C2_dimension: 64, vals: 702336
+D1_dimension: 64, D2_dimension: 128, vals: 8192
+
+
+spmm-spmm execution
+
+-----------------------------------------
+/home/min/a/kadhitha/ispc-examples/data/suitesparse/bcsstk17/bcsstk17.mtx
+ref(i,l)=B(i,j)*C(i,k)*D(j,k);
+B1_dimension: 10974, B2_dimension: 10974, vals: 428650
+C1_dimension: 10974, C2_dimension: 64, vals: 702336
+D1_dimension: 64, D2_dimension: 128, vals: 8192
+
+
+kernel execution time:  11.7415 ms
+fused time: 12.4648
+
+kernel execution time:  155.192 ms
+taco reference time: 155.893
+
+spmm-spmm execution
+
+-----------------------------------------
+/home/min/a/kadhitha/ispc-examples/data/suitesparse/bcsstk17/bcsstk17.mtx
+ref(i,l)=B(i,j)*C(i,k)*D(j,k);
+B1_dimension: 10974, B2_dimension: 10974, vals: 428650
+C1_dimension: 10974, C2_dimension: 64, vals: 702336
+D1_dimension: 64, D2_dimension: 128, vals: 8192
+
+
+kernel execution time:  6.56465 ms
+fused time: 7.31046
+
+kernel execution time:  1.17042 ms
+sddmm time: 1.68226
+
+kernel execution time:  5.08948 ms
+spmm time: 5.36855
+
+kernel execution time:  124.176 ms
+taco reference time: 124.551
+
+spmm-spmm execution
+
+-----------------------------------------
+/home/min/a/kadhitha/ispc-examples/data/suitesparse/pdb1HYS/pdb1HYS.mtx
+ref(i,l)=B(i,j)*C(i,k)*D(j,k);
+B1_dimension: 36417, B2_dimension: 36417, vals: 4344765
+C1_dimension: 36417, C2_dimension: 64, vals: 2330688
+D1_dimension: 64, D2_dimension: 128, vals: 8192
+
+
+kernel execution time:  25.3076 ms
+fused time: 25.7407
+
+kernel execution time:  14.1922 ms
+sddmm time: 14.7097
+
+kernel execution time:  16.8223 ms
+spmm time: 17.3081
+
+kernel execution time:  1299.07 ms
+taco reference time: 1299.47
+
+spmm-spmm execution
+
+-----------------------------------------
+/home/min/a/kadhitha/ispc-examples/data/suitesparse/rma10/rma10.mtx
+ref(i,l)=B(i,j)*C(i,k)*D(j,k);
+B1_dimension: 46835, B2_dimension: 46835, vals: 2374001
+C1_dimension: 46835, C2_dimension: 64, vals: 2997440
+D1_dimension: 64, D2_dimension: 128, vals: 8192
+
+
+kernel execution time:  27.1044 ms
+fused time: 27.5788
+
+kernel execution time:  9.05436 ms
+sddmm time: 9.61561
+
+kernel execution time:  21.401 ms
+spmm time: 21.9403
+
+kernel execution time:  695.617 ms
+taco reference time: 696.166
+
+spmm-spmm execution
+
+-----------------------------------------
+/home/min/a/kadhitha/ispc-examples/data/suitesparse/cant/cant.mtx
+ref(i,l)=B(i,j)*C(i,k)*D(j,k);
+B1_dimension: 62451, B2_dimension: 62451, vals: 4007383
+C1_dimension: 62451, C2_dimension: 64, vals: 3996864
+D1_dimension: 64, D2_dimension: 128, vals: 8192
+
+
+kernel execution time:  33.1726 ms
+fused time: 33.5921
+
+kernel execution time:  14.8585 ms
+sddmm time: 15.3574
+
+kernel execution time:  28.8622 ms
+spmm time: 29.3477
+
+kernel execution time:  1179.24 ms
+taco reference time: 1179.66
+
+spmm-spmm execution
+
+-----------------------------------------
+/home/min/a/kadhitha/ispc-examples/data/suitesparse/consph/consph.mtx
+ref(i,l)=B(i,j)*C(i,k)*D(j,k);
+B1_dimension: 83334, B2_dimension: 83334, vals: 6010480
+C1_dimension: 83334, C2_dimension: 64, vals: 5333376
+D1_dimension: 64, D2_dimension: 128, vals: 8192
+
+
+kernel execution time:  50.933 ms
+fused time: 51.3664
+
+kernel execution time:  22.1051 ms
+sddmm time: 22.6231
+
+kernel execution time:  37.9487 ms
+spmm time: 38.4594
+
+kernel execution time:  1793.69 ms
+taco reference time: 1794.18
+
+spmm-spmm execution
+
+-----------------------------------------
+/home/min/a/kadhitha/ispc-examples/data/suitesparse/cop20k_A/cop20k_A.mtx
+ref(i,l)=B(i,j)*C(i,k)*D(j,k);
+B1_dimension: 121192, B2_dimension: 121192, vals: 2624331
+C1_dimension: 121192, C2_dimension: 64, vals: 7756288
+D1_dimension: 64, D2_dimension: 128, vals: 8192
+
+
+kernel execution time:  77.6403 ms
+fused time: 78.0713
+
+kernel execution time:  19.9996 ms
+sddmm time: 20.5235
+
+kernel execution time:  55.1072 ms
+spmm time: 55.6382
+
+kernel execution time:  757.71 ms
+taco reference time: 758.251
+
+spmm-spmm execution
+
+-----------------------------------------
+/home/min/a/kadhitha/ispc-examples/data/suitesparse/shipsec1/shipsec1.mtx
+ref(i,l)=B(i,j)*C(i,k)*D(j,k);
+B1_dimension: 140874, B2_dimension: 140874, vals: 7813404
+C1_dimension: 140874, C2_dimension: 64, vals: 9015936
+D1_dimension: 64, D2_dimension: 128, vals: 8192
+
+
+kernel execution time:  74.448 ms
+fused time: 74.8977
+
+kernel execution time:  28.5447 ms
+sddmm time: 29.0628
+
+kernel execution time:  64.5939 ms
+spmm time: 65.3752
+
+kernel execution time:  2277.84 ms
+taco reference time: 2278.26
+
+spmm-spmm execution
+
+-----------------------------------------
+/home/min/a/kadhitha/ispc-examples/data/suitesparse/scircuit/scircuit.mtx
+ref(i,l)=B(i,j)*C(i,k)*D(j,k);
+B1_dimension: 170998, B2_dimension: 170998, vals: 958936
+C1_dimension: 170998, C2_dimension: 64, vals: 10943872
+D1_dimension: 64, D2_dimension: 128, vals: 8192
+
+
+kernel execution time:  103.993 ms
+fused time: 104.417
+
+kernel execution time:  13.9953 ms
+sddmm time: 14.4722
+
+kernel execution time:  77.1505 ms
+spmm time: 77.6507
+
+kernel execution time:  277.888 ms
+taco reference time: 278.424
+
+spmm-spmm execution
+
+-----------------------------------------
+/home/min/a/kadhitha/ispc-examples/data/suitesparse/mac_econ_fwd500/mac_econ_fwd500.mtx
+ref(i,l)=B(i,j)*C(i,k)*D(j,k);
+B1_dimension: 206500, B2_dimension: 206500, vals: 1273389
+C1_dimension: 206500, C2_dimension: 64, vals: 13216000
+D1_dimension: 64, D2_dimension: 128, vals: 8192
+
+
+kernel execution time:  122.094 ms
+fused time: 122.526
+
+kernel execution time:  16.3934 ms
+sddmm time: 16.9174
+
+kernel execution time:  93.4293 ms
+spmm time: 93.9709
+
+kernel execution time:  368.185 ms
+taco reference time: 368.744
+
+spmm-spmm execution
+
+-----------------------------------------
+/home/min/a/kadhitha/ispc-examples/data/ufl/webbase-1M/webbase-1M.mtx
+ref(i,l)=B(i,j)*C(i,k)*D(j,k);
+B1_dimension: 1000005, B2_dimension: 1000005, vals: 3105536
+C1_dimension: 1000005, C2_dimension: 64, vals: 64000320
+D1_dimension: 64, D2_dimension: 128, vals: 8192
+
+
+kernel execution time:  594.481 ms
+fused time: 594.903
+
+kernel execution time:  68.7062 ms
+sddmm time: 69.19
+
+kernel execution time:  456.966 ms
+spmm time: 457.476
+
+kernel execution time:  939.672 ms
+taco reference time: 940.234
+
+spmm-spmm execution
+
+-----------------------------------------
+/home/min/a/kadhitha/ispc-examples/data/suitesparse/circuit5M/circuit5M.mtx
+ref(i,l)=B(i,j)*C(i,k)*D(j,k);
+B1_dimension: 5558326, B2_dimension: 5558326, vals: 59524291
+C1_dimension: 5558326, C2_dimension: 64, vals: 355732864
+D1_dimension: 64, D2_dimension: 128, vals: 8192
+
+
+kernel execution time:  3572.47 ms
+fused time: 3573.32
+
+kernel execution time:  1088.24 ms
+sddmm time: 1088.74
+
+kernel execution time:  2533.08 ms
+spmm time: 2533.64
+
+kernel execution time:  19935.1 ms
+taco reference time: 19936.1
+
+spmm-spmm execution
+
+-----------------------------------------
+/home/min/a/kadhitha/ispc-examples/data/suitesparse/circuit5M/circuit5M.mtx
+
+spmm-spmm execution
+
+-----------------------------------------
+/home/min/a/kadhitha/ispc-examples/data/suitesparse/bcsstk17/bcsstk17.mtx
+ref(i,l)=B(i,j)*C(i,k)*D(j,k);
+B1_dimension: 10974, B2_dimension: 10974, vals: 428650
+C1_dimension: 10974, C2_dimension: 128, vals: 1404672
+D1_dimension: 128, D2_dimension: 64, vals: 8192
+
+
+kernel execution time:  28.4416 ms
+fused time: 28.8482
+
+kernel execution time:  58.9151 ms
+sddmm time: 59.3822
+
+kernel execution time:  85.1524 ms
+spmm time: 85.6136
+
+kernel execution time:  3443.24 ms
+taco reference time: 3444.27
+
+spmm-spmm execution
+
+-----------------------------------------
+/home/min/a/kadhitha/ispc-examples/data/suitesparse/bcsstk17/bcsstk17.mtx
+ref(i,l)=B(i,j)*C(i,k)*D(j,k);
+B1_dimension: 10974, B2_dimension: 10974, vals: 428650
+C1_dimension: 10974, C2_dimension: 128, vals: 1404672
+D1_dimension: 128, D2_dimension: 64, vals: 8192
+
+
+kernel execution time:  28.4398 ms
+fused time: 28.9133
+
+kernel execution time:  59.5781 ms
+SpMM time: 60.0552
+
+kernel execution time:  85.038 ms
+GeMM time: 85.49
+
+kernel execution time:  83.589 ms
+Optimized GeMM time: 83.939
+
+kernel execution time:  3425.66 ms
+taco reference time: 3426.56
+
+spmm-spmm execution
+
+-----------------------------------------
+/home/min/a/kadhitha/ispc-examples/data/suitesparse/bcsstk17/bcsstk17.mtx
+ref(i,l)=B(i,j)*C(i,k)*D(j,k);
+B1_dimension: 10974, B2_dimension: 10974, vals: 428650
+C1_dimension: 10974, C2_dimension: 128, vals: 1404672
+D1_dimension: 128, D2_dimension: 64, vals: 8192
+
+
+kernel execution time:  28.1949 ms
+fused time: 28.6047
+
+kernel execution time:  58.8056 ms
+SpMM time: 59.2739
+
+kernel execution time:  85.098 ms
+GeMM time: 85.5677
+
+spmm-spmm execution
+
+-----------------------------------------
+/home/min/a/kadhitha/ispc-examples/data/suitesparse/bcsstk17/bcsstk17.mtx
+ref(i,l)=B(i,j)*C(i,k)*D(j,k);
+B1_dimension: 10974, B2_dimension: 10974, vals: 428650
+C1_dimension: 10974, C2_dimension: 128, vals: 1404672
+D1_dimension: 128, D2_dimension: 64, vals: 8192
+
+
+spmm-spmm execution
+
+-----------------------------------------
+/home/min/a/kadhitha/ispc-examples/data/suitesparse/bcsstk17/bcsstk17.mtx
+ref(i,l)=B(i,j)*C(i,k)*D(j,k);
+B1_dimension: 10974, B2_dimension: 10974, vals: 428650
+C1_dimension: 10974, C2_dimension: 128, vals: 1404672
+D1_dimension: 128, D2_dimension: 64, vals: 8192
+
+
+kernel execution time:  34.4562 ms
+fused time: 35.1247
+
+kernel execution time:  57.8421 ms
+SpMM time: 58.3206
+
+kernel execution time:  84.8243 ms
+GeMM time: 85.2948
+
+kernel execution time:  84.2094 ms
+Optimized GeMM template time: 84.5715
+
+kernel execution time:  3423.26 ms
+taco reference time: 3424.18
+
+spmm-spmm execution
+
+-----------------------------------------
+/home/min/a/kadhitha/ispc-examples/data/suitesparse/bcsstk17/bcsstk17.mtx
+ref(i,l)=B(i,j)*C(i,k)*D(j,k);
+B1_dimension: 10974, B2_dimension: 10974, vals: 428650
+C1_dimension: 10974, C2_dimension: 128, vals: 1404672
+D1_dimension: 128, D2_dimension: 64, vals: 8192
+
+
+kernel execution time:  34.1982 ms
+fused time: 34.9007
+
+kernel execution time:  58.2208 ms
+SpMM time: 58.708
+
+kernel execution time:  85.2639 ms
+GeMM time: 85.7329
+
+kernel execution time:  84.6708 ms
+Optimized GeMM template time: 85.0447
+
+kernel execution time:  3448.38 ms
+taco reference time: 3449.25
+
+spmm-spmm execution
+
+-----------------------------------------
+/home/min/a/kadhitha/ispc-examples/data/suitesparse/bcsstk17/bcsstk17.mtx
+ref(i,l)=B(i,j)*C(i,k)*D(j,k);
+B1_dimension: 10974, B2_dimension: 10974, vals: 428650
+C1_dimension: 10974, C2_dimension: 128, vals: 1404672
+D1_dimension: 128, D2_dimension: 64, vals: 8192
+
+
+kernel execution time:  3.98391 ms
+fused time: 4.78728
+
+kernel execution time:  3.85974 ms
+SpMM time: 4.41484
+
+kernel execution time:  5.20996 ms
+GeMM time: 5.78292
+
+kernel execution time:  85.5005 ms
+Optimized GeMM template time: 85.8224
+
+kernel execution time:  68.5977 ms
+taco reference time: 69.0953
+
+spmm-spmm execution
+
+-----------------------------------------
+/home/min/a/kadhitha/ispc-examples/data/suitesparse/bcsstk17/bcsstk17.mtx
+ref(i,l)=B(i,j)*C(i,k)*D(j,k);
+B1_dimension: 10974, B2_dimension: 10974, vals: 428650
+C1_dimension: 10974, C2_dimension: 128, vals: 1404672
+D1_dimension: 128, D2_dimension: 64, vals: 8192
+
+
+kernel execution time:  35.477 ms
+fused time: 36.1715
+
+kernel execution time:  57.2092 ms
+SpMM time: 57.6862
+
+kernel execution time:  84.9251 ms
+GeMM time: 85.3862
+
+kernel execution time:  84.8529 ms
+Optimized GeMM template time: 85.2333
+
+kernel execution time:  3425.71 ms
+taco reference time: 3426.59
+
+spmm-spmm execution
+
+-----------------------------------------
+/home/min/a/kadhitha/ispc-examples/data/suitesparse/bcsstk17/bcsstk17.mtx
+ref(i,l)=B(i,j)*C(i,k)*D(j,k);
+B1_dimension: 10974, B2_dimension: 10974, vals: 428650
+C1_dimension: 10974, C2_dimension: 128, vals: 1404672
+D1_dimension: 128, D2_dimension: 64, vals: 8192
+
+
+kernel execution time:  35.2755 ms
+fused time: 35.9965
+
+kernel execution time:  57.3952 ms
+SpMM time: 57.8851
+
+kernel execution time:  85.2686 ms
+GeMM time: 85.7356
+
+kernel execution time:  84.5744 ms
+Optimized GeMM template time: 84.9512
+
+kernel execution time:  3429.7 ms
+taco reference time: 3430.52
+
+spmm-spmm execution
+
+-----------------------------------------
+/home/min/a/kadhitha/ispc-examples/data/suitesparse/bcsstk17/bcsstk17.mtx
+ref(i,l)=B(i,j)*C(i,k)*D(j,k);
+B1_dimension: 10974, B2_dimension: 10974, vals: 428650
+C1_dimension: 10974, C2_dimension: 128, vals: 1404672
+D1_dimension: 128, D2_dimension: 64, vals: 8192
+
+
+kernel execution time:  3.98364 ms
+fused time: 4.61817
+
+kernel execution time:  3.85737 ms
+SpMM time: 4.28322
+
+kernel execution time:  5.15902 ms
+GeMM time: 5.6055
+
+kernel execution time:  87.1601 ms
+Optimized GeMM template time: 87.4622
+
+kernel execution time:  69.0316 ms
+taco reference time: 69.4576
+
+spmm-spmm execution
+
+-----------------------------------------
+/home/min/a/kadhitha/ispc-examples/data/suitesparse/bcsstk17/bcsstk17.mtx
+ref(i,l)=B(i,j)*C(i,k)*D(j,k);
+B1_dimension: 10974, B2_dimension: 10974, vals: 428650
+C1_dimension: 10974, C2_dimension: 128, vals: 1404672
+D1_dimension: 128, D2_dimension: 64, vals: 8192
+
+
+spmm-spmm execution
+
+-----------------------------------------
+/home/min/a/kadhitha/ispc-examples/data/suitesparse/bcsstk17/bcsstk17.mtx
+ref(i,l)=B(i,j)*C(i,k)*D(j,k);
+B1_dimension: 10974, B2_dimension: 10974, vals: 428650
+C1_dimension: 10974, C2_dimension: 128, vals: 1404672
+D1_dimension: 128, D2_dimension: 64, vals: 8192
+
+
+kernel execution time:  4.62195 ms
+fused time: 5.02884
+
+kernel execution time:  4.03094 ms
+SpMM time: 4.41592
+
+kernel execution time:  5.10184 ms
+GeMM time: 5.44766
+
+kernel execution time:  83.6233 ms
+Optimized GeMM template time: 83.895
+
+kernel execution time:  5.3188 ms
+Optimized GeMM template time: 5.65673
+
+kernel execution time:  69.2656 ms
+taco reference time: 69.6404
+
+spmm-spmm execution
+
+-----------------------------------------
+/home/min/a/kadhitha/ispc-examples/data/suitesparse/bcsstk17/bcsstk17.mtx
+ref(i,l)=B(i,j)*C(i,k)*D(j,k);
+B1_dimension: 10974, B2_dimension: 10974, vals: 428650
+C1_dimension: 10974, C2_dimension: 128, vals: 1404672
+D1_dimension: 128, D2_dimension: 64, vals: 8192
+
+
+kernel execution time:  4.03732 ms
+fused time: 4.69314
+
+kernel execution time:  3.72378 ms
+SpMM time: 4.02627
+
+kernel execution time:  2.04995 ms
+GeMM time: 2.33804
+
+kernel execution time:  2.25997 ms
+Optimized GeMM template time: 2.50901
+
+kernel execution time:  5.18509 ms
+Optimized GeMM template time: 5.46269
+
+kernel execution time:  68.4415 ms
+taco reference time: 68.78
+
+spmm-spmm execution
+
+-----------------------------------------
+/home/min/a/kadhitha/ispc-examples/data/suitesparse/bcsstk17/bcsstk17.mtx
+ref(i,l)=B(i,j)*C(i,k)*D(j,k);
+B1_dimension: 10974, B2_dimension: 10974, vals: 428650
+C1_dimension: 10974, C2_dimension: 128, vals: 1404672
+D1_dimension: 128, D2_dimension: 64, vals: 8192
+
+
+kernel execution time:  3.95981 ms
+fused time: 4.3754
+
+kernel execution time:  3.78475 ms
+SpMM time: 4.19686
+
+kernel execution time:  2.00709 ms
+GeMM time: 2.38028
+
+spmm-spmm execution
+
+-----------------------------------------
+/home/min/a/kadhitha/ispc-examples/data/suitesparse/bcsstk17/bcsstk17.mtx
+ref(i,l)=B(i,j)*C(i,k)*D(j,k);
+B1_dimension: 10974, B2_dimension: 10974, vals: 428650
+C1_dimension: 10974, C2_dimension: 128, vals: 1404672
+D1_dimension: 128, D2_dimension: 64, vals: 8192
+
+
+kernel execution time:  4.05057 ms
+fused time: 4.40773
+
+kernel execution time:  3.75306 ms
+SpMM time: 4.08598
+
+kernel execution time:  2.05899 ms
+GeMM time: 2.36596
+
+kernel execution time:  2.12928 ms
+Optimized GeMM template time: 2.36493
+
+kernel execution time:  5.14712 ms
+Optimized GeMM template time: 5.41248
+
+kernel execution time:  68.075 ms
+taco reference time: 68.3835
+
+spmm-spmm execution
+
+-----------------------------------------
+/home/min/a/kadhitha/ispc-examples/data/suitesparse/bcsstk17/bcsstk17.mtx
+ref(i,l)=B(i,j)*C(i,k)*D(j,k);
+B1_dimension: 10974, B2_dimension: 10974, vals: 428650
+C1_dimension: 10974, C2_dimension: 128, vals: 1404672
+D1_dimension: 128, D2_dimension: 64, vals: 8192
+
+
+kernel execution time:  3.88934 ms
+fused time: 4.25328
+
+kernel execution time:  3.82407 ms
+SpMM time: 4.19446
+
+spmm-spmm execution
+
+-----------------------------------------
+/home/min/a/kadhitha/ispc-examples/data/suitesparse/bcsstk17/bcsstk17.mtx
+ref(i,l)=B(i,j)*C(i,k)*D(j,k);
+B1_dimension: 10974, B2_dimension: 10974, vals: 428650
+C1_dimension: 10974, C2_dimension: 128, vals: 1404672
+D1_dimension: 128, D2_dimension: 64, vals: 8192
+
+
+kernel execution time:  4.28741 ms
+fused time: 4.98944
+
+kernel execution time:  3.79765 ms
+SpMM time: 4.16417
+
+kernel execution time:  1.4265 ms
+SpMM template time: 1.74127
+
+kernel execution time:  2.10898 ms
+GeMM time: 2.39285
+
+kernel execution time:  2.34628 ms
+Optimized GeMM template time: 2.61728
+
+kernel execution time:  5.31869 ms
+Optimized GeMM template time: 5.60267
+
+kernel execution time:  69.5098 ms
+taco reference time: 69.8708
+
+spmm-spmm execution
+
+-----------------------------------------
+/home/min/a/kadhitha/ispc-examples/data/suitesparse/bcsstk17/bcsstk17.mtx
+ref(i,l)=B(i,j)*C(i,k)*D(j,k);
+B1_dimension: 10974, B2_dimension: 10974, vals: 428650
+C1_dimension: 10974, C2_dimension: 128, vals: 1404672
+D1_dimension: 128, D2_dimension: 64, vals: 8192
+
+
+kernel execution time:  4.01588 ms
+fused time: 4.65051
+
+kernel execution time:  3.86258 ms
+SpMM time: 4.2125
+
+kernel execution time:  1.43425 ms
+SpMM template time: 1.72825
+
+kernel execution time:  2.09177 ms
+GeMM time: 2.35741
+
+kernel execution time:  2.03779 ms
+GeMM time: 2.26668
+
+kernel execution time:  2.18152 ms
+Optimized GeMM template time: 2.45788
+
+kernel execution time:  0.974804 ms
+Optimized GeMM template time: 1.25462
+
+kernel execution time:  67.9024 ms
+taco reference time: 68.2452
+
+spmm-spmm execution
+
+-----------------------------------------
+/home/min/a/kadhitha/ispc-examples/data/suitesparse/bcsstk17/bcsstk17.mtx
+ref(i,l)=B(i,j)*C(i,k)*D(j,k);
+B1_dimension: 10974, B2_dimension: 10974, vals: 428650
+C1_dimension: 10974, C2_dimension: 128, vals: 1404672
+D1_dimension: 128, D2_dimension: 64, vals: 8192
+
+
+kernel execution time:  4.0224 ms
+fused time: 4.44033
+
+kernel execution time:  3.84077 ms
+SpMM time: 4.2196
+
+kernel execution time:  1.57684 ms
+SpMM template time: 1.93604
+
+kernel execution time:  2.00289 ms
+GeMM time: 2.38135
+
+kernel execution time:  1.93219 ms
+ref 2 GeMM time: 2.16952
+
+kernel execution time:  1.9562 ms
+ref3 GeMM template time: 2.22014
+
+kernel execution time:  1.02843 ms
+SpMM template time: 1.3134
+
+kernel execution time:  68.6937 ms
+taco reference time: 69.0531
+
+spmm-spmm execution
+
+-----------------------------------------
+/home/min/a/kadhitha/ispc-examples/data/suitesparse/bcsstk17/bcsstk17.mtx
+ref(i,l)=B(i,j)*C(i,k)*D(j,k);
+B1_dimension: 10974, B2_dimension: 10974, vals: 428650
+C1_dimension: 10974, C2_dimension: 128, vals: 1404672
+D1_dimension: 128, D2_dimension: 64, vals: 8192
+
+
+spmm-spmm execution
+
+-----------------------------------------
+/home/min/a/kadhitha/ispc-examples/data/suitesparse/bcsstk17/bcsstk17.mtx
+ref(i,l)=B(i,j)*C(i,k)*D(j,k);
+B1_dimension: 10974, B2_dimension: 10974, vals: 428650
+C1_dimension: 10974, C2_dimension: 128, vals: 1404672
+D1_dimension: 128, D2_dimension: 64, vals: 8192
+
+
+kernel execution time:  4.70723 ms
+fused time: 5.10663
+
+kernel execution time:  3.86475 ms
+SpMM time: 4.22896
+
+kernel execution time:  1.5696 ms
+SpMM template time: 1.91027
+
+kernel execution time:  2.06463 ms
+GeMM time: 2.35063
+
+kernel execution time:  1.93837 ms
+ref 2 GeMM time: 2.18475
+
+kernel execution time:  1.93808 ms
+ref3 GeMM template time: 2.21134
+
+kernel execution time:  1.00393 ms
+SpMM template time: 1.28759
+
+kernel execution time:  65.6539 ms
+taco reference time: 66.0123
+
+spmm-spmm execution
+
+-----------------------------------------
+/home/min/a/kadhitha/ispc-examples/data/suitesparse/bcsstk17/bcsstk17.mtx
+ref(i,l)=B(i,j)*C(i,k)*D(j,k);
+B1_dimension: 10974, B2_dimension: 10974, vals: 428650
+C1_dimension: 10974, C2_dimension: 128, vals: 1404672
+D1_dimension: 128, D2_dimension: 64, vals: 8192
+
+
+kernel execution time:  4.41073 ms
+fused time: 4.81175
+
+kernel execution time:  3.96438 ms
+SpMM time: 4.33792
+
+kernel execution time:  1.48077 ms
+SpMM template time: 1.84634
+
+kernel execution time:  2.06276 ms
+GeMM time: 2.52122
+
+kernel execution time:  2.4643 ms
+ref 2 GeMM template time: 3.77443
+
+kernel execution time:  2.21292 ms
+ref3 GeMM template time: 2.48374
+
+kernel execution time:  1.02386 ms
+SpMM template time ref4: 5.63941
+
+kernel execution time:  73.0137 ms
+taco reference time: 73.4188
+
+spmm-spmm execution
+
+-----------------------------------------
+/home/min/a/kadhitha/ispc-examples/data/suitesparse/bcsstk17/bcsstk17.mtx
+ref(i,l)=B(i,j)*C(i,k)*D(j,k);
+B1_dimension: 10974, B2_dimension: 10974, vals: 428650
+C1_dimension: 10974, C2_dimension: 128, vals: 1404672
+D1_dimension: 128, D2_dimension: 64, vals: 8192
+
+
+kernel execution time:  2.81946 ms
+fused time: 3.44515
+
+kernel execution time:  3.93379 ms
+SpMM time: 4.19505
+
+kernel execution time:  1.46537 ms
+SpMM template time: 1.77106
+
+kernel execution time:  2.48839 ms
+GeMM time: 2.75159
+
+kernel execution time:  2.57119 ms
+ref 2 GeMM template time: 2.83288
+
+kernel execution time:  2.19579 ms
+ref3 GeMM template time: 2.44668
+
+kernel execution time:  1.08977 ms
+SpMM template time ref4: 1.3527
+
+kernel execution time:  72.5212 ms
+taco reference time: 72.8405
+
+spmm-spmm execution
+
+-----------------------------------------
+/home/min/a/kadhitha/ispc-examples/data/suitesparse/bcsstk17/bcsstk17.mtx
+ref(i,l)=B(i,j)*C(i,k)*D(j,k);
+B1_dimension: 10974, B2_dimension: 10974, vals: 428650
+C1_dimension: 10974, C2_dimension: 128, vals: 1404672
+D1_dimension: 128, D2_dimension: 64, vals: 8192
+
+
+kernel execution time:  2.34088 ms
+fused time: 2.99398
+
+kernel execution time:  3.80606 ms
+SpMM time: 4.36154
+
+kernel execution time:  1.58906 ms
+SpMM template time: 1.95568
+
+kernel execution time:  2.25455 ms
+GeMM time: 2.5356
+
+kernel execution time:  2.3975 ms
+ref 2 GeMM template time: 2.66963
+
+kernel execution time:  2.10202 ms
+ref3 GeMM template time: 2.40392
+
+kernel execution time:  1.02333 ms
+SpMM template time ref4: 1.30975
+
+kernel execution time:  72.6994 ms
+taco reference time: 73.0145
+
+
+
+
+
+
+---------------------------------------------------------------------------------------------------------------
+---------------------------------------------------------------------------------------------------------------
+---------------------------------------------------------------------------------------------------------------
+
+
+with 64 threads
+
+
+
+
+
+spmm-spmm execution
+
+-----------------------------------------
+/home/min/a/kadhitha/ispc-examples/data/suitesparse/bcsstk17/bcsstk17.mtx
+ref(i,l)=B(i,j)*C(i,k)*D(j,k);
+B1_dimension: 10974, B2_dimension: 10974, vals: 428650
+C1_dimension: 10974, C2_dimension: 128, vals: 1404672
+D1_dimension: 128, D2_dimension: 64, vals: 8192
+
+
+kernel execution time:  2.36795 ms
+fused time: 2.78304
+
+kernel execution time:  3.8721 ms
+SpMM time: 4.20057
+
+kernel execution time:  1.52637 ms
+SpMM template time: 1.85784
+
+kernel execution time:  2.03318 ms
+GeMM time: 2.31935
+
+kernel execution time:  2.39998 ms
+ref 2 GeMM template time: 2.68836
+
+kernel execution time:  1.94819 ms
+ref3 GeMM template time: 2.2353
+
+kernel execution time:  1.06049 ms
+SpMM template time ref4: 1.35755
+
+kernel execution time:  68.6851 ms
+taco reference time: 69.0188
+
+spmm-spmm execution
+
+-----------------------------------------
+/home/min/a/kadhitha/ispc-examples/data/suitesparse/pdb1HYS/pdb1HYS.mtx
+ref(i,l)=B(i,j)*C(i,k)*D(j,k);
+B1_dimension: 36417, B2_dimension: 36417, vals: 4344765
+C1_dimension: 36417, C2_dimension: 128, vals: 4661376
+D1_dimension: 128, D2_dimension: 64, vals: 8192
+
+
+kernel execution time:  8.41302 ms
+fused time: 8.85733
+
+kernel execution time:  17.639 ms
+SpMM time: 18.2378
+
+kernel execution time:  7.98654 ms
+SpMM template time: 8.57087
+
+kernel execution time:  6.34574 ms
+GeMM time: 6.8938
+
+kernel execution time:  6.10335 ms
+ref 2 GeMM template time: 6.39173
+
+kernel execution time:  5.82956 ms
+ref3 GeMM template time: 6.11877
+
+kernel execution time:  4.70653 ms
+SpMM template time ref4: 5.04278
+
+kernel execution time:  671.833 ms
+taco reference time: 672.353
+
+spmm-spmm execution
+
+-----------------------------------------
+/home/min/a/kadhitha/ispc-examples/data/suitesparse/rma10/rma10.mtx
+ref(i,l)=B(i,j)*C(i,k)*D(j,k);
+B1_dimension: 46835, B2_dimension: 46835, vals: 2374001
+C1_dimension: 46835, C2_dimension: 128, vals: 5994880
+D1_dimension: 128, D2_dimension: 64, vals: 8192
+
+
+kernel execution time:  7.27388 ms
+fused time: 7.73945
+
+kernel execution time:  17.7256 ms
+SpMM time: 18.3199
+
+kernel execution time:  7.35832 ms
+SpMM template time: 7.9109
+
+kernel execution time:  8.33036 ms
+GeMM time: 8.86966
+
+kernel execution time:  7.86963 ms
+ref 2 GeMM template time: 8.15124
+
+kernel execution time:  7.7866 ms
+ref3 GeMM template time: 8.07407
+
+kernel execution time:  4.49305 ms
+SpMM template time ref4: 4.80781
+
+kernel execution time:  398.926 ms
+taco reference time: 399.478
+
+spmm-spmm execution
+
+-----------------------------------------
+/home/min/a/kadhitha/ispc-examples/data/suitesparse/cant/cant.mtx
+ref(i,l)=B(i,j)*C(i,k)*D(j,k);
+B1_dimension: 62451, B2_dimension: 62451, vals: 4007383
+C1_dimension: 62451, C2_dimension: 128, vals: 7993728
+D1_dimension: 128, D2_dimension: 64, vals: 8192
+
+
+kernel execution time:  11.3443 ms
+fused time: 11.8147
+
+kernel execution time:  22.2928 ms
+SpMM time: 22.924
+
+kernel execution time:  12.4461 ms
+SpMM template time: 13.0043
+
+kernel execution time:  10.9317 ms
+GeMM time: 11.5006
+
+kernel execution time:  10.7585 ms
+ref 2 GeMM template time: 11.0658
+
+kernel execution time:  11.0196 ms
+ref3 GeMM template time: 11.3149
+
+kernel execution time:  6.90358 ms
+SpMM template time ref4: 7.24984
+
+kernel execution time:  657.038 ms
+taco reference time: 657.641
+
+spmm-spmm execution
+
+-----------------------------------------
+/home/min/a/kadhitha/ispc-examples/data/suitesparse/consph/consph.mtx
+ref(i,l)=B(i,j)*C(i,k)*D(j,k);
+B1_dimension: 83334, B2_dimension: 83334, vals: 6010480
+C1_dimension: 83334, C2_dimension: 128, vals: 10666752
+D1_dimension: 128, D2_dimension: 64, vals: 8192
+
+
+kernel execution time:  15.2657 ms
+fused time: 15.7013
+
+kernel execution time:  31.6235 ms
+SpMM time: 32.1905
+
+kernel execution time:  16.8006 ms
+SpMM template time: 17.332
+
+kernel execution time:  14.3795 ms
+GeMM time: 14.9199
+
+kernel execution time:  14.4997 ms
+ref 2 GeMM template time: 14.8349
+
+kernel execution time:  14.0983 ms
+ref3 GeMM template time: 14.393
+
+kernel execution time:  9.33791 ms
+SpMM template time ref4: 9.73698
+
+kernel execution time:  903.295 ms
+taco reference time: 903.924
+
+spmm-spmm execution
+
+-----------------------------------------
+/home/min/a/kadhitha/ispc-examples/data/suitesparse/cop20k_A/cop20k_A.mtx
+ref(i,l)=B(i,j)*C(i,k)*D(j,k);
+B1_dimension: 121192, B2_dimension: 121192, vals: 2624331
+C1_dimension: 121192, C2_dimension: 128, vals: 15512576
+D1_dimension: 128, D2_dimension: 64, vals: 8192
+
+
+kernel execution time:  27.1267 ms
+fused time: 27.6407
+
+kernel execution time:  52.874 ms
+SpMM time: 53.49
+
+kernel execution time:  25.9708 ms
+SpMM template time: 26.5475
+
+kernel execution time:  20.1295 ms
+GeMM time: 20.7267
+
+kernel execution time:  21.2549 ms
+ref 2 GeMM template time: 21.7256
+
+kernel execution time:  20.7262 ms
+ref3 GeMM template time: 21.1848
+
+kernel execution time:  12.5379 ms
+SpMM template time ref4: 13.0829
+
+kernel execution time:  405.376 ms
+taco reference time: 406.043
+
+spmm-spmm execution
+
+-----------------------------------------
+/home/min/a/kadhitha/ispc-examples/data/suitesparse/shipsec1/shipsec1.mtx
+ref(i,l)=B(i,j)*C(i,k)*D(j,k);
+B1_dimension: 140874, B2_dimension: 140874, vals: 7813404
+C1_dimension: 140874, C2_dimension: 128, vals: 18031872
+D1_dimension: 128, D2_dimension: 64, vals: 8192
+
+
+kernel execution time:  22.7136 ms
+fused time: 23.1625
+
+kernel execution time:  49.1418 ms
+SpMM time: 49.7343
+
+kernel execution time:  25.0936 ms
+SpMM template time: 25.604
+
+kernel execution time:  23.6444 ms
+GeMM time: 24.1812
+
+kernel execution time:  24.348 ms
+ref 2 GeMM template time: 24.6837
+
+kernel execution time:  23.9836 ms
+ref3 GeMM template time: 24.2972
+
+kernel execution time:  14.4884 ms
+SpMM template time ref4: 14.8698
+
+kernel execution time:  1154.44 ms
+taco reference time: 1155.04
+
+spmm-spmm execution
+
+-----------------------------------------
+/home/min/a/kadhitha/ispc-examples/data/suitesparse/scircuit/scircuit.mtx
+ref(i,l)=B(i,j)*C(i,k)*D(j,k);
+B1_dimension: 170998, B2_dimension: 170998, vals: 958936
+C1_dimension: 170998, C2_dimension: 128, vals: 21887744
+D1_dimension: 128, D2_dimension: 64, vals: 8192
+
+
+kernel execution time:  18.015 ms
+fused time: 18.4775
+
+kernel execution time:  56.1907 ms
+SpMM time: 56.8126
+
+kernel execution time:  20.0375 ms
+SpMM template time: 20.5913
+
+kernel execution time:  28.1716 ms
+GeMM time: 28.7647
+
+kernel execution time:  30.484 ms
+ref 2 GeMM template time: 30.9681
+
+kernel execution time:  30.0422 ms
+ref3 GeMM template time: 30.5496
+
+kernel execution time:  10.8925 ms
+SpMM template time ref4: 11.4401
+
+kernel execution time:  162.277 ms
+taco reference time: 162.908
+
+spmm-spmm execution
+
+-----------------------------------------
+/home/min/a/kadhitha/ispc-examples/data/suitesparse/mac_econ_fwd500/mac_econ_fwd500.mtx
+ref(i,l)=B(i,j)*C(i,k)*D(j,k);
+B1_dimension: 206500, B2_dimension: 206500, vals: 1273389
+C1_dimension: 206500, C2_dimension: 128, vals: 26432000
+D1_dimension: 128, D2_dimension: 64, vals: 8192
+
+
+kernel execution time:  23.8637 ms
+fused time: 24.4029
+
+kernel execution time:  69.8832 ms
+SpMM time: 70.504
+
+kernel execution time:  26.8086 ms
+SpMM template time: 27.6336
+
+kernel execution time:  34.2049 ms
+GeMM time: 34.8056
+
+kernel execution time:  34.6783 ms
+ref 2 GeMM template time: 35.183
+
+kernel execution time:  33.8854 ms
+ref3 GeMM template time: 34.3954
+
+kernel execution time:  13.9069 ms
+SpMM template time ref4: 14.4251
+
+kernel execution time:  189.271 ms
+taco reference time: 189.95
+
+spmm-spmm execution
+
+-----------------------------------------
+/home/min/a/kadhitha/ispc-examples/data/ufl/webbase-1M/webbase-1M.mtx
+ref(i,l)=B(i,j)*C(i,k)*D(j,k);
+B1_dimension: 1000005, B2_dimension: 1000005, vals: 3105536
+C1_dimension: 1000005, C2_dimension: 128, vals: 128000640
+D1_dimension: 128, D2_dimension: 64, vals: 8192
+
+
+kernel execution time:  66.2912 ms
+fused time: 66.8207
+
+kernel execution time:  335.04 ms
+SpMM time: 335.699
+
+kernel execution time:  83.9137 ms
+SpMM template time: 84.5618
+
+kernel execution time:  157.411 ms
+GeMM time: 158.061
+
+kernel execution time:  169.35 ms
+ref 2 GeMM template time: 169.938
+
+kernel execution time:  168.201 ms
+ref3 GeMM template time: 168.762
+
+kernel execution time:  44.531 ms
+SpMM template time ref4: 45.176
+
+kernel execution time:  458.322 ms
+taco reference time: 458.992
+
+spmm-spmm execution
+
+-----------------------------------------
+/home/min/a/kadhitha/ispc-examples/data/suitesparse/circuit5M/circuit5M.mtx
+ref(i,l)=B(i,j)*C(i,k)*D(j,k);
+B1_dimension: 5558326, B2_dimension: 5558326, vals: 59524291
+C1_dimension: 5558326, C2_dimension: 128, vals: 711465728
+D1_dimension: 128, D2_dimension: 64, vals: 8192
+
+
+kernel execution time:  629.911 ms
+fused time: 630.89
+
+kernel execution time:  2385.92 ms
+SpMM time: 2386.45
+
+kernel execution time:  904.117 ms
+SpMM template time: 904.66
+
+kernel execution time:  867.356 ms
+GeMM time: 867.943
+
+kernel execution time:  946.344 ms
+ref 2 GeMM template time: 946.912
+
+kernel execution time:  951.944 ms
+ref3 GeMM template time: 952.496
+
+kernel execution time:  464.289 ms
+SpMM template time ref4: 464.847
+
+kernel execution time:  19646 ms
+taco reference time: 19647.2
+
+spmm-spmm execution
+
+-----------------------------------------
+/home/min/a/kadhitha/ispc-examples/data/ufl/webbase-1M/webbase-1M.mtx
+ref(i,l)=B(i,j)*C(i,k)*D(j,k);
+B1_dimension: 1000005, B2_dimension: 1000005, vals: 3105536
+C1_dimension: 1000005, C2_dimension: 128, vals: 128000640
+D1_dimension: 128, D2_dimension: 64, vals: 8192
+
+
+kernel execution time:  65.749 ms
+fused time: 66.2393
+
+kernel execution time:  334.436 ms
+SpMM time: 335.114
+
+kernel execution time:  85.6378 ms
+SpMM template time: 86.2216
+
+kernel execution time:  156.716 ms
+GeMM time: 157.281
+
+kernel execution time:  169.383 ms
+ref 2 GeMM template time: 169.948
+
+kernel execution time:  168.128 ms
+ref3 GeMM template time: 168.722
+
+kernel execution time:  44.3902 ms
+SpMM template time ref4: 44.9859
+
+kernel execution time:  462.089 ms
+taco reference time: 462.747
+
+kernel execution time:  472.176 ms
+taco reference new time: 472.868
+
+spmm-spmm execution
+
+-----------------------------------------
+/home/min/a/kadhitha/ispc-examples/data/suitesparse/mac_econ_fwd500/mac_econ_fwd500.mtx
+ref(i,l)=B(i,j)*C(i,k)*D(j,k);
+B1_dimension: 206500, B2_dimension: 206500, vals: 1273389
+C1_dimension: 206500, C2_dimension: 128, vals: 26432000
+D1_dimension: 128, D2_dimension: 64, vals: 8192
+
+
+kernel execution time:  22.9203 ms
+fused time: 23.382
+
+kernel execution time:  69.0678 ms
+SpMM time: 69.6771
+
+kernel execution time:  25.7576 ms
+SpMM template time: 26.2883
+
+kernel execution time:  33.838 ms
+GeMM time: 34.3893
+
+kernel execution time:  36.2223 ms
+ref 2 GeMM template time: 36.7099
+
+kernel execution time:  35.9919 ms
+ref3 GeMM template time: 36.5181
+
+kernel execution time:  13.5094 ms
+SpMM template time ref4: 14.0411
+
+kernel execution time:  209.225 ms
+taco reference time: 209.806
+
+kernel execution time:  195.258 ms
+taco reference new time: 195.862
+
+spmm-spmm execution
+
+-----------------------------------------
+/home/min/a/kadhitha/ispc-examples/data/suitesparse/mac_econ_fwd500/mac_econ_fwd500.mtx
+ref(i,l)=B(i,j)*C(i,k)*D(j,k);
+B1_dimension: 206500, B2_dimension: 206500, vals: 1273389
+C1_dimension: 206500, C2_dimension: 128, vals: 26432000
+D1_dimension: 128, D2_dimension: 64, vals: 8192
+
+
+kernel execution time:  23.9941 ms
+fused time: 24.5306
+
+kernel execution time:  70.3118 ms
+SpMM time: 70.9711
+
+kernel execution time:  26.7754 ms
+SpMM template time: 27.3965
+
+kernel execution time:  34.3488 ms
+GeMM time: 34.9449
+
+kernel execution time:  34.9754 ms
+ref 2 GeMM template time: 35.5492
+
+kernel execution time:  34.4524 ms
+ref3 GeMM template time: 35.0358
+
+kernel execution time:  13.8295 ms
+SpMM template time ref4: 14.4023
+
+kernel execution time:  195.316 ms
+taco reference time: 195.985
+
+kernel execution time:  194.321 ms
+taco reference new time: 194.959
+
+spmm-spmm execution
+
+-----------------------------------------
+/home/min/a/kadhitha/ispc-examples/data/suitesparse/shipsec1/shipsec1.mtx
+ref(i,l)=B(i,j)*C(i,k)*D(j,k);
+B1_dimension: 140874, B2_dimension: 140874, vals: 7813404
+C1_dimension: 140874, C2_dimension: 128, vals: 18031872
+D1_dimension: 128, D2_dimension: 64, vals: 8192
+
+
+kernel execution time:  499.31 ms
+fused time: 500.253
+
+kernel execution time:  1127.92 ms
+SpMM time: 1128.46
+
+kernel execution time:  314.563 ms
+SpMM template time: 315.094
+
+kernel execution time:  1071.42 ms
+GeMM time: 1071.96
+
+kernel execution time:  772.255 ms
+ref 2 GeMM template time: 772.765
+
+kernel execution time:  768.478 ms
+ref3 GeMM template time: 768.998
+
+kernel execution time:  162.934 ms
+SpMM template time ref4: 163.456
+
+kernel execution time:  51182.8 ms
+taco reference time: 51183.7
+
+kernel execution time:  62360.6 ms
+taco reference new time: 62361.5
+
+spmm-spmm execution
+
+-----------------------------------------
+/home/min/a/kadhitha/ispc-examples/data/suitesparse/scircuit/scircuit.mtx
+ref(i,l)=B(i,j)*C(i,k)*D(j,k);
+B1_dimension: 170998, B2_dimension: 170998, vals: 958936
+C1_dimension: 170998, C2_dimension: 128, vals: 21887744
+D1_dimension: 128, D2_dimension: 64, vals: 8192
+
+
+kernel execution time:  343.987 ms
+fused time: 344.403
+
+kernel execution time:  127.278 ms
+SpMM time: 127.803
+
+kernel execution time:  139.755 ms
+SpMM template time: 140.297
+
+kernel execution time:  1308.19 ms
+GeMM time: 1308.77
+
+kernel execution time:  930.985 ms
+ref 2 GeMM template time: 931.498
+
+kernel execution time:  924.636 ms
+ref3 GeMM template time: 925.164
+
+kernel execution time:  83.9238 ms
+SpMM template time ref4: 84.4508
+
+kernel execution time:  6298.13 ms
+taco reference time: 6299.21
+
+kernel execution time:  7357.04 ms
+taco reference new time: 7358.09
+
+spmm-spmm execution
+
+-----------------------------------------
+/home/min/a/kadhitha/ispc-examples/data/suitesparse/mac_econ_fwd500/mac_econ_fwd500.mtx
+ref(i,l)=B(i,j)*C(i,k)*D(j,k);
+B1_dimension: 206500, B2_dimension: 206500, vals: 1273389
+C1_dimension: 206500, C2_dimension: 128, vals: 26432000
+D1_dimension: 128, D2_dimension: 64, vals: 8192
+
+
+kernel execution time:  404.825 ms
+fused time: 405.271
+
+kernel execution time:  142.933 ms
+SpMM time: 143.48
+
+kernel execution time:  155.193 ms
+SpMM template time: 155.761
+
+kernel execution time:  1572.88 ms
+GeMM time: 1573.41
+
+kernel execution time:  1132.63 ms
+ref 2 GeMM template time: 1133.13
+
+kernel execution time:  1126.54 ms
+ref3 GeMM template time: 1127.06
+
+kernel execution time:  96.7404 ms
+SpMM template time ref4: 97.2437
+
+kernel execution time:  8321.2 ms
+taco reference time: 8322.27
+
+kernel execution time:  9774.76 ms
+taco reference new time: 9775.82
+
+spmm-spmm execution
+
+-----------------------------------------
+/home/min/a/kadhitha/ispc-examples/data/ufl/webbase-1M/webbase-1M.mtx
+ref(i,l)=B(i,j)*C(i,k)*D(j,k);
+B1_dimension: 1000005, B2_dimension: 1000005, vals: 3105536
+C1_dimension: 1000005, C2_dimension: 128, vals: 128000640
+D1_dimension: 128, D2_dimension: 64, vals: 8192
+
+
+kernel execution time:  1796.56 ms
+fused time: 1797.34
+
+kernel execution time:  429.623 ms
+SpMM time: 430.127
+
+kernel execution time:  406.352 ms
+SpMM template time: 406.855
+
+kernel execution time:  7603.48 ms
+GeMM time: 7604.4
+
+kernel execution time:  5458.44 ms
+ref 2 GeMM template time: 5459.36
+
+kernel execution time:  5413.18 ms
+ref3 GeMM template time: 5414.05
+
+kernel execution time:  266.783 ms
+SpMM template time ref4: 267.276
+
+kernel execution time:  20481.5 ms
+taco reference time: 20482.6
+
+kernel execution time:  23942.3 ms
+taco reference new time: 23943.8
+
+spmm-spmm execution
+
+-----------------------------------------
+/home/min/a/kadhitha/ispc-examples/data/suitesparse/circuit5M/circuit5M.mtx
+ref(i,l)=B(i,j)*C(i,k)*D(j,k);
+B1_dimension: 5558326, B2_dimension: 5558326, vals: 59524291
+C1_dimension: 5558326, C2_dimension: 128, vals: 711465728
+D1_dimension: 128, D2_dimension: 64, vals: 8192
+
+
+kernel execution time:  11983.1 ms
+fused time: 11984.1
+
+kernel execution time:  14647.3 ms
+SpMM time: 14648.4
+
+kernel execution time:  5779.35 ms
+SpMM template time: 5780.3
+
+kernel execution time:  42156 ms
+GeMM time: 42156.9
+
+kernel execution time:  30315.6 ms
+ref 2 GeMM template time: 30316.6
+
+kernel execution time:  30070.9 ms
+ref3 GeMM template time: 30071.9
+
+kernel execution time:  3196.34 ms
+SpMM template time ref4: 3197.36
+
+kernel execution time:  387963 ms
+taco reference time: 387964
+
+kernel execution time:  481094 ms
+taco reference new time: 481095
+
+spmm-spmm execution
+
+-----------------------------------------
+/home/min/a/kadhitha/ispc-examples/data/suitesparse/bcsstk17/bcsstk17.mtx
+ref(i,l)=B(i,j)*C(i,k)*D(j,k);
+B1_dimension: 10974, B2_dimension: 10974, vals: 428650
+C1_dimension: 10974, C2_dimension: 128, vals: 1404672
+D1_dimension: 128, D2_dimension: 64, vals: 8192
+
+
+kernel execution time:  32.8596 ms
+fused time: 33.2745
+
+kernel execution time:  57.4073 ms
+SpMM time: 57.9242
+
+kernel execution time:  18.9092 ms
+SpMM template time: 19.4238
+
+kernel execution time:  84.8547 ms
+GeMM time: 85.3549
+
+kernel execution time:  60.5468 ms
+ref 2 GeMM template time: 60.9429
+
+kernel execution time:  60.3303 ms
+ref3 GeMM template time: 60.7269
+
+kernel execution time:  9.95693 ms
+SpMM template time ref4: 10.3864
+
+kernel execution time:  2808.32 ms
+taco reference time: 2808.79
+
+kernel execution time:  3456.32 ms
+taco reference new time: 3457.29
+
+spmm-spmm execution
+
+-----------------------------------------
+/home/min/a/kadhitha/ispc-examples/data/suitesparse/pdb1HYS/pdb1HYS.mtx
+ref(i,l)=B(i,j)*C(i,k)*D(j,k);
+B1_dimension: 36417, B2_dimension: 36417, vals: 4344765
+C1_dimension: 36417, C2_dimension: 128, vals: 4661376
+D1_dimension: 128, D2_dimension: 64, vals: 8192
+
+
+kernel execution time:  203.078 ms
+fused time: 203.513
+
+kernel execution time:  594.431 ms
+SpMM time: 594.968
+
+kernel execution time:  135.247 ms
+SpMM template time: 135.774
+
+kernel execution time:  277.557 ms
+GeMM time: 278.077
+
+kernel execution time:  201.246 ms
+ref 2 GeMM template time: 201.741
+
+kernel execution time:  200.173 ms
+ref3 GeMM template time: 200.697
+
+kernel execution time:  67.3815 ms
+SpMM template time ref4: 67.9079
+
+kernel execution time:  28413.2 ms
+taco reference time: 28414.2
+
+kernel execution time:  34685.2 ms
+taco reference new time: 34687
+
+spmm-spmm execution
+
+-----------------------------------------
+/home/min/a/kadhitha/ispc-examples/data/suitesparse/rma10/rma10.mtx
+ref(i,l)=B(i,j)*C(i,k)*D(j,k);
+B1_dimension: 46835, B2_dimension: 46835, vals: 2374001
+C1_dimension: 46835, C2_dimension: 128, vals: 5994880
+D1_dimension: 128, D2_dimension: 64, vals: 8192
+
+
+kernel execution time:  156.103 ms
+fused time: 156.534
+
+kernel execution time:  313.946 ms
+SpMM time: 314.545
+
+kernel execution time:  95.9908 ms
+SpMM template time: 96.5235
+
+kernel execution time:  355.516 ms
+GeMM time: 356.043
+
+kernel execution time:  257.486 ms
+ref 2 GeMM template time: 258
+
+kernel execution time:  255.966 ms
+ref3 GeMM template time: 256.498
+
+kernel execution time:  50.7943 ms
+SpMM template time ref4: 51.3121
+
+kernel execution time:  15474.9 ms
+taco reference time: 15476
+
+kernel execution time:  19054.1 ms
+taco reference new time: 19055.3
+
+spmm-spmm execution
+
+-----------------------------------------
+/home/min/a/kadhitha/ispc-examples/data/suitesparse/cant/cant.mtx
+ref(i,l)=B(i,j)*C(i,k)*D(j,k);
+B1_dimension: 62451, B2_dimension: 62451, vals: 4007383
+C1_dimension: 62451, C2_dimension: 128, vals: 7993728
+D1_dimension: 128, D2_dimension: 64, vals: 8192
+
+
+kernel execution time:  233.01 ms
+fused time: 233.435
+
+kernel execution time:  583.856 ms
+SpMM time: 584.39
+
+kernel execution time:  148.111 ms
+SpMM template time: 148.649
+
+kernel execution time:  474.209 ms
+GeMM time: 474.735
+
+kernel execution time:  343.934 ms
+ref 2 GeMM template time: 344.44
+
+kernel execution time:  342.778 ms
+ref3 GeMM template time: 343.3
+
+kernel execution time:  74.5241 ms
+SpMM template time ref4: 75.0386
+
+kernel execution time:  26129.8 ms
+taco reference time: 26130.9
+
+kernel execution time:  32058.9 ms
+taco reference new time: 32059.8
+
+spmm-spmm execution
+
+-----------------------------------------
+/home/min/a/kadhitha/ispc-examples/data/suitesparse/consph/consph.mtx
+ref(i,l)=B(i,j)*C(i,k)*D(j,k);
+B1_dimension: 83334, B2_dimension: 83334, vals: 6010480
+C1_dimension: 83334, C2_dimension: 128, vals: 10666752
+D1_dimension: 128, D2_dimension: 64, vals: 8192
+
+
+kernel execution time:  332.296 ms
+fused time: 332.73
+
+kernel execution time:  871.053 ms
+SpMM time: 871.586
+
+kernel execution time:  217.386 ms
+SpMM template time: 217.911
+
+kernel execution time:  636.82 ms
+GeMM time: 637.357
+
+kernel execution time:  461.8 ms
+ref 2 GeMM template time: 462.325
+
+kernel execution time:  458.184 ms
+ref3 GeMM template time: 458.738
+
+kernel execution time:  114.816 ms
+SpMM template time ref4: 115.341
+
+kernel execution time:  39240.9 ms
+taco reference time: 39242
+
+kernel execution time:  48108.4 ms
+taco reference new time: 48109.4
+
+spmm-spmm execution
+
+-----------------------------------------
+/home/min/a/kadhitha/ispc-examples/data/suitesparse/cop20k_A/cop20k_A.mtx
+ref(i,l)=B(i,j)*C(i,k)*D(j,k);
+B1_dimension: 121192, B2_dimension: 121192, vals: 2624331
+C1_dimension: 121192, C2_dimension: 128, vals: 15512576
+D1_dimension: 128, D2_dimension: 64, vals: 8192
+
+
+kernel execution time:  351.775 ms
+fused time: 352.201
+
+kernel execution time:  317.447 ms
+SpMM time: 317.983
+
+kernel execution time:  217.205 ms
+SpMM template time: 217.733
+
+kernel execution time:  921.754 ms
+GeMM time: 922.288
+
+kernel execution time:  667.69 ms
+ref 2 GeMM template time: 668.21
+
+kernel execution time:  655.357 ms
+ref3 GeMM template time: 655.888
+
+kernel execution time:  118.018 ms
+SpMM template time ref4: 118.546
+
+kernel execution time:  17243.9 ms
+taco reference time: 17245
+
+kernel execution time:  21353.4 ms
+taco reference new time: 21354.7
+
+spmm-spmm execution
+
+-----------------------------------------
+/home/min/a/kadhitha/ispc-examples/data/suitesparse/cop20k_A/cop20k_A.mtx
+ref(i,l)=B(i,j)*C(i,k)*D(j,k);
+B1_dimension: 121192, B2_dimension: 121192, vals: 2624331
+C1_dimension: 121192, C2_dimension: 128, vals: 15512576
+D1_dimension: 128, D2_dimension: 64, vals: 8192
+
+
+kernel execution time:  27502 ms
+fused time: 27581.4
+
+kernel execution time:  19193.1 ms
+SpMM time: 19304.1
+
+kernel execution time:  8528.83 ms
+SpMM template time: 8571.46
+
+kernel execution time:  33685.2 ms
+GeMM time: 33768.7
+
+kernel execution time:  32503 ms
+ref 2 GeMM template time: 32589.2
+
+kernel execution time:  32859.6 ms
+ref3 GeMM template time: 32952.9
+
+kernel execution time:  4862.19 ms
+SpMM template time ref4: 4917.41
+
+kernel execution time:  891084 ms
+taco reference time: 891170
+
+
+
+
+
+
+----------------------------------------------------------------------------------------------------
+----------------------------------------------------------------------------------------------------
+----------------------------------------------------------------------------------------------------
+
+
+
+
+spmm-spmm execution
+
+-----------------------------------------
+/home/min/a/kadhitha/ispc-examples/data/suitesparse/bcsstk17/bcsstk17.mtx
+ref(i,l)=B(i,j)*C(i,k)*D(j,k);
+B1_dimension: 10974, B2_dimension: 10974, vals: 428650
+C1_dimension: 10974, C2_dimension: 128, vals: 1404672
+D1_dimension: 128, D2_dimension: 64, vals: 8192
+
+
+kernel execution time:  2.69255 ms
+fused time: 5.71229
+
+kernel execution time:  3.93158 ms
+SpMM time: 4.42244
+
+1st pattern computation
+
+kernel execution time:  1.69479 ms
+SpMM template time: 2.18137
+
+kernel execution time:  2.53215 ms
+GeMM time: 2.92698
+
+kernel execution time:  82.7455 ms
+ref 2 GeMM template time: 83.6829
+
+2nd pattern computation
+
+kernel execution time:  2.52512 ms
+ref3 GeMM template time: 2.90403
+
+kernel execution time:  1.07835 ms
+SpMM template time ref4: 1.34312
+
+reference pattern computation
+
+kernel execution time:  66.8405 ms
+taco reference time: 67.1485
+
+kernel execution time:  71.5847 ms
+taco reference new time: 71.9261
+
+spmm-spmm execution
+
+-----------------------------------------
+filenum: 2
+---------------------------------
+/home/min/a/kadhitha/ispc-examples/data/suitesparse/bcsstk17/bcsstk17.mtx
+ref(i,l)=B(i,j)*C(i,k)*D(j,k);
+B1_dimension: 10974, B2_dimension: 10974, vals: 428650
+C1_dimension: 10974, C2_dimension: 128, vals: 1404672
+D1_dimension: 128, D2_dimension: 64, vals: 8192
+
+
+kernel execution time:  2.77205 ms
+fused time: 6.22498
+
+kernel execution time:  3.70735 ms
+SpMM time: 4.15143
+
+1st pattern computation
+
+kernel execution time:  1.68777 ms
+SpMM template time: 2.37238
+
+kernel execution time:  2.64104 ms
+GeMM time: 5.76589
+
+kernel execution time:  81.9899 ms
+ref 2 GeMM template time: 82.2704
+
+2nd pattern computation
+
+kernel execution time:  2.45488 ms
+ref3 GeMM template time: 2.8586
+
+kernel execution time:  1.12289 ms
+SpMM template time ref4: 1.39155
+
+reference pattern computation
+
+kernel execution time:  76.3877 ms
+taco reference time: 78.7939
+
+kernel execution time:  72.755 ms
+taco reference new time: 73.1269
+filenum: 3
+---------------------------------
+/home/min/a/kadhitha/ispc-examples/data/suitesparse/pdb1HYS/pdb1HYS.mtx
+ref(i,l)=B(i,j)*C(i,k)*D(j,k);
+B1_dimension: 36417, B2_dimension: 36417, vals: 4344765
+C1_dimension: 36417, C2_dimension: 128, vals: 4661376
+D1_dimension: 128, D2_dimension: 64, vals: 8192
+
+
+kernel execution time:  7.80932 ms
+fused time: 11.2518
+
+kernel execution time:  16.5944 ms
+SpMM time: 17.886
+
+1st pattern computation
+
+kernel execution time:  7.11089 ms
+SpMM template time: 7.68253
+
+kernel execution time:  6.4731 ms
+GeMM time: 9.33681
+
+kernel execution time:  275.759 ms
+ref 2 GeMM template time: 276.631
+
+2nd pattern computation
+
+kernel execution time:  6.3356 ms
+ref3 GeMM template time: 6.81471
+
+kernel execution time:  4.47152 ms
+SpMM template time ref4: 4.76175
+
+reference pattern computation
+
+kernel execution time:  658.29 ms
+taco reference time: 658.76
+
+kernel execution time:  687.782 ms
+taco reference new time: 688.49
+filenum: 4
+---------------------------------
+/home/min/a/kadhitha/ispc-examples/data/suitesparse/rma10/rma10.mtx
+ref(i,l)=B(i,j)*C(i,k)*D(j,k);
+B1_dimension: 46835, B2_dimension: 46835, vals: 2374001
+C1_dimension: 46835, C2_dimension: 128, vals: 5994880
+D1_dimension: 128, D2_dimension: 64, vals: 8192
+
+
+kernel execution time:  6.78576 ms
+fused time: 8.17823
+
+kernel execution time:  18.7121 ms
+SpMM time: 20.1397
+
+1st pattern computation
+
+kernel execution time:  6.53343 ms
+SpMM template time: 7.11366
+
+kernel execution time:  8.13131 ms
+GeMM time: 10.4823
+
+kernel execution time:  341.676 ms
+ref 2 GeMM template time: 341.986
+
+2nd pattern computation
+
+kernel execution time:  7.69804 ms
+ref3 GeMM template time: 8.15483
+
+kernel execution time:  4.61245 ms
+SpMM template time ref4: 4.90988
+
+reference pattern computation
+
+kernel execution time:  343.367 ms
+taco reference time: 343.755
+
+kernel execution time:  374.197 ms
+taco reference new time: 374.704
+filenum: 5
+---------------------------------
+/home/min/a/kadhitha/ispc-examples/data/suitesparse/cant/cant.mtx
+ref(i,l)=B(i,j)*C(i,k)*D(j,k);
+B1_dimension: 62451, B2_dimension: 62451, vals: 4007383
+C1_dimension: 62451, C2_dimension: 128, vals: 7993728
+D1_dimension: 128, D2_dimension: 64, vals: 8192
+
+
+kernel execution time:  11.6176 ms
+fused time: 15.1115
+
+kernel execution time:  22.6994 ms
+SpMM time: 23.3508
+
+1st pattern computation
+
+kernel execution time:  11.9033 ms
+SpMM template time: 12.4284
+
+kernel execution time:  10.4635 ms
+GeMM time: 10.9336
+
+kernel execution time:  452.62 ms
+ref 2 GeMM template time: 452.931
+
+2nd pattern computation
+
+kernel execution time:  9.29193 ms
+ref3 GeMM template time: 9.74228
+
+kernel execution time:  7.21434 ms
+SpMM template time ref4: 7.5664
+
+reference pattern computation
+
+kernel execution time:  570.857 ms
+taco reference time: 571.396
+
+kernel execution time:  623.78 ms
+taco reference new time: 624.325
+filenum: 6
+---------------------------------
+/home/min/a/kadhitha/ispc-examples/data/suitesparse/consph/consph.mtx
+ref(i,l)=B(i,j)*C(i,k)*D(j,k);
+B1_dimension: 83334, B2_dimension: 83334, vals: 6010480
+C1_dimension: 83334, C2_dimension: 128, vals: 10666752
+D1_dimension: 128, D2_dimension: 64, vals: 8192
+
+
+kernel execution time:  15.2241 ms
+fused time: 17.4586
+
+kernel execution time:  31.7064 ms
+SpMM time: 32.3582
+
+1st pattern computation
+
+kernel execution time:  16.5454 ms
+SpMM template time: 17.0802
+
+kernel execution time:  13.8741 ms
+GeMM time: 14.3707
+
+kernel execution time:  604.662 ms
+ref 2 GeMM template time: 605.002
+
+2nd pattern computation
+
+kernel execution time:  11.9433 ms
+ref3 GeMM template time: 12.403
+
+kernel execution time:  9.77169 ms
+SpMM template time ref4: 10.1324
+
+reference pattern computation
+
+kernel execution time:  841.646 ms
+taco reference time: 842.221
+
+kernel execution time:  932.828 ms
+taco reference new time: 933.378
+filenum: 7
+---------------------------------
+/home/min/a/kadhitha/ispc-examples/data/suitesparse/cop20k_A/cop20k_A.mtx
+ref(i,l)=B(i,j)*C(i,k)*D(j,k);
+B1_dimension: 121192, B2_dimension: 121192, vals: 2624331
+C1_dimension: 121192, C2_dimension: 128, vals: 15512576
+D1_dimension: 128, D2_dimension: 64, vals: 8192
+
+
+kernel execution time:  25.1981 ms
+fused time: 28.3453
+
+kernel execution time:  51.7019 ms
+SpMM time: 52.3269
+
+1st pattern computation
+
+kernel execution time:  24.2567 ms
+SpMM template time: 24.8204
+
+kernel execution time:  19.9687 ms
+GeMM time: 20.5536
+
+kernel execution time:  874.389 ms
+ref 2 GeMM template time: 874.8
+
+2nd pattern computation
+
+kernel execution time:  17.1428 ms
+ref3 GeMM template time: 17.605
+
+kernel execution time:  12.4989 ms
+SpMM template time ref4: 12.9327
+
+reference pattern computation
+
+kernel execution time:  374.424 ms
+taco reference time: 375.053
+
+kernel execution time:  412.224 ms
+taco reference new time: 412.828
+filenum: 8
+---------------------------------
+/home/min/a/kadhitha/ispc-examples/data/suitesparse/shipsec1/shipsec1.mtx
+ref(i,l)=B(i,j)*C(i,k)*D(j,k);
+B1_dimension: 140874, B2_dimension: 140874, vals: 7813404
+C1_dimension: 140874, C2_dimension: 128, vals: 18031872
+D1_dimension: 128, D2_dimension: 64, vals: 8192
+
+
+kernel execution time:  22.3642 ms
+fused time: 22.9541
+
+kernel execution time:  48.8361 ms
+SpMM time: 49.478
+
+1st pattern computation
+
+kernel execution time:  24.4919 ms
+SpMM template time: 25.0744
+
+kernel execution time:  23.1278 ms
+GeMM time: 23.714
+
+kernel execution time:  1021.89 ms
+ref 2 GeMM template time: 1022.32
+
+2nd pattern computation
+
+kernel execution time:  19.872 ms
+ref3 GeMM template time: 20.3315
+
+kernel execution time:  14.608 ms
+SpMM template time ref4: 15.077
+
+reference pattern computation
+
+kernel execution time:  1080.68 ms
+taco reference time: 1081.32
+
+kernel execution time:  1211.77 ms
+taco reference new time: 1212.36
+filenum: 9
+---------------------------------
+/home/min/a/kadhitha/ispc-examples/data/suitesparse/scircuit/scircuit.mtx
+ref(i,l)=B(i,j)*C(i,k)*D(j,k);
+B1_dimension: 170998, B2_dimension: 170998, vals: 958936
+C1_dimension: 170998, C2_dimension: 128, vals: 21887744
+D1_dimension: 128, D2_dimension: 64, vals: 8192
+
+
+kernel execution time:  16.318 ms
+fused time: 18.887
+
+kernel execution time:  56.5258 ms
+SpMM time: 57.1171
+
+1st pattern computation
+
+kernel execution time:  18.2007 ms
+SpMM template time: 18.7215
+
+kernel execution time:  28.1041 ms
+GeMM time: 28.6173
+
+kernel execution time:  1232.84 ms
+ref 2 GeMM template time: 1233.26
+
+2nd pattern computation
+
+kernel execution time:  23.6402 ms
+ref3 GeMM template time: 24.1216
+
+kernel execution time:  10.6221 ms
+SpMM template time ref4: 11.1278
+
+reference pattern computation
+
+kernel execution time:  136.61 ms
+taco reference time: 137.191
+
+kernel execution time:  143.222 ms
+taco reference new time: 143.823
+filenum: 10
+---------------------------------
+/home/min/a/kadhitha/ispc-examples/data/suitesparse/mac_econ_fwd500/mac_econ_fwd500.mtx
+ref(i,l)=B(i,j)*C(i,k)*D(j,k);
+B1_dimension: 206500, B2_dimension: 206500, vals: 1273389
+C1_dimension: 206500, C2_dimension: 128, vals: 26432000
+D1_dimension: 128, D2_dimension: 64, vals: 8192
+
+
+kernel execution time:  22.1951 ms
+fused time: 25.4707
+
+kernel execution time:  69.5817 ms
+SpMM time: 70.2133
+
+1st pattern computation
+
+kernel execution time:  25.2229 ms
+SpMM template time: 25.818
+
+kernel execution time:  34.0166 ms
+GeMM time: 34.5719
+
+kernel execution time:  1506.8 ms
+ref 2 GeMM template time: 1507.32
+
+2nd pattern computation
+
+kernel execution time:  27.9513 ms
+ref3 GeMM template time: 28.4381
+
+kernel execution time:  13.4585 ms
+SpMM template time ref4: 14.0168
+
+reference pattern computation
+
+kernel execution time:  182.244 ms
+taco reference time: 182.878
+
+kernel execution time:  191.621 ms
+taco reference new time: 192.28
+filenum: 12
+---------------------------------
+/home/min/a/kadhitha/ispc-examples/data/ufl/webbase-1M/webbase-1M.mtx
+ref(i,l)=B(i,j)*C(i,k)*D(j,k);
+B1_dimension: 1000005, B2_dimension: 1000005, vals: 3105536
+C1_dimension: 1000005, C2_dimension: 128, vals: 128000640
+D1_dimension: 128, D2_dimension: 64, vals: 8192
+
+
+kernel execution time:  62.6358 ms
+fused time: 66.0562
+
+kernel execution time:  331.995 ms
+SpMM time: 332.669
+
+1st pattern computation
+
+kernel execution time:  81.0262 ms
+SpMM template time: 81.6316
+
+kernel execution time:  155.308 ms
+GeMM time: 155.913
+
+kernel execution time:  7174.32 ms
+ref 2 GeMM template time: 7175.38
+
+2nd pattern computation
+
+kernel execution time:  131.848 ms
+ref3 GeMM template time: 132.36
+
+kernel execution time:  43.681 ms
+SpMM template time ref4: 44.293
+
+reference pattern computation
+
+kernel execution time:  444.857 ms
+taco reference time: 445.492
+
+kernel execution time:  467.509 ms
+taco reference new time: 468.15
+filenum: 15
+---------------------------------
+/home/min/a/kadhitha/ispc-examples/data/suitesparse/circuit5M/circuit5M.mtx
+ref(i,l)=B(i,j)*C(i,k)*D(j,k);
+B1_dimension: 5558326, B2_dimension: 5558326, vals: 59524291
+C1_dimension: 5558326, C2_dimension: 128, vals: 711465728
+D1_dimension: 128, D2_dimension: 64, vals: 8192
+
+
+kernel execution time:  621.338 ms
+fused time: 625.05
+
+kernel execution time:  2276.7 ms
+SpMM time: 2277.28
+
+1st pattern computation
+
+kernel execution time:  881.7 ms
+SpMM template time: 882.296
+
+kernel execution time:  859.785 ms
+GeMM time: 860.272
+
+kernel execution time:  39771.6 ms
+ref 2 GeMM template time: 39772.6
+
+2nd pattern computation
+
+kernel execution time:  748.251 ms
+ref3 GeMM template time: 748.758
+
+kernel execution time:  452.61 ms
+SpMM template time ref4: 453.163
+
+reference pattern computation
+
+kernel execution time:  19528.6 ms
+taco reference time: 19529.7
+
+kernel execution time:  26715.2 ms
+taco reference new time: 26716.6
+
+spmm-spmm execution
+
+-----------------------------------------
+filenum: 2
+---------------------------------
+/home/min/a/kadhitha/ispc-examples/data/suitesparse/bcsstk17/bcsstk17.mtx
+ref(i,l)=B(i,j)*C(i,k)*D(j,k);
+B1_dimension: 10974, B2_dimension: 10974, vals: 428650
+C1_dimension: 10974, C2_dimension: 128, vals: 1404672
+D1_dimension: 128, D2_dimension: 64, vals: 8192
+
+
+kernel execution time:  2.64213 ms
+fused time: 6.13507
+
+--------- 1st pattern computation TTM, GEMM
+
+kernel execution time:  3.84056 ms
+SpMM time: 4.24008
+
+kernel execution time:  1.61274 ms
+SpMM template time: 2.04575
+
+kernel execution time:  2.33971 ms
+GeMM time: 2.69705
+
+kernel execution time:  85.2544 ms
+ref 2 GeMM template time: 86.1514
+
+--------- 2nd pattern computation GEMM, SpMM
+
+kernel execution time:  2.2757 ms
+ref3 GeMM template time: 2.64863
+
+kernel execution time:  1.04819 ms
+SpMM template time ref4: 1.27491
+
+-------- reference pattern computation
+
+kernel execution time:  69.4126 ms
+taco reference time: 71.9418
+
+kernel execution time:  71.8522 ms
+taco reference new time: 72.137
+filenum: 3
+---------------------------------
+/home/min/a/kadhitha/ispc-examples/data/suitesparse/pdb1HYS/pdb1HYS.mtx
+ref(i,l)=B(i,j)*C(i,k)*D(j,k);
+B1_dimension: 36417, B2_dimension: 36417, vals: 4344765
+C1_dimension: 36417, C2_dimension: 128, vals: 4661376
+D1_dimension: 128, D2_dimension: 64, vals: 8192
+
+
+kernel execution time:  7.47716 ms
+fused time: 11.1061
+
+--------- 1st pattern computation TTM, GEMM
+
+kernel execution time:  16.7215 ms
+SpMM time: 17.3352
+
+kernel execution time:  7.10234 ms
+SpMM template time: 7.68864
+
+kernel execution time:  6.44691 ms
+GeMM time: 9.89357
+
+kernel execution time:  275.868 ms
+ref 2 GeMM template time: 276.795
+
+--------- 2nd pattern computation GEMM, SpMM
+
+kernel execution time:  6.21948 ms
+ref3 GeMM template time: 6.86379
+
+kernel execution time:  4.55999 ms
+SpMM template time ref4: 4.85255
+
+-------- reference pattern computation
+
+kernel execution time:  643.662 ms
+taco reference time: 644.221
+
+kernel execution time:  682.88 ms
+taco reference new time: 683.468
+filenum: 4
+---------------------------------
+/home/min/a/kadhitha/ispc-examples/data/suitesparse/rma10/rma10.mtx
+ref(i,l)=B(i,j)*C(i,k)*D(j,k);
+B1_dimension: 46835, B2_dimension: 46835, vals: 2374001
+C1_dimension: 46835, C2_dimension: 128, vals: 5994880
+D1_dimension: 128, D2_dimension: 64, vals: 8192
+
+
+kernel execution time:  7.25024 ms
+fused time: 11.0411
+
+--------- 1st pattern computation TTM, GEMM
+
+kernel execution time:  18.4386 ms
+SpMM time: 18.956
+
+kernel execution time:  6.48062 ms
+SpMM template time: 7.03658
+
+kernel execution time:  7.9428 ms
+GeMM time: 9.42206
+
+kernel execution time:  343.414 ms
+ref 2 GeMM template time: 343.746
+
+--------- 2nd pattern computation GEMM, SpMM
+
+kernel execution time:  6.9495 ms
+ref3 GeMM template time: 7.40299
+
+kernel execution time:  4.95305 ms
+SpMM template time ref4: 5.26981
+
+-------- reference pattern computation
+
+kernel execution time:  338.889 ms
+taco reference time: 339.74
+
+kernel execution time:  373.621 ms
+taco reference new time: 374.075
+filenum: 5
+---------------------------------
+/home/min/a/kadhitha/ispc-examples/data/suitesparse/cant/cant.mtx
+ref(i,l)=B(i,j)*C(i,k)*D(j,k);
+B1_dimension: 62451, B2_dimension: 62451, vals: 4007383
+C1_dimension: 62451, C2_dimension: 128, vals: 7993728
+D1_dimension: 128, D2_dimension: 64, vals: 8192
+
+
+kernel execution time:  11.3714 ms
+fused time: 15.0722
+
+--------- 1st pattern computation TTM, GEMM
+
+kernel execution time:  22.4213 ms
+SpMM time: 22.9773
+
+kernel execution time:  11.8747 ms
+SpMM template time: 12.4314
+
+kernel execution time:  10.2572 ms
+GeMM time: 12.818
+
+kernel execution time:  451.818 ms
+ref 2 GeMM template time: 452.131
+
+--------- 2nd pattern computation GEMM, SpMM
+
+kernel execution time:  9.4658 ms
+ref3 GeMM template time: 9.90856
+
+kernel execution time:  6.97316 ms
+SpMM template time ref4: 7.30846
+
+-------- reference pattern computation
+
+kernel execution time:  543.932 ms
+taco reference time: 544.422
+
+kernel execution time:  623.419 ms
+taco reference new time: 623.935
+filenum: 6
+---------------------------------
+/home/min/a/kadhitha/ispc-examples/data/suitesparse/consph/consph.mtx
+ref(i,l)=B(i,j)*C(i,k)*D(j,k);
+B1_dimension: 83334, B2_dimension: 83334, vals: 6010480
+C1_dimension: 83334, C2_dimension: 128, vals: 10666752
+D1_dimension: 128, D2_dimension: 64, vals: 8192
+
+
+kernel execution time:  15.18 ms
+fused time: 18.5471
+
+--------- 1st pattern computation TTM, GEMM
+
+kernel execution time:  31.3038 ms
+SpMM time: 31.9251
+
+kernel execution time:  16.4816 ms
+SpMM template time: 17.0655
+
+kernel execution time:  13.7454 ms
+GeMM time: 14.2668
+
+kernel execution time:  601.657 ms
+ref 2 GeMM template time: 602.024
+
+--------- 2nd pattern computation GEMM, SpMM
+
+kernel execution time:  14.354 ms
+ref3 GeMM template time: 14.8072
+
+kernel execution time:  9.41569 ms
+SpMM template time ref4: 9.77992
+
+-------- reference pattern computation
+
+kernel execution time:  805.535 ms
+taco reference time: 806.106
+
+kernel execution time:  928.447 ms
+taco reference new time: 928.999
+filenum: 7
+---------------------------------
+/home/min/a/kadhitha/ispc-examples/data/suitesparse/cop20k_A/cop20k_A.mtx
+ref(i,l)=B(i,j)*C(i,k)*D(j,k);
+B1_dimension: 121192, B2_dimension: 121192, vals: 2624331
+C1_dimension: 121192, C2_dimension: 128, vals: 15512576
+D1_dimension: 128, D2_dimension: 64, vals: 8192
+
+
+kernel execution time:  25.2666 ms
+fused time: 27.8771
+
+--------- 1st pattern computation TTM, GEMM
+
+kernel execution time:  51.9104 ms
+SpMM time: 52.5127
+
+kernel execution time:  23.9709 ms
+SpMM template time: 24.5371
+
+kernel execution time:  19.8979 ms
+GeMM time: 20.5052
+
+kernel execution time:  878.762 ms
+ref 2 GeMM template time: 879.166
+
+--------- 2nd pattern computation GEMM, SpMM
+
+kernel execution time:  16.9454 ms
+ref3 GeMM template time: 17.4072
+
+kernel execution time:  12.6943 ms
+SpMM template time ref4: 13.1204
+
+-------- reference pattern computation
+
+kernel execution time:  356.591 ms
+taco reference time: 357.146
+
+kernel execution time:  408.529 ms
+taco reference new time: 409.172
+filenum: 8
+---------------------------------
+/home/min/a/kadhitha/ispc-examples/data/suitesparse/shipsec1/shipsec1.mtx
+ref(i,l)=B(i,j)*C(i,k)*D(j,k);
+B1_dimension: 140874, B2_dimension: 140874, vals: 7813404
+C1_dimension: 140874, C2_dimension: 128, vals: 18031872
+D1_dimension: 128, D2_dimension: 64, vals: 8192
+
+
+kernel execution time:  22.2469 ms
+fused time: 22.8567
+
+--------- 1st pattern computation TTM, GEMM
+
+kernel execution time:  49.6959 ms
+SpMM time: 50.3273
+
+kernel execution time:  24.2333 ms
+SpMM template time: 24.8116
+
+kernel execution time:  23.0719 ms
+GeMM time: 23.6169
+
+kernel execution time:  1017.55 ms
+ref 2 GeMM template time: 1018
+
+--------- 2nd pattern computation GEMM, SpMM
+
+kernel execution time:  19.3601 ms
+ref3 GeMM template time: 19.8249
+
+kernel execution time:  14.2804 ms
+SpMM template time ref4: 14.7665
+
+-------- reference pattern computation
+
+kernel execution time:  1048.84 ms
+taco reference time: 1049.44
+
+kernel execution time:  1209.88 ms
+taco reference new time: 1210.47
+filenum: 9
+---------------------------------
+/home/min/a/kadhitha/ispc-examples/data/suitesparse/scircuit/scircuit.mtx
+ref(i,l)=B(i,j)*C(i,k)*D(j,k);
+B1_dimension: 170998, B2_dimension: 170998, vals: 958936
+C1_dimension: 170998, C2_dimension: 128, vals: 21887744
+D1_dimension: 128, D2_dimension: 64, vals: 8192
+
+
+kernel execution time:  15.8746 ms
+fused time: 19.813
+
+--------- 1st pattern computation TTM, GEMM
+
+kernel execution time:  55.9723 ms
+SpMM time: 56.6152
+
+kernel execution time:  17.9806 ms
+SpMM template time: 18.623
+
+kernel execution time:  27.7406 ms
+GeMM time: 28.4557
+
+kernel execution time:  1236.24 ms
+ref 2 GeMM template time: 1236.69
+
+--------- 2nd pattern computation GEMM, SpMM
+
+kernel execution time:  23.8143 ms
+ref3 GeMM template time: 24.2887
+
+kernel execution time:  10.5388 ms
+SpMM template time ref4: 11.0342
+
+-------- reference pattern computation
+
+kernel execution time:  131.162 ms
+taco reference time: 131.729
+
+kernel execution time:  142.639 ms
+taco reference new time: 143.262
+filenum: 10
+---------------------------------
+/home/min/a/kadhitha/ispc-examples/data/suitesparse/mac_econ_fwd500/mac_econ_fwd500.mtx
+ref(i,l)=B(i,j)*C(i,k)*D(j,k);
+B1_dimension: 206500, B2_dimension: 206500, vals: 1273389
+C1_dimension: 206500, C2_dimension: 128, vals: 26432000
+D1_dimension: 128, D2_dimension: 64, vals: 8192
+
+
+kernel execution time:  22.0414 ms
+fused time: 24.5186
+
+--------- 1st pattern computation TTM, GEMM
+
+kernel execution time:  69.6038 ms
+SpMM time: 70.136
+
+kernel execution time:  24.6489 ms
+SpMM template time: 25.1488
+
+kernel execution time:  33.413 ms
+GeMM time: 33.9108
+
+kernel execution time:  1497.05 ms
+ref 2 GeMM template time: 1497.51
+
+--------- 2nd pattern computation GEMM, SpMM
+
+kernel execution time:  29.3442 ms
+ref3 GeMM template time: 29.8157
+
+kernel execution time:  12.9244 ms
+SpMM template time ref4: 13.3503
+
+-------- reference pattern computation
+
+kernel execution time:  174.347 ms
+taco reference time: 174.811
+
+kernel execution time:  190.408 ms
+taco reference new time: 190.973
+filenum: 12
+---------------------------------
+/home/min/a/kadhitha/ispc-examples/data/ufl/webbase-1M/webbase-1M.mtx
+ref(i,l)=B(i,j)*C(i,k)*D(j,k);
+B1_dimension: 1000005, B2_dimension: 1000005, vals: 3105536
+C1_dimension: 1000005, C2_dimension: 128, vals: 128000640
+D1_dimension: 128, D2_dimension: 64, vals: 8192
+
+
+kernel execution time:  61.219 ms
+fused time: 65.9604
+
+--------- 1st pattern computation TTM, GEMM
+
+kernel execution time:  329.098 ms
+SpMM time: 329.782
+
+kernel execution time:  80.1902 ms
+SpMM template time: 80.758
+
+kernel execution time:  154.474 ms
+GeMM time: 155.08
+
+kernel execution time:  7192.75 ms
+ref 2 GeMM template time: 7193.76
+
+--------- 2nd pattern computation GEMM, SpMM
+
+kernel execution time:  132.057 ms
+ref3 GeMM template time: 132.561
+
+kernel execution time:  43.0394 ms
+SpMM template time ref4: 43.6558
+
+-------- reference pattern computation
+
+kernel execution time:  430.157 ms
+taco reference time: 430.825
+
+kernel execution time:  463.848 ms
+taco reference new time: 464.498
+filenum: 15
+---------------------------------
+/home/min/a/kadhitha/ispc-examples/data/suitesparse/circuit5M/circuit5M.mtx
+ref(i,l)=B(i,j)*C(i,k)*D(j,k);
+B1_dimension: 5558326, B2_dimension: 5558326, vals: 59524291
+C1_dimension: 5558326, C2_dimension: 128, vals: 711465728
+D1_dimension: 128, D2_dimension: 64, vals: 8192
+
+
+kernel execution time:  602.9 ms
+fused time: 606.764
+
+--------- 1st pattern computation TTM, GEMM
+
+kernel execution time:  2126.86 ms
+SpMM time: 2127.49
+
+kernel execution time:  871.892 ms
+SpMM template time: 872.491
+
+kernel execution time:  845.837 ms
+GeMM time: 846.363
+
+kernel execution time:  39844.5 ms
+ref 2 GeMM template time: 39845.6
+
+--------- 2nd pattern computation GEMM, SpMM
+
+kernel execution time:  740.208 ms
+ref3 GeMM template time: 740.701
+
+kernel execution time:  447.66 ms
+SpMM template time ref4: 448.268
+
+-------- reference pattern computation
+
+kernel execution time:  18669.7 ms
+taco reference time: 18671
+
+kernel execution time:  26729.8 ms
+taco reference new time: 26731.1
+
+spmm-spmm execution
+
+-----------------------------------------
+filenum: 1
+---------------------------------
+/home/min/a/kadhitha/ispc-examples/data/suitesparse/cage3/cage3.mtx
+ref(i,l)=B(i,j)*C(i,k)*D(j,k);
+B1_dimension: 5, B2_dimension: 5, vals: 19
+C1_dimension: 5, C2_dimension: 128, vals: 640
+D1_dimension: 128, D2_dimension: 64, vals: 8192
+
+
+kernel execution time:  0.044111 ms
+fused time: 0.69912
+
+--------- 1st pattern computation TTM, GEMM
+
+kernel execution time:  0.019191 ms
+SpMM time: 1.30214
+
+kernel execution time:  0.499717 ms
+SpMM template time: 1.01315
+
+kernel execution time:  0.096371 ms
+GeMM time: 0.631739
+
+kernel execution time:  0.070191 ms
+ref 2 GeMM template time: 0.560537
+
+--------- 2nd pattern computation GEMM, SpMM
+
+kernel execution time:  0.070901 ms
+ref3 GeMM template time: 0.579358
+
+kernel execution time:  0.02984 ms
+SpMM template time ref4: 0.851161
+
+-------- reference pattern computation
+
+kernel execution time:  0.194393 ms
+taco reference time: 0.628889
+
+kernel execution time:  0.242974 ms
+taco reference new time: 0.667439
+
+spmm-spmm execution
+
+-----------------------------------------
+filenum: 1
+---------------------------------
+/home/min/a/kadhitha/ispc-examples/data/suitesparse/cage3/cage3.mtx
+ref(i,l)=B(i,j)*C(i,k)*D(j,k);
+B1_dimension: 5, B2_dimension: 5, vals: 19
+C1_dimension: 5, C2_dimension: 128, vals: 640
+D1_dimension: 128, D2_dimension: 64, vals: 8192
+
+
+kernel execution time:  0.043801 ms
+fused time: 0.685989
+
+--------- 1st pattern computation TTM, GEMM
+
+kernel execution time:  0.01878 ms
+SpMM time: 0.861191
+
+kernel execution time:  0.503617 ms
+SpMM template time: 1.00581
+
+kernel execution time:  0.095292 ms
+GeMM time: 0.583898
+
+kernel execution time:  0.070121 ms
+ref 2 GeMM template time: 0.520137
+
+--------- 2nd pattern computation GEMM, SpMM
+
+kernel execution time:  0.070641 ms
+ref3 GeMM template time: 0.537688
+
+kernel execution time:  0.035491 ms
+SpMM template time ref4: 0.514717
+
+-------- reference pattern computation
+
+kernel execution time:  0.194192 ms
+taco reference time: 0.618658
+
+kernel execution time:  0.239543 ms
+taco reference new time: 0.655149
+
+spmm-spmm execution
+
+-----------------------------------------
+filenum: 1
+---------------------------------
+/home/min/a/kadhitha/ispc-examples/data/suitesparse/cage3/cage3.mtx
+ref(i,l)=B(i,j)*C(i,k)*D(j,k);
+B1_dimension: 5, B2_dimension: 5, vals: 19
+C1_dimension: 5, C2_dimension: 128, vals: 640
+D1_dimension: 128, D2_dimension: 64, vals: 8192
+
+
+kernel execution time:  0.04383 ms
+fused time: 0.680319
+
+--------- 1st pattern computation TTM, GEMM
+
+kernel execution time:  0.019891 ms
+SpMM time: 0.72453
+
+kernel execution time:  0.515237 ms
+SpMM template time: 0.995294
+
+kernel execution time:  0.095731 ms
+GeMM time: 0.628018
+
+kernel execution time:  0.071101 ms
+ref 2 GeMM template time: 0.539967
+
+--------- 2nd pattern computation GEMM, SpMM
+
+kernel execution time:  0.071171 ms
+ref3 GeMM template time: 0.592848
+
+kernel execution time:  0.029131 ms
+SpMM template time ref4: 0.582288
+
+-------- reference pattern computation
+
+kernel execution time:  0.254484 ms
+taco reference time: 0.768111
+
+kernel execution time:  0.273853 ms
+taco reference new time: 0.781751
+
+spmm-spmm execution
+
+-----------------------------------------
+filenum: 1
+---------------------------------
+/home/min/a/kadhitha/ispc-examples/data/suitesparse/cage3/cage3.mtx
+ref(i,l)=B(i,j)*C(i,k)*D(j,k);
+B1_dimension: 5, B2_dimension: 5, vals: 19
+C1_dimension: 5, C2_dimension: 128, vals: 640
+D1_dimension: 128, D2_dimension: 64, vals: 8192
+
+
+kernel execution time:  0.043111 ms
+fused time: 0.676409
+
+--------- 1st pattern computation TTM, GEMM
+
+kernel execution time:  0.01898 ms
+SpMM time: 0.836491
+
+kernel execution time:  0.489586 ms
+SpMM template time: 0.969303
+
+kernel execution time:  0.094641 ms
+GeMM time: 0.561697
+
+kernel execution time:  0.070251 ms
+ref 2 GeMM template time: 0.545778
+
+--------- 2nd pattern computation GEMM, SpMM
+
+kernel execution time:  0.07045 ms
+ref3 GeMM template time: 0.550897
+
+kernel execution time:  0.0282 ms
+SpMM template time ref4: 0.463227
+
+-------- reference pattern computation
+
+kernel execution time:  0.245783 ms
+taco reference time: 0.761711
+
+kernel execution time:  0.304314 ms
+taco reference new time: 0.834081
+
+spmm-spmm execution
+
+-----------------------------------------
+filenum: 1
+---------------------------------
+/home/min/a/kadhitha/ispc-examples/data/suitesparse/cage3/cage3.mtx
+ref(i,l)=B(i,j)*C(i,k)*D(j,k);
+B1_dimension: 5, B2_dimension: 5, vals: 19
+C1_dimension: 5, C2_dimension: 128, vals: 640
+D1_dimension: 128, D2_dimension: 64, vals: 8192
+
+
+kernel execution time:  0.03874 ms
+fused time: 0.669969
+
+--------- 1st pattern computation TTM, GEMM
+
+kernel execution time:  0.019931 ms
+SpMM time: 0.857531
+
+kernel execution time:  0.507936 ms
+SpMM template time: 1.00321
+
+kernel execution time:  0.093961 ms
+GeMM time: 0.727229
+
+kernel execution time:  0.070371 ms
+ref 2 GeMM template time: 0.867451
+
+--------- 2nd pattern computation GEMM, SpMM
+
+kernel execution time:  0.069541 ms
+ref3 GeMM template time: 0.546687
+
+kernel execution time:  0.02565 ms
+SpMM template time ref4: 0.541707
+
+-------- reference pattern computation
+
+kernel execution time:  0.195092 ms
+taco reference time: 0.615338
+
+kernel execution time:  0.239653 ms
+taco reference new time: 0.657449
+
+spmm-spmm execution
+
+-----------------------------------------
+filenum: 3
+---------------------------------
+/home/min/a/kadhitha/ispc-examples/data/suitesparse/pdb1HYS/pdb1HYS.mtx
+ref(i,l)=B(i,j)*C(i,k)*D(j,k);
+B1_dimension: 36417, B2_dimension: 36417, vals: 4344765
+C1_dimension: 36417, C2_dimension: 128, vals: 4661376
+D1_dimension: 128, D2_dimension: 64, vals: 8192
+
+
+kernel execution time:  202.946 ms
+fused time: 203.369
+
+--------- 1st pattern computation TTM, GEMM
+
+kernel execution time:  604.532 ms
+SpMM time: 605.081
+
+kernel execution time:  137.88 ms
+SpMM template time: 138.397
+
+kernel execution time:  281.01 ms
+GeMM time: 281.522
+
+kernel execution time:  267.152 ms
+ref 2 GeMM template time: 267.64
+
+--------- 2nd pattern computation GEMM, SpMM
+
+kernel execution time:  202.612 ms
+ref3 GeMM template time: 203.13
+
+kernel execution time:  72.1263 ms
+SpMM template time ref4: 72.634
+
+-------- reference pattern computation
+
+kernel execution time:  26464.3 ms
+taco reference time: 26465.4
+
+kernel execution time:  34639.1 ms
+taco reference new time: 34640.2
+
+spmm-spmm execution
+
+-----------------------------------------
+filenum: 3
+---------------------------------
+/home/min/a/kadhitha/ispc-examples/data/suitesparse/pdb1HYS/pdb1HYS.mtx
+ref(i,l)=B(i,j)*C(i,k)*D(j,k);
+B1_dimension: 36417, B2_dimension: 36417, vals: 4344765
+C1_dimension: 36417, C2_dimension: 128, vals: 4661376
+D1_dimension: 128, D2_dimension: 64, vals: 8192
+
+
+--------- 1st pattern computation TTM, GEMM
+
+kernel execution time:  601.783 ms
+SpMM time: 602.149
+
+kernel execution time:  135.443 ms
+SpMM template time: 135.968
+
+kernel execution time:  277.027 ms
+GeMM time: 277.575
+
+kernel execution time:  262.418 ms
+ref 2 GeMM template time: 262.884
+
+--------- 2nd pattern computation GEMM, SpMM
+
+kernel execution time:  200.17 ms
+ref3 GeMM template time: 200.726
+
+kernel execution time:  71.523 ms
+SpMM template time ref4: 72.0077
+
+-------- reference pattern computation
+
+kernel execution time:  26468.2 ms
+taco reference time: 26469.2
+
+spmm-spmm execution
+
+-----------------------------------------
+filenum: 3
+---------------------------------
+/home/min/a/kadhitha/ispc-examples/data/suitesparse/pdb1HYS/pdb1HYS.mtx
+ref(i,l)=B(i,j)*C(i,k)*D(j,k);
+B1_dimension: 36417, B2_dimension: 36417, vals: 4344765
+C1_dimension: 36417, C2_dimension: 128, vals: 4661376
+D1_dimension: 128, D2_dimension: 64, vals: 8192
+
+
+--------- 1st pattern computation TTM, GEMM
+
+kernel execution time:  600.837 ms
+SpMM time: 601.215
+
+kernel execution time:  137.481 ms
+SpMM template time: 138.009
+
+kernel execution time:  280.631 ms
+GeMM time: 281.208
+
+kernel execution time:  266.073 ms
+ref 2 GeMM template time: 266.549
+
+--------- 2nd pattern computation GEMM, SpMM
+
+kernel execution time:  200.674 ms
+ref3 GeMM template time: 201.238
+
+kernel execution time:  72.8548 ms
+SpMM template time ref4: 73.3562
+
+-------- reference pattern computation
+
+kernel execution time:  26717.7 ms
+taco reference time: 26718.7
+
+kernel execution time:  34613.6 ms
+taco reference new time: 34614.6
+
+kernel execution time:  202.425 ms
+fused time: 203.027
+
+spmm-spmm execution
+
+-----------------------------------------
+filenum: 3
+---------------------------------
+
+spmm-spmm execution
+
+-----------------------------------------
+filenum: 0
+---------------------------------
+/home/min/a/kadhitha/workspace/my_taco/taco/net-repo-graph/cora.mtx
+ref(i,l)=B(i,j)*C(i,k)*D(j,k);
+B1_dimension: 2708, B2_dimension: 2708, vals: 5429
+C1_dimension: 2708, C2_dimension: 128, vals: 346624
+D1_dimension: 128, D2_dimension: 64, vals: 8192
+
+
+--------- 1st pattern computation TTM, GEMM
+
+kernel execution time:  0.924512 ms
+SpMM time: 1.22967
+
+kernel execution time:  1.23287 ms
+SpMM template time: 1.51353
+
+kernel execution time:  20.7805 ms
+GeMM time: 21.0769
+
+kernel execution time:  19.6116 ms
+ref 2 GeMM template time: 19.8379
+
+--------- 2nd pattern computation GEMM, SpMM
+
+kernel execution time:  14.7563 ms
+ref3 GeMM template time: 15.0245
+
+kernel execution time:  0.823641 ms
+SpMM template time ref4: 1.05233
+
+-------- reference pattern computation
+
+kernel execution time:  34.1041 ms
+taco reference time: 34.4607
+
+kernel execution time:  41.9195 ms
+taco reference new time: 42.2061
+
+kernel execution time:  4.76242 ms
+fused time: 5.04101
+filenum: 1
+---------------------------------
+/home/min/a/kadhitha/workspace/my_taco/taco/net-repo-graph/amazon.mtx
+ref(i,l)=B(i,j)*C(i,k)*D(j,k);
+B1_dimension: 548551, B2_dimension: 548551, vals: 1851744
+C1_dimension: 548551, C2_dimension: 128, vals: 70214528
+D1_dimension: 128, D2_dimension: 64, vals: 8192
+
+
+--------- 1st pattern computation TTM, GEMM
+
+kernel execution time:  394.8 ms
+SpMM time: 395.503
+
+kernel execution time:  473.148 ms
+SpMM template time: 473.684
+
+kernel execution time:  4117.68 ms
+GeMM time: 4118.6
+
+kernel execution time:  3957.31 ms
+ref 2 GeMM template time: 3958.16
+
+--------- 2nd pattern computation GEMM, SpMM
+
+kernel execution time:  3017.13 ms
+ref3 GeMM template time: 3017.67
+
+kernel execution time:  314.652 ms
+SpMM template time ref4: 315.164
+
+-------- reference pattern computation
+
+kernel execution time:  11644.6 ms
+taco reference time: 11645.6
+
+kernel execution time:  14402.6 ms
+taco reference new time: 14403.6
+
+kernel execution time:  1261.33 ms
+fused time: 1261.88
+
+spmm-spmm execution
+
+-----------------------------------------
+filenum: 0
+---------------------------------
+/home/min/a/kadhitha/workspace/my_taco/taco/net-repo-graph/cora.mtx
+ref(i,l)=B(i,j)*C(i,k)*D(j,k);
+B1_dimension: 2708, B2_dimension: 2708, vals: 5429
+C1_dimension: 2708, C2_dimension: 128, vals: 346624
+D1_dimension: 128, D2_dimension: 64, vals: 8192
+
+
+--------- 1st pattern computation TTM, GEMM
+
+kernel execution time:  0.209133 ms
+SpMM time: 0.517016
+
+kernel execution time:  0.579748 ms
+SpMM template time: 0.864251
+
+kernel execution time:  1.0574 ms
+GeMM time: 1.37727
+
+kernel execution time:  19.621 ms
+ref 2 GeMM template time: 19.8504
+
+--------- 2nd pattern computation GEMM, SpMM
+
+kernel execution time:  1.44618 ms
+ref3 GeMM template time: 1.72243
+
+kernel execution time:  0.384425 ms
+SpMM template time ref4: 0.610708
+
+-------- reference pattern computation
+
+kernel execution time:  3.59893 ms
+taco reference time: 3.95508
+
+kernel execution time:  4.81855 ms
+taco reference new time: 5.10349
+
+kernel execution time:  1.47107 ms
+fused time: 1.90463
+filenum: 1
+---------------------------------
+/home/min/a/kadhitha/workspace/my_taco/taco/net-repo-graph/amazon.mtx
+ref(i,l)=B(i,j)*C(i,k)*D(j,k);
+B1_dimension: 548551, B2_dimension: 548551, vals: 1851744
+C1_dimension: 548551, C2_dimension: 128, vals: 70214528
+D1_dimension: 128, D2_dimension: 64, vals: 8192
+
+
+--------- 1st pattern computation TTM, GEMM
+
+kernel execution time:  50.1795 ms
+SpMM time: 50.5567
+
+kernel execution time:  64.2504 ms
+SpMM template time: 64.8179
+
+kernel execution time:  96.8464 ms
+GeMM time: 97.4123
+
+kernel execution time:  3949.87 ms
+ref 2 GeMM template time: 3950.93
+
+--------- 2nd pattern computation GEMM, SpMM
+
+kernel execution time:  123.802 ms
+ref3 GeMM template time: 124.342
+
+kernel execution time:  39.2723 ms
+SpMM template time ref4: 39.8322
+
+-------- reference pattern computation
+
+kernel execution time:  457.271 ms
+taco reference time: 457.979
+
+kernel execution time:  427.194 ms
+taco reference new time: 427.789
+
+kernel execution time:  93.1417 ms
+fused time: 93.7188

@@ -292,6 +292,7 @@ void IRRewriter::visit(const Store* op) {
 }
 
 void IRRewriter::visit(const For* op) {
+  // std::cout << "This is IRRewriter::visit(const For* op) method: For: " << op << std::endl;
   Expr var       = rewrite(op->var);
   Expr start     = rewrite(op->start);
   Expr end       = rewrite(op->end);

@@ -1,0 +1,2924 @@
+ttm-ttm execution
+
+-----------------------------------------
+A(i,j,m) = B(i,j,k) * C(k,l) * D(l,m)
+/home/min/a/kadhitha/ispc-examples/data/tns/delicious-3d.tns
+B1_dimension: 532924, B2_dimension: 17262471, B3_dimension: 532924, vals: 140126181
+C1_dimension: 2480308, C2_dimension: 16, vals: 39684928
+D1_dimension: 16, D2_dimension: 16, vals: 256
+
+
+kernel execution time:  6299.03 ms
+fused time: 6300.12
+
+kernel execution time:  21080.2 ms
+reference time: 21081.3
+
+kernel execution time:  2757.48 ms
+reference time: 2757.94
+
+kernel execution time:  5064.84 ms
+reference time: 5065.87
+
+ttm-ttm execution
+
+-----------------------------------------
+A(i,j,m) = B(i,j,k) * C(k,l) * D(l,m)
+/home/min/a/kadhitha/ispc-examples/data/tns/flickr-3d.tns
+B1_dimension: 319686, B2_dimension: 28153045, B3_dimension: 319686, vals: 112890310
+C1_dimension: 1607191, C2_dimension: 16, vals: 25715056
+D1_dimension: 16, D2_dimension: 16, vals: 256
+
+
+kernel execution time:  3709.97 ms
+fused time: 3711.05
+
+kernel execution time:  16159.4 ms
+reference time: 16160.5
+
+kernel execution time:  1773.12 ms
+reference time: 1773.58
+
+kernel execution time:  3030.89 ms
+reference time: 3031.42
+
+ttm-ttm execution 
+
+------------------------------------------
+A(i,j,m) = B(i,j,k) * C(k,l) * D(l,m)
+/home/min/a/kadhitha/ispc-examples/data/tns/nell-2.tns
+B1_dimension: 12092, B2_dimension: 9184, B3_dimension: 12092, vals: 76879419
+C1_dimension: 28818, C2_dimension: 16, vals: 461088
+D1_dimension: 16, D2_dimension: 16, vals: 256
+
+
+kernel execution time:  487.016 ms
+fused time: 487.513
+
+kernel execution time:  11041.9 ms
+reference time: 11043
+
+kernel execution time:  1009.63 ms
+reference time: 1010.12
+
+kernel execution time:  37.1546 ms
+reference time: 37.757
+
+
+ttm-ttm execution
+
+-----------------------------------------
+/home/min/a/kadhitha/ispc-examples/data/tns/nell-1.tns
+A(i,j,m) = B(i,j,k) * C(k,l) * D(l,m)
+B1_dimension: 2902330, B2_dimension: 2143368, B3_dimension: 2902330, vals: 143599552
+C1_dimension: 25495389, C2_dimension: 16, vals: 407926224
+D1_dimension: 16, D2_dimension: 16, vals: 256
+
+
+kernel execution time:  11984.9 ms
+fused time: 11985.9
+
+kernel execution time:  34959 ms
+reference time: 34960.1
+
+kernel execution time:  8476.95 ms
+reference time: 8477.9
+
+kernel execution time:  1869.85 ms
+reference time: 1870.39
+
+ttm-ttm execution
+
+-----------------------------------------
+/home/min/a/kadhitha/ispc-examples/data/tns/vast-2015-mc1-3d.tns
+A(i,j,m) = B(i,j,k) * C(k,l) * D(l,m)
+B1_dimension: 165427, B2_dimension: 11374, B3_dimension: 165427, vals: 26021854
+C1_dimension: 2, C2_dimension: 16, vals: 32
+D1_dimension: 16, D2_dimension: 16, vals: 256
+
+
+kernel execution time:  2730.05 ms
+fused time: 2731.15
+
+kernel execution time:  4167.74 ms
+reference time: 4168.86
+
+kernel execution time:  550.937 ms
+reference time: 551.395
+
+kernel execution time:  2788.55 ms
+reference time: 2789.07
+
+ttm-ttm execution
+
+-----------------------------------------
+/home/min/a/kadhitha/ispc-examples/data/tns/1998DARPA.tns
+A(i,j,m) = B(i,j,k) * C(k,l) * D(l,m)
+B1_dimension: 22476, B2_dimension: 22476, B3_dimension: 22476, vals: 28421307
+C1_dimension: 23776223, C2_dimension: 16, vals: 380419568
+D1_dimension: 16, D2_dimension: 16, vals: 256
+
+
+ttm-ttm execution
+
+-----------------------------------------
+/home/min/a/kadhitha/ispc-examples/data/tns/freebase_music.tns
+A(i,j,m) = B(i,j,k) * C(k,l) * D(l,m)
+B1_dimension: 23343790, B2_dimension: 23344784, B3_dimension: 23343790, vals: 99546550
+C1_dimension: 166, C2_dimension: 16, vals: 2656
+D1_dimension: 16, D2_dimension: 16, vals: 256
+
+
+kernel execution time:  10491.6 ms
+fused time: 10492.7
+
+kernel execution time:  15968 ms
+reference time: 15969.1
+
+kernel execution time:  1886.09 ms
+reference time: 1886.55
+
+kernel execution time:  10763.7 ms
+reference time: 10765
+
+ttm-ttm execution
+
+-----------------------------------------
+/home/min/a/kadhitha/ispc-examples/data/tns/darpa1998.tns
+A(i,j,m) = B(i,j,k) * C(k,l) * D(l,m)
+B1_dimension: 22476, B2_dimension: 22476, B3_dimension: 22476, vals: 28421307
+C1_dimension: 23776223, C2_dimension: 16, vals: 380419568
+D1_dimension: 16, D2_dimension: 16, vals: 256
+
+
+kernel execution time:  847.087 ms
+fused time: 847.588
+
+kernel execution time:  7136.54 ms
+reference time: 7137.57
+
+kernel execution time:  1340.45 ms
+reference time: 1340.91
+
+kernel execution time:  8.28247 ms
+reference time: 8.80899
+
+ttm-ttm execution
+
+-----------------------------------------
+/home/min/a/kadhitha/ispc-examples/data/tns/freebase_sampled.tns
+A(i,j,m) = B(i,j,k) * C(k,l) * D(l,m)
+B1_dimension: 38954435, B2_dimension: 38955429, B3_dimension: 38954435, vals: 139920770
+C1_dimension: 532, C2_dimension: 16, vals: 8512
+D1_dimension: 16, D2_dimension: 16, vals: 256
+
+
+ttm-ttm execution
+
+-----------------------------------------
+/home/min/a/kadhitha/ispc-examples/data/tns/freebase_music.tns
+A(i,j,m) = B(i,j,k) * C(k,l) * D(l,m)
+B1_dimension: 23343790, B2_dimension: 23344784, B3_dimension: 23343790, vals: 99546550
+C1_dimension: 166, C2_dimension: 16, vals: 2656
+D1_dimension: 16, D2_dimension: 16, vals: 256
+
+
+kernel execution time:  10540.6 ms
+fused time: 10541.6
+
+kernel execution time:  16072 ms
+reference time: 16073
+
+kernel execution time:  1900.39 ms
+reference time: 1900.89
+
+kernel execution time:  10819.5 ms
+reference time: 10820.5
+
+ttm-ttm execution
+
+-----------------------------------------
+/home/min/a/kadhitha/ispc-examples/data/tns/freebase_sampled.tns
+A(i,j,m) = B(i,j,k) * C(k,l) * D(l,m)
+B1_dimension: 38954435, B2_dimension: 38955429, B3_dimension: 38954435, vals: 139920770
+C1_dimension: 532, C2_dimension: 16, vals: 8512
+D1_dimension: 16, D2_dimension: 16, vals: 256
+
+
+ttm-ttm execution
+
+-----------------------------------------
+/home/min/a/kadhitha/ispc-examples/data/tns/flickr-3d.tns
+A(i,j,m) = B(i,j,k) * C(k,l) * D(l,m)
+B1_dimension: 319686, B2_dimension: 28153045, B3_dimension: 319686, vals: 112890310
+C1_dimension: 1607191, C2_dimension: 16, vals: 25715056
+D1_dimension: 16, D2_dimension: 16, vals: 256
+
+
+kernel execution time:  3689.85 ms
+fused time: 3690.99
+
+kernel execution time:  16162.6 ms
+reference time: 16163.7
+
+kernel execution time:  2035.42 ms
+TTM1: 2035.96
+
+kernel execution time:  3004.2 ms
+TTM2: 3004.74
+
+kernel execution time:  147.233 ms
+dense: 147.648
+
+kernel execution time:  2240.45 ms
+TTM after dense: 2240.96
+
+ttm-ttm execution
+
+-----------------------------------------
+/home/min/a/kadhitha/ispc-examples/data/tns/flickr-3d.tns
+A(i,j,m) = B(i,j,k) * C(k,l) * D(l,m)
+B1_dimension: 319686, B2_dimension: 28153045, B3_dimension: 319686, vals: 112890310
+C1_dimension: 1607191, C2_dimension: 16, vals: 25715056
+D1_dimension: 16, D2_dimension: 1024, vals: 16384
+
+
+ttm-ttm execution
+
+-----------------------------------------
+/home/min/a/kadhitha/ispc-examples/data/tns/nell-2.tns
+A(i,j,m) = B(i,j,k) * C(k,l) * D(l,m)
+B1_dimension: 12092, B2_dimension: 9184, B3_dimension: 12092, vals: 76879419
+C1_dimension: 28818, C2_dimension: 16, vals: 461088
+D1_dimension: 16, D2_dimension: 32, vals: 512
+
+
+kernel execution time:  542.361 ms
+fused time: 542.813
+
+kernel execution time:  22547.6 ms
+reference time: 22548.6
+
+kernel execution time:  1008.25 ms
+TTM1: 1008.82
+
+kernel execution time:  70.7434 ms
+TTM2: 71.2926
+
+kernel execution time:  5.2174 ms
+dense: 5.58699
+
+kernel execution time:  2086.85 ms
+TTM after dense: 2087.25
+
+ttm-ttm execution
+
+-----------------------------------------
+/home/min/a/kadhitha/ispc-examples/data/tns/nell-2.tns
+A(i,j,m) = B(i,j,k) * C(k,l) * D(l,m)
+B1_dimension: 12092, B2_dimension: 9184, B3_dimension: 12092, vals: 76879419
+C1_dimension: 28818, C2_dimension: 16, vals: 461088
+D1_dimension: 16, D2_dimension: 16, vals: 256
+
+
+kernel execution time:  531.924 ms
+fused time: 532.696
+
+kernel execution time:  11314 ms
+reference time: 11315.1
+
+kernel execution time:  1009.54 ms
+TTM1: 1010.08
+
+kernel execution time:  37.5466 ms
+TTM2: 38.0867
+
+kernel execution time:  2.77519 ms
+dense: 3.13589
+
+kernel execution time:  1014.37 ms
+TTM after dense: 1014.74
+
+ttm-ttm execution
+
+-----------------------------------------
+/home/min/a/kadhitha/ispc-examples/data/tns/nell-2.tns
+A(i,j,m) = B(i,j,k) * C(k,l) * D(l,m)
+B1_dimension: 12092, B2_dimension: 9184, B3_dimension: 12092, vals: 76879419
+C1_dimension: 28818, C2_dimension: 16, vals: 461088
+D1_dimension: 16, D2_dimension: 64, vals: 1024
+
+
+kernel execution time:  604.787 ms
+fused time: 605.25
+
+kernel execution time:  45011.1 ms
+reference time: 45012.2
+
+kernel execution time:  1008.41 ms
+TTM1: 1008.97
+
+kernel execution time:  137.791 ms
+TTM2: 138.316
+
+kernel execution time:  10.0591 ms
+dense: 10.4452
+
+kernel execution time:  5120.5 ms
+TTM after dense: 5121.57
+
+ttm-ttm execution
+
+-----------------------------------------
+/home/min/a/kadhitha/ispc-examples/data/tns/matmul_5-5-5.tns
+A(i,j,m) = B(i,j,k) * C(k,l) * D(l,m)
+B1_dimension: 25, B2_dimension: 25, B3_dimension: 25, vals: 125
+C1_dimension: 25, C2_dimension: 32, vals: 800
+D1_dimension: 32, D2_dimension: 64, vals: 2048
+
+
+kernel execution time:  0.129572 ms
+fused time: 0.560598
+
+kernel execution time:  0.151942 ms
+reference time: 0.999013
+
+kernel execution time:  0.01803 ms
+TTM1: 0.310364
+
+kernel execution time:  0.119052 ms
+TTM2: 0.897713
+
+kernel execution time:  0.093421 ms
+dense: 0.284444
+
+kernel execution time:  0.032111 ms
+TTM after dense: 0.662509
+
+ttm-ttm execution
+
+-----------------------------------------
+/home/min/a/kadhitha/ispc-examples/data/tns/matmul_5-5-5.tns
+A(i,j,m) = B(i,j,k) * C(k,l) * D(l,m)
+B1_dimension: 25, B2_dimension: 25, B3_dimension: 25, vals: 125
+C1_dimension: 25, C2_dimension: 32, vals: 800
+D1_dimension: 32, D2_dimension: 64, vals: 2048
+
+
+kernel execution time:  0.136562 ms
+fused time: 0.555088
+
+kernel execution time:  0.155282 ms
+reference time: 1.02811
+
+kernel execution time:  0.01913 ms
+TTM1: 0.293014
+
+kernel execution time:  0.148032 ms
+TTM2: 1.08159
+
+kernel execution time:  0.093351 ms
+dense: 0.282434
+
+kernel execution time:  0.03336 ms
+TTM after dense: 0.309775
+
+ttm-ttm execution
+
+-----------------------------------------
+/home/min/a/kadhitha/ispc-examples/data/tns/matmul_5-5-5.tns
+A(i,j,m) = B(i,j,k) * C(k,l) * D(l,m)
+B1_dimension: 25, B2_dimension: 25, B3_dimension: 25, vals: 125
+C1_dimension: 25, C2_dimension: 32, vals: 800
+D1_dimension: 32, D2_dimension: 64, vals: 2048
+
+
+kernel execution time:  0.133302 ms
+fused time: 0.590248
+
+kernel execution time:  0.154633 ms
+reference time: 0.976683
+
+kernel execution time:  0.032061 ms
+TTM1: 0.554668
+
+kernel execution time:  0.231943 ms
+TTM2: 0.790901
+
+kernel execution time:  0.093152 ms
+dense: 0.456727
+
+kernel execution time:  0.168413 ms
+TTM after dense: 0.866702
+
+ttm-ttm execution
+
+-----------------------------------------
+/home/min/a/kadhitha/ispc-examples/data/tns/matmul_5-5-5.tns
+A(i,j,m) = B(i,j,k) * C(k,l) * D(l,m)
+B1_dimension: 25, B2_dimension: 25, B3_dimension: 25, vals: 125
+C1_dimension: 25, C2_dimension: 32, vals: 800
+D1_dimension: 32, D2_dimension: 64, vals: 2048
+
+
+kernel execution time:  0.211383 ms
+fused time: 0.979204
+
+kernel execution time:  0.300854 ms
+reference time: 0.976764
+
+kernel execution time:  0.03182 ms
+TTM1: 0.986423
+
+kernel execution time:  0.223513 ms
+TTM2: 1.25582
+
+kernel execution time:  0.140142 ms
+dense: 0.491247
+
+kernel execution time:  0.057651 ms
+TTM after dense: 0.632639
+
+ttm-ttm execution
+
+-----------------------------------------
+/home/min/a/kadhitha/ispc-examples/data/tns/matmul_5-5-5.tns
+A(i,j,m) = B(i,j,k) * C(k,l) * D(l,m)
+B1_dimension: 25, B2_dimension: 25, B3_dimension: 25, vals: 125
+C1_dimension: 25, C2_dimension: 32, vals: 800
+D1_dimension: 32, D2_dimension: 64, vals: 2048
+
+
+kernel execution time:  0.226813 ms
+fused time: 0.981434
+
+kernel execution time:  0.299435 ms
+reference time: 0.980784
+
+kernel execution time:  0.03171 ms
+TTM1: 1.17345
+
+kernel execution time:  0.236723 ms
+TTM2: 1.08452
+
+kernel execution time:  0.099581 ms
+dense: 0.448246
+
+kernel execution time:  0.055691 ms
+TTM after dense: 0.595948
+
+ttm-ttm execution
+
+-----------------------------------------
+/home/min/a/kadhitha/ispc-examples/data/tns/matmul_5-5-5.tns
+A(i,j,m) = B(i,j,k) * C(k,l) * D(l,m)
+B1_dimension: 25, B2_dimension: 25, B3_dimension: 25, vals: 125
+C1_dimension: 25, C2_dimension: 32, vals: 800
+D1_dimension: 32, D2_dimension: 64, vals: 2048
+
+
+kernel execution time:  0.183452 ms
+fused time: 0.934223
+
+kernel execution time:  0.258304 ms
+reference time: 1.14423
+
+kernel execution time:  0.028031 ms
+TTM1: 0.530247
+
+kernel execution time:  0.192393 ms
+TTM2: 0.865752
+
+kernel execution time:  0.104401 ms
+dense: 0.458676
+
+kernel execution time:  0.058181 ms
+TTM after dense: 0.641949
+
+ttm-ttm execution
+
+-----------------------------------------
+/home/min/a/kadhitha/ispc-examples/data/tns/matmul_5-5-5.tns
+A(i,j,m) = B(i,j,k) * C(k,l) * D(l,m)
+B1_dimension: 25, B2_dimension: 25, B3_dimension: 25, vals: 125
+C1_dimension: 25, C2_dimension: 32, vals: 800
+D1_dimension: 32, D2_dimension: 64, vals: 2048
+
+
+kernel execution time:  0.212263 ms
+fused time: 1.00447
+
+kernel execution time:  0.293174 ms
+reference time: 1.00466
+
+kernel execution time:  0.03429 ms
+TTM1: 1.06194
+
+kernel execution time:  0.227643 ms
+TTM2: 0.77555
+
+kernel execution time:  0.093021 ms
+dense: 0.615169
+
+kernel execution time:  0.111302 ms
+TTM after dense: 1.19147
+
+ttm-ttm execution
+
+-----------------------------------------
+/home/min/a/kadhitha/ispc-examples/data/tns/matmul_5-5-5.tns
+A(i,j,m) = B(i,j,k) * C(k,l) * D(l,m)
+B1_dimension: 25, B2_dimension: 25, B3_dimension: 25, vals: 125
+C1_dimension: 25, C2_dimension: 32, vals: 800
+D1_dimension: 32, D2_dimension: 64, vals: 2048
+
+
+kernel execution time:  0.126042 ms
+fused time: 0.542138
+
+kernel execution time:  0.170263 ms
+reference time: 0.974603
+
+kernel execution time:  0.01972 ms
+TTM1: 0.286434
+
+kernel execution time:  0.125282 ms
+TTM2: 0.402736
+
+kernel execution time:  0.103582 ms
+dense: 0.7661
+
+kernel execution time:  0.04149 ms
+TTM after dense: 0.320775
+
+ttm-ttm execution
+
+-----------------------------------------
+/home/min/a/kadhitha/ispc-examples/data/tns/matmul_5-5-5.tns
+A(i,j,m) = B(i,j,k) * C(k,l) * D(l,m)
+B1_dimension: 25, B2_dimension: 25, B3_dimension: 25, vals: 125
+C1_dimension: 25, C2_dimension: 32, vals: 800
+D1_dimension: 32, D2_dimension: 64, vals: 2048
+
+
+kernel execution time:  0.193463 ms
+fused time: 0.831391
+
+kernel execution time:  0.347254 ms
+reference time: 1.12168
+
+kernel execution time:  0.03811 ms
+TTM1: 1.19729
+
+kernel execution time:  0.334915 ms
+TTM2: 1.14708
+
+kernel execution time:  0.109681 ms
+dense: 0.526707
+
+kernel execution time:  0.140412 ms
+TTM after dense: 0.76001
+
+ttm-ttm execution
+
+-----------------------------------------
+/home/min/a/kadhitha/ispc-examples/data/tns/matmul_5-5-5.tns
+A(i,j,m) = B(i,j,k) * C(k,l) * D(l,m)
+B1_dimension: 25, B2_dimension: 25, B3_dimension: 25, vals: 125
+C1_dimension: 25, C2_dimension: 32, vals: 800
+D1_dimension: 32, D2_dimension: 64, vals: 2048
+
+
+kernel execution time:  0.147722 ms
+fused time: 0.7865
+
+kernel execution time:  0.237434 ms
+reference time: 1.01788
+
+kernel execution time:  0.020341 ms
+TTM1: 0.330005
+
+kernel execution time:  0.201823 ms
+TTM2: 1.01705
+
+kernel execution time:  0.069931 ms
+dense: 0.261943
+
+kernel execution time:  0.032231 ms
+TTM after dense: 0.314845
+
+ttm-ttm execution
+
+-----------------------------------------
+/home/min/a/kadhitha/ispc-examples/data/tns/matmul_5-5-5.tns
+A(i,j,m) = B(i,j,k) * C(k,l) * D(l,m)
+B1_dimension: 25, B2_dimension: 25, B3_dimension: 25, vals: 125
+C1_dimension: 25, C2_dimension: 32, vals: 800
+D1_dimension: 32, D2_dimension: 64, vals: 2048
+
+
+kernel execution time:  0.210293 ms
+fused time: 0.999243
+
+kernel execution time:  0.577188 ms
+reference time: 1.23453
+
+kernel execution time:  0.032071 ms
+TTM1: 0.965223
+
+kernel execution time:  0.227183 ms
+TTM2: 1.25077
+
+kernel execution time:  0.091622 ms
+dense: 0.449416
+
+kernel execution time:  0.04494 ms
+TTM after dense: 0.73161
+
+ttm-ttm execution
+
+-----------------------------------------
+/home/min/a/kadhitha/ispc-examples/data/tns/matmul_5-5-5.tns
+A(i,j,m) = B(i,j,k) * C(k,l) * D(l,m)
+B1_dimension: 25, B2_dimension: 25, B3_dimension: 25, vals: 125
+C1_dimension: 25, C2_dimension: 32, vals: 800
+D1_dimension: 32, D2_dimension: 64, vals: 2048
+
+
+kernel execution time:  0.109392 ms
+fused time: 0.481746
+
+kernel execution time:  0.242474 ms
+reference time: 0.72963
+
+kernel execution time:  0.01624 ms
+TTM1: 0.257934
+
+kernel execution time:  0.089982 ms
+TTM2: 0.341365
+
+kernel execution time:  0.106392 ms
+dense: 0.74066
+
+kernel execution time:  0.027241 ms
+TTM after dense: 0.277864
+
+ttm-ttm execution
+
+-----------------------------------------
+/home/min/a/kadhitha/ispc-examples/data/tns/matmul_5-5-5.tns
+A(i,j,m) = B(i,j,k) * C(k,l) * D(l,m)
+B1_dimension: 25, B2_dimension: 25, B3_dimension: 25, vals: 125
+C1_dimension: 25, C2_dimension: 32, vals: 800
+D1_dimension: 32, D2_dimension: 64, vals: 2048
+
+
+ttm-ttm execution
+
+-----------------------------------------
+/home/min/a/kadhitha/ispc-examples/data/tns/matmul_5-5-5.tns
+A(i,j,m) = B(i,j,k) * C(k,l) * D(l,m)
+B1_dimension: 25, B2_dimension: 25, B3_dimension: 25, vals: 125
+C1_dimension: 25, C2_dimension: 32, vals: 800
+D1_dimension: 32, D2_dimension: 64, vals: 2048
+
+
+kernel execution time:  0.938612 ms
+fused time: 1.66032
+
+kernel execution time:  0.598878 ms
+reference time: 1.2444
+
+kernel execution time:  0.027881 ms
+TTM1: 0.664309
+
+kernel execution time:  0.172162 ms
+TTM2: 1.0861
+
+kernel execution time:  0.087052 ms
+dense: 0.420256
+
+kernel execution time:  0.044921 ms
+TTM after dense: 0.669959
+
+ttm-ttm execution
+
+-----------------------------------------
+/home/min/a/kadhitha/ispc-examples/data/tns/matmul_5-5-5.tns
+A(i,j,m) = B(i,j,k) * C(k,l) * D(l,m)
+B1_dimension: 25, B2_dimension: 25, B3_dimension: 25, vals: 125
+C1_dimension: 25, C2_dimension: 32, vals: 800
+D1_dimension: 32, D2_dimension: 64, vals: 2048
+
+
+kernel execution time:  0.723749 ms
+fused time: 1.52668
+
+kernel execution time:  1.33287 ms
+reference time: 2.02148
+
+kernel execution time:  0.03285 ms
+TTM1: 1.06994
+
+kernel execution time:  0.227263 ms
+TTM2: 1.00641
+
+kernel execution time:  0.121451 ms
+dense: 0.410656
+
+kernel execution time:  0.046891 ms
+TTM after dense: 0.612258
+
+ttm-ttm execution
+
+-----------------------------------------
+/home/min/a/kadhitha/ispc-examples/data/tns/matmul_5-5-5.tns
+A(i,j,m) = B(i,j,k) * C(k,l) * D(l,m)
+B1_dimension: 25, B2_dimension: 25, B3_dimension: 25, vals: 125
+C1_dimension: 25, C2_dimension: 32, vals: 800
+D1_dimension: 32, D2_dimension: 64, vals: 2048
+
+
+kernel execution time:  0.654879 ms
+fused time: 1.0716
+
+kernel execution time:  1.24327 ms
+reference time: 1.59976
+
+kernel execution time:  0.691129 ms
+TTM1: 1.0059
+
+kernel execution time:  0.859771 ms
+TTM2: 1.1516
+
+kernel execution time:  0.136762 ms
+dense: 0.334665
+
+kernel execution time:  0.524517 ms
+TTM after dense: 0.806231
+
+ttm-ttm execution
+
+-----------------------------------------
+/home/min/a/kadhitha/ispc-examples/data/tns/flickr-3d.tns
+A(i,j,m) = B(i,j,k) * C(k,l) * D(l,m)
+B1_dimension: 319686, B2_dimension: 28153045, B3_dimension: 319686, vals: 112890310
+C1_dimension: 1607191, C2_dimension: 32, vals: 51430112
+D1_dimension: 32, D2_dimension: 64, vals: 2048
+
+
+kernel execution time:  891.501 ms
+fused time: 892.508
+
+kernel execution time:  6378.22 ms
+reference time: 6379.42
+
+kernel execution time:  265.033 ms
+TTM1: 265.676
+
+kernel execution time:  514.397 ms
+TTM2: 515.1
+
+kernel execution time:  70.5991 ms
+dense: 71.0624
+
+kernel execution time:  541.878 ms
+TTM after dense: 542.548
+
+ttm-ttm execution
+
+-----------------------------------------
+/home/min/a/kadhitha/ispc-examples/data/tns/vast-2015-mc1-3d.tns
+A(i,j,m) = B(i,j,k) * C(k,l) * D(l,m)
+B1_dimension: 165427, B2_dimension: 11374, B3_dimension: 165427, vals: 26021854
+C1_dimension: 2, C2_dimension: 32, vals: 64
+D1_dimension: 32, D2_dimension: 64, vals: 2048
+
+
+kernel execution time:  753.49 ms
+fused time: 754.615
+
+kernel execution time:  1394.55 ms
+reference time: 1395.28
+
+kernel execution time:  197.246 ms
+TTM1: 197.894
+
+kernel execution time:  503.301 ms
+TTM2: 503.886
+
+kernel execution time:  0.0622 ms
+dense: 1.00584
+
+kernel execution time:  380.931 ms
+TTM after dense: 381.331
+
+ttm-ttm execution
+
+-----------------------------------------
+/home/min/a/kadhitha/ispc-examples/data/tns/flickr-3d.tns
+A(i,j,m) = B(i,j,k) * C(k,l) * D(l,m)
+B1_dimension: 319686, B2_dimension: 28153045, B3_dimension: 319686, vals: 112890310
+C1_dimension: 1607191, C2_dimension: 32, vals: 51430112
+D1_dimension: 32, D2_dimension: 64, vals: 2048
+
+
+kernel execution time:  894.532 ms
+fused time: 895.512
+
+kernel execution time:  6345.62 ms
+reference time: 6346.77
+
+kernel execution time:  266.55 ms
+TTM1: 267.22
+
+kernel execution time:  515.257 ms
+TTM2: 515.893
+
+kernel execution time:  70.7658 ms
+dense: 71.2374
+
+kernel execution time:  542.175 ms
+TTM after dense: 542.864
+
+ttm-ttm execution
+
+-----------------------------------------
+/home/min/a/kadhitha/ispc-examples/data/tns/nell-2.tns
+A(i,j,m) = B(i,j,k) * C(k,l) * D(l,m)
+B1_dimension: 12092, B2_dimension: 9184, B3_dimension: 12092, vals: 76879419
+C1_dimension: 28818, C2_dimension: 32, vals: 922176
+D1_dimension: 32, D2_dimension: 64, vals: 2048
+
+
+kernel execution time:  49.8694 ms
+fused time: 50.6512
+
+ttm-ttm execution
+
+-----------------------------------------
+/home/min/a/kadhitha/ispc-examples/data/tns/nell-1.tns
+A(i,j,m) = B(i,j,k) * C(k,l) * D(l,m)
+B1_dimension: 2902330, B2_dimension: 2143368, B3_dimension: 2902330, vals: 143599552
+C1_dimension: 25495389, C2_dimension: 32, vals: 815852448
+D1_dimension: 32, D2_dimension: 64, vals: 2048
+
+
+kernel execution time:  1309.77 ms
+fused time: 1310.84
+
+kernel execution time:  8179.4 ms
+reference time: 8180.68
+
+kernel execution time:  805.812 ms
+TTM1: 806.562
+
+kernel execution time:  314.204 ms
+TTM2: 314.751
+
+kernel execution time:  1134.47 ms
+dense: 1134.93
+
+kernel execution time:  1621.3 ms
+TTM after dense: 1621.92
+
+ttm-ttm execution
+
+-----------------------------------------
+/home/min/a/kadhitha/ispc-examples/data/tns/vast-2015-mc1-3d.tns
+A(i,j,m) = B(i,j,k) * C(k,l) * D(l,m)
+B1_dimension: 165427, B2_dimension: 11374, B3_dimension: 165427, vals: 26021854
+C1_dimension: 2, C2_dimension: 32, vals: 64
+D1_dimension: 32, D2_dimension: 64, vals: 2048
+
+
+kernel execution time:  749.757 ms
+fused time: 750.843
+
+kernel execution time:  1391.56 ms
+reference time: 1392.35
+
+kernel execution time:  196.711 ms
+TTM1: 197.347
+
+kernel execution time:  502.61 ms
+TTM2: 503.193
+
+kernel execution time:  0.063271 ms
+dense: 0.948892
+
+kernel execution time:  381.132 ms
+TTM after dense: 381.508
+
+ttm-ttm execution
+
+-----------------------------------------
+/home/min/a/kadhitha/ispc-examples/data/tns/darpa1998.tns
+A(i,j,m) = B(i,j,k) * C(k,l) * D(l,m)
+B1_dimension: 22476, B2_dimension: 22476, B3_dimension: 22476, vals: 28421307
+C1_dimension: 23776223, C2_dimension: 32, vals: 760839136
+D1_dimension: 32, D2_dimension: 64, vals: 2048
+
+
+kernel execution time:  230.973 ms
+fused time: 231.921
+
+ttm-ttm execution
+
+-----------------------------------------
+/home/min/a/kadhitha/ispc-examples/data/tns/matmul_5-5-5.tns
+A(i,j,m) = B(i,j,k) * C(k,l) * D(l,m)
+B1_dimension: 25, B2_dimension: 25, B3_dimension: 25, vals: 125
+C1_dimension: 25, C2_dimension: 32, vals: 800
+D1_dimension: 32, D2_dimension: 64, vals: 2048
+
+
+kernel execution time:  0.72187 ms
+fused time: 1.46707
+
+kernel execution time:  0.842291 ms
+reference time: 1.52295
+
+kernel execution time:  0.490417 ms
+TTM1: 1.08223
+
+kernel execution time:  0.653919 ms
+TTM2: 1.17803
+
+kernel execution time:  0.115332 ms
+dense: 0.889372
+
+kernel execution time:  0.446076 ms
+TTM after dense: 1.05921
+
+ttm-ttm execution
+
+-----------------------------------------
+/home/min/a/kadhitha/ispc-examples/data/tns/matmul_5-5-5.tns
+A(i,j,m) = B(i,j,k) * C(k,l) * D(l,m)
+B1_dimension: 25, B2_dimension: 25, B3_dimension: 25, vals: 125
+C1_dimension: 25, C2_dimension: 16, vals: 400
+D1_dimension: 16, D2_dimension: 32, vals: 512
+
+
+kernel execution time:  1.29819 ms
+fused time: 2.11481
+
+kernel execution time:  0.560877 ms
+reference time: 1.26788
+
+kernel execution time:  0.506967 ms
+TTM1: 1.14189
+
+kernel execution time:  0.547697 ms
+TTM2: 1.24278
+
+kernel execution time:  0.075421 ms
+dense: 0.508546
+
+kernel execution time:  0.464356 ms
+TTM after dense: 1.09434
+
+ttm-ttm execution
+
+-----------------------------------------
+/home/min/a/kadhitha/ispc-examples/data/tns/darpa1998.tns
+A(i,j,m) = B(i,j,k) * C(k,l) * D(l,m)
+B1_dimension: 22476, B2_dimension: 22476, B3_dimension: 22476, vals: 28421307
+C1_dimension: 23776223, C2_dimension: 16, vals: 380419568
+D1_dimension: 16, D2_dimension: 32, vals: 512
+
+
+kernel execution time:  126.199 ms
+fused time: 126.724
+
+ttm-ttm execution
+
+-----------------------------------------
+/home/min/a/kadhitha/ispc-examples/data/tns/darpa1998.tns
+A(i,j,m) = B(i,j,k) * C(k,l) * D(l,m)
+B1_dimension: 22476, B2_dimension: 22476, B3_dimension: 22476, vals: 28421307
+C1_dimension: 23776223, C2_dimension: 16, vals: 380419568
+D1_dimension: 16, D2_dimension: 32, vals: 512
+
+
+kernel execution time:  132.543 ms
+fused time: 133.165
+
+kernel execution time:  2405.44 ms
+reference time: 2406.19
+
+kernel execution time:  331.61 ms
+TTM1: 332.199
+
+kernel execution time:  2.26417 ms
+TTM2: 3.02615
+
+kernel execution time:  400.791 ms
+dense: 401.064
+
+kernel execution time:  620.74 ms
+TTM after dense: 621.389
+
+ttm-ttm execution
+
+-----------------------------------------
+/home/min/a/kadhitha/ispc-examples/data/tns/flickr-3d.tns
+A(i,j,m) = B(i,j,k) * C(k,l) * D(l,m)
+B1_dimension: 319686, B2_dimension: 28153045, B3_dimension: 319686, vals: 112890310
+C1_dimension: 1607191, C2_dimension: 16, vals: 25715056
+D1_dimension: 16, D2_dimension: 32, vals: 512
+
+
+kernel execution time:  455.645 ms
+fused time: 456.696
+
+kernel execution time:  718.699 ms
+reference time: 719.384
+
+kernel execution time:  142.557 ms
+TTM1: 143.105
+
+kernel execution time:  256.179 ms
+TTM2: 256.785
+
+kernel execution time:  29.5586 ms
+dense: 30.0451
+
+kernel execution time:  269.529 ms
+TTM after dense: 270.186
+
+ttm-ttm execution
+
+-----------------------------------------
+/home/min/a/kadhitha/ispc-examples/data/tns/flickr-3d.tns
+A(i,j,m) = B(i,j,k) * C(k,l) * D(l,m)
+B1_dimension: 319686, B2_dimension: 28153045, B3_dimension: 319686, vals: 112890310
+C1_dimension: 1607191, C2_dimension: 32, vals: 51430112
+D1_dimension: 32, D2_dimension: 64, vals: 2048
+
+
+kernel execution time:  890.318 ms
+fused time: 891.345
+
+kernel execution time:  2038.26 ms
+reference time: 2038.96
+
+kernel execution time:  265.076 ms
+TTM1: 265.783
+
+kernel execution time:  544.765 ms
+TTM2: 545.423
+
+kernel execution time:  70.9058 ms
+dense: 71.4509
+
+kernel execution time:  541.442 ms
+TTM after dense: 542.115
+
+ttm-ttm execution
+
+-----------------------------------------
+/home/min/a/kadhitha/ispc-examples/data/tns/vast-2015-mc1-3d.tns
+A(i,j,m) = B(i,j,k) * C(k,l) * D(l,m)
+B1_dimension: 165427, B2_dimension: 11374, B3_dimension: 165427, vals: 26021854
+C1_dimension: 2, C2_dimension: 64, vals: 128
+D1_dimension: 64, D2_dimension: 64, vals: 4096
+
+
+kernel execution time:  902.466 ms
+fused time: 903.626
+
+kernel execution time:  1051.52 ms
+reference time: 1052.27
+
+kernel execution time:  385.619 ms
+TTM1: 386.243
+
+kernel execution time:  937.648 ms
+TTM2: 938.212
+
+kernel execution time:  0.067901 ms
+dense: 1.00372
+
+kernel execution time:  380.193 ms
+TTM after dense: 380.613
+
+ttm-ttm execution
+
+-----------------------------------------
+/home/min/a/kadhitha/ispc-examples/data/tns/vast-2015-mc1-3d.tns
+A(i,j,m) = B(i,j,k) * C(k,l) * D(l,m)
+B1_dimension: 165427, B2_dimension: 11374, B3_dimension: 165427, vals: 26021854
+C1_dimension: 2, C2_dimension: 64, vals: 128
+D1_dimension: 64, D2_dimension: 128, vals: 8192
+
+
+ttm-ttm execution
+
+-----------------------------------------
+/home/min/a/kadhitha/ispc-examples/data/tns/vast-2015-mc1-3d.tns
+A(i,j,m) = B(i,j,k) * C(k,l) * D(l,m)
+B1_dimension: 165427, B2_dimension: 11374, B3_dimension: 165427, vals: 26021854
+C1_dimension: 2, C2_dimension: 64, vals: 128
+D1_dimension: 64, D2_dimension: 64, vals: 4096
+
+
+kernel execution time:  898.295 ms
+fused time: 899.297
+
+kernel execution time:  1037.66 ms
+reference time: 1038.39
+
+kernel execution time:  385.768 ms
+TTM1: 386.452
+
+kernel execution time:  939.137 ms
+TTM2: 939.74
+
+kernel execution time:  0.073171 ms
+dense: 1.20129
+
+kernel execution time:  383.479 ms
+TTM after dense: 384.01
+
+ttm-ttm execution
+
+-----------------------------------------
+/home/min/a/kadhitha/ispc-examples/data/tns/flickr-3d.tns
+A(i,j,m) = B(i,j,k) * C(k,l) * D(l,m)
+B1_dimension: 319686, B2_dimension: 28153045, B3_dimension: 319686, vals: 112890310
+C1_dimension: 1607191, C2_dimension: 64, vals: 102860224
+D1_dimension: 64, D2_dimension: 64, vals: 4096
+
+
+kernel execution time:  1034.06 ms
+fused time: 1035.05
+
+kernel execution time:  4275.39 ms
+reference time: 4276.62
+
+kernel execution time:  516.765 ms
+TTM1: 517.518
+
+kernel execution time:  1048.69 ms
+TTM2: 1049.32
+
+kernel execution time:  119.233 ms
+dense: 119.711
+
+kernel execution time:  546.744 ms
+TTM after dense: 547.412
+
+ttm-ttm execution
+
+-----------------------------------------
+/home/min/a/kadhitha/ispc-examples/data/tns/flickr-3d.tns
+A(i,j,m) = B(i,j,k) * C(k,l) * D(l,m)
+B1_dimension: 319686, B2_dimension: 28153045, B3_dimension: 319686, vals: 112890310
+C1_dimension: 1607191, C2_dimension: 32, vals: 51430112
+D1_dimension: 32, D2_dimension: 64, vals: 2048
+
+
+kernel execution time:  894.088 ms
+fused time: 895.234
+
+kernel execution time:  2025.29 ms
+reference time: 2025.92
+
+kernel execution time:  264.446 ms
+TTM1: 265.069
+
+kernel execution time:  541.153 ms
+TTM2: 541.71
+
+kernel execution time:  70.7936 ms
+dense: 71.2153
+
+kernel execution time:  542.474 ms
+TTM after dense: 543.104
+
+ttm-ttm execution
+
+-----------------------------------------
+/home/min/a/kadhitha/ispc-examples/data/tns/flickr-3d.tns
+A(i,j,m) = B(i,j,k) * C(k,l) * D(l,m)
+B1_dimension: 319686, B2_dimension: 28153045, B3_dimension: 319686, vals: 112890310
+C1_dimension: 1607191, C2_dimension: 16, vals: 25715056
+D1_dimension: 16, D2_dimension: 64, vals: 1024
+
+
+kernel execution time:  871.496 ms
+fused time: 872.523
+
+kernel execution time:  1340.14 ms
+reference time: 1340.84
+
+kernel execution time:  143.439 ms
+TTM1: 143.995
+
+kernel execution time:  459.09 ms
+TTM2: 459.668
+
+kernel execution time:  51.7433 ms
+dense: 52.1957
+
+kernel execution time:  545.092 ms
+TTM after dense: 545.899
+
+ttm-ttm execution
+
+-----------------------------------------
+/home/min/a/kadhitha/ispc-examples/data/tns/flickr-3d.tns
+A(i,j,m) = B(i,j,k) * C(k,l) * D(l,m)
+B1_dimension: 319686, B2_dimension: 28153045, B3_dimension: 319686, vals: 112890310
+C1_dimension: 1607191, C2_dimension: 32, vals: 51430112
+D1_dimension: 32, D2_dimension: 64, vals: 2048
+
+
+kernel execution time:  893.815 ms
+fused time: 894.866
+
+kernel execution time:  2016.15 ms
+reference time: 2016.8
+
+kernel execution time:  266.599 ms
+TTM1: 267.18
+
+kernel execution time:  544.015 ms
+TTM2: 544.597
+
+kernel execution time:  70.7604 ms
+dense: 71.1854
+
+kernel execution time:  543.212 ms
+TTM after dense: 543.879
+
+ttm-ttm execution
+
+-----------------------------------------
+/home/min/a/kadhitha/ispc-examples/data/tns/nell-2.tns
+A(i,j,m) = B(i,j,k) * C(k,l) * D(l,m)
+B1_dimension: 12092, B2_dimension: 9184, B3_dimension: 12092, vals: 76879419
+C1_dimension: 28818, C2_dimension: 32, vals: 922176
+D1_dimension: 32, D2_dimension: 64, vals: 2048
+
+
+kernel execution time:  47.6087 ms
+fused time: 48.0666
+
+kernel execution time:  2381.79 ms
+reference time: 2382.51
+
+kernel execution time:  85.3431 ms
+TTM1: 86.158
+
+kernel execution time:  8.56212 ms
+TTM2: 9.19594
+
+kernel execution time:  1.27998 ms
+dense: 1.66095
+
+kernel execution time:  185.324 ms
+TTM after dense: 185.729
+
+ttm-ttm execution
+
+-----------------------------------------
+/home/min/a/kadhitha/ispc-examples/data/tns/nell-1.tns
+A(i,j,m) = B(i,j,k) * C(k,l) * D(l,m)
+B1_dimension: 2902330, B2_dimension: 2143368, B3_dimension: 2902330, vals: 143599552
+C1_dimension: 25495389, C2_dimension: 32, vals: 815852448
+D1_dimension: 32, D2_dimension: 64, vals: 2048
+
+
+kernel execution time:  1312.78 ms
+fused time: 1313.78
+
+kernel execution time:  3548.92 ms
+reference time: 3550.02
+
+kernel execution time:  794.193 ms
+TTM1: 794.835
+
+kernel execution time:  371.233 ms
+TTM2: 371.853
+
+kernel execution time:  1136.25 ms
+dense: 1136.73
+
+kernel execution time:  1608.81 ms
+TTM after dense: 1609.49
+
+ttm-ttm execution
+
+-----------------------------------------
+/home/min/a/kadhitha/ispc-examples/data/tns/vast-2015-mc1-3d.tns
+A(i,j,m) = B(i,j,k) * C(k,l) * D(l,m)
+B1_dimension: 165427, B2_dimension: 11374, B3_dimension: 165427, vals: 26021854
+C1_dimension: 2, C2_dimension: 32, vals: 64
+D1_dimension: 32, D2_dimension: 64, vals: 2048
+
+
+kernel execution time:  749.836 ms
+fused time: 750.93
+
+kernel execution time:  566.457 ms
+reference time: 567.141
+
+kernel execution time:  197.095 ms
+TTM1: 197.696
+
+kernel execution time:  503.839 ms
+TTM2: 504.407
+
+kernel execution time:  0.05955 ms
+dense: 0.911152
+
+kernel execution time:  382.185 ms
+TTM after dense: 382.591
+
+ttm-ttm execution
+
+-----------------------------------------
+/home/min/a/kadhitha/ispc-examples/data/tns/darpa1998.tns
+A(i,j,m) = B(i,j,k) * C(k,l) * D(l,m)
+B1_dimension: 22476, B2_dimension: 22476, B3_dimension: 22476, vals: 28421307
+C1_dimension: 23776223, C2_dimension: 32, vals: 760839136
+D1_dimension: 32, D2_dimension: 64, vals: 2048
+
+
+kernel execution time:  226.079 ms
+fused time: 227.028
+
+kernel execution time:  8763.95 ms
+reference time: 8765.15
+
+kernel execution time:  605.807 ms
+TTM1: 606.7
+
+kernel execution time:  5.27951 ms
+TTM2: 5.94312
+
+kernel execution time:  1075.36 ms
+dense: 1075.63
+
+kernel execution time:  1244.1 ms
+TTM after dense: 1244.76
+
+ttm-ttm execution
+
+-----------------------------------------
+/home/min/a/kadhitha/ispc-examples/data/tns/freebase_music.tns
+A(i,j,m) = B(i,j,k) * C(k,l) * D(l,m)
+B1_dimension: 23343790, B2_dimension: 23344784, B3_dimension: 23343790, vals: 99546550
+C1_dimension: 166, C2_dimension: 32, vals: 5312
+D1_dimension: 32, D2_dimension: 64, vals: 2048
+
+
+ttm-ttm execution
+
+-----------------------------------------
+/home/min/a/kadhitha/ispc-examples/data/tns/delicious-3d.tns
+A(i,j,m) = B(i,j,k) * C(k,l) * D(l,m)
+B1_dimension: 958893, B2_dimension: 55584242, B3_dimension: 958893, vals: 140126164
+C1_dimension: 2480308, C2_dimension: 32, vals: 79369856
+D1_dimension: 32, D2_dimension: 64, vals: 2048
+
+
+ttm-ttm execution
+
+-----------------------------------------
+/home/min/a/kadhitha/ispc-examples/data/tns/flickr-3d.tns
+A(i,j,m) = B(i,j,k) * C(k,l) * D(l,m)
+B1_dimension: 319686, B2_dimension: 28153045, B3_dimension: 319686, vals: 112890310
+C1_dimension: 1607191, C2_dimension: 32, vals: 51430112
+D1_dimension: 32, D2_dimension: 64, vals: 2048
+
+
+kernel execution time:  14896.3 ms
+fused time: 14897.5
+
+kernel execution time:  94041.2 ms
+reference time: 94042.2
+
+kernel execution time:  3578.66 ms
+TTM1: 3579.61
+
+kernel execution time:  18883.5 ms
+TTM2: 18884.5
+
+kernel execution time:  2197.87 ms
+dense: 2198.28
+
+kernel execution time:  7686.45 ms
+TTM after dense: 7687.46
+
+ttm-ttm execution
+
+-----------------------------------------
+/home/min/a/kadhitha/ispc-examples/data/tns/nell-2.tns
+A(i,j,m) = B(i,j,k) * C(k,l) * D(l,m)
+B1_dimension: 12092, B2_dimension: 9184, B3_dimension: 12092, vals: 76879419
+C1_dimension: 28818, C2_dimension: 32, vals: 922176
+D1_dimension: 32, D2_dimension: 64, vals: 2048
+
+
+kernel execution time:  1072.87 ms
+fused time: 1073.82
+
+kernel execution time:  71021.8 ms
+reference time: 71022.9
+
+kernel execution time:  1996.05 ms
+TTM1: 1996.58
+
+kernel execution time:  231.665 ms
+TTM2: 232.177
+
+kernel execution time:  40.2369 ms
+dense: 40.6304
+
+kernel execution time:  4971.71 ms
+TTM after dense: 4972.6
+
+ttm-ttm execution
+
+-----------------------------------------
+/home/min/a/kadhitha/ispc-examples/data/tns/nell-1.tns
+A(i,j,m) = B(i,j,k) * C(k,l) * D(l,m)
+B1_dimension: 2902330, B2_dimension: 2143368, B3_dimension: 2902330, vals: 143599552
+C1_dimension: 25495389, C2_dimension: 32, vals: 815852448
+D1_dimension: 32, D2_dimension: 64, vals: 2048
+
+
+kernel execution time:  29074.9 ms
+fused time: 29076
+
+kernel execution time:  148072 ms
+reference time: 148073
+
+kernel execution time:  13571.2 ms
+TTM1: 13572.2
+
+kernel execution time:  11698.5 ms
+TTM2: 11699.5
+
+kernel execution time:  34736.9 ms
+dense: 34737.7
+
+kernel execution time:  22283.6 ms
+TTM after dense: 22284.5
+
+ttm-ttm execution
+
+-----------------------------------------
+/home/min/a/kadhitha/ispc-examples/data/tns/vast-2015-mc1-3d.tns
+A(i,j,m) = B(i,j,k) * C(k,l) * D(l,m)
+B1_dimension: 165427, B2_dimension: 11374, B3_dimension: 165427, vals: 26021854
+C1_dimension: 2, C2_dimension: 32, vals: 64
+D1_dimension: 32, D2_dimension: 64, vals: 2048
+
+
+kernel execution time:  12513.9 ms
+fused time: 12515
+
+kernel execution time:  23535.3 ms
+reference time: 23536.3
+
+kernel execution time:  1334.33 ms
+TTM1: 1334.87
+
+kernel execution time:  17560.3 ms
+TTM2: 17561.3
+
+kernel execution time:  0.019291 ms
+dense: 0.885501
+
+kernel execution time:  3394.59 ms
+TTM after dense: 3395.34
+
+ttm-ttm execution
+
+-----------------------------------------
+/home/min/a/kadhitha/ispc-examples/data/tns/darpa1998.tns
+A(i,j,m) = B(i,j,k) * C(k,l) * D(l,m)
+B1_dimension: 22476, B2_dimension: 22476, B3_dimension: 22476, vals: 28421307
+C1_dimension: 23776223, C2_dimension: 32, vals: 760839136
+D1_dimension: 32, D2_dimension: 64, vals: 2048
+
+
+kernel execution time:  1517.3 ms
+fused time: 1518.25
+
+kernel execution time:  45929.9 ms
+reference time: 45930.9
+
+kernel execution time:  2929.29 ms
+TTM1: 2929.82
+
+kernel execution time:  53.4282 ms
+TTM2: 53.9625
+
+kernel execution time:  32592.7 ms
+dense: 32593.5
+
+kernel execution time:  6277.64 ms
+TTM after dense: 6278.68
+
+ttm-ttm execution
+
+-----------------------------------------
+/home/min/a/kadhitha/ispc-examples/data/tns/matmul_5-5-5.tns
+A(i,j,m) = B(i,j,k) * C(k,l) * D(l,m)
+B1_dimension: 25, B2_dimension: 25, B3_dimension: 25, vals: 125
+C1_dimension: 25, C2_dimension: 32, vals: 800
+D1_dimension: 32, D2_dimension: 64, vals: 2048
+
+
+kernel execution time:  0.852321 ms
+fused time: 1.60101
+
+kernel execution time:  0.662379 ms
+reference time: 1.32203
+
+kernel execution time:  0.511427 ms
+TTM1: 1.03372
+
+kernel execution time:  0.667709 ms
+TTM2: 1.20996
+
+kernel execution time:  0.118331 ms
+dense: 0.542977
+
+kernel execution time:  0.483187 ms
+TTM after dense: 0.900252
+
+ttm-ttm execution
+
+-----------------------------------------
+/home/min/a/kadhitha/ispc-examples/data/tns/matmul_5-5-5.tns
+A(i,j,m) = B(i,j,k) * C(k,l) * D(l,m)
+B1_dimension: 25, B2_dimension: 25, B3_dimension: 25, vals: 125
+C1_dimension: 25, C2_dimension: 32, vals: 800
+D1_dimension: 32, D2_dimension: 64, vals: 2048
+
+
+kernel execution time:  0.671739 ms
+fused time: 4.90845
+
+kernel execution time:  0.711039 ms
+reference time: 5.04208
+
+kernel execution time:  0.486907 ms
+reference new time: 4.37081
+
+kernel execution time:  0.482627 ms
+TTM1: 3.67761
+
+kernel execution time:  0.589078 ms
+TTM2: 4.27397
+
+kernel execution time:  0.095461 ms
+dense: 0.492616
+
+kernel execution time:  0.530937 ms
+TTM after dense: 1.0284
+
+ttm-ttm execution
+
+-----------------------------------------
+/home/min/a/kadhitha/ispc-examples/data/tns/flickr-3d.tns
+A(i,j,m) = B(i,j,k) * C(k,l) * D(l,m)
+B1_dimension: 319686, B2_dimension: 28153045, B3_dimension: 319686, vals: 112890310
+C1_dimension: 1607191, C2_dimension: 32, vals: 51430112
+D1_dimension: 32, D2_dimension: 64, vals: 2048
+
+
+kernel execution time:  881.367 ms
+fused time: 886.111
+
+reference impl time 
+
+kernel execution time:  2050.43 ms
+reference time: 2051.08
+
+kernel execution time:  2002.9 ms
+reference new time: 2003.54
+
+kernel execution time:  260.701 ms
+TTM1: 261.277
+
+kernel execution time:  539.892 ms
+TTM2: 540.489
+
+kernel execution time:  69.5675 ms
+dense: 70.0315
+
+kernel execution time:  531.744 ms
+TTM after dense: 532.375
+/home/min/a/kadhitha/ispc-examples/data/tns/nell-2.tns
+A(i,j,m) = B(i,j,k) * C(k,l) * D(l,m)
+B1_dimension: 12092, B2_dimension: 9184, B3_dimension: 12092, vals: 76879419
+C1_dimension: 28818, C2_dimension: 32, vals: 922176
+D1_dimension: 32, D2_dimension: 64, vals: 2048
+
+
+kernel execution time:  46.1273 ms
+fused time: 50.9231
+
+reference impl time 
+
+kernel execution time:  2363.18 ms
+reference time: 2364.02
+
+kernel execution time:  2340.56 ms
+reference new time: 2341.2
+
+kernel execution time:  82.5312 ms
+TTM1: 83.1034
+
+kernel execution time:  8.62143 ms
+TTM2: 9.16734
+
+kernel execution time:  1.20538 ms
+dense: 1.48454
+
+kernel execution time:  181.488 ms
+TTM after dense: 181.827
+
+ttm-ttm execution
+
+-----------------------------------------
+
+file: /home/min/a/kadhitha/ispc-examples/data/tns/flickr-3d.tns
+----------------------------------------------------------------
+/home/min/a/kadhitha/ispc-examples/data/tns/flickr-3d.tns
+A(i,j,m) = B(i,j,k) * C(k,l) * D(l,m)
+B1_dimension: 319686, B2_dimension: 28153045, B3_dimension: 319686, vals: 112890310
+C1_dimension: 1607191, C2_dimension: 32, vals: 51430112
+D1_dimension: 32, D2_dimension: 64, vals: 2048
+
+
+kernel execution time:  874.724 ms
+fused time: 878.246
+
+reference impl time 
+
+kernel execution time:  2042.51 ms
+reference time: 2043.27
+
+kernel execution time:  46819.7 ms
+reference new time: 46820.8
+
+schedule 1
+
+kernel execution time:  260.841 ms
+TTM1: 261.378
+
+kernel execution time:  539.264 ms
+TTM2: 539.834
+
+schedule 2
+
+kernel execution time:  69.2965 ms
+dense: 69.7197
+
+kernel execution time:  532.774 ms
+TTM after dense: 535.64
+
+file: /home/min/a/kadhitha/ispc-examples/data/tns/nell-2.tns
+----------------------------------------------------------------
+/home/min/a/kadhitha/ispc-examples/data/tns/nell-2.tns
+A(i,j,m) = B(i,j,k) * C(k,l) * D(l,m)
+B1_dimension: 12092, B2_dimension: 9184, B3_dimension: 12092, vals: 76879419
+C1_dimension: 28818, C2_dimension: 32, vals: 922176
+D1_dimension: 32, D2_dimension: 64, vals: 2048
+
+
+kernel execution time:  51.3316 ms
+fused time: 55.9685
+
+reference impl time 
+
+kernel execution time:  2363.6 ms
+reference time: 2364.38
+
+kernel execution time:  31523.9 ms
+reference new time: 31525
+
+schedule 1
+
+kernel execution time:  84.4692 ms
+TTM1: 84.9774
+
+kernel execution time:  7.9451 ms
+TTM2: 8.49167
+
+schedule 2
+
+kernel execution time:  1.17918 ms
+dense: 1.49638
+
+ttm-ttm execution
+
+-----------------------------------------
+
+file: /home/min/a/kadhitha/ispc-examples/data/tns/flickr-3d.tns
+----------------------------------------------------------------
+/home/min/a/kadhitha/ispc-examples/data/tns/flickr-3d.tns
+A(i,j,m) = B(i,j,k) * C(k,l) * D(l,m)
+B1_dimension: 319686, B2_dimension: 28153045, B3_dimension: 319686, vals: 112890310
+C1_dimension: 1607191, C2_dimension: 32, vals: 51430112
+D1_dimension: 32, D2_dimension: 64, vals: 2048
+
+
+kernel execution time:  877.727 ms
+fused time: 881.892
+
+reference impl time 
+
+kernel execution time:  1998.47 ms
+reference time: 1999.14
+
+kernel execution time:  1818.14 ms
+reference new time: 1818.77
+
+schedule 1
+
+kernel execution time:  261.202 ms
+TTM1: 261.759
+
+kernel execution time:  539.615 ms
+TTM2: 540.183
+
+schedule 2
+
+kernel execution time:  69.7746 ms
+dense: 70.1943
+
+kernel execution time:  532.374 ms
+TTM after dense: 533.008
+
+file: /home/min/a/kadhitha/ispc-examples/data/tns/nell-2.tns
+----------------------------------------------------------------
+/home/min/a/kadhitha/ispc-examples/data/tns/nell-2.tns
+A(i,j,m) = B(i,j,k) * C(k,l) * D(l,m)
+B1_dimension: 12092, B2_dimension: 9184, B3_dimension: 12092, vals: 76879419
+C1_dimension: 28818, C2_dimension: 32, vals: 922176
+D1_dimension: 32, D2_dimension: 64, vals: 2048
+
+
+kernel execution time:  42.811 ms
+fused time: 47.6618
+
+reference impl time 
+
+kernel execution time:  2267.84 ms
+reference time: 2268.63
+
+kernel execution time:  1379.49 ms
+reference new time: 1380.15
+
+schedule 1
+
+kernel execution time:  81.6849 ms
+TTM1: 82.4365
+
+kernel execution time:  9.74645 ms
+TTM2: 10.2848
+
+schedule 2
+
+kernel execution time:  1.47367 ms
+dense: 1.78443
+
+kernel execution time:  208.263 ms
+TTM after dense: 210.169
+
+file: /home/min/a/kadhitha/ispc-examples/data/tns/nell-1.tns
+----------------------------------------------------------------
+/home/min/a/kadhitha/ispc-examples/data/tns/nell-1.tns
+A(i,j,m) = B(i,j,k) * C(k,l) * D(l,m)
+B1_dimension: 2902330, B2_dimension: 2143368, B3_dimension: 2902330, vals: 143599552
+C1_dimension: 25495389, C2_dimension: 32, vals: 815852448
+D1_dimension: 32, D2_dimension: 64, vals: 2048
+
+
+kernel execution time:  1299.91 ms
+fused time: 1303.65
+
+reference impl time 
+
+kernel execution time:  3494.78 ms
+reference time: 3497.66
+
+kernel execution time:  2383.79 ms
+reference new time: 2384.52
+
+schedule 1
+
+kernel execution time:  774.869 ms
+TTM1: 775.571
+
+kernel execution time:  1488.64 ms
+TTM2: 1489.78
+
+schedule 2
+
+kernel execution time:  1121.66 ms
+dense: 1122.11
+
+kernel execution time:  1581.94 ms
+TTM after dense: 1582.61
+
+file: /home/min/a/kadhitha/ispc-examples/data/tns/vast-2015-mc1-3d.tns
+----------------------------------------------------------------
+/home/min/a/kadhitha/ispc-examples/data/tns/vast-2015-mc1-3d.tns
+A(i,j,m) = B(i,j,k) * C(k,l) * D(l,m)
+B1_dimension: 165427, B2_dimension: 11374, B3_dimension: 165427, vals: 26021854
+C1_dimension: 2, C2_dimension: 32, vals: 64
+D1_dimension: 32, D2_dimension: 64, vals: 2048
+
+
+ttm-ttm execution
+
+-----------------------------------------
+
+file: /home/min/a/kadhitha/ispc-examples/data/tns/vast-2015-mc1-3d.tns
+----------------------------------------------------------------
+/home/min/a/kadhitha/ispc-examples/data/tns/vast-2015-mc1-3d.tns
+A(i,j,m) = B(i,j,k) * C(k,l) * D(l,m)
+B1_dimension: 165427, B2_dimension: 11374, B3_dimension: 165427, vals: 26021854
+C1_dimension: 2, C2_dimension: 32, vals: 64
+D1_dimension: 32, D2_dimension: 64, vals: 2048
+
+
+kernel execution time:  746.344 ms
+fused time: 749.212
+
+reference impl time 
+
+kernel execution time:  548.763 ms
+reference time: 549.493
+
+kernel execution time:  737.768 ms
+reference new time: 738.436
+
+schedule 1
+
+kernel execution time:  195.639 ms
+TTM1: 196.286
+
+kernel execution time:  493.569 ms
+TTM2: 494.15
+
+schedule 2
+
+kernel execution time:  0.052551 ms
+dense: 0.648739
+
+kernel execution time:  374.407 ms
+TTM after dense: 376.248
+
+file: /home/min/a/kadhitha/ispc-examples/data/tns/darpa1998.tns
+----------------------------------------------------------------
+/home/min/a/kadhitha/ispc-examples/data/tns/darpa1998.tns
+A(i,j,m) = B(i,j,k) * C(k,l) * D(l,m)
+B1_dimension: 22476, B2_dimension: 22476, B3_dimension: 22476, vals: 28421307
+C1_dimension: 23776223, C2_dimension: 32, vals: 760839136
+D1_dimension: 32, D2_dimension: 64, vals: 2048
+
+
+kernel execution time:  221.905 ms
+fused time: 222.964
+
+reference impl time 
+
+kernel execution time:  8826.57 ms
+reference time: 8827.82
+
+kernel execution time:  1435.28 ms
+reference new time: 1437.65
+
+schedule 1
+
+kernel execution time:  574.934 ms
+TTM1: 576.159
+
+kernel execution time:  4.42254 ms
+TTM2: 5.12181
+
+schedule 2
+
+kernel execution time:  1041.05 ms
+dense: 1041.36
+
+kernel execution time:  1247.06 ms
+TTM after dense: 1247.76
+
+ttm-ttm execution
+
+-----------------------------------------
+
+file: /home/min/a/kadhitha/ispc-examples/data/tns/nell-1.tns
+----------------------------------------------------------------
+/home/min/a/kadhitha/ispc-examples/data/tns/nell-1.tns
+A(i,j,m) = B(i,j,k) * C(k,l) * D(l,m)
+B1_dimension: 2902330, B2_dimension: 2143368, B3_dimension: 2902330, vals: 143599552
+C1_dimension: 25495389, C2_dimension: 32, vals: 815852448
+D1_dimension: 32, D2_dimension: 64, vals: 2048
+
+
+kernel execution time:  1312.2 ms
+fused time: 1315.79
+
+reference impl time 
+
+kernel execution time:  3512.84 ms
+reference time: 3514.54
+
+kernel execution time:  2381.97 ms
+reference new time: 2382.6
+
+schedule 1
+
+kernel execution time:  779.205 ms
+TTM1: 779.794
+
+kernel execution time:  366.382 ms
+TTM2: 367.081
+
+schedule 2
+
+kernel execution time:  1127.72 ms
+dense: 1128.25
+
+kernel execution time:  1579.85 ms
+TTM after dense: 1580.5
+
+ttm-ttm execution
+
+-----------------------------------------
+
+file: /home/min/a/kadhitha/ispc-examples/data/tns/nell-1.tns
+----------------------------------------------------------------
+/home/min/a/kadhitha/ispc-examples/data/tns/nell-1.tns
+A(i,j,m) = B(i,j,k) * C(k,l) * D(l,m)
+B1_dimension: 2902330, B2_dimension: 2143368, B3_dimension: 2902330, vals: 143599552
+C1_dimension: 25495389, C2_dimension: 32, vals: 815852448
+D1_dimension: 32, D2_dimension: 64, vals: 2048
+
+
+kernel execution time:  1326.91 ms
+fused time: 1331.56
+
+reference impl time 
+
+kernel execution time:  3535.03 ms
+reference time: 3536.38
+
+kernel execution time:  2387.24 ms
+reference new time: 2387.99
+
+schedule 1
+
+kernel execution time:  780.495 ms
+TTM1: 781.09
+
+kernel execution time:  369.704 ms
+TTM2: 370.292
+
+schedule 2
+
+kernel execution time:  1119.23 ms
+dense: 1119.7
+
+kernel execution time:  1579.78 ms
+TTM after dense: 1580.54
+
+ttm-ttm execution
+
+-----------------------------------------
+
+file: /home/min/a/kadhitha/ispc-examples/data/tns/vast-2015-mc1-3d.tns
+----------------------------------------------------------------
+/home/min/a/kadhitha/ispc-examples/data/tns/vast-2015-mc1-3d.tns
+A(i,j,m) = B(i,j,k) * C(k,l) * D(l,m)
+B1_dimension: 165427, B2_dimension: 11374, B3_dimension: 165427, vals: 26021854
+C1_dimension: 2, C2_dimension: 64, vals: 128
+D1_dimension: 64, D2_dimension: 128, vals: 8192
+
+
+ttm-ttm execution
+
+-----------------------------------------
+
+file: /home/min/a/kadhitha/ispc-examples/data/tns/vast-2015-mc1-3d.tns
+----------------------------------------------------------------
+/home/min/a/kadhitha/ispc-examples/data/tns/vast-2015-mc1-3d.tns
+A(i,j,m) = B(i,j,k) * C(k,l) * D(l,m)
+B1_dimension: 165427, B2_dimension: 11374, B3_dimension: 165427, vals: 26021854
+C1_dimension: 2, C2_dimension: 32, vals: 64
+D1_dimension: 32, D2_dimension: 64, vals: 2048
+
+
+kernel execution time:  746.399 ms
+fused time: 747.454
+
+reference impl time 
+
+kernel execution time:  549.908 ms
+reference time: 550.683
+
+kernel execution time:  731.657 ms
+reference new time: 732.322
+
+schedule 1
+
+kernel execution time:  194.605 ms
+TTM1: 195.252
+
+kernel execution time:  491.591 ms
+TTM2: 492.148
+
+schedule 2
+
+kernel execution time:  0.049841 ms
+dense: 0.820181
+
+kernel execution time:  372.064 ms
+TTM after dense: 372.449
+
+ttm-ttm execution
+
+-----------------------------------------
+
+file: /home/min/a/kadhitha/ispc-examples/data/tns/vast-2015-mc1-3d.tns
+----------------------------------------------------------------
+/home/min/a/kadhitha/ispc-examples/data/tns/vast-2015-mc1-3d.tns
+A(i,j,m) = B(i,j,k) * C(k,l) * D(l,m)
+B1_dimension: 165427, B2_dimension: 11374, B3_dimension: 165427, vals: 26021854
+C1_dimension: 2, C2_dimension: 32, vals: 64
+D1_dimension: 32, D2_dimension: 64, vals: 2048
+
+
+kernel execution time:  746.043 ms
+fused time: 747.23
+
+reference impl time 
+
+kernel execution time:  561.015 ms
+reference time: 561.669
+
+kernel execution time:  737.535 ms
+reference new time: 738.158
+
+schedule 1
+
+kernel execution time:  194.638 ms
+TTM1: 195.169
+
+kernel execution time:  495.355 ms
+TTM2: 495.903
+
+schedule 2
+
+kernel execution time:  0.148292 ms
+dense: 0.534998
+
+kernel execution time:  374.231 ms
+TTM after dense: 374.667
+
+ttm-ttm execution
+
+-----------------------------------------
+
+file: /home/min/a/kadhitha/ispc-examples/data/tns/vast-2015-mc1-3d.tns
+----------------------------------------------------------------
+/home/min/a/kadhitha/ispc-examples/data/tns/vast-2015-mc1-3d.tns
+A(i,j,m) = B(i,j,k) * C(k,l) * D(l,m)
+B1_dimension: 165427, B2_dimension: 11374, B3_dimension: 165427, vals: 26021854
+C1_dimension: 2, C2_dimension: 32, vals: 64
+D1_dimension: 32, D2_dimension: 64, vals: 2048
+
+
+kernel execution time:  745.881 ms
+fused time: 746.992
+
+reference impl time 
+
+kernel execution time:  551.705 ms
+reference time: 552.359
+
+kernel execution time:  736.019 ms
+reference new time: 736.611
+
+schedule 1
+
+kernel execution time:  194.777 ms
+TTM1: 195.33
+
+kernel execution time:  491.151 ms
+TTM2: 491.732
+
+schedule 2
+
+kernel execution time:  0.144522 ms
+dense: 0.528597
+
+kernel execution time:  374.363 ms
+TTM after dense: 374.752
+
+ttm-ttm execution
+
+-----------------------------------------
+
+file: /home/min/a/kadhitha/ispc-examples/data/tns/vast-2015-mc1-3d.tns
+----------------------------------------------------------------
+
+ttm-ttm execution
+
+----------------------------------------- Europa
+
+file: /home/min/a/kadhitha/workspace/my_taco/tns/darpa1998.tns
+----------------------------------------------------------------
+/home/min/a/kadhitha/workspace/my_taco/tns/darpa1998.tns
+A(i,j,m) = B(i,j,k) * C(k,l) * D(l,m)
+B1_dimension: 22476, B2_dimension: 22476, B3_dimension: 22476, vals: 28421307
+C1_dimension: 23776223, C2_dimension: 32, vals: 760839136
+D1_dimension: 32, D2_dimension: 64, vals: 2048
+
+
+kernel execution time:  2299.49 ms
+fused time: 2301.59
+
+reference impl time 
+
+kernel execution time:  78844.2 ms
+reference time: 78846.6
+
+kernel execution time:  34427 ms
+reference new time: 34429.3
+
+schedule 1
+
+kernel execution time:  6968.36 ms
+TTM1: 6970.4
+
+kernel execution time:  121.497 ms
+TTM2: 123.127
+
+schedule 2
+
+kernel execution time:  64026.1 ms
+dense: 64028
+
+kernel execution time:  15531.3 ms
+TTM after dense: 15533.4
+
+ttm-ttm execution
+
+-----------------------------------------
+
+file: /home/min/a/kadhitha/ispc-examples/data/tns/vast-2015-mc1-3d.tns
+----------------------------------------------------------------
+
+ttm-ttm execution
+
+-----------------------------------------
+
+file: /home/min/a/kadhitha/workspace/my_taco/tns/vast-2015-mc1-3d.tns
+----------------------------------------------------------------
+/home/min/a/kadhitha/workspace/my_taco/tns/vast-2015-mc1-3d.tns
+A(i,j,m) = B(i,j,k) * C(k,l) * D(l,m)
+B1_dimension: 165427, B2_dimension: 11374, B3_dimension: 165427, vals: 26021854
+C1_dimension: 2, C2_dimension: 32, vals: 64
+D1_dimension: 32, D2_dimension: 64, vals: 2048
+
+
+kernel execution time:  40017.6 ms
+fused time: 40019.4
+
+reference impl time 
+
+kernel execution time:  50710.4 ms
+reference time: 50712.8
+
+kernel execution time:  37978.8 ms
+reference new time: 37980.6
+
+schedule 1
+
+kernel execution time:  3848.85 ms
+TTM1: 3850.48
+
+ttm-ttm execution
+
+-----------------------------------------
+
+file: /home/min/a/kadhitha/workspace/my_taco/tns/vast-2015-mc1-3d.tns
+----------------------------------------------------------------
+/home/min/a/kadhitha/workspace/my_taco/tns/vast-2015-mc1-3d.tns
+A(i,j,m) = B(i,j,k) * C(k,l) * D(l,m)
+B1_dimension: 165427, B2_dimension: 11374, B3_dimension: 165427, vals: 26021854
+C1_dimension: 2, C2_dimension: 32, vals: 64
+D1_dimension: 32, D2_dimension: 64, vals: 2048
+
+
+kernel execution time:  40277.5 ms
+fused time: 40279.9
+
+reference impl time 
+
+kernel execution time:  50449.4 ms
+reference time: 50452
+
+kernel execution time:  37881.2 ms
+reference new time: 37883.4
+
+schedule 1
+
+kernel execution time:  3987.96 ms
+TTM1: 3990.09
+
+kernel execution time:  40935.3 ms
+TTM2: 40937.4
+
+schedule 2
+
+kernel execution time:  0.098195 ms
+dense: 1.2874
+
+kernel execution time:  12037.9 ms
+TTM after dense: 12039.5
+
+ttm-ttm execution
+
+-----------------------------------------
+
+file: /home/min/a/kadhitha/workspace/my_taco/tns/vast-2015-mc1-3d.tns
+----------------------------------------------------------------
+/home/min/a/kadhitha/workspace/my_taco/tns/vast-2015-mc1-3d.tns
+A(i,j,m) = B(i,j,k) * C(k,l) * D(l,m)
+B1_dimension: 165427, B2_dimension: 11374, B3_dimension: 2, vals: 26021854
+C1_dimension: 2, C2_dimension: 32, vals: 64
+D1_dimension: 32, D2_dimension: 64, vals: 2048
+
+
+kernel execution time:  36918.5 ms
+fused time: 36920.9
+
+reference impl time 
+
+kernel execution time:  47892.3 ms
+reference time: 47894.8
+
+kernel execution time:  37901.4 ms
+reference new time: 37903.5
+
+schedule 1
+
+kernel execution time:  3801.16 ms
+TTM1: 3803.21
+
+kernel execution time:  43488.6 ms
+TTM2: 43490.6
+
+schedule 2
+
+kernel execution time:  0.060642 ms
+dense: 1.08588
+
+kernel execution time:  15190.9 ms
+TTM after dense: 15192.3
+
+ttm-ttm execution
+
+-----------------------------------------
+
+file: /home/min/a/kadhitha/workspace/my_taco/tns/vast-2015-mc1-3d.tns
+
+ttm-ttm execution
+
+-----------------------------------------
+
+file: /home/min/a/kadhitha/workspace/my_taco/tns/vast-2015-mc1-3d.tns
+----------------------------------------------------------------
+/home/min/a/kadhitha/workspace/my_taco/tns/vast-2015-mc1-3d.tns
+A(i,j,m) = B(i,j,k) * C(k,l) * D(l,m)
+B1_dimension: 165427, B2_dimension: 11374, B3_dimension: 2, vals: 26021854
+C1_dimension: 2, C2_dimension: 32, vals: 64
+D1_dimension: 32, D2_dimension: 64, vals: 2048
+
+
+kernel execution time:  35130 ms
+fused time: 35133.9
+
+reference impl time 
+
+kernel execution time:  47634.1 ms
+reference time: 47636.7
+
+kernel execution time:  37616.7 ms
+reference new time: 37618.9
+
+schedule 1
+
+kernel execution time:  2930.06 ms
+TTM1: 2931.74
+
+kernel execution time:  40710.7 ms
+TTM2: 40713
+
+schedule 2
+
+kernel execution time:  0.07506 ms
+dense: 1.28501
+
+kernel execution time:  12393.3 ms
+TTM after dense: 12394.9
+
+ttm-ttm execution
+
+-----------------------------------------
+
+file: /home/min/a/kadhitha/workspace/my_taco/tns/vast-2015-mc1-3d.tns
+----------------------------------------------------------------
+/home/min/a/kadhitha/workspace/my_taco/tns/vast-2015-mc1-3d.tns
+A(i,j,m) = B(i,j,k) * C(k,l) * D(l,m)
+B1_dimension: 165427, B2_dimension: 11374, B3_dimension: 2, vals: 26021854
+C1_dimension: 2, C2_dimension: 32, vals: 64
+D1_dimension: 32, D2_dimension: 64, vals: 2048
+
+
+kernel execution time:  12528.5 ms
+fused time: 12529.7
+
+reference impl time 
+
+kernel execution time:  23576.9 ms
+reference time: 23578.1
+
+kernel execution time:  16282.8 ms
+reference new time: 16283.8
+
+schedule 1
+
+kernel execution time:  1332.64 ms
+TTM1: 1333.18
+
+kernel execution time:  17503.1 ms
+TTM2: 17504.2
+
+schedule 2
+
+kernel execution time:  0.025131 ms
+dense: 0.438566
+
+kernel execution time:  3369.58 ms
+TTM after dense: 3370.48
+
+ttm-ttm execution
+
+-----------------------------------------
+
+file: /home/min/a/kadhitha/workspace/my_taco/tns/vast-2015-mc1-3d.tns
+----------------------------------------------------------------
+/home/min/a/kadhitha/workspace/my_taco/tns/vast-2015-mc1-3d.tns
+A(i,j,m) = B(i,j,k) * C(k,l) * D(l,m)
+B1_dimension: 165427, B2_dimension: 11374, B3_dimension: 2, vals: 26021854
+C1_dimension: 2, C2_dimension: 32, vals: 64
+D1_dimension: 32, D2_dimension: 64, vals: 2048
+
+
+kernel execution time:  12698.5 ms
+fused time: 12699.7
+
+reference impl time 
+
+kernel execution time:  23669.6 ms
+reference time: 23670.8
+
+kernel execution time:  16390.1 ms
+reference new time: 16391.1
+
+schedule 1
+
+kernel execution time:  1343.9 ms
+TTM1: 1344.42
+
+kernel execution time:  17641.6 ms
+TTM2: 17642.6
+
+schedule 2
+
+kernel execution time:  0.02212 ms
+dense: 0.397656
+
+kernel execution time:  3411.14 ms
+TTM after dense: 3412.04
+
+ttm-ttm execution
+
+-----------------------------------------
+
+file: /home/min/a/kadhitha/ispc-examples/data/tns/delicious-3d.tns
+
+ttm-ttm execution
+
+-----------------------------------------
+
+file: /home/min/a/kadhitha/workspace/my_taco/tns/vast-2015-mc1-3d.tns
+
+ttm-ttm execution
+
+-----------------------------------------
+
+file: /home/min/a/kadhitha/workspace/my_taco/tns/vast-2015-mc1-3d.tns
+----------------------------------------------------------------
+/home/min/a/kadhitha/workspace/my_taco/tns/vast-2015-mc1-3d.tns
+A(i,j,m) = B(i,j,k) * C(k,l) * D(l,m)
+B1_dimension: 165427, B2_dimension: 11374, B3_dimension: 2, vals: 26021854
+C1_dimension: 2, C2_dimension: 32, vals: 64
+D1_dimension: 32, D2_dimension: 64, vals: 2048
+
+
+kernel execution time:  844.466 ms
+fused time: 845.618
+
+reference impl time 
+
+kernel execution time:  814.964 ms
+reference time: 815.676
+
+kernel execution time:  918.472 ms
+reference new time: 919.142
+
+schedule 1
+
+kernel execution time:  200.521 ms
+TTM1: 201.112
+
+kernel execution time:  678.038 ms
+TTM2: 678.647
+
+schedule 2
+
+kernel execution time:  0.07066 ms
+dense: 0.524547
+
+kernel execution time:  394.81 ms
+TTM after dense: 395.266
+
+ttm-ttm execution
+
+-----------------------------------------
+
+file: /home/min/a/kadhitha/workspace/my_taco/tns/vast-2015-mc1-3d.tns
+----------------------------------------------------------------
+/home/min/a/kadhitha/workspace/my_taco/tns/vast-2015-mc1-3d.tns
+A(i,j,m) = B(i,j,k) * C(k,l) * D(l,m)
+B1_dimension: 165427, B2_dimension: 11374, B3_dimension: 2, vals: 26021854
+C1_dimension: 2, C2_dimension: 32, vals: 64
+D1_dimension: 32, D2_dimension: 64, vals: 2048
+
+
+kernel execution time:  2900.7 ms
+fused time: 2903.25
+
+reference impl time 
+
+kernel execution time:  2746.32 ms
+reference time: 2748.86
+
+kernel execution time:  2812.87 ms
+reference new time: 2815.19
+
+schedule 1
+
+kernel execution time:  2429.09 ms
+TTM1: 2431.17
+
+kernel execution time:  2451.88 ms
+TTM2: 2454.06
+
+schedule 2
+
+kernel execution time:  1.43373 ms
+dense: 2.85191
+
+kernel execution time:  1651.7 ms
+TTM after dense: 1652.91
+
+ttm-ttm execution
+
+-----------------------------------------
+
+file: /home/min/a/kadhitha/workspace/my_taco/tns/vast-2015-mc1-3d.tns
+----------------------------------------------------------------
+/home/min/a/kadhitha/workspace/my_taco/tns/vast-2015-mc1-3d.tns
+A(i,j,m) = B(i,j,k) * C(k,l) * D(l,m)
+B1_dimension: 165427, B2_dimension: 11374, B3_dimension: 2, vals: 26021854
+C1_dimension: 2, C2_dimension: 32, vals: 64
+D1_dimension: 32, D2_dimension: 64, vals: 2048
+
+
+kernel execution time:  3539.09 ms
+fused time: 3541.54
+
+reference impl time 
+
+kernel execution time:  2968.95 ms
+reference time: 2972.61
+
+kernel execution time:  3354.98 ms
+reference new time: 3357.43
+
+schedule 1
+
+kernel execution time:  2697.68 ms
+TTM1: 2699.71
+
+kernel execution time:  2804.11 ms
+TTM2: 2806.99
+
+schedule 2
+
+kernel execution time:  6.38211 ms
+dense: 8.06652
+
+kernel execution time:  1822.02 ms
+TTM after dense: 1823.06
+
+ttm-ttm execution
+
+-----------------------------------------
+
+file: /home/min/a/kadhitha/workspace/my_taco/tns/vast-2015-mc1-3d.tns
+
+ttm-ttm execution
+
+-----------------------------------------
+
+file: /home/min/a/kadhitha/workspace/my_taco/tns/vast-2015-mc1-3d.tns
+----------------------------------------------------------------
+/home/min/a/kadhitha/workspace/my_taco/tns/vast-2015-mc1-3d.tns
+A(i,j,m) = B(i,j,k) * C(k,l) * D(l,m)
+B1_dimension: 165427, B2_dimension: 11374, B3_dimension: 2, vals: 26021854
+C1_dimension: 2, C2_dimension: 32, vals: 64
+D1_dimension: 32, D2_dimension: 64, vals: 2048
+
+
+kernel execution time:  3608.92 ms
+fused time: 3611.17
+
+reference impl time 
+
+kernel execution time:  3026.81 ms
+reference time: 3029.09
+
+kernel execution time:  3189.34 ms
+reference new time: 3192.69
+
+schedule 1
+
+kernel execution time:  2659.86 ms
+TTM1: 2661.48
+
+kernel execution time:  2749.47 ms
+TTM2: 2750.96
+
+schedule 2
+
+kernel execution time:  5.54375 ms
+dense: 6.71077
+
+kernel execution time:  1799.52 ms
+TTM after dense: 1800.4
+
+ttm-ttm execution
+
+-----------------------------------------
+
+file: /home/min/a/kadhitha/workspace/my_taco/tns/vast-2015-mc1-3d.tns
+----------------------------------------------------------------
+/home/min/a/kadhitha/workspace/my_taco/tns/vast-2015-mc1-3d.tns
+A(i,j,m) = B(i,j,k) * C(k,l) * D(l,m)
+B1_dimension: 165427, B2_dimension: 11374, B3_dimension: 2, vals: 26021854
+C1_dimension: 2, C2_dimension: 32, vals: 64
+D1_dimension: 32, D2_dimension: 64, vals: 2048
+
+
+kernel execution time:  3553.08 ms
+fused time: 3555.93
+
+reference impl time 
+
+kernel execution time:  2962.14 ms
+reference time: 2964.25
+
+kernel execution time:  3306.95 ms
+reference new time: 3309.38
+
+schedule 1
+
+kernel execution time:  2723.22 ms
+TTM1: 2724.83
+
+kernel execution time:  2581.33 ms
+TTM2: 2583.4
+
+schedule 2
+
+kernel execution time:  0.772961 ms
+dense: 2.02166
+
+kernel execution time:  1731.42 ms
+TTM after dense: 1732.48
+
+ttm-ttm execution
+
+-----------------------------------------
+
+file: /home/min/a/kadhitha/workspace/my_taco/tns/vast-2015-mc1-3d.tns
+----------------------------------------------------------------
+/home/min/a/kadhitha/workspace/my_taco/tns/vast-2015-mc1-3d.tns
+A(i,j,m) = B(i,j,k) * C(k,l) * D(l,m)
+B1_dimension: 165427, B2_dimension: 11374, B3_dimension: 2, vals: 26021854
+C1_dimension: 2, C2_dimension: 32, vals: 64
+D1_dimension: 32, D2_dimension: 64, vals: 2048
+
+
+kernel execution time:  3577.13 ms
+fused time: 3580.97
+
+reference impl time 
+
+kernel execution time:  3010.77 ms
+reference time: 3013.04
+
+kernel execution time:  3364.45 ms
+reference new time: 3366.58
+
+schedule 1
+
+kernel execution time:  2740.85 ms
+TTM1: 2742.84
+
+kernel execution time:  2788.11 ms
+TTM2: 2790.79
+
+schedule 2
+
+kernel execution time:  2.57712 ms
+dense: 4.23057
+
+kernel execution time:  1934.52 ms
+TTM after dense: 1935.9
+
+ttm-ttm execution
+
+-----------------------------------------
+
+file: /home/min/a/kadhitha/workspace/my_taco/tns/vast-2015-mc1-3d.tns
+----------------------------------------------------------------
+/home/min/a/kadhitha/workspace/my_taco/tns/vast-2015-mc1-3d.tns
+A(i,j,m) = B(i,j,k) * C(k,l) * D(l,m)
+B1_dimension: 165427, B2_dimension: 11374, B3_dimension: 2, vals: 26021854
+C1_dimension: 2, C2_dimension: 32, vals: 64
+D1_dimension: 32, D2_dimension: 64, vals: 2048
+
+
+kernel execution time:  3424.23 ms
+fused time: 3426.81
+
+reference impl time 
+
+kernel execution time:  3023.35 ms
+reference time: 3025.97
+
+kernel execution time:  3086.35 ms
+reference new time: 3089.41
+
+schedule 1
+
+kernel execution time:  2913.43 ms
+TTM1: 2915.13
+
+kernel execution time:  2623.7 ms
+TTM2: 2625.65
+
+schedule 2
+
+kernel execution time:  5.28416 ms
+dense: 6.61329
+
+kernel execution time:  1971.48 ms
+TTM after dense: 1972.7
+
+ttm-ttm execution
+
+-----------------------------------------
+
+file: /home/min/a/kadhitha/workspace/my_taco/tns/vast-2015-mc1-3d.tns
+----------------------------------------------------------------
+/home/min/a/kadhitha/workspace/my_taco/tns/vast-2015-mc1-3d.tns
+A(i,j,m) = B(i,j,k) * C(k,l) * D(l,m)
+B1_dimension: 165427, B2_dimension: 11374, B3_dimension: 2, vals: 26021854
+C1_dimension: 2, C2_dimension: 32, vals: 64
+D1_dimension: 32, D2_dimension: 64, vals: 2048
+
+
+kernel execution time:  3693.12 ms
+fused time: 3695.79
+
+reference impl time 
+
+kernel execution time:  2900.73 ms
+reference time: 2902.96
+
+kernel execution time:  3138.83 ms
+reference new time: 3141.16
+
+schedule 1
+
+kernel execution time:  2673.94 ms
+TTM1: 2675.57
+
+kernel execution time:  2703.37 ms
+TTM2: 2705.31
+
+schedule 2
+
+kernel execution time:  5.31585 ms
+dense: 7.12051
+
+kernel execution time:  1724.31 ms
+TTM after dense: 1726.36
+
+ttm-ttm execution
+
+-----------------------------------------
+
+file: /home/min/a/kadhitha/workspace/my_taco/tns/vast-2015-mc1-3d.tns
+----------------------------------------------------------------
+/home/min/a/kadhitha/workspace/my_taco/tns/vast-2015-mc1-3d.tns
+A(i,j,m) = B(i,j,k) * C(k,l) * D(l,m)
+B1_dimension: 165427, B2_dimension: 11374, B3_dimension: 2, vals: 26021854
+C1_dimension: 2, C2_dimension: 32, vals: 64
+D1_dimension: 32, D2_dimension: 64, vals: 2048
+
+
+kernel execution time:  3572.56 ms
+fused time: 3575.03
+
+reference impl time 
+
+kernel execution time:  2939.46 ms
+reference time: 2941.84
+
+kernel execution time:  3182.38 ms
+reference new time: 3184.81
+
+schedule 1
+
+kernel execution time:  2731.33 ms
+TTM1: 2733.2
+
+kernel execution time:  2782.07 ms
+TTM2: 2784.32
+
+schedule 2
+
+kernel execution time:  5.52055 ms
+dense: 7.06503
+
+kernel execution time:  1729.87 ms
+TTM after dense: 1730.87
+
+ttm-ttm execution
+
+-----------------------------------------
+
+file: /home/min/a/kadhitha/workspace/my_taco/tns/darpa1998.tns
+
+ttm-ttm execution
+
+-----------------------------------------
+
+file: /home/min/a/kadhitha/workspace/my_taco/tns/darpa1998.tns
+----------------------------------------------------------------
+/home/min/a/kadhitha/workspace/my_taco/tns/darpa1998.tns
+A(i,j,m) = B(i,j,k) * C(k,l) * D(l,m)
+B1_dimension: 22476, B2_dimension: 22476, B3_dimension: 23776223, vals: 28421307
+C1_dimension: 23776223, C2_dimension: 32, vals: 760839136
+D1_dimension: 32, D2_dimension: 64, vals: 2048
+
+
+kernel execution time:  1404.79 ms
+fused time: 1406.83
+
+reference impl time 
+
+kernel execution time:  28471.3 ms
+reference time: 28474.9
+
+kernel execution time:  5689.54 ms
+reference new time: 5692.1
+
+schedule 1
+
+kernel execution time:  3526.34 ms
+TTM1: 3528.66
+
+kernel execution time:  21.5542 ms
+TTM2: 23.6182
+
+schedule 2
+
+kernel execution time:  6069.99 ms
+dense: 6071.91
+
+kernel execution time:  6163.35 ms
+TTM after dense: 6165.73
+
+ttm-ttm execution
+
+-----------------------------------------
+
+file: /home/min/a/kadhitha/workspace/my_taco/tns/darpa1998.tns
+----------------------------------------------------------------
+/home/min/a/kadhitha/workspace/my_taco/tns/darpa1998.tns
+A(i,j,m) = B(i,j,k) * C(k,l) * D(l,m)
+B1_dimension: 22476, B2_dimension: 22476, B3_dimension: 23776223, vals: 28421307
+C1_dimension: 23776223, C2_dimension: 32, vals: 760839136
+D1_dimension: 32, D2_dimension: 64, vals: 2048
+
+
+kernel execution time:  1390.55 ms
+fused time: 1392.48
+
+reference impl time 
+
+kernel execution time:  30840.6 ms
+reference time: 30843.4
+
+kernel execution time:  5638.37 ms
+reference new time: 5641.01
+
+schedule 1
+
+kernel execution time:  3642.19 ms
+TTM1: 3644.13
+
+kernel execution time:  24.3447 ms
+TTM2: 25.6449
+
+schedule 2
+
+kernel execution time:  6027.41 ms
+dense: 6029.82
+
+kernel execution time:  6494.21 ms
+TTM after dense: 6497.33
+
+ttm-ttm execution
+
+-----------------------------------------
+
+file: /home/min/a/kadhitha/workspace/my_taco/tns/vast-2015-mc1-3d.tns
+----------------------------------------------------------------
+/home/min/a/kadhitha/workspace/my_taco/tns/vast-2015-mc1-3d.tns
+A(i,j,m) = B(i,j,k) * C(k,l) * D(l,m)
+B1_dimension: 165427, B2_dimension: 11374, B3_dimension: 2, vals: 26021854
+C1_dimension: 2, C2_dimension: 32, vals: 64
+D1_dimension: 32, D2_dimension: 64, vals: 2048
+
+
+kernel execution time:  3727.32 ms
+fused time: 3729.78
+
+reference impl time 
+
+kernel execution time:  2996.48 ms
+reference time: 2999.42
+
+kernel execution time:  3216.53 ms
+reference new time: 3218.79
+
+schedule 1
+
+kernel execution time:  2902.94 ms
+TTM1: 2904.86
+
+kernel execution time:  2722.22 ms
+TTM2: 2724.59
+
+schedule 2
+
+kernel execution time:  5.8157 ms
+dense: 7.48208
+
+kernel execution time:  1725.24 ms
+TTM after dense: 1726.69

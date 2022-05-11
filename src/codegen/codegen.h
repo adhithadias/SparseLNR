@@ -16,9 +16,13 @@ public:
   enum CodeGenType { C, CUDA };
 
   CodeGen(std::ostream& stream, CodeGenType type) : IRPrinter(stream), codeGenType(type) {};
-  CodeGen(std::ostream& stream, bool color, bool simplify, CodeGenType type) : IRPrinter(stream, color, simplify), codeGenType(type) {};
+  CodeGen(std::ostream& stream, bool color, bool simplify, CodeGenType type) 
+    : IRPrinter(stream, color, simplify), codeGenType(type) {};
+  CodeGen(std::ostream& stream, std::ostream& stream2, bool color, bool simplify, CodeGenType type) 
+    : IRPrinter(stream, stream2, color, simplify), codeGenType(type) {};
   /// Initialize the default code generator
   static std::shared_ptr<CodeGen> init_default(std::ostream &dest, OutputKind outputKind);
+  static std::shared_ptr<CodeGen> init_default(std::ostream &dest, std::ostream &dest2, OutputKind outputKind);
 
   /// Compile a lowered function
   virtual void compile(Stmt stmt, bool isFirst=false) =0;
@@ -26,6 +30,9 @@ public:
 protected:
   static bool checkForAlloc(const Function *func);
   static int countYields(const Function *func);
+  void getSortedProps(std::map<Expr, std::string, ExprCompare> &varMap,
+              std::vector<const GetProperty*> &sortedProps, std::vector<Expr> &inputs,
+              std::vector<Expr> &outputs);
 
   static std::string printCType(Datatype type, bool is_ptr);
   static std::string printCUDAType(Datatype type, bool is_ptr);
@@ -52,6 +59,10 @@ protected:
   std::string printFuncName(const Function *func, 
           std::map<Expr, std::string, ExprCompare> inputMap={}, 
           std::map<Expr, std::string, ExprCompare> outputMap={});
+  
+  std::string printTensorProperty(std::string varname, const GetProperty* op, bool is_ptr);
+  std::string getUnpackedTensorArgument(std::string varname, const GetProperty* op,
+                              bool is_output_prop); 
 
   void resetUniqueNameCounters();
   std::string genUniqueName(std::string name);
@@ -61,9 +72,8 @@ protected:
 private:
   virtual std::string restrictKeyword() const { return ""; }
 
-  std::string printTensorProperty(std::string varname, const GetProperty* op, bool is_ptr);
   std::string unpackTensorProperty(std::string varname, const GetProperty* op,
-                              bool is_output_prop);
+                              bool is_output_prop); 
   std::string packTensorProperty(std::string varname, Expr tnsr, TensorProperty property,
                             int mode, int index);
   std::string pointTensorProperty(std::string varname);

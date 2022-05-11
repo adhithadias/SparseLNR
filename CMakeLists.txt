@@ -10,11 +10,13 @@ project(taco
   LANGUAGES C CXX
 )
 option(CUDA "Build for NVIDIA GPU (CUDA must be preinstalled)" OFF)
+option(ISPC "Build for Intel ISPC Compiler (ISPC Compiler must be preinstalled)" OFF)
 option(PYTHON "Build TACO for python environment" OFF)
-option(OPENMP "Build with OpenMP execution support" OFF)
+option(OPENMP "Build with OpenMP execution support" ON)
 option(COVERAGE "Build with code coverage analysis" OFF)
 set(TACO_FEATURE_CUDA 0)
-set(TACO_FEATURE_OPENMP 0)
+set(TACO_FEATURE_ISPC 0)
+set(TACO_FEATURE_OPENMP 1)
 set(TACO_FEATURE_PYTHON 0)
 if(CUDA)
   message("-- Searching for CUDA Installation")
@@ -22,6 +24,11 @@ if(CUDA)
   add_definitions(-DCUDA_BUILT)
   set(TACO_FEATURE_CUDA 1)
 endif(CUDA)
+if(ISPC)
+  message("-- Searching for ISPC Installation")
+  add_definitions(-DISPC_BUILT)
+  set(TACO_FEATURE_ISPC 1)
+endif(ISPC) 
 if(OPENMP)
   message("-- Will use OpenMP for parallel execution")
   add_definitions(-DUSE_OPENMP)
@@ -88,6 +95,39 @@ if(OPENMP)
   set(C_CXX_FLAGS "-fopenmp ${C_CXX_FLAGS}")
 endif(OPENMP)
 
+set(PAPI_DIR "/home/min/a/kadhitha/workspace/my_taco/papi/src/install/")
+
+find_path(PAPI_DIR
+    NAMES include/papi.h
+)
+
+find_library(PAPI_LIBRARIES
+    # Pick the static library first for easier run-time linking.
+    NAMES libpapi.a papi
+    HINTS ${PAPI_DIR}/lib ${HILTIDEPS}/lib
+)
+
+find_path(PAPI_INCLUDE_DIRS
+    NAMES papi.h
+    HINTS ${PAPI_DIR}/include ${HILTIDEPS}/include
+)
+
+include(FindPackageHandleStandardArgs)
+find_package_handle_standard_args(PAPI DEFAULT_MSG
+    PAPI_LIBRARIES
+    PAPI_INCLUDE_DIRS
+)
+
+mark_as_advanced(
+    PAPI_PREFIX_DIRS
+    PAPI_LIBRARIES
+    PAPI_INCLUDE_DIRS
+)
+
+include_directories(${PAPI_INCLUDE_DIRS})
+
+# project (ValgrindExample)
+
 if(COVERAGE)
   find_program(PATH_TO_GCOVR gcovr REQUIRED)
   # add coverage tooling to build flags
@@ -97,7 +137,8 @@ if(COVERAGE)
   message("-- Code coverage analysis (gcovr) enabled")
 endif(COVERAGE)
 
-set(C_CXX_FLAGS "${C_CXX_FLAGS}")
+set(C_CXX_FLAGS "${C_CXX_FLAGS} -I/${PAPI_DIR}/include -L/${PAPI_DIR}/lib")
+# set(C_CXX_FLAGS "${C_CXX_FLAGS}")
 set(CMAKE_C_FLAGS "${C_CXX_FLAGS}")
 set(CMAKE_CXX_FLAGS "${C_CXX_FLAGS} -std=c++14")
 
@@ -110,6 +151,9 @@ set(TACO_INCLUDE_DIR ${TACO_PROJECT_DIR}/include)
 
 enable_testing()
 include_directories(${TACO_INCLUDE_DIR})
+# include_directories("/home/min/a/kadhitha/workspace/my_taco/valgrind")
+# project (ValgrindExample)
+# include (CTest)
 
 set(TACO_LIBRARY_DIR ${CMAKE_LIBRARY_OUTPUT_DIRECTORY})
 

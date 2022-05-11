@@ -1,0 +1,1471 @@
+
+sddmm-spmm-gemm execution
+
+-----------------------------------------
+/home/min/a/kadhitha/ispc-examples/data/suitesparse/bcsstk17/bcsstk17.mtx
+ref(i,m)=B(i,j)*C(i,k)*D(j,k)*F(j,l)*G(l,m);
+B1_dimension: 10974, B2_dimension: 10974, vals: 428650
+C1_dimension: 10974, C2_dimension: 64, vals: 702336
+D1_dimension: 10974, D2_dimension: 64, vals: 702336
+E1_dimension: 10974, E2_dimension: 64, vals: 702336
+G1_dimension: 10974, G2_dimension: 64, vals: 4096
+
+
+kernel execution time:  2.51139 ms
+fused time: 3.49403
+
+kernel execution time:  3.80634 ms
+sddmm time: 4.13132
+
+kernel execution time:  0.75853 ms
+sddmm ryan time: 1.07946
+
+kernel execution time:  0.968473 ms
+spmm ryan time: 1.2051
+
+kernel execution time:  1.39879 ms
+gemm time: 1.6602
+
+kernel execution time:  1070.79 ms
+taco reference time: 1071.2
+
+sddmm-spmm-gemm execution
+
+-----------------------------------------
+/home/min/a/kadhitha/ispc-examples/data/suitesparse/pdb1HYS/pdb1HYS.mtx
+ref(i,m)=B(i,j)*C(i,k)*D(j,k)*F(j,l)*G(l,m);
+B1_dimension: 36417, B2_dimension: 36417, vals: 4344765
+C1_dimension: 36417, C2_dimension: 64, vals: 2330688
+D1_dimension: 36417, D2_dimension: 64, vals: 2330688
+E1_dimension: 36417, E2_dimension: 64, vals: 2330688
+G1_dimension: 36417, G2_dimension: 64, vals: 4096
+
+
+kernel execution time:  8.43361 ms
+fused time: 9.03941
+
+kernel execution time:  13.3195 ms
+sddmm time: 13.9487
+
+kernel execution time:  4.73639 ms
+sddmm ryan time: 5.32202
+
+kernel execution time:  4.735 ms
+spmm ryan time: 5.22103
+
+kernel execution time:  3.66798 ms
+gemm time: 4.15167
+
+kernel execution time:  10658.4 ms
+taco reference time: 10659.3
+
+sddmm-spmm-gemm execution
+
+-----------------------------------------
+/home/min/a/kadhitha/ispc-examples/data/suitesparse/rma10/rma10.mtx
+ref(i,m)=B(i,j)*C(i,k)*D(j,k)*F(j,l)*G(l,m);
+B1_dimension: 46835, B2_dimension: 46835, vals: 2374001
+C1_dimension: 46835, C2_dimension: 64, vals: 2997440
+D1_dimension: 46835, D2_dimension: 64, vals: 2997440
+E1_dimension: 46835, E2_dimension: 64, vals: 2997440
+G1_dimension: 46835, G2_dimension: 64, vals: 4096
+
+
+kernel execution time:  7.54896 ms
+fused time: 8.15687
+
+kernel execution time:  15.1277 ms
+sddmm time: 15.796
+
+kernel execution time:  3.51464 ms
+sddmm ryan time: 4.10653
+
+kernel execution time:  4.21975 ms
+spmm ryan time: 4.6923
+
+kernel execution time:  4.74088 ms
+gemm time: 5.2156
+
+kernel execution time:  5949.54 ms
+taco reference time: 5950.52
+
+sddmm-spmm-gemm execution
+
+-----------------------------------------
+/home/min/a/kadhitha/ispc-examples/data/suitesparse/cant/cant.mtx
+ref(i,m)=B(i,j)*C(i,k)*D(j,k)*F(j,l)*G(l,m);
+B1_dimension: 62451, B2_dimension: 62451, vals: 4007383
+C1_dimension: 62451, C2_dimension: 64, vals: 3996864
+D1_dimension: 62451, D2_dimension: 64, vals: 3996864
+E1_dimension: 62451, E2_dimension: 64, vals: 3996864
+G1_dimension: 62451, G2_dimension: 64, vals: 4096
+
+
+kernel execution time:  11.7188 ms
+fused time: 12.3427
+
+kernel execution time:  18.5962 ms
+sddmm time: 19.2831
+
+kernel execution time:  6.5821 ms
+sddmm ryan time: 7.20737
+
+kernel execution time:  6.6327 ms
+spmm ryan time: 7.20703
+
+kernel execution time:  6.06003 ms
+gemm time: 6.61794
+
+kernel execution time:  9765.93 ms
+taco reference time: 9766.85
+
+sddmm-spmm-gemm execution
+
+-----------------------------------------
+/home/min/a/kadhitha/ispc-examples/data/suitesparse/consph/consph.mtx
+ref(i,m)=B(i,j)*C(i,k)*D(j,k)*F(j,l)*G(l,m);
+B1_dimension: 83334, B2_dimension: 83334, vals: 6010480
+C1_dimension: 83334, C2_dimension: 64, vals: 5333376
+D1_dimension: 83334, D2_dimension: 64, vals: 5333376
+E1_dimension: 83334, E2_dimension: 64, vals: 5333376
+G1_dimension: 83334, G2_dimension: 64, vals: 4096
+
+
+kernel execution time:  16.3022 ms
+fused time: 16.877
+
+kernel execution time:  26.4065 ms
+sddmm time: 26.9999
+
+kernel execution time:  9.6103 ms
+sddmm ryan time: 10.1859
+
+kernel execution time:  9.5796 ms
+spmm ryan time: 10.139
+
+kernel execution time:  7.75909 ms
+gemm time: 8.27337
+
+kernel execution time:  14674.3 ms
+taco reference time: 14675.2
+
+sddmm-spmm-gemm execution
+
+-----------------------------------------
+/home/min/a/kadhitha/ispc-examples/data/suitesparse/cop20k_A/cop20k_A.mtx
+ref(i,m)=B(i,j)*C(i,k)*D(j,k)*F(j,l)*G(l,m);
+B1_dimension: 121192, B2_dimension: 121192, vals: 2624331
+C1_dimension: 121192, C2_dimension: 64, vals: 7756288
+D1_dimension: 121192, D2_dimension: 64, vals: 7756288
+E1_dimension: 121192, E2_dimension: 64, vals: 7756288
+G1_dimension: 121192, G2_dimension: 64, vals: 4096
+
+
+kernel execution time:  28.3919 ms
+fused time: 29.022
+
+kernel execution time:  28.7666 ms
+sddmm time: 29.4282
+
+kernel execution time:  10.9353 ms
+sddmm ryan time: 11.5639
+
+kernel execution time:  12.2792 ms
+spmm ryan time: 12.86
+
+kernel execution time:  12.0463 ms
+gemm time: 12.6219
+
+kernel execution time:  6496.16 ms
+taco reference time: 6497.16
+
+sddmm-spmm-gemm execution
+
+-----------------------------------------
+/home/min/a/kadhitha/ispc-examples/data/suitesparse/shipsec1/shipsec1.mtx
+ref(i,m)=B(i,j)*C(i,k)*D(j,k)*F(j,l)*G(l,m);
+B1_dimension: 140874, B2_dimension: 140874, vals: 7813404
+C1_dimension: 140874, C2_dimension: 64, vals: 9015936
+D1_dimension: 140874, D2_dimension: 64, vals: 9015936
+E1_dimension: 140874, E2_dimension: 64, vals: 9015936
+G1_dimension: 140874, G2_dimension: 64, vals: 4096
+
+
+kernel execution time:  23.8673 ms
+fused time: 24.4851
+
+kernel execution time:  38.4245 ms
+sddmm time: 39.0808
+
+kernel execution time:  13.3169 ms
+sddmm ryan time: 13.9402
+
+kernel execution time:  13.8214 ms
+spmm ryan time: 14.3969
+
+kernel execution time:  13.3955 ms
+gemm time: 14.0084
+
+kernel execution time:  19010.9 ms
+taco reference time: 19012
+
+sddmm-spmm-gemm execution
+
+-----------------------------------------
+/home/min/a/kadhitha/ispc-examples/data/suitesparse/scircuit/scircuit.mtx
+ref(i,m)=B(i,j)*C(i,k)*D(j,k)*F(j,l)*G(l,m);
+B1_dimension: 170998, B2_dimension: 170998, vals: 958936
+C1_dimension: 170998, C2_dimension: 64, vals: 10943872
+D1_dimension: 170998, D2_dimension: 64, vals: 10943872
+E1_dimension: 170998, E2_dimension: 64, vals: 10943872
+G1_dimension: 170998, G2_dimension: 64, vals: 4096
+
+
+kernel execution time:  19.1593 ms
+fused time: 19.7496
+
+kernel execution time:  31.0395 ms
+sddmm time: 31.6882
+
+kernel execution time:  7.35776 ms
+sddmm ryan time: 7.96434
+
+kernel execution time:  9.33589 ms
+spmm ryan time: 9.89731
+
+kernel execution time:  16.4733 ms
+gemm time: 17.0352
+
+kernel execution time:  2397 ms
+taco reference time: 2397.64
+
+sddmm-spmm-gemm execution
+
+-----------------------------------------
+/home/min/a/kadhitha/ispc-examples/data/ufl/webbase-1M/webbase-1M.mtx
+ref(i,m)=B(i,j)*C(i,k)*D(j,k)*F(j,l)*G(l,m);
+B1_dimension: 1000005, B2_dimension: 1000005, vals: 3105536
+C1_dimension: 1000005, C2_dimension: 64, vals: 64000320
+D1_dimension: 1000005, D2_dimension: 64, vals: 64000320
+E1_dimension: 1000005, E2_dimension: 64, vals: 64000320
+G1_dimension: 1000005, G2_dimension: 64, vals: 4096
+
+
+kernel execution time:  66.7468 ms
+fused time: 67.289
+
+kernel execution time:  69.5837 ms
+sddmm time: 70.1602
+
+kernel execution time:  23.2899 ms
+sddmm ryan time: 23.8277
+
+kernel execution time:  41.9566 ms
+spmm ryan time: 42.5095
+
+kernel execution time:  93.8383 ms
+gemm time: 94.3738
+
+kernel execution time:  7587.7 ms
+taco reference time: 7588.87
+
+sddmm-spmm-gemm execution
+
+-----------------------------------------
+/home/min/a/kadhitha/ispc-examples/data/suitesparse/circuit5M/circuit5M.mtx
+ref(i,m)=B(i,j)*C(i,k)*D(j,k)*F(j,l)*G(l,m);
+B1_dimension: 5558326, B2_dimension: 5558326, vals: 59524291
+C1_dimension: 5558326, C2_dimension: 64, vals: 355732864
+D1_dimension: 5558326, D2_dimension: 64, vals: 355732864
+E1_dimension: 5558326, E2_dimension: 64, vals: 355732864
+G1_dimension: 5558326, G2_dimension: 64, vals: 4096
+
+
+kernel execution time:  688.492 ms
+fused time: 689.478
+
+kernel execution time:  979.86 ms
+sddmm time: 980.45
+
+kernel execution time:  318.248 ms
+sddmm ryan time: 318.831
+
+kernel execution time:  449.669 ms
+spmm ryan time: 450.215
+
+kernel execution time:  503.695 ms
+gemm time: 504.291
+
+kernel execution time:  326798 ms
+taco reference time: 326799
+
+sddmm-spmm-gemm execution
+
+-----------------------------------------
+/home/min/a/kadhitha/ispc-examples/data/suitesparse/circuit5M/circuit5M.mtx
+ref(i,m)=B(i,j)*C(i,k)*D(j,k)*F(j,l)*G(l,m);
+B1_dimension: 5558326, B2_dimension: 5558326, vals: 59524291
+C1_dimension: 5558326, C2_dimension: 64, vals: 355732864
+D1_dimension: 5558326, D2_dimension: 64, vals: 355732864
+E1_dimension: 5558326, E2_dimension: 64, vals: 355732864
+G1_dimension: 5558326, G2_dimension: 64, vals: 4096
+
+
+kernel execution time:  9624.7 ms
+fused time: 9625.73
+
+kernel execution time:  1635.76 ms
+sddmm time: 1636.3
+
+kernel execution time:  1636.41 ms
+sddmm ryan time: 1636.96
+
+kernel execution time:  2930.01 ms
+spmm ryan time: 2930.5
+
+kernel execution time:  15204.2 ms
+gemm time: 15205.2
+
+sddmm-spmm-gemm execution
+
+-----------------------------------------
+/home/min/a/kadhitha/ispc-examples/data/suitesparse/bcsstk17/bcsstk17.mtx
+ref(i,m)=B(i,j)*C(i,k)*D(j,k)*F(j,l)*G(l,m);
+B1_dimension: 10974, B2_dimension: 10974, vals: 428650
+C1_dimension: 10974, C2_dimension: 64, vals: 702336
+D1_dimension: 10974, D2_dimension: 64, vals: 702336
+E1_dimension: 10974, E2_dimension: 64, vals: 702336
+G1_dimension: 10974, G2_dimension: 64, vals: 4096
+
+
+kernel execution time:  31.0958 ms
+fused time: 31.6403
+
+kernel execution time:  9.52362 ms
+sddmm time: 10.0411
+
+kernel execution time:  9.50283 ms
+sddmm ryan time: 9.98181
+
+kernel execution time:  9.9883 ms
+spmm ryan time: 10.3927
+
+kernel execution time:  30.6724 ms
+gemm time: 31.0956
+
+kernel execution time:  50903.4 ms
+taco reference time: 50904.4
+
+sddmm-spmm-gemm execution
+
+-----------------------------------------
+/home/min/a/kadhitha/ispc-examples/data/suitesparse/pdb1HYS/pdb1HYS.mtx
+ref(i,m)=B(i,j)*C(i,k)*D(j,k)*F(j,l)*G(l,m);
+B1_dimension: 36417, B2_dimension: 36417, vals: 4344765
+C1_dimension: 36417, C2_dimension: 64, vals: 2330688
+D1_dimension: 36417, D2_dimension: 64, vals: 2330688
+E1_dimension: 36417, E2_dimension: 64, vals: 2330688
+G1_dimension: 36417, G2_dimension: 64, vals: 4096
+
+
+kernel execution time:  221.251 ms
+fused time: 223.31
+
+kernel execution time:  90.6291 ms
+sddmm time: 91.9017
+
+kernel execution time:  92.6299 ms
+sddmm ryan time: 93.1693
+
+kernel execution time:  70.0109 ms
+spmm ryan time: 70.4884
+
+kernel execution time:  103.984 ms
+gemm time: 105.217
+
+kernel execution time:  441848 ms
+taco reference time: 441849
+
+sddmm-spmm-gemm execution
+
+-----------------------------------------
+/home/min/a/kadhitha/ispc-examples/data/suitesparse/rma10/rma10.mtx
+ref(i,m)=B(i,j)*C(i,k)*D(j,k)*F(j,l)*G(l,m);
+B1_dimension: 46835, B2_dimension: 46835, vals: 2374001
+C1_dimension: 46835, C2_dimension: 64, vals: 2997440
+D1_dimension: 46835, D2_dimension: 64, vals: 2997440
+E1_dimension: 46835, E2_dimension: 64, vals: 2997440
+G1_dimension: 46835, G2_dimension: 64, vals: 4096
+
+
+kernel execution time:  156.706 ms
+fused time: 158.878
+
+kernel execution time:  53.3541 ms
+sddmm time: 53.8804
+
+kernel execution time:  53.6128 ms
+sddmm ryan time: 54.7942
+
+kernel execution time:  51.5253 ms
+spmm ryan time: 52.5961
+
+kernel execution time:  130.147 ms
+gemm time: 131.306
+
+kernel execution time:  243737 ms
+taco reference time: 243739
+/home/min/a/kadhitha/ispc-examples/data/suitesparse/cant/cant.mtx
+ref(i,m)=B(i,j)*C(i,k)*D(j,k)*F(j,l)*G(l,m);
+B1_dimension: 62451, B2_dimension: 62451, vals: 4007383
+C1_dimension: 62451, C2_dimension: 64, vals: 3996864
+D1_dimension: 62451, D2_dimension: 64, vals: 3996864
+E1_dimension: 62451, E2_dimension: 64, vals: 3996864
+G1_dimension: 62451, G2_dimension: 64, vals: 4096
+
+
+kernel execution time:  238.619 ms
+fused time: 240.152
+
+kernel execution time:  84.8828 ms
+sddmm time: 85.4286
+
+kernel execution time:  80.7058 ms
+sddmm ryan time: 81.2588
+
+kernel execution time:  75.2549 ms
+spmm ryan time: 75.7338
+
+kernel execution time:  174.145 ms
+gemm time: 174.654
+
+kernel execution time:  412699 ms
+taco reference time: 412701
+/home/min/a/kadhitha/ispc-examples/data/suitesparse/consph/consph.mtx
+ref(i,m)=B(i,j)*C(i,k)*D(j,k)*F(j,l)*G(l,m);
+B1_dimension: 83334, B2_dimension: 83334, vals: 6010480
+C1_dimension: 83334, C2_dimension: 64, vals: 5333376
+D1_dimension: 83334, D2_dimension: 64, vals: 5333376
+E1_dimension: 83334, E2_dimension: 64, vals: 5333376
+G1_dimension: 83334, G2_dimension: 64, vals: 4096
+
+
+kernel execution time:  350.004 ms
+fused time: 351.319
+
+kernel execution time:  123.574 ms
+sddmm time: 124.101
+
+kernel execution time:  126.113 ms
+sddmm ryan time: 127.971
+
+kernel execution time:  113.146 ms
+spmm ryan time: 113.615
+
+kernel execution time:  234.287 ms
+gemm time: 235.546
+
+kernel execution time:  619783 ms
+taco reference time: 619784
+/home/min/a/kadhitha/ispc-examples/data/suitesparse/cop20k_A/cop20k_A.mtx
+ref(i,m)=B(i,j)*C(i,k)*D(j,k)*F(j,l)*G(l,m);
+B1_dimension: 121192, B2_dimension: 121192, vals: 2624331
+C1_dimension: 121192, C2_dimension: 64, vals: 7756288
+D1_dimension: 121192, D2_dimension: 64, vals: 7756288
+E1_dimension: 121192, E2_dimension: 64, vals: 7756288
+G1_dimension: 121192, G2_dimension: 64, vals: 4096
+
+
+kernel execution time:  335.548 ms
+fused time: 337.292
+
+kernel execution time:  90.8795 ms
+sddmm time: 91.3981
+
+kernel execution time:  87.7678 ms
+sddmm ryan time: 88.2879
+
+kernel execution time:  111.725 ms
+spmm ryan time: 113.063
+
+kernel execution time:  338.451 ms
+gemm time: 340.2
+
+kernel execution time:  268303 ms
+taco reference time: 268304
+/home/min/a/kadhitha/ispc-examples/data/suitesparse/shipsec1/shipsec1.mtx
+ref(i,m)=B(i,j)*C(i,k)*D(j,k)*F(j,l)*G(l,m);
+B1_dimension: 140874, B2_dimension: 140874, vals: 7813404
+C1_dimension: 140874, C2_dimension: 64, vals: 9015936
+D1_dimension: 140874, D2_dimension: 64, vals: 9015936
+E1_dimension: 140874, E2_dimension: 64, vals: 9015936
+G1_dimension: 140874, G2_dimension: 64, vals: 4096
+
+
+kernel execution time:  488.065 ms
+fused time: 489.312
+
+kernel execution time:  161.434 ms
+sddmm time: 163.199
+
+kernel execution time:  164.295 ms
+sddmm ryan time: 165.567
+
+kernel execution time:  154.131 ms
+spmm ryan time: 154.61
+
+kernel execution time:  391.972 ms
+gemm time: 393.242
+
+kernel execution time:  798245 ms
+taco reference time: 798247
+/home/min/a/kadhitha/ispc-examples/data/suitesparse/scircuit/scircuit.mtx
+ref(i,m)=B(i,j)*C(i,k)*D(j,k)*F(j,l)*G(l,m);
+B1_dimension: 170998, B2_dimension: 170998, vals: 958936
+C1_dimension: 170998, C2_dimension: 64, vals: 10943872
+D1_dimension: 170998, D2_dimension: 64, vals: 10943872
+E1_dimension: 170998, E2_dimension: 64, vals: 10943872
+G1_dimension: 170998, G2_dimension: 64, vals: 4096
+
+
+kernel execution time:  279.308 ms
+fused time: 280.422
+
+kernel execution time:  41.2598 ms
+sddmm time: 41.7727
+
+kernel execution time:  40.3132 ms
+sddmm ryan time: 40.882
+
+kernel execution time:  72.4795 ms
+spmm ryan time: 73.6321
+
+kernel execution time:  473.298 ms
+gemm time: 474.582
+
+kernel execution time:  98095.7 ms
+taco reference time: 98098.4
+/home/min/a/kadhitha/ispc-examples/data/suitesparse/mac_econ_fwd500/mac_econ_fwd500.mtx
+ref(i,m)=B(i,j)*C(i,k)*D(j,k)*F(j,l)*G(l,m);
+B1_dimension: 206500, B2_dimension: 206500, vals: 1273389
+C1_dimension: 206500, C2_dimension: 64, vals: 13216000
+D1_dimension: 206500, D2_dimension: 64, vals: 13216000
+E1_dimension: 206500, E2_dimension: 64, vals: 13216000
+G1_dimension: 206500, G2_dimension: 64, vals: 4096
+
+
+kernel execution time:  321.827 ms
+fused time: 322.725
+
+kernel execution time:  43.7794 ms
+sddmm time: 44.8964
+
+kernel execution time:  42.531 ms
+sddmm ryan time: 43.7502
+
+kernel execution time:  83.5305 ms
+spmm ryan time: 84.0178
+
+kernel execution time:  567.368 ms
+gemm time: 567.876
+
+kernel execution time:  130204 ms
+taco reference time: 130207
+/home/min/a/kadhitha/ispc-examples/data/ufl/webbase-1M/webbase-1M.mtx
+ref(i,m)=B(i,j)*C(i,k)*D(j,k)*F(j,l)*G(l,m);
+B1_dimension: 1000005, B2_dimension: 1000005, vals: 3105536
+C1_dimension: 1000005, C2_dimension: 64, vals: 64000320
+D1_dimension: 1000005, D2_dimension: 64, vals: 64000320
+E1_dimension: 1000005, E2_dimension: 64, vals: 64000320
+G1_dimension: 1000005, G2_dimension: 64, vals: 4096
+
+
+kernel execution time:  1355.72 ms
+fused time: 1357.14
+
+kernel execution time:  98.94 ms
+sddmm time: 101.488
+
+kernel execution time:  97.8972 ms
+sddmm ryan time: 98.4423
+
+kernel execution time:  218.188 ms
+spmm ryan time: 219.39
+
+kernel execution time:  2744.38 ms
+gemm time: 2744.89
+
+kernel execution time:  320035 ms
+taco reference time: 320037
+/home/min/a/kadhitha/ispc-examples/data/suitesparse/circuit5M/circuit5M.mtx
+ref(i,m)=B(i,j)*C(i,k)*D(j,k)*F(j,l)*G(l,m);
+B1_dimension: 5558326, B2_dimension: 5558326, vals: 59524291
+C1_dimension: 5558326, C2_dimension: 64, vals: 355732864
+D1_dimension: 5558326, D2_dimension: 64, vals: 355732864
+E1_dimension: 5558326, E2_dimension: 64, vals: 355732864
+G1_dimension: 5558326, G2_dimension: 64, vals: 4096
+
+
+kernel execution time:  9682.48 ms
+fused time: 9684.45
+
+kernel execution time:  1640.01 ms
+sddmm time: 1641.3
+
+kernel execution time:  1626.66 ms
+sddmm ryan time: 1628.12
+
+kernel execution time:  2908.47 ms
+spmm ryan time: 2908.94
+
+kernel execution time:  15252.4 ms
+gemm time: 15253.4
+
+kernel execution time:  6.11703e+06 ms
+taco reference time: 6.11703e+06
+
+sddmm-spmm-gemm execution
+
+-----------------------------------------
+/home/min/a/kadhitha/ispc-examples/data/suitesparse/rma10/rma10.mtx
+ref(i,m)=B(i,j)*C(i,k)*D(j,k)*F(j,l)*G(l,m);
+B1_dimension: 46835, B2_dimension: 46835, vals: 2374001
+C1_dimension: 46835, C2_dimension: 64, vals: 2997440
+D1_dimension: 46835, D2_dimension: 64, vals: 2997440
+E1_dimension: 46835, E2_dimension: 64, vals: 2997440
+G1_dimension: 46835, G2_dimension: 64, vals: 4096
+
+
+kernel execution time:  7.90719 ms
+fused time: 12.4475
+
+kernel execution time:  15.0235 ms
+sddmm time: 18.4078
+
+kernel execution time:  3.60187 ms
+sddmm ryan time: 7.64096
+
+kernel execution time:  4.26585 ms
+spmm ryan time: 7.23736
+
+kernel execution time:  5.51232 ms
+gemm time: 8.94274
+
+kernel execution time:  5900.92 ms
+taco reference time: 5901.77
+/home/min/a/kadhitha/ispc-examples/data/suitesparse/cant/cant.mtx
+ref(i,m)=B(i,j)*C(i,k)*D(j,k)*F(j,l)*G(l,m);
+B1_dimension: 62451, B2_dimension: 62451, vals: 4007383
+C1_dimension: 62451, C2_dimension: 64, vals: 3996864
+D1_dimension: 62451, D2_dimension: 64, vals: 3996864
+E1_dimension: 62451, E2_dimension: 64, vals: 3996864
+G1_dimension: 62451, G2_dimension: 64, vals: 4096
+
+
+kernel execution time:  11.9944 ms
+fused time: 15.5065
+
+kernel execution time:  17.5788 ms
+sddmm time: 18.2088
+
+kernel execution time:  6.90362 ms
+sddmm ryan time: 9.18146
+
+kernel execution time:  6.52502 ms
+spmm ryan time: 7.08577
+
+kernel execution time:  5.70869 ms
+gemm time: 6.23327
+
+kernel execution time:  9752.35 ms
+taco reference time: 9753.37
+/home/min/a/kadhitha/ispc-examples/data/suitesparse/consph/consph.mtx
+ref(i,m)=B(i,j)*C(i,k)*D(j,k)*F(j,l)*G(l,m);
+B1_dimension: 83334, B2_dimension: 83334, vals: 6010480
+C1_dimension: 83334, C2_dimension: 64, vals: 5333376
+D1_dimension: 83334, D2_dimension: 64, vals: 5333376
+E1_dimension: 83334, E2_dimension: 64, vals: 5333376
+G1_dimension: 83334, G2_dimension: 64, vals: 4096
+
+
+kernel execution time:  16.1703 ms
+fused time: 19.9224
+
+kernel execution time:  26.3346 ms
+sddmm time: 30.1538
+
+kernel execution time:  9.47197 ms
+sddmm ryan time: 12.7137
+
+kernel execution time:  9.14926 ms
+spmm ryan time: 9.78178
+
+kernel execution time:  8.06171 ms
+gemm time: 8.592
+
+kernel execution time:  14612.6 ms
+taco reference time: 14617.7
+/home/min/a/kadhitha/ispc-examples/data/suitesparse/cop20k_A/cop20k_A.mtx
+ref(i,m)=B(i,j)*C(i,k)*D(j,k)*F(j,l)*G(l,m);
+B1_dimension: 121192, B2_dimension: 121192, vals: 2624331
+C1_dimension: 121192, C2_dimension: 64, vals: 7756288
+D1_dimension: 121192, D2_dimension: 64, vals: 7756288
+E1_dimension: 121192, E2_dimension: 64, vals: 7756288
+G1_dimension: 121192, G2_dimension: 64, vals: 4096
+
+
+kernel execution time:  28.2581 ms
+fused time: 32.7167
+
+kernel execution time:  30.162 ms
+sddmm time: 33.8587
+
+kernel execution time:  11.0142 ms
+sddmm ryan time: 15.2742
+
+kernel execution time:  12.1744 ms
+spmm ryan time: 15.0065
+
+kernel execution time:  11.4579 ms
+gemm time: 14.5527
+
+kernel execution time:  6379.22 ms
+taco reference time: 6380.3
+/home/min/a/kadhitha/ispc-examples/data/suitesparse/shipsec1/shipsec1.mtx
+ref(i,m)=B(i,j)*C(i,k)*D(j,k)*F(j,l)*G(l,m);
+B1_dimension: 140874, B2_dimension: 140874, vals: 7813404
+C1_dimension: 140874, C2_dimension: 64, vals: 9015936
+D1_dimension: 140874, D2_dimension: 64, vals: 9015936
+E1_dimension: 140874, E2_dimension: 64, vals: 9015936
+G1_dimension: 140874, G2_dimension: 64, vals: 4096
+
+
+kernel execution time:  24.3937 ms
+fused time: 28.6422
+
+kernel execution time:  37.2457 ms
+sddmm time: 41.311
+
+kernel execution time:  13.8503 ms
+sddmm ryan time: 17.9583
+
+kernel execution time:  14.2713 ms
+spmm ryan time: 17.1402
+
+kernel execution time:  13.6024 ms
+gemm time: 16.6078
+
+kernel execution time:  18993.5 ms
+taco reference time: 18994.5
+/home/min/a/kadhitha/ispc-examples/data/suitesparse/scircuit/scircuit.mtx
+ref(i,m)=B(i,j)*C(i,k)*D(j,k)*F(j,l)*G(l,m);
+B1_dimension: 170998, B2_dimension: 170998, vals: 958936
+C1_dimension: 170998, C2_dimension: 64, vals: 10943872
+D1_dimension: 170998, D2_dimension: 64, vals: 10943872
+E1_dimension: 170998, E2_dimension: 64, vals: 10943872
+G1_dimension: 170998, G2_dimension: 64, vals: 4096
+
+
+kernel execution time:  18.4645 ms
+fused time: 22.0711
+
+kernel execution time:  31.6844 ms
+sddmm time: 34.9774
+
+kernel execution time:  7.19931 ms
+sddmm ryan time: 11.584
+
+kernel execution time:  9.40139 ms
+spmm ryan time: 10.002
+
+kernel execution time:  16.3933 ms
+gemm time: 19.0699
+
+kernel execution time:  2325.51 ms
+taco reference time: 2326.19
+/home/min/a/kadhitha/ispc-examples/data/suitesparse/mac_econ_fwd500/mac_econ_fwd500.mtx
+ref(i,m)=B(i,j)*C(i,k)*D(j,k)*F(j,l)*G(l,m);
+B1_dimension: 206500, B2_dimension: 206500, vals: 1273389
+C1_dimension: 206500, C2_dimension: 64, vals: 13216000
+D1_dimension: 206500, D2_dimension: 64, vals: 13216000
+E1_dimension: 206500, E2_dimension: 64, vals: 13216000
+G1_dimension: 206500, G2_dimension: 64, vals: 4096
+
+
+kernel execution time:  25.9398 ms
+fused time: 30.7713
+
+kernel execution time:  43.1619 ms
+sddmm time: 47.1566
+
+kernel execution time:  9.47076 ms
+sddmm ryan time: 12.9736
+
+kernel execution time:  12.1315 ms
+spmm ryan time: 12.7125
+
+kernel execution time:  19.8795 ms
+gemm time: 23.9233
+
+kernel execution time:  3085.34 ms
+taco reference time: 3087.4
+/home/min/a/kadhitha/ispc-examples/data/ufl/webbase-1M/webbase-1M.mtx
+ref(i,m)=B(i,j)*C(i,k)*D(j,k)*F(j,l)*G(l,m);
+B1_dimension: 1000005, B2_dimension: 1000005, vals: 3105536
+C1_dimension: 1000005, C2_dimension: 64, vals: 64000320
+D1_dimension: 1000005, D2_dimension: 64, vals: 64000320
+E1_dimension: 1000005, E2_dimension: 64, vals: 64000320
+G1_dimension: 1000005, G2_dimension: 64, vals: 4096
+
+
+kernel execution time:  68.9391 ms
+fused time: 73.2143
+
+kernel execution time:  68.0597 ms
+sddmm time: 71.8136
+
+kernel execution time:  23.658 ms
+sddmm ryan time: 27.2015
+
+kernel execution time:  42.2166 ms
+spmm ryan time: 45.3816
+
+kernel execution time:  91.7085 ms
+gemm time: 94.965
+
+kernel execution time:  7504.53 ms
+taco reference time: 7510.21
+/home/min/a/kadhitha/ispc-examples/data/suitesparse/circuit5M/circuit5M.mtx
+ref(i,m)=B(i,j)*C(i,k)*D(j,k)*F(j,l)*G(l,m);
+B1_dimension: 5558326, B2_dimension: 5558326, vals: 59524291
+C1_dimension: 5558326, C2_dimension: 64, vals: 355732864
+D1_dimension: 5558326, D2_dimension: 64, vals: 355732864
+E1_dimension: 5558326, E2_dimension: 64, vals: 355732864
+G1_dimension: 5558326, G2_dimension: 64, vals: 4096
+
+
+kernel execution time:  685.25 ms
+fused time: 691.004
+
+kernel execution time:  978.107 ms
+sddmm time: 982.105
+
+kernel execution time:  314.889 ms
+sddmm ryan time: 319.437
+
+kernel execution time:  451.321 ms
+spmm ryan time: 454.339
+
+kernel execution time:  511.771 ms
+gemm time: 516.049
+
+kernel execution time:  324954 ms
+taco reference time: 324960
+
+sddmm-spmm-gemm execution
+
+-----------------------------------------
+/home/min/a/kadhitha/ispc-examples/data/suitesparse/bcsstk17/bcsstk17.mtx
+ref(i,m)=B(i,j)*C(i,k)*D(j,k)*F(j,l)*G(l,m);
+B1_dimension: 10974, B2_dimension: 10974, vals: 428650
+C1_dimension: 10974, C2_dimension: 64, vals: 702336
+D1_dimension: 10974, D2_dimension: 64, vals: 702336
+E1_dimension: 10974, E2_dimension: 64, vals: 702336
+G1_dimension: 10974, G2_dimension: 64, vals: 4096
+
+
+kernel execution time:  2.03017 ms
+fused time: 6.89988
+
+kernel execution time:  4.23176 ms
+sddmm time: 4.56628
+
+kernel execution time:  1.07066 ms
+sddmm ryan time: 1.60331
+
+kernel execution time:  1.04047 ms
+spmm ryan time: 1.84411
+
+kernel execution time:  1.58419 ms
+gemm time: 3.49011
+
+kernel execution time:  1168.5 ms
+taco reference time: 1172.82
+/home/min/a/kadhitha/ispc-examples/data/suitesparse/pdb1HYS/pdb1HYS.mtx
+ref(i,m)=B(i,j)*C(i,k)*D(j,k)*F(j,l)*G(l,m);
+B1_dimension: 36417, B2_dimension: 36417, vals: 4344765
+C1_dimension: 36417, C2_dimension: 64, vals: 2330688
+D1_dimension: 36417, D2_dimension: 64, vals: 2330688
+E1_dimension: 36417, E2_dimension: 64, vals: 2330688
+G1_dimension: 36417, G2_dimension: 64, vals: 4096
+
+
+kernel execution time:  8.02954 ms
+fused time: 12.4005
+
+kernel execution time:  12.7753 ms
+sddmm time: 15.6047
+
+kernel execution time:  4.73627 ms
+sddmm ryan time: 8.24994
+
+kernel execution time:  4.90489 ms
+spmm ryan time: 5.40766
+
+kernel execution time:  2.99487 ms
+gemm time: 3.53289
+
+kernel execution time:  10658.1 ms
+taco reference time: 10661.2
+/home/min/a/kadhitha/ispc-examples/data/suitesparse/rma10/rma10.mtx
+ref(i,m)=B(i,j)*C(i,k)*D(j,k)*F(j,l)*G(l,m);
+B1_dimension: 46835, B2_dimension: 46835, vals: 2374001
+C1_dimension: 46835, C2_dimension: 64, vals: 2997440
+D1_dimension: 46835, D2_dimension: 64, vals: 2997440
+E1_dimension: 46835, E2_dimension: 64, vals: 2997440
+G1_dimension: 46835, G2_dimension: 64, vals: 4096
+
+
+kernel execution time:  7.15818 ms
+fused time: 11.6143
+
+kernel execution time:  15.0391 ms
+sddmm time: 18.5456
+
+kernel execution time:  3.33442 ms
+sddmm ryan time: 6.94621
+
+kernel execution time:  4.13895 ms
+spmm ryan time: 7.49526
+
+kernel execution time:  3.79939 ms
+gemm time: 4.19085
+
+kernel execution time:  5801.87 ms
+taco reference time: 5803.1
+/home/min/a/kadhitha/ispc-examples/data/suitesparse/cant/cant.mtx
+ref(i,m)=B(i,j)*C(i,k)*D(j,k)*F(j,l)*G(l,m);
+B1_dimension: 62451, B2_dimension: 62451, vals: 4007383
+C1_dimension: 62451, C2_dimension: 64, vals: 3996864
+D1_dimension: 62451, D2_dimension: 64, vals: 3996864
+E1_dimension: 62451, E2_dimension: 64, vals: 3996864
+G1_dimension: 62451, G2_dimension: 64, vals: 4096
+
+
+kernel execution time:  12.0771 ms
+fused time: 16.6939
+
+kernel execution time:  17.5697 ms
+sddmm time: 18.7919
+
+kernel execution time:  6.94731 ms
+sddmm ryan time: 11.0254
+
+kernel execution time:  7.03752 ms
+spmm ryan time: 8.55729
+
+kernel execution time:  5.18056 ms
+gemm time: 8.22984
+
+kernel execution time:  9735.41 ms
+taco reference time: 9737.5
+/home/min/a/kadhitha/ispc-examples/data/suitesparse/consph/consph.mtx
+ref(i,m)=B(i,j)*C(i,k)*D(j,k)*F(j,l)*G(l,m);
+B1_dimension: 83334, B2_dimension: 83334, vals: 6010480
+C1_dimension: 83334, C2_dimension: 64, vals: 5333376
+D1_dimension: 83334, D2_dimension: 64, vals: 5333376
+E1_dimension: 83334, E2_dimension: 64, vals: 5333376
+G1_dimension: 83334, G2_dimension: 64, vals: 4096
+
+
+kernel execution time:  16.2173 ms
+fused time: 20.4628
+
+kernel execution time:  26.5883 ms
+sddmm time: 30.2732
+
+kernel execution time:  9.67928 ms
+sddmm ryan time: 13.4002
+
+kernel execution time:  9.46597 ms
+spmm ryan time: 12.3215
+
+kernel execution time:  6.14851 ms
+gemm time: 6.79689
+
+kernel execution time:  14647.4 ms
+taco reference time: 14648.9
+/home/min/a/kadhitha/ispc-examples/data/suitesparse/cop20k_A/cop20k_A.mtx
+ref(i,m)=B(i,j)*C(i,k)*D(j,k)*F(j,l)*G(l,m);
+B1_dimension: 121192, B2_dimension: 121192, vals: 2624331
+C1_dimension: 121192, C2_dimension: 64, vals: 7756288
+D1_dimension: 121192, D2_dimension: 64, vals: 7756288
+E1_dimension: 121192, E2_dimension: 64, vals: 7756288
+G1_dimension: 121192, G2_dimension: 64, vals: 4096
+
+
+kernel execution time:  28.0895 ms
+fused time: 33.0632
+
+kernel execution time:  29.4447 ms
+sddmm time: 33.2669
+
+kernel execution time:  10.992 ms
+sddmm ryan time: 15.1462
+
+kernel execution time:  12.2197 ms
+spmm ryan time: 14.8823
+
+kernel execution time:  9.1576 ms
+gemm time: 12.476
+
+kernel execution time:  6388.6 ms
+taco reference time: 6389.71
+/home/min/a/kadhitha/ispc-examples/data/suitesparse/shipsec1/shipsec1.mtx
+ref(i,m)=B(i,j)*C(i,k)*D(j,k)*F(j,l)*G(l,m);
+B1_dimension: 140874, B2_dimension: 140874, vals: 7813404
+C1_dimension: 140874, C2_dimension: 64, vals: 9015936
+D1_dimension: 140874, D2_dimension: 64, vals: 9015936
+E1_dimension: 140874, E2_dimension: 64, vals: 9015936
+G1_dimension: 140874, G2_dimension: 64, vals: 4096
+
+
+kernel execution time:  24.4023 ms
+fused time: 28.7813
+
+kernel execution time:  37.3163 ms
+sddmm time: 41.2616
+
+kernel execution time:  13.8084 ms
+sddmm ryan time: 17.1208
+
+kernel execution time:  14.1626 ms
+spmm ryan time: 17.3487
+
+kernel execution time:  10.2461 ms
+gemm time: 10.8026
+
+kernel execution time:  19008 ms
+taco reference time: 19013
+/home/min/a/kadhitha/ispc-examples/data/suitesparse/scircuit/scircuit.mtx
+ref(i,m)=B(i,j)*C(i,k)*D(j,k)*F(j,l)*G(l,m);
+B1_dimension: 170998, B2_dimension: 170998, vals: 958936
+C1_dimension: 170998, C2_dimension: 64, vals: 10943872
+D1_dimension: 170998, D2_dimension: 64, vals: 10943872
+E1_dimension: 170998, E2_dimension: 64, vals: 10943872
+G1_dimension: 170998, G2_dimension: 64, vals: 4096
+
+
+kernel execution time:  18.5328 ms
+fused time: 21.8578
+
+kernel execution time:  29.8727 ms
+sddmm time: 32.6967
+
+kernel execution time:  7.1244 ms
+sddmm ryan time: 10.2857
+
+kernel execution time:  8.9243 ms
+spmm ryan time: 9.54503
+
+kernel execution time:  12.6159 ms
+gemm time: 13.2038
+
+kernel execution time:  2326 ms
+taco reference time: 2326.66
+/home/min/a/kadhitha/ispc-examples/data/suitesparse/mac_econ_fwd500/mac_econ_fwd500.mtx
+ref(i,m)=B(i,j)*C(i,k)*D(j,k)*F(j,l)*G(l,m);
+B1_dimension: 206500, B2_dimension: 206500, vals: 1273389
+C1_dimension: 206500, C2_dimension: 64, vals: 13216000
+D1_dimension: 206500, D2_dimension: 64, vals: 13216000
+E1_dimension: 206500, E2_dimension: 64, vals: 13216000
+G1_dimension: 206500, G2_dimension: 64, vals: 4096
+
+
+kernel execution time:  25.7525 ms
+fused time: 27.0427
+
+kernel execution time:  40.701 ms
+sddmm time: 44.8629
+
+kernel execution time:  9.61808 ms
+sddmm ryan time: 13.4076
+
+kernel execution time:  12.4322 ms
+spmm ryan time: 15.2811
+
+kernel execution time:  15.1033 ms
+gemm time: 17.9102
+
+kernel execution time:  3091.33 ms
+taco reference time: 3092.53
+/home/min/a/kadhitha/ispc-examples/data/ufl/webbase-1M/webbase-1M.mtx
+ref(i,m)=B(i,j)*C(i,k)*D(j,k)*F(j,l)*G(l,m);
+B1_dimension: 1000005, B2_dimension: 1000005, vals: 3105536
+C1_dimension: 1000005, C2_dimension: 64, vals: 64000320
+D1_dimension: 1000005, D2_dimension: 64, vals: 64000320
+E1_dimension: 1000005, E2_dimension: 64, vals: 64000320
+G1_dimension: 1000005, G2_dimension: 64, vals: 4096
+
+
+kernel execution time:  68.4469 ms
+fused time: 72.7982
+
+kernel execution time:  52.1276 ms
+sddmm time: 56.0577
+
+kernel execution time:  23.4796 ms
+sddmm ryan time: 27.0851
+
+kernel execution time:  42.2008 ms
+spmm ryan time: 45.2618
+
+kernel execution time:  74.1167 ms
+gemm time: 78.5888
+
+kernel execution time:  7502.71 ms
+taco reference time: 7508.45
+/home/min/a/kadhitha/ispc-examples/data/suitesparse/circuit5M/circuit5M.mtx
+ref(i,m)=B(i,j)*C(i,k)*D(j,k)*F(j,l)*G(l,m);
+B1_dimension: 5558326, B2_dimension: 5558326, vals: 59524291
+C1_dimension: 5558326, C2_dimension: 64, vals: 355732864
+D1_dimension: 5558326, D2_dimension: 64, vals: 355732864
+E1_dimension: 5558326, E2_dimension: 64, vals: 355732864
+G1_dimension: 5558326, G2_dimension: 64, vals: 4096
+
+
+kernel execution time:  684.483 ms
+fused time: 689.124
+
+kernel execution time:  889.925 ms
+sddmm time: 894.03
+
+kernel execution time:  315.322 ms
+sddmm ryan time: 319.629
+
+kernel execution time:  449.91 ms
+spmm ryan time: 453.686
+
+kernel execution time:  417.449 ms
+gemm time: 421.26
+
+kernel execution time:  326305 ms
+taco reference time: 326311
+
+sddmm-spmm-gemm execution
+
+-----------------------------------------
+/home/min/a/kadhitha/workspace/my_taco/taco/net-repo-graph/cora.mtx
+ref(i,m)=B(i,j)*C(i,k)*D(j,k)*F(j,l)*G(l,m);
+B1_dimension: 2708, B2_dimension: 2708, vals: 5429
+C1_dimension: 2708, C2_dimension: 64, vals: 173312
+D1_dimension: 2708, D2_dimension: 64, vals: 173312
+E1_dimension: 2708, E2_dimension: 64, vals: 173312
+G1_dimension: 2708, G2_dimension: 64, vals: 4096
+
+
+kernel execution time:  5.08607 ms
+fused time: 5.61989
+
+kernel execution time:  0.557608 ms
+sddmm time: 0.871642
+
+kernel execution time:  0.465526 ms
+sddmm ryan time: 0.7713
+
+kernel execution time:  0.498686 ms
+spmm ryan time: 0.739309
+
+kernel execution time:  0.7957 ms
+gemm time: 1.05919
+
+kernel execution time:  42.447 ms
+taco reference time: 42.885
+/home/min/a/kadhitha/workspace/my_taco/taco/net-repo-graph/amazon.mtx
+ref(i,m)=B(i,j)*C(i,k)*D(j,k)*F(j,l)*G(l,m);
+B1_dimension: 548551, B2_dimension: 548551, vals: 1851744
+C1_dimension: 548551, C2_dimension: 64, vals: 35107264
+D1_dimension: 548551, D2_dimension: 64, vals: 35107264
+E1_dimension: 548551, E2_dimension: 64, vals: 35107264
+G1_dimension: 548551, G2_dimension: 64, vals: 4096
+
+
+kernel execution time:  89.9099 ms
+fused time: 90.5117
+
+kernel execution time:  29.9086 ms
+sddmm time: 30.4936
+
+kernel execution time:  29.1529 ms
+sddmm ryan time: 29.7063
+
+kernel execution time:  34.6318 ms
+spmm ryan time: 35.1535
+
+kernel execution time:  66.4663 ms
+gemm time: 67.0316
+
+kernel execution time:  6272.25 ms
+taco reference time: 6273.42
+
+sddmm-spmm-gemm execution
+
+-----------------------------------------
+/home/min/a/kadhitha/workspace/my_taco/taco/net-repo-graph/cora.mtx
+ref(i,m)=B(i,j)*C(i,k)*D(j,k)*F(j,l)*G(l,m);
+B1_dimension: 2708, B2_dimension: 2708, vals: 5429
+C1_dimension: 2708, C2_dimension: 64, vals: 173312
+D1_dimension: 2708, D2_dimension: 64, vals: 173312
+E1_dimension: 2708, E2_dimension: 64, vals: 173312
+G1_dimension: 2708, G2_dimension: 64, vals: 4096
+
+
+kernel execution time:  3.72391 ms
+fused time: 4.19698
+
+kernel execution time:  0.585647 ms
+sddmm time: 0.893112
+
+kernel execution time:  0.483056 ms
+sddmm ryan time: 0.79108
+
+kernel execution time:  0.567518 ms
+spmm ryan time: 0.808711
+
+kernel execution time:  0.929183 ms
+gemm time: 1.32543
+
+kernel execution time:  35.7066 ms
+taco reference time: 36.3331
+/home/min/a/kadhitha/workspace/my_taco/taco/net-repo-graph/amazon.mtx
+ref(i,m)=B(i,j)*C(i,k)*D(j,k)*F(j,l)*G(l,m);
+B1_dimension: 548551, B2_dimension: 548551, vals: 1851744
+C1_dimension: 548551, C2_dimension: 64, vals: 35107264
+D1_dimension: 548551, D2_dimension: 64, vals: 35107264
+E1_dimension: 548551, E2_dimension: 64, vals: 35107264
+G1_dimension: 548551, G2_dimension: 64, vals: 4096
+
+
+kernel execution time:  94.9377 ms
+fused time: 95.7687
+
+kernel execution time:  32.2051 ms
+sddmm time: 32.7881
+
+kernel execution time:  30.3982 ms
+sddmm ryan time: 30.95
+
+kernel execution time:  34.4172 ms
+spmm ryan time: 34.9049
+
+kernel execution time:  67.2709 ms
+gemm time: 67.8035
+
+kernel execution time:  6215.08 ms
+taco reference time: 6216.26
+
+sddmm-spmm-gemm execution
+
+-----------------------------------------
+/home/min/a/kadhitha/workspace/my_taco/taco/net-repo-graph/cora.mtx
+ref(i,m)=B(i,j)*C(i,k)*D(j,k)*F(j,l)*G(l,m);
+B1_dimension: 2708, B2_dimension: 2708, vals: 5429
+C1_dimension: 2708, C2_dimension: 64, vals: 173312
+D1_dimension: 2708, D2_dimension: 64, vals: 173312
+E1_dimension: 2708, E2_dimension: 64, vals: 173312
+G1_dimension: 2708, G2_dimension: 64, vals: 4096
+
+
+kernel execution time:  6.99173 ms
+fused time: 7.86448
+
+kernel execution time:  0.78061 ms
+sddmm time: 1.28867
+
+kernel execution time:  0.554227 ms
+sddmm ryan time: 0.837111
+
+kernel execution time:  0.909912 ms
+spmm ryan time: 1.12908
+
+kernel execution time:  7.60724 ms
+gemm time: 7.85047
+
+kernel execution time:  652.888 ms
+taco reference time: 653.271
+/home/min/a/kadhitha/workspace/my_taco/taco/net-repo-graph/amazon.mtx
+ref(i,m)=B(i,j)*C(i,k)*D(j,k)*F(j,l)*G(l,m);
+B1_dimension: 548551, B2_dimension: 548551, vals: 1851744
+C1_dimension: 548551, C2_dimension: 64, vals: 35107264
+D1_dimension: 548551, D2_dimension: 64, vals: 35107264
+E1_dimension: 548551, E2_dimension: 64, vals: 35107264
+G1_dimension: 548551, G2_dimension: 64, vals: 4096
+
+
+kernel execution time:  1236.33 ms
+fused time: 1236.87
+
+kernel execution time:  249.805 ms
+sddmm time: 250.356
+
+kernel execution time:  247.195 ms
+sddmm ryan time: 247.729
+
+kernel execution time:  285.764 ms
+spmm ryan time: 286.235
+
+kernel execution time:  1529.34 ms
+gemm time: 1529.83
+
+kernel execution time:  190620 ms
+taco reference time: 190621
+
+sddmm-spmm-gemm execution
+
+-----------------------------------------
+/home/min/a/kadhitha/workspace/my_taco/taco/net-repo-graph/cora.mtx
+ref(i,m)=B(i,j)*C(i,k)*D(j,k)*F(j,l)*G(l,m);
+B1_dimension: 2708, B2_dimension: 2708, vals: 5429
+C1_dimension: 2708, C2_dimension: 64, vals: 173312
+D1_dimension: 2708, D2_dimension: 64, vals: 173312
+E1_dimension: 2708, E2_dimension: 64, vals: 173312
+G1_dimension: 2708, G2_dimension: 64, vals: 4096
+
+
+kernel execution time:  1.86163 ms
+fused time: 2.34746
+
+kernel execution time:  0.542927 ms
+sddmm time: 1.05528
+
+kernel execution time:  0.541998 ms
+sddmm ryan time: 1.07672
+
+kernel execution time:  0.524767 ms
+spmm ryan time: 0.944293
+
+kernel execution time:  0.75947 ms
+gemm time: 1.2162
+
+kernel execution time:  36.3755 ms
+taco reference time: 37.0989
+
+sddmm-spmm-gemm execution
+
+-----------------------------------------
+/home/min/a/kadhitha/workspace/my_taco/taco/net-repo-graph/cora.mtx
+ref(i,m)=B(i,j)*C(i,k)*D(j,k)*F(j,l)*G(l,m);
+B1_dimension: 2708, B2_dimension: 2708, vals: 5429
+C1_dimension: 2708, C2_dimension: 64, vals: 173312
+D1_dimension: 2708, D2_dimension: 64, vals: 173312
+E1_dimension: 2708, E2_dimension: 64, vals: 173312
+G1_dimension: 2708, G2_dimension: 64, vals: 4096
+
+
+kernel execution time:  1.97375 ms
+fused time: 2.84436
+
+kernel execution time:  0.881212 ms
+sddmm time: 1.38907
+
+kernel execution time:  0.545557 ms
+sddmm ryan time: 1.0807
+
+kernel execution time:  0.548488 ms
+spmm ryan time: 0.978813
+
+kernel execution time:  0.72955 ms
+gemm time: 1.2023
+
+kernel execution time:  34.867 ms
+taco reference time: 35.5819
+
+sddmm-spmm-gemm execution
+
+-----------------------------------------
+/home/min/a/kadhitha/workspace/my_taco/taco/net-repo-graph/cora.mtx
+ref(i,m)=B(i,j)*C(i,k)*D(j,k)*F(j,l)*G(l,m);
+B1_dimension: 2708, B2_dimension: 2708, vals: 5429
+C1_dimension: 2708, C2_dimension: 64, vals: 173312
+D1_dimension: 2708, D2_dimension: 64, vals: 173312
+E1_dimension: 2708, E2_dimension: 64, vals: 173312
+G1_dimension: 2708, G2_dimension: 64, vals: 4096
+
+
+kernel execution time:  1.69165 ms
+fused time: 2.2114
+
+kernel execution time:  0.908102 ms
+sddmm time: 1.19792
+
+kernel execution time:  0.513137 ms
+sddmm ryan time: 0.807571
+
+kernel execution time:  0.510327 ms
+spmm ryan time: 0.76134
+
+kernel execution time:  0.803101 ms
+gemm time: 1.0684
+
+kernel execution time:  45.9784 ms
+taco reference time: 46.3901
+
+sddmm-spmm-gemm execution
+
+-----------------------------------------
+/home/min/a/kadhitha/workspace/my_taco/taco/net-repo-graph/cora.mtx
+ref(i,m)=B(i,j)*C(i,k)*D(j,k)*F(j,l)*G(l,m);
+B1_dimension: 2708, B2_dimension: 2708, vals: 5429
+C1_dimension: 2708, C2_dimension: 64, vals: 173312
+D1_dimension: 2708, D2_dimension: 64, vals: 173312
+E1_dimension: 2708, E2_dimension: 64, vals: 173312
+G1_dimension: 2708, G2_dimension: 64, vals: 4096
+
+
+kernel execution time:  1.82354 ms
+fused time: 2.81223
+
+kernel execution time:  0.926052 ms
+sddmm time: 1.48292
+
+kernel execution time:  0.564157 ms
+sddmm ryan time: 1.14611
+
+kernel execution time:  0.512447 ms
+spmm ryan time: 0.925102
+
+kernel execution time:  0.689109 ms
+gemm time: 1.08196
+
+kernel execution time:  34.7847 ms
+taco reference time: 35.4182
+
+sddmm-spmm-gemm execution
+
+-----------------------------------------
+/home/min/a/kadhitha/workspace/my_taco/taco/net-repo-graph/cora.mtx
+ref(i,m)=B(i,j)*C(i,k)*D(j,k)*F(j,l)*G(l,m);
+B1_dimension: 2708, B2_dimension: 2708, vals: 5429
+C1_dimension: 2708, C2_dimension: 64, vals: 173312
+D1_dimension: 2708, D2_dimension: 64, vals: 173312
+E1_dimension: 2708, E2_dimension: 64, vals: 173312
+G1_dimension: 2708, G2_dimension: 64, vals: 4096
+
+
+kernel execution time:  6.8174 ms
+fused time: 7.69061
+
+kernel execution time:  0.935843 ms
+sddmm time: 1.46847
+
+kernel execution time:  0.612468 ms
+sddmm ryan time: 0.880662
+
+kernel execution time:  0.831351 ms
+spmm ryan time: 1.05745
+
+kernel execution time:  7.58342 ms
+gemm time: 7.82297
+
+kernel execution time:  566.881 ms
+taco reference time: 567.264

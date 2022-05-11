@@ -38,6 +38,20 @@ void ASSERT_TENSOR_EQ(TensorBase expected, TensorBase actual) {
   ASSERT_TRUE(equals(expected, actual));
 }
 
+// void ASSERT_TENSOR_VAL(TensorBase expected, TensorBase actual) {
+//   std::cout << "order: " << expected.getOrder();
+//   std::vector<int> modes{};
+//   for (int mode = 0; mode < expected.getOrder(); mode++) {
+//     if (expected.getDimension(mode) != actual.getDimension(mode)) {
+//       ASSERT_TRUE(false);
+//     }
+
+//     for (int i=0; i<expected.getDimension(mode); i++) {
+//       std::cout << expected(i) << " " << actual(i) << std::endl;
+//     }
+//   }
+// }
+
 std::string testDirectory() {
   return TO_STRING(TACO_TEST_DIR);
 }

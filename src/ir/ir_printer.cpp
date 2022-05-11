@@ -35,11 +35,7 @@ IRPrinter::IRPrinter(ostream &s) : IRPrinter(s, false, false) {
 }
 
 IRPrinter::IRPrinter(ostream &s, bool color, bool simplify)
-    : stream(s), stream2(s), indent(0), color(color), simplify(simplify) {
-}
-
-IRPrinter::IRPrinter(ostream &s, ostream &s2, bool color, bool simplify)
-    : stream(s), stream2(s2), indent(0), color(color), simplify(simplify) {
+    : stream(s), indent(0), color(color), simplify(simplify) {
 }
 
 IRPrinter::~IRPrinter() {
@@ -425,10 +421,6 @@ void IRPrinter::visit(const For* op) {
   stream << "}";
   stream << endl;    
 
-}
-
-void IRPrinter::sendToStream(std::stringstream &stream) {
-  this->stream << stream.str();
 }
 
 void IRPrinter::visit(const While* op) {

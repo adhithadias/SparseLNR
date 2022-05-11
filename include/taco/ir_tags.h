@@ -9,7 +9,7 @@ namespace taco {
 /// ParallelUnit::GPUWarp can be optionally used to allow for GPU warp-level primitives
 /// ParallelUnit::GPUThread causes for every iteration to be executed on a separate GPU thread
 enum class ParallelUnit {
-  NotParallel, DefaultUnit, GPUBlock, GPUWarp, GPUThread, CPUThread, CPUVector, CPUThreadGroupReduction, GPUBlockReduction, GPUWarpReduction, CPUSimd, CPUSpmd
+  NotParallel, DefaultUnit, GPUBlock, GPUWarp, GPUThread, CPUThread, CPUVector, CPUThreadGroupReduction, GPUBlockReduction, GPUWarpReduction
 };
 extern const char *ParallelUnit_NAMES[];
 

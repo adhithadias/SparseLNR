@@ -31,15 +31,6 @@ shared_ptr<CodeGen> CodeGen::init_default(std::ostream &dest, OutputKind outputK
   }
 }
 
-shared_ptr<CodeGen> CodeGen::init_default(std::ostream &dest, std::ostream &dest2, OutputKind outputKind) {
-  if (should_use_CUDA_codegen()) {
-    return make_shared<CodeGen_CUDA>(dest, outputKind);
-  }
-  else {
-    return make_shared<CodeGen_C>(dest, outputKind);
-  }
-}
-
 int CodeGen::countYields(const Function *func) {
   struct CountYields : public IRVisitor {
     int yields = 0;

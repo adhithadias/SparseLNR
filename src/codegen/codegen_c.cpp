@@ -242,9 +242,6 @@ protected:
 
 CodeGen_C::CodeGen_C(std::ostream &dest, OutputKind outputKind, bool simplify)
     : CodeGen(dest, false, simplify, C), out(dest), out2(dest), outputKind(outputKind) {}
-  
-CodeGen_C::CodeGen_C(std::ostream &dest, std::ostream &dest2, OutputKind outputKind, bool simplify)
-    : CodeGen(dest, dest2, false, simplify, C), out(dest), out2(dest2), outputKind(outputKind) {}
 
 CodeGen_C::~CodeGen_C() {}
 

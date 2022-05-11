@@ -646,7 +646,6 @@ void CodeGen_CUDA::printDeviceFunctions(const Function* func) {
   // Collect device functions
   resetUniqueNameCounters();
   deviceFunctionLoopDepth = 0;
-  // here they calculate the device FunctionCollecor
   DeviceFunctionCollector deviceFunctionCollector(func->inputs, func->outputs, this);
   func->body.accept(&deviceFunctionCollector);
   deviceFunctions = deviceFunctionCollector.blockFors;

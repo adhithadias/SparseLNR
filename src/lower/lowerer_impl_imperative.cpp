@@ -1,6 +1,4 @@
 #include <taco/lower/mode_format_compressed.h>
-#include "taco/cuda.h"
-#include "taco/ir_tags.h"
 #include "taco/lower/lowerer_impl_imperative.h"
 #include "taco/lower/lowerer_impl.h"
 
@@ -591,7 +589,6 @@ Stmt LowererImplImperative::lowerForall(Forall forall)
 {
   bool hasExactBound = provGraph.hasExactBound(forall.getIndexVar());
   bool forallNeedsUnderivedGuards = !hasExactBound && emitUnderivedGuards;
-
   if (!ignoreVectorize && forallNeedsUnderivedGuards &&
       (forall.getParallelUnit() == ParallelUnit::CPUVector ||
        forall.getUnrollFactor() > 0)) {
@@ -833,7 +830,6 @@ Stmt LowererImplImperative::lowerForall(Forall forall)
     parallelUnitIndexVars.erase(forall.getParallelUnit());
     parallelUnitSizes.erase(forall.getParallelUnit());
   }
-
   return Block::blanks(preInitValues,
                        temporaryValuesInitFree[0],
                        loops,
@@ -1505,7 +1501,6 @@ Stmt LowererImplImperative::lowerForallFusedPosition(Forall forall, Iterator ite
            && forall.getOutputRaceStrategy() != OutputRaceStrategy::ParallelReduction && !ignoreVectorize) {
     kind = LoopKind::Runtime;
   }
-
   // Loop with preamble and postamble
   return Block::blanks(boundsCompute,
                        Block::make(Block::make(searchForUnderivedStart),
@@ -1768,7 +1763,6 @@ Stmt LowererImplImperative::lowerForallBody(Expr coordinate, IndexStmt stmt,
                                   vector<Iterator> inserters,
                                   vector<Iterator> appenders,
                                   const set<Access>& reducedAccesses) {
-  
   Stmt initVals = resizeAndInitValues(appenders, reducedAccesses);
 
   // Inserter positions
@@ -1893,7 +1887,6 @@ vector<Stmt> LowererImplImperative::codeToInitializeDenseAcceleratorArrays(Where
     Expr p = Var::make("p" + temporary.getName(), Int());
     Stmt guardZeroInit = Store::make(alreadySetArr, p, ir::Literal::zero(bitGuardType));
 
-    // std::cout << "vector<Stmt> LowererImplImperative::codeToInitializeDenseAcceleratorArrays\n" << std::endl;
     Stmt zeroInitLoop = For::make(p, 0, bitGuardSize, 1, guardZeroInit, LoopKind::Serial);
     Stmt inits = Block::make(alreadySetDecl, indexListDecl, allocateAlreadySet, allocateIndexList, zeroInitLoop);
     return {inits, freeTemps};
@@ -2124,6 +2117,8 @@ vector<Stmt> LowererImplImperative::codeToInitializeTemporary(Where where) {
         needComputeValues(where, temporary)) {
       values = ir::Var::make(temporary.getName(),
                              temporary.getType().getDataType(), true, false);
+      taco_iassert(temporary.getType().getOrder() == 1)
+          << " Temporary order was " << temporary.getType().getOrder();  // TODO
       Expr size = getTemporarySize(where);
 
       // no decl needed for shared memory
@@ -2747,7 +2742,7 @@ Stmt LowererImplImperative::initResultArrays(vector<Access> writes,
       // iteration of all the iterators is not full. We can check this by seeing if we can recover a
       // full iterator from our set of iterators.
       Expr size = generateAssembleCode() ? getCapacityVar(tensor) : parentSize;
-      result.push_back(zeroInitValues(tensor, 0, size)); // init values
+      result.push_back(zeroInitValues(tensor, 0, size));
     }
   }
   return result.empty() ? Stmt() : Block::blanks(result);
@@ -3238,7 +3233,6 @@ Stmt LowererImplImperative::codeToIncIteratorVars(Expr coordinate, IndexVar coor
   for (auto& iterator : levelIterators) {
     Expr ivar = iterator.getIteratorVar();
     if (iterator.isUnique()) {
-      std::cout << "casting \n";
       Expr increment = iterator.isFull()
                      ? 1
                      : ir::Cast::make(Eq::make(iterator.getCoordVar(),
@@ -3509,7 +3503,6 @@ Expr LowererImplImperative::generateAssembleGuard(IndexExpr expr) {
     }
 
     void visit(const CastNode* node) {
-      std::cout << "lowering to cast node\n";
       expr = lower(node->a);
     }
 

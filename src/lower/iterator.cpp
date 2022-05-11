@@ -569,9 +569,6 @@ void Iterators::createAccessIterators(Access access, Format format, Expr tensorI
                                       ProvenanceGraph provGraph,
                                       const map<TensorVar, Expr> &tensorVars) {
   TensorVar tensorConcrete = access.getTensorVar();
-  cout << "tensor: " << tensorConcrete << " " ;
-  cout << "tensorConcrete order: " << tensorConcrete.getOrder();
-  cout << ", format order: " << format.getOrder() << endl;
   taco_iassert(tensorConcrete.getOrder() == format.getOrder())
       << tensorConcrete << ", Format" << format;
   Shape shape = tensorConcrete.getType().getShape();

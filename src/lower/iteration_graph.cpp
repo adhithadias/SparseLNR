@@ -48,8 +48,6 @@ struct IterationGraph::Content {
 IterationGraph::IterationGraph() {
 }
 
-// remember that iteration graph does not have an ordering
-// I got the ordering from topologically reorder index Ryan wrote
 IterationGraph IterationGraph::make(Assignment assignment) {
   TensorVar tensor = assignment.getLhs().getTensorVar();
   IndexExpr expr = assignment.getRhs();
@@ -68,14 +66,7 @@ IterationGraph IterationGraph::make(Assignment assignment) {
 
   // access nodes of right hand side
   match(expr,
-    function<void(const AccessNode*)>([&](const AccessNode* op) {
-      std::cout << "access node: " << op->tensorVar << " <- " << IndexExpr(op) << std::endl;
-      std::cout << "index var: ";
-      for (auto indexVar : op->indexVars) {
-        std::cout << indexVar << " ";
-      }
-      std::cout << std::endl;
-      
+    function<void(const AccessNode*)>([&](const AccessNode* op) {      
       auto type = op->tensorVar.getType();
       taco_iassert((size_t)type.getShape().getOrder() == op->indexVars.size())
           << "Tensor access " << IndexExpr(op) << " but tensor format only has "

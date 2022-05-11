@@ -16,7 +16,6 @@ public:
   /// Initialize a code generator that generates code to an
   /// output stream.
   CodeGen_C(std::ostream &dest, OutputKind outputKind, bool simplify=true);
-  CodeGen_C(std::ostream &dest, std::ostream &dest2, OutputKind outputKind, bool simplify=true);
   ~CodeGen_C();
 
   /// Compile a lowered function
@@ -46,7 +45,6 @@ protected:
   std::map<Expr, std::string, ExprCompare> varMap;
   std::vector<Expr> localVars;
   std::ostream &out;
-  std::ostream &out2;
   int count = 0;
   
   OutputKind outputKind;

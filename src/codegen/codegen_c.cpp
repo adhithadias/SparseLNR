@@ -241,7 +241,7 @@ protected:
 };
 
 CodeGen_C::CodeGen_C(std::ostream &dest, OutputKind outputKind, bool simplify)
-    : CodeGen(dest, false, simplify, C), out(dest), out2(dest), outputKind(outputKind) {}
+    : CodeGen(dest, false, simplify, C), out(dest), outputKind(outputKind) {}
 
 CodeGen_C::~CodeGen_C() {}
 
@@ -300,17 +300,14 @@ void CodeGen_C::visit(const Function* func) {
 
   // Print variable declarations
   out << printDecls(varFinder.varDecls, func->inputs, func->outputs) << endl;
-  // out << "printf(\"declarations added\\n\");" << std::endl;
 
   if (emittingCoroutine) {
     out << printContextDeclAndInit(varMap, localVars, numYields, func->name)
         << endl;
   }
-  // out << "printf(\"declarations added2\\n\");" << std::endl;
 
   // output body
   print(func->body);
-  // out << "printf(\"function body added " << count++ << "\\n\"); // " << std::endl;
 
 
   // output repack only if we allocated memory
@@ -409,8 +406,6 @@ static string getAtomicPragma() {
 // http://clang.llvm.org/docs/LanguageExtensions.html#extensions-for-loop-hint-optimizations
 void CodeGen_C::visit(const For* op) {
 
-  // out << "    printf(\"adding for loop " << count++ << "\\n\"); //" << std::endl;
-
   switch (op->kind) {
     case LoopKind::Vectorized:
       doIndent();
@@ -460,14 +455,6 @@ void CodeGen_C::visit(const For* op) {
   }
   stream << ") {\n";
 
-  // out << "  printf(\"loop " << count++ << " : %d  , dim: %d, %d\\n\",";
-  // op->var.accept(this);
-  // out << ", ";
-  // op->start.accept(this);
-  // out << ", ";
-  // op->end.accept(this);
-  // out << "); // " << count++ << std::endl;
-
   op->contents.accept(this);
   doIndent();
   stream << "}";
@@ -488,7 +475,6 @@ void CodeGen_C::visit(const While* op) {
 }
 
 void CodeGen_C::visit(const GetProperty* op) {
-  // std::cout << "GetProperty* " << op << std::endl;
   taco_iassert(varMap.count(op) > 0) <<
       "Property " << Expr(op) << " of " << op->tensor << " not found in varMap";
   out << varMap[op];

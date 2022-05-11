@@ -1,7 +1,6 @@
 #ifndef TACO_UTIL_STRINGS_H
 #define TACO_UTIL_STRINGS_H
 
-#include "taco/cuda.h"
 #include <string>
 #include <sstream>
 #include <vector>

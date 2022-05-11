@@ -229,6 +229,49 @@ string CodeGen::printTensorProperty(string varname, const GetProperty* op, bool 
   return ret.str();
 }
 
+string CodeGen::getUnpackedTensorArgument(string varname, const GetProperty* op,
+                            bool is_output_prop) {
+  stringstream ret;
+  ret << "";
+
+  auto tensor = op->tensor.as<Var>();
+  if (op->property == TensorProperty::Values) {
+    // for the values, it's in the last slot
+    ret << "uniform " << printType(tensor->type, false) << " " << varname << "[]";
+    return ret.str();
+  } else if (op->property == TensorProperty::ValuesSize) {
+    ret << "int32 " << varname;
+    return ret.str();
+  }
+
+  // for a Dense level, nnz is an int
+  // for a Fixed level, ptr is an int
+  // all others are int*
+  if (op->property == TensorProperty::Dimension) {
+    if (op->type == Int32) {
+      ret << "uniform int32 ";
+    } else if (op->type == Int64) {
+      ret << "uniform int64 ";
+    } else {
+      ret << "int ";
+    }
+    ret << varname;
+    
+  } else {
+    taco_iassert(op->property == TensorProperty::Indices);
+    if (op->type == Int32) {
+      ret << "uniform int32 ";
+    } else if (op->type == Int64) {
+      ret << "uniform int64 ";
+    } else {
+      ret << "uniform int ";
+    }
+    ret << varname << "[]";
+  }
+
+  return ret.str();
+}
+
 string CodeGen::unpackTensorProperty(string varname, const GetProperty* op,
                             bool is_output_prop) {
   stringstream ret;
@@ -310,13 +353,9 @@ string CodeGen::pointTensorProperty(std::string varname) {
   return ret.str();
 }
 
-// helper to print declarations
-string CodeGen::printDecls(map<Expr, string, ExprCompare> varMap,
-                           vector<Expr> inputs, vector<Expr> outputs) {
-  stringstream ret;
-  unordered_set<string> propsAlreadyGenerated;
-
-  vector<const GetProperty*> sortedProps;
+void CodeGen::getSortedProps(map<Expr, string, ExprCompare> &varMap,
+              vector<const GetProperty*> &sortedProps, vector<Expr> &inputs,
+              vector<Expr> &outputs) {
 
   for (auto const& p: varMap) {
     if (p.first.as<GetProperty>())
@@ -355,6 +394,17 @@ string CodeGen::printDecls(map<Expr, string, ExprCompare> varMap,
          return a->index < b->index;
        });
 
+}
+
+// helper to print declarations
+string CodeGen::printDecls(map<Expr, string, ExprCompare> varMap,
+                           vector<Expr> inputs, vector<Expr> outputs) {
+  stringstream ret;
+  unordered_set<string> propsAlreadyGenerated;
+
+  vector<const GetProperty*> sortedProps;
+  getSortedProps(varMap, sortedProps, inputs, outputs);
+
   for (auto prop: sortedProps) {
     bool isOutputProp = (find(outputs.begin(), outputs.end(),
                               prop->tensor) != outputs.end());
@@ -374,7 +424,6 @@ string CodeGen::printDecls(map<Expr, string, ExprCompare> varMap,
 
   return ret.str();
 }
-
 
 string CodeGen::printPack(map<tuple<Expr, TensorProperty, int, int>,
         string> outputProperties, vector<Expr> outputs) {

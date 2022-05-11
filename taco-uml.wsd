@@ -1,0 +1,411 @@
+@startuml taco
+scale 1
+
+
+class IntrusivePtr {
+    +T *ptr
+}
+class Uncopyable {}
+
+class IRNode {
+    +virtual void accept(IRVisitorStrict *v) const = 0
+    +virtual IRNodeType type_info() const = 0;
+}
+
+class BaseStmtNode {}
+class BaseExprNode {
+    +Datatype type
+}
+
+class StmtNode {
+    +void accept(IRVisitorStrict *v) const
+}
+class ExprNode {
+    +void accept(IRVisitorStrict *v) const
+}
+
+Uncopyable <|-- IRNode
+IRNode <|-- BaseStmtNode
+IRNode <|-- BaseExprNode
+BaseStmtNode <|-- StmtNode
+BaseExprNode <|-- ExprNode
+
+class IRHandle {
+    +void accept(IRVisitorStrict *v) const
+}
+class Expr {}
+class Stmt {}
+
+IntrusivePtr <|-- IRHandle
+IRHandle <|-- Expr
+IRHandle <|-- Stmt
+
+IRHandle "1" *-- "1" IRNode : contains
+
+
+
+' this class is abstract but plantuml version does not support interface keyword
+interface IRVisitorStrict {
+    +virtual void visit(const IRNode*) const = 0
+}
+
+/' 
+IRVisitor is not an interface or abstract because it 
+has not pure virtual methods
+'/
+class IRVisitor {
+    +virtual void visit(const IRNode*)
+}
+
+class IRRewriter {
+    ' protected fields and methods
+    #Expr expr 
+    #Stmt stmt
+
+    #virtual void visit(const ExprNode* op)
+    #virtual void visit(const StmtNode* op)
+
+    ' public fields and methods
+    +Expr rewrite(Expr)
+    +Stmt rewrite(Stmt)
+}
+class IRPrinter {
+    #std::ostream &stream
+    #std::ostream &stream2
+    #int indent
+    #bool color
+    #bool simplify
+    #enum Precedence
+    #Precedence parentPrecedence = BOTTOM
+    #NameGenerator varNameGenerator
+    #scopedMap<Expr, std::String> varNames
+
+    #void doIndent()
+    #void printBinOp(Expr a, Expr b, std::string op, Precedence precedence)
+    #void fewMoreMethods()
+    
+    #virtual void visit(const ExprNode*)
+    #virtual void visit(const StmtNode*)
+
+    +setColor(bool color)
+    +print(Stmt)
+}
+class IRVerifier {}
+
+IRVisitorStrict <|-- IRVisitor
+IRVisitorStrict <|-- IRPrinter
+IRVisitorStrict <|-- IRRewriter
+IRVisitor <|-- IRVerifier
+
+' Inheritance from IRRewriter
+' simplifier for ir::Expr
+class ExpressionSimplifier {}
+IRRewriter <|-- ExpressionSimplifier
+
+' simplifiers for ir::Stmt
+class RemoveRedundantStatements {}
+class RemoveRedundantLoops {}
+class RemoveDuplicateBody {}
+
+IRRewriter <|-- RemoveRedundantStatements
+IRRewriter <|-- RemoveRedundantLoops
+IRRewriter <|-- RemoveDuplicateBody
+
+
+' Inheritance from IRPrinter
+class CodeGen {}
+class CodeGen_C {}
+class CodeGen_CUDA {}
+class CodeGen_ISPC {
+    -class FindVars
+}
+
+class FindVars {}
+
+IRPrinter <|-- CodeGen
+CodeGen <|-- CodeGen_C
+CodeGen <|-- CodeGen_ISPC
+CodeGen <|-- CodeGen_CUDA
+
+IRVisitor <|-- FindVars
+CodeGen_ISPC +-- FindVars
+
+class Manageable {}
+class IndexStmtNode {
+    -virtual void accept(IndexStmtVisitorStrict*) const = 0
+}
+class IndexExprNode {
+    -virtual void accept(IndexStmtVisitorStrict*) const = 0
+}
+
+
+Manageable <|-- IndexStmtNode
+Uncopyable <|-- IndexStmtNode
+Manageable <|-- IndexExprNode
+Uncopyable <|-- IndexExprNode
+
+class IndexStmt {}
+class IndexExpr {}
+
+IntrusivePtr <|-- IndexStmt
+IndexStmt "1" *-- "1" IndexStmtNode
+IntrusivePtr <|-- IndexExpr
+IndexExpr "1" *-- "1" IndexExprNode
+
+
+abstract class IndexExprVisitorStrict {
+    +void visit(const IndexStmt&)
+    +virtual void visit(const AccessNode*) = 0
+    +virtual void visit(const LiteralNode*) = 0
+    +virtual void visit(const NegNode*) = 0
+    +virtual void visit(const AddNode*) = 0
+    +virtual void visit(const SubNode*) = 0
+    +virtual void visit(const MulNode*) = 0
+    +virtual void visit(const DivNode*) = 0
+    +virtual void visit(const SqrtNode*) = 0
+    +virtual void visit(const CastNode*) = 0
+    +virtual void visit(const CallIntrinsicNode*) = 0
+    +virtual void visit(const ReductionNode*) = 0
+}
+abstract class IndexStmtVisitorStrict {
+    +void visit(const IndexStmt&)
+    +virtual void visit(const AssignmentNode*) = 0
+    +virtual void visit(const YieldNode*) = 0
+    +virtual void visit(const ForallNode*) = 0
+    +virtual void visit(const WhereNode*) = 0
+    +virtual void visit(const SequenceNode*) = 0
+    +virtual void visit(const AssembleNode*) = 0
+    +virtual void visit(const MultiNode*) = 0
+    +virtual void visit(const SuchThatNode*) = 0
+}
+
+abstract class IndexNotationVisitorStrict {}
+class IndexNotationPrinter {
+    +void print(const IndexExpr& expr)
+    +void print(const IndexStmt& expr)
+
+    ' Index Expressions visit()
+    +void visit(const AccessNode* node)
+    +void visit(const LiteralNode* node)
+    + void visit(const NegNode* node)
+    + void visit(const AddNode* node)
+    + void visit(const SubNode* node)
+    + void visit(const MulNode* node)
+    + void visit(const DivNode* node)
+    + void visit(const SqrtNode* node)
+    + void visit(const CastNode* node)
+    + void visit(const CallIntrinsicNode* node)
+    + void visit(const UnaryExprNode* node)
+    + void visit(const BinaryExprNode* node)
+    + void visit(const ReductionNode* node)
+
+    ' Index Statement visit()
+    + void visit(const AssignmentNode* node)
+    + void visit(const YieldNode* node)
+    + void visit(const ForallNode* node)
+    + void visit(const WhereNode* node)
+    + void visit(const SequenceNode* node)
+    + void visit(const AssembleNode* node)
+    + void visit(const MultiNode* node)
+    + void visit(const SuchThatNode* node)
+}
+class IndexNotationVisitor {
+    ' Index Expressions visit()
+    +virtual void visit(const AccessNode* node)
+    +virtual void visit(const LiteralNode* node)
+    +virtual void visit(const NegNode* node)
+    +virtual void visit(const AddNode* node)
+    +virtual void visit(const SubNode* node)
+    +virtual void visit(const MulNode* node)
+    +virtual void visit(const DivNode* node)
+    +virtual void visit(const SqrtNode* node)
+    +virtual void visit(const CastNode* node)
+    +virtual void visit(const CallIntrinsicNode* node)
+    +virtual void visit(const UnaryExprNode* node)
+    +virtual void visit(const BinaryExprNode* node)
+    +virtual void visit(const ReductionNode* node)
+
+    ' Index Statement visit()
+    +virtual void visit(const AssignmentNode* node)
+    +virtual void visit(const YieldNode* node)
+    +virtual void visit(const ForallNode* node)
+    +virtual void visit(const WhereNode* node)
+    +virtual void visit(const SequenceNode* node)
+    +virtual void visit(const AssembleNode* node)
+    +virtual void visit(const MultiNode* node)
+    +virtual void visit(const SuchThatNode* node)
+}
+class Matcher {
+
+}
+
+abstract class IndexExprRewriterStrict {
+    +IndexExpr rewrite(IndexExpr)
+
+    #IndexExpr expr
+
+    #virtual void visit(const AccessNode* op) = 0
+    #virtual void visit(const LiteralNode* op) = 0
+    #virtual void visit(const NegNode* op) = 0
+    #virtual void visit(const SqrtNode* op) = 0
+    #virtual void visit(const AddNode* op) = 0
+    #virtual void visit(const SubNode* op) = 0
+    #virtual void visit(const MulNode* op) = 0
+    #virtual void visit(const DivNode* op) = 0
+    #virtual void visit(const CastNode* op) = 0
+    #virtual void visit(const CallIntrinsicNode* op) = 0
+    #virtual void visit(const ReductionNode* op) = 0
+}
+abstract class IndexStmtRewriterStrict {
+    +IndexStmt rewrite(IndexStmt)
+
+    #IndexStmt stmt
+
+    #virtual void visit(const AssignmentNode* op) = 0
+    #virtual void visit(const YieldNode* op) = 0
+    #virtual void visit(const ForallNode* op) = 0
+    #virtual void visit(const WhereNode* op) = 0
+    #virtual void visit(const SequenceNode* op) = 0
+    #virtual void visit(const AssembleNode* op) = 0
+    #virtual void visit(const MultiNode* op) = 0
+    #virtual void visit(const SuchThatNode* op) = 0
+}
+abstract class IndexNotationRewriterStrict {}
+class IndexNotationRewriter {
+    ' Index Expressions visit()
+    +virtual void visit(const AccessNode* node)
+    +virtual void visit(const LiteralNode* node)
+    +virtual void visit(const NegNode* node)
+    +virtual void visit(const AddNode* node)
+    +virtual void visit(const SubNode* node)
+    +virtual void visit(const MulNode* node)
+    +virtual void visit(const DivNode* node)
+    +virtual void visit(const SqrtNode* node)
+    +virtual void visit(const CastNode* node)
+    +virtual void visit(const CallIntrinsicNode* node)
+    +virtual void visit(const UnaryExprNode* node)
+    +virtual void visit(const BinaryExprNode* node)
+    +virtual void visit(const ReductionNode* node)
+
+    ' Index Statement visit()
+    +virtual void visit(const AssignmentNode* node)
+    +virtual void visit(const YieldNode* node)
+    +virtual void visit(const ForallNode* node)
+    +virtual void visit(const WhereNode* node)
+    +virtual void visit(const SequenceNode* node)
+    +virtual void visit(const AssembleNode* node)
+    +virtual void visit(const MultiNode* node)
+    +virtual void visit(const SuchThatNode* node)
+}
+
+
+IndexExprVisitorStrict <|-- IndexNotationVisitorStrict
+IndexStmtVisitorStrict <|-- IndexNotationVisitorStrict
+IndexNotationVisitorStrict <|-- IndexNotationVisitor
+IndexNotationVisitorStrict <|-- IndexNotationPrinter
+IndexNotationVisitor <|-- Matcher
+
+IndexExprVisitorStrict <|-- IndexExprRewriterStrict
+IndexStmtVisitorStrict <|-- IndexStmtRewriterStrict
+IndexExprRewriterStrict <|-- IndexNotationRewriterStrict
+IndexStmtRewriterStrict <|-- IndexNotationRewriterStrict
+
+IndexNotationRewriterStrict <|-- IndexNotationRewriter
+
+' - private
+' # protected
+' ~ package private
+' + public
+
+' {static}
+' {abstract} virtual methods
+
+' lowering part -- convertion from IndexExpr and IndexStmt to ir::Expr and ir::Stmt
+class Lowerer {
+    +std::shared_ptr<LowererImpl> impl;
+}
+abstract class LowererImpl {
+    ' protected fields and methods
+    #class Visitor;
+    #friend class Visitor;
+    #std::shared_ptr<Visitor> visitor;
+
+    #virtual ir::Stmt lower(IndexStmt stmt);
+    #virtual ir::Expr lower(IndexExpr expr);
+
+    #virtual ir::Expr lowerExpr(IndexExpr expr) = 0;
+    #virtual ir::Stmt lowerStmt(IndexStmt stmt) = 0;
+
+    ' public fields and methods
+    +virtual ir::Stmt lower(IndexStmt stmt, std::string name, 
+                 bool assemble, bool compute, bool pack, bool unpack) = 0;
+}
+
+class LowererImplImperative {
+    ' private fields and methods
+    -class Visitor
+    -fiend class Visitor
+    -std::shared_ptr<Visitor> visitor
+    -bool assemble
+    -bool compute
+    -vars a_bunch_of_other_fields
+
+    ' protected fields and methods
+    #virtual ir::Stmt lowerExpr(IndexExpr expr);
+    #virtual ir::Stmt lowerStmt(IndexStmt stmt);
+
+    ' public fields and methods
+    +ir::Stmt lower(IndexStmt stmt, std::string name, 
+                 bool assemble, bool compute, bool pack, bool unpack)
+
+}
+note bottom of LowererImplImperative : Stmt LowererImplImperative::lower(IndexStmt stmt) {\n  return visitor->lower(stmt);\n}
+
+Uncopyable <|-- LowererImpl
+Lowerer "1" *-- "1" LowererImpl : contains
+
+
+' visitor that does the lowering
+class Visitor {
+    ' private fields and methods
+    -LowererImpl* impl
+    -Expr expr
+    -Stmt stmt
+
+    -void visit(const AssignmentNode* node)
+    -void visit(const YieldNode* node)
+    -void visit(const ForallNode* node) 
+    -void visit(const WhereNode* node) 
+    -void visit(const MultiNode* node) 
+    -void visit(const SuchThatNode* node) 
+    -void visit(const SequenceNode* node) 
+    -void visit(const AssembleNode* node) 
+    -void visit(const AccessNode* node) 
+    -void visit(const LiteralNode* node) 
+    -void visit(const NegNode* node) 
+    -void visit(const AddNode* node) 
+    -void visit(const SubNode* node) 
+    -void visit(const MulNode* node) 
+    -void visit(const DivNode* node) 
+    -void visit(const SqrtNode* node) 
+    -void visit(const CastNode* node) 
+    -void visit(const CallIntrinsicNode* node) 
+    -void visit(const ReductionNode* node) 
+
+    ' public fields and methods
+    +Visitor(LowererImplImperative* impl)
+    +Stmt lower(IndexStmt stmt)
+    +Expr lower(IndexExpr expr)
+}
+
+note bottom of Visitor:   Stmt lower(IndexStmt stmt) {\n  this->stmt = Stmt();\n  impl->accessibleIterators.scope();\n  IndexStmtVisitorStrict::visit(stmt);\n  impl->accessibleIterators.unscope();\n  return this->stmt;\n}
+
+IndexNotationVisitorStrict <|-- Visitor
+LowererImpl "1" +-- "1" Visitor : contains
+Visitor "1" *-- "1" LowererImpl : contains
+
+LowererImpl <|-- LowererImplImperative
+LowererImplImperative "1" +-- "1" Visitor : contains
+Visitor "1" *-- "1" LowererImplImperative : contains
+
+@enduml

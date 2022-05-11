@@ -421,7 +421,6 @@ Stmt LowererImplImperative::lowerAssignment(Assignment assignment)
   Expr var = getTensorVar(result);
 
   const bool needComputeAssign = util::contains(needCompute, result);
-
   Expr rhs;
   if (needComputeAssign) {
     rhs = lower(assignment.getRhs());
@@ -817,7 +816,6 @@ Stmt LowererImplImperative::lowerForall(Forall forall)
                               forall.getStmt(), reducedAccesses);
   }
 //  taco_iassert(loops.defined());
-
   if (!generateComputeCode() && !hasStores(loops)) {
     // If assembly loop does not modify output arrays, then it can be safely
     // omitted.

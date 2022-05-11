@@ -10,6 +10,7 @@
 #include <utility>
 #include <mutex>
 
+#include "../test/util.h"
 #include "taco/cuda.h"
 #include "taco/format.h"
 #include "taco/taco_tensor_t.h"
@@ -278,6 +279,7 @@ static size_t unpackTensorData(const taco_tensor_t& tensorData,
 
 /// Pack coordinates into a data structure given by the tensor format.
 void TensorBase::pack() {
+  std::cout << "TensorBase::Pack() method\n";
   if (!needsPack()) {
     return;
   }
@@ -346,6 +348,7 @@ void TensorBase::pack() {
   taco_iassert((content->coordinateBufferUsed % content->coordinateSize) == 0);
   const size_t numCoordinates = content->coordinateBufferUsed / content->coordinateSize;
 
+  std::cout << "call helperFuncs\n";
   const auto helperFuncs = getHelperFunctions(getFormat(), getComponentType(),
                                               dimensions);
 
@@ -619,10 +622,12 @@ void TensorBase::compile() {
   IndexStmt stmt = makeConcreteNotation(makeReductionNotation(assignment));
   stmt = reorderLoopsTopologically(stmt);
   stmt = insertTemporaries(stmt);
+  std::cout << "calling parallelizeOuterLoop(stmt)\n";
   stmt = parallelizeOuterLoop(stmt);
   compile(stmt, content->assembleWhileCompute);
 }
 void TensorBase::compile(taco::IndexStmt stmt, bool assembleWhileCompute) {
+  std::cout << "TensorBase::compile\n";
   if (!needsCompile()) {
     return;
   }
@@ -802,6 +807,63 @@ void TensorBase::assemble() {
   }
 }
 
+void TensorBase::compute(std::ofstream& statfile, std::string& sofile) {
+  taco_uassert(!needsCompile()) << error::compute_without_compile;
+  // if (!needsCompute()) {
+  //   return;
+  // }
+  setNeedsCompute(false);
+  // Sync operand tensors if needed.
+  auto operands = getTensors(getAssignment().getRhs());
+  for (auto& operand : operands) {
+    // std::cout << "operand: " << operand.second << std::endl;
+    operand.second.syncValues();
+    operand.second.removeDependentTensor(*this);
+  }
+
+  auto arguments = packArguments(*this);
+
+  taco::util::TimeResults timevalue;
+  bool time                = true;
+  TOOL_BENCHMARK_TIMER2(this->content->module->callFuncPacked("compute", sofile, arguments.data()), 
+      "\nkernel execution time: ", timevalue);
+  // this->content->module->callFuncPacked("compute", arguments.data());
+
+  if (content->assembleWhileCompute) {
+    setNeedsAssemble(false);
+    taco_tensor_t* tensorData = ((taco_tensor_t*)arguments[0]);
+    content->valuesSize = unpackTensorData(*tensorData, *this);
+  }
+}
+
+void TensorBase::compute(std::ofstream& statfile) {
+  taco_uassert(!needsCompile()) << error::compute_without_compile;
+  // if (!needsCompute()) {
+  //   return;
+  // }
+  setNeedsCompute(false);
+  // Sync operand tensors if needed.
+  auto operands = getTensors(getAssignment().getRhs());
+  for (auto& operand : operands) {
+    operand.second.syncValues();
+    operand.second.removeDependentTensor(*this);
+  }
+
+  auto arguments = packArguments(*this);
+
+  taco::util::TimeResults timevalue;
+  bool time                = true;
+  TOOL_BENCHMARK_TIMER2(this->content->module->callFuncPacked("compute", arguments.data()), 
+      "\nkernel execution time: ", timevalue);
+  // this->content->module->callFuncPacked("compute", arguments.data());
+
+  if (content->assembleWhileCompute) {
+    setNeedsAssemble(false);
+    taco_tensor_t* tensorData = ((taco_tensor_t*)arguments[0]);
+    content->valuesSize = unpackTensorData(*tensorData, *this);
+  }
+}
+
 void TensorBase::compute() {
   taco_uassert(!needsCompile()) << error::compute_without_compile;
   if (!needsCompute()) {
@@ -816,7 +878,9 @@ void TensorBase::compute() {
   }
 
   auto arguments = packArguments(*this);
+  std::cout << "running the compute function from the shared library\n";
   this->content->module->callFuncPacked("compute", arguments.data());
+  std::cout << "compute function executed\n";
 
   if (content->assembleWhileCompute) {
     setNeedsAssemble(false);
@@ -951,6 +1015,7 @@ TensorBase::getHelperFunctions(const Format& format, Datatype ctype,
     }
 
     // Lower packing and iterator code.
+    std::cout << "1 Lower packing and iterator code\n";
     helperModule->addFunction(lower(packStmt, "pack", true, true));
     helperModule->addFunction(lower(iterateStmt, "iterate", false, true));
   } else {
@@ -964,12 +1029,14 @@ TensorBase::getHelperFunctions(const Format& format, Datatype ctype,
     IndexVar indexVar;
     IndexStmt assignment = (packedScalar() = bufferVector(indexVar));
     IndexStmt packStmt= makeConcreteNotation(makeReductionNotation(assignment));
+    std::cout << "2 Lower packing and iterator code\n";
     helperModule->addFunction(lower(packStmt, "pack", true, true));
 
     // Define and lower iterator code.
     IndexStmt iterateStmt = Yield({}, packedScalar());
     helperModule->addFunction(lower(iterateStmt, "iterate", false, true));
   }
+  std::cout << "Compiling the helperModule\n";
   helperModule->compile();
 
   helperFunctionsMutex.lock();

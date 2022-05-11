@@ -34,6 +34,7 @@ const string cHeaders =
   "#include <math.h>\n"
   "#include <complex.h>\n"
   "#include <string.h>\n"
+  "#include <omp.h>\n"
   "#if _OPENMP\n"
   "#include <omp.h>\n"
   "#endif\n"
@@ -308,6 +309,7 @@ void CodeGen_C::visit(const Function* func) {
   // output body
   print(func->body);
 
+
   // output repack only if we allocated memory
   if (checkForAlloc(func))
     out << endl << printPack(varFinder.outputProperties, func->outputs);
@@ -403,6 +405,7 @@ static string getAtomicPragma() {
 // Docs for vectorization pragmas:
 // http://clang.llvm.org/docs/LanguageExtensions.html#extensions-for-loop-hint-optimizations
 void CodeGen_C::visit(const For* op) {
+
   switch (op->kind) {
     case LoopKind::Vectorized:
       doIndent();

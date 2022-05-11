@@ -64,8 +64,9 @@ IterationGraph IterationGraph::make(Assignment assignment) {
     oldToSplitVar.insert({indexVar, indexVar});
   }
 
+  // access nodes of right hand side
   match(expr,
-    function<void(const AccessNode*)>([&](const AccessNode* op) {
+    function<void(const AccessNode*)>([&](const AccessNode* op) {      
       auto type = op->tensorVar.getType();
       taco_iassert((size_t)type.getShape().getOrder() == op->indexVars.size())
           << "Tensor access " << IndexExpr(op) << " but tensor format only has "

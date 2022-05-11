@@ -17,7 +17,7 @@ class Module {
 public:
   /// Create a module for some target
   Module(Target target=getTargetFromEnvironment())
-    : lib_handle(nullptr), moduleFromUserSource(false), target(target) {
+    : lib_handle(nullptr), so_lib_handle(nullptr), moduleFromUserSource(false), target(target) {
     setJITLibname();
     setJITTmpdir();
   }
@@ -44,11 +44,16 @@ public:
   /// before calling. If there's no function of this name then a nullptr is
   /// returned.
   void* getFuncPtr(std::string name);
+  void* getFuncPtr(std::string& sofile, std::string name);
 
   /// Call a raw function in this module and return the result
+  int callFuncPackedRaw(std::string name, std::string& sofile, void** args);
   int callFuncPackedRaw(std::string name, void** args);
   
   /// Call a raw function in this module and return the result
+  int callFuncPackedRaw(std::string name, std::string& sofile, std::vector<void*> args) {
+    return callFuncPackedRaw(name, sofile, args.data());
+  }
   int callFuncPackedRaw(std::string name, std::vector<void*> args) {
     return callFuncPackedRaw(name, args.data());
   }
@@ -56,6 +61,10 @@ public:
   /// Call a function using the taco_tensor_t interface and return the result
   int callFuncPacked(std::string name, void** args) {
     return callFuncPackedRaw("_shim_"+name, args);
+  }
+
+  int callFuncPacked(std::string name, std::string& sofile, void** args) {
+    return callFuncPackedRaw("_shim_"+name, sofile,args);
   }
   
   /// Call a function using the taco_tensor_t interface and return the result
@@ -72,6 +81,7 @@ private:
   std::string libname;
   std::string tmpdir;
   void* lib_handle;
+  void* so_lib_handle;
   std::vector<Stmt> funcs;
   
   // true iff the module was created from user-provided source

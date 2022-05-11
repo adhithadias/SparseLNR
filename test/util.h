@@ -4,7 +4,6 @@
 #include <iostream>
 #include <taco/index_notation/transformations.h>
 #include <codegen/codegen_c.h>
-#include <codegen/codegen_ispc.h>
 #include <codegen/codegen_cuda.h>
 #include <fstream>
 #include <memory>
@@ -59,7 +58,6 @@ using namespace taco;
 
 static void printToCout(IndexStmt stmt);
 static void printToFile(string filename, IndexStmt stmt);
-static void printToFile(string filename, string additional_filename, IndexStmt stmt);
 
 
 static void printToCout(IndexStmt stmt) {
@@ -83,31 +81,6 @@ void printToFile(string filename, IndexStmt stmt) {
   source_file.open(file_path + filename + file_ending);
   source_file << source.str();
   source_file.close();
-}
-
-void printToFile(string filename, string additional_filename, IndexStmt stmt) {
-  stringstream source1;
-  stringstream source2;
-
-  string file_path = "eval_generated/";
-  mkdir(file_path.c_str(), 0777);
-
-  std::shared_ptr<ir::CodeGen> codegen = ir::CodeGen::init_default(source1, source2, ir::CodeGen::ImplementationGen);
-  ir::Stmt compute = lower(stmt, "compute", false, true);
-  codegen->compile(compute, true);
-
-  ofstream source_file;
-  string file_ending = should_use_CUDA_codegen() ? ".cu" : ".c";
-  source_file.open(file_path+filename+file_ending);
-  source_file << source1.str();
-  source_file.close();
-
-  ofstream additional_source_file;
-  string additional_file_ending = ".ispc";
-  additional_source_file.open(file_path+additional_filename+additional_file_ending);
-  additional_source_file << source2.str();
-  additional_source_file.close();
-
 }
 
 #endif // __SCHEDULE_UTIL_HH__

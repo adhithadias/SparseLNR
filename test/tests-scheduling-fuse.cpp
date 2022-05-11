@@ -9,321 +9,321 @@
 #define NUM_THREADS_TO_USE 1
 // #define NUM_THREADS_TO_USE 32
 
-TEST(scheduling_eval, spmvFusedWithSyntheticData) {
-  if (should_use_CUDA_codegen()) {
-    return;
-  }
-  taco_set_num_threads(NUM_THREADS_TO_USE);
+// TEST(scheduling_eval, spmvFusedWithSyntheticData) {
+//   if (should_use_CUDA_codegen()) {
+//     return;
+//   }
+//   taco_set_num_threads(NUM_THREADS_TO_USE);
 
-  std::default_random_engine gen(0);
-  std::uniform_real_distribution<double> unif(0.0, 1.0);
+//   std::default_random_engine gen(0);
+//   std::uniform_real_distribution<double> unif(0.0, 1.0);
 
-  Format csr({dense, sparse});
-  Format  rm({dense});
+//   Format csr({dense, sparse});
+//   Format  rm({dense});
 
-  // uncomment this for reading the csr matrix saved in mtx file
-  std::cout << "reading B mat mtx\n";
+//   // uncomment this for reading the csr matrix saved in mtx file
+//   std::cout << "reading B mat mtx\n";
 
-  int NUM_I = 5; // 1021/10;
-  int NUM_J = 5; // 1039/10;
-  int NUM_K = 8;
-  float SPARSITY = .3;
-  Tensor<double> B("B", {NUM_I, NUM_J}, csr);
-  srand(75883);
-  for (int i = 0; i < NUM_I; i++) {
-    for (int j = 0; j < NUM_J; j++) {
-      float rand_float = (float)rand()/(float)(RAND_MAX);
-      if (rand_float < SPARSITY) {
-        B.insert({i, j}, (double) ((int) (rand_float*3/SPARSITY)));
-      }
-    }
-  }
-  B.pack();
-
-
-  std::cout << "B dim0: " << B.getDimension(0) << ", dim1: " << B.getDimension(1) << std::endl;
-  std::cout << "adding c mat\n";
-  Tensor<double> C("C", {NUM_J, NUM_K}, csr);
-  for (int i = 0; i < C.getDimension(0); ++i) {
-    for (int j = 0; j < C.getDimension(1); ++j) {
-      C.insert({i,j}, unif(gen));
-    }
-  }
-  std::cout << "packing C mat\n";
-  C.pack();
-
-  Tensor<double> v("v", {NUM_K}, rm);
-  for (int i = 0; i < v.getDimension(0); ++i) {
-      v.insert({i}, unif(gen));
-  }
-  std::cout << "packing D mat\n";
-  v.pack();
-
-  Tensor<double> A("A", {NUM_I}, rm);
-  Tensor<double> ref("ref", {NUM_I}, rm);
-  IndexVar i, j, k, l, m;
-  A(i) = B(i,j) * C(j,k) * v(k);
-
-  // IndexStmt stmt = A.getAssignment().concretize();
-  IndexStmt stmt = makeReductionNotation(A.getAssignment());
-  stmt = makeConcreteNotation(stmt);
-  printToFile("SpMVfused", stmt);
-  stmt = reorderLoopsTopologically(stmt);
-  stmt = loopFusionOverFission(stmt, A.getAssignment(), "f", 1);
-  stmt = insertTemporaries(stmt);
-  stmt = parallelizeOuterLoop(stmt);
-
-  A.compile(stmt);
-  // We can now call the functions taco generated to assemble the indices of the
-  // output matrix and then actually compute the MTTKRP.
-  A.assemble();
+//   int NUM_I = 5; // 1021/10;
+//   int NUM_J = 5; // 1039/10;
+//   int NUM_K = 8;
+//   float SPARSITY = .3;
+//   Tensor<double> B("B", {NUM_I, NUM_J}, csr);
+//   srand(75883);
+//   for (int i = 0; i < NUM_I; i++) {
+//     for (int j = 0; j < NUM_J; j++) {
+//       float rand_float = (float)rand()/(float)(RAND_MAX);
+//       if (rand_float < SPARSITY) {
+//         B.insert({i, j}, (double) ((int) (rand_float*3/SPARSITY)));
+//       }
+//     }
+//   }
+//   B.pack();
 
 
-  // ref(i) = B(i,j) * C(j,k) * v(k);
-  // IndexStmt refStmt = makeReductionNotation(ref.getAssignment());
-  // refStmt = makeConcreteNotation(refStmt);
-  // refStmt = insertTemporaries(refStmt);
-  // refStmt = parallelizeOuterLoop(refStmt);
-  // ref.compile(refStmt);
-  // ref.assemble();
+//   std::cout << "B dim0: " << B.getDimension(0) << ", dim1: " << B.getDimension(1) << std::endl;
+//   std::cout << "adding c mat\n";
+//   Tensor<double> C("C", {NUM_J, NUM_K}, csr);
+//   for (int i = 0; i < C.getDimension(0); ++i) {
+//     for (int j = 0; j < C.getDimension(1); ++j) {
+//       C.insert({i,j}, unif(gen));
+//     }
+//   }
+//   std::cout << "packing C mat\n";
+//   C.pack();
 
-  // Tensor<double> ref1({NUM_J}, rm);
-  // Tensor<double> ref2({NUM_I}, rm);
-  // ref1(j) = C(j,k) * v(k);
-  // ref2(i) = B(i,j) * ref1(j);
+//   Tensor<double> v("v", {NUM_K}, rm);
+//   for (int i = 0; i < v.getDimension(0); ++i) {
+//       v.insert({i}, unif(gen));
+//   }
+//   std::cout << "packing D mat\n";
+//   v.pack();
 
-  // IndexStmt ref1Stmt = makeReductionNotation(ref1.getAssignment());
-  // ref1Stmt = makeConcreteNotation(ref1Stmt);
-  // ref1Stmt = insertTemporaries(ref1Stmt);
-  // ref1Stmt = parallelizeOuterLoop(ref1Stmt);
-  // ref1.compile(ref1Stmt);
-  // ref1.assemble();
+//   Tensor<double> A("A", {NUM_I}, rm);
+//   Tensor<double> ref("ref", {NUM_I}, rm);
+//   IndexVar i, j, k, l, m;
+//   A(i) = B(i,j) * C(j,k) * v(k);
 
-  // IndexStmt ref2Stmt = makeReductionNotation(ref2.getAssignment());
-  // ref2Stmt = makeConcreteNotation(ref2Stmt);
-  // ref2Stmt = insertTemporaries(ref2Stmt);
-  // ref2Stmt = parallelizeOuterLoop(ref2Stmt);
-  // ref2.compile(ref2Stmt);
-  // ref2.assemble();
+//   // IndexStmt stmt = A.getAssignment().concretize();
+//   IndexStmt stmt = makeReductionNotation(A.getAssignment());
+//   stmt = makeConcreteNotation(stmt);
+//   printToFile("SpMVfused", stmt);
+//   stmt = reorderLoopsTopologically(stmt);
+//   stmt = loopFusionOverFission(stmt, A.getAssignment(), "f", 1);
+//   stmt = insertTemporaries(stmt);
+//   stmt = parallelizeOuterLoop(stmt);
 
-  std::cout << "compute start\n";
-  taco::util::TimeResults timevalue;
-  bool time                = true;
-  // TOOL_BENCHMARK_TIMER(ref.compute(), "\n\nReference Kernel: ", timevalue);
-  TOOL_BENCHMARK_TIMER(A.compute(), "\n\nFused Kernel: ", timevalue);
-  // ASSERT_TENSOR_EQ(ref, A);
-
-  // // check results
-  // for (int q = 0; q < A.getDimension(0); ++q) {
-  //   if ( abs(A(q) - ref(q))/abs(ref(q)) > ERROR_MARGIN) {
-  //     std::cout << "error: results don't match A("<< q << "): " 
-  //       << A(q) << ", ref: " << ref(q) << std::endl;
-  //     ASSERT_TRUE(false);
-  //   }
-  // }
-  // // ASSERT_TENSOR_EQ(A, ref);
-  // TOOL_BENCHMARK_TIMER(ref1.compute(), "\n\nSDDMM Kernel: ", timevalue);
-  // TOOL_BENCHMARK_TIMER(ref2.compute(), "\n\nSpMM Kernel: ", timevalue);
-  // ASSERT_TENSOR_EQ(ref, ref2);
-
-  // for (int q = 0; q < ref2.getDimension(0); ++q) {
-  //   for (int w = 0; w < ref2.getDimension(1); ++w) {
-  //     if ( abs(ref2(q,w) - ref(q,w))/abs(ref(q,w)) > ERROR_MARGIN) {
-  //       std::cout << "error: results don't match A("<< q << "," << w << "): " 
-  //         << ref2(q,w) << ", ref: " << ref(q,w) << std::endl;
-  //       ASSERT_TRUE(false);
-  //     }
-  //   }
-  // }
-
-}
-
-TEST(scheduling_eval, spmvFused) {
-  if (should_use_CUDA_codegen()) {
-    return;
-  }
-
-  ofstream statfile;
-  statfile.open(
-    "/home/min/a/kadhitha/workspace/my_taco/taco/test/stats/spmv-spmv.txt", std::ios::app);
-  if (statfile.is_open()) {
-    statfile << "\nspmv-spmv execution\n";
-    statfile << "\n-----------------------------------------\n";
-  }
-  taco_set_num_threads(NUM_THREADS_TO_USE);
-
-  std::default_random_engine gen(0);
-  std::uniform_real_distribution<double> unif(0.0, 1.0);
-
-  Format csr({dense, sparse});
-  Format  rm({dense});
+//   A.compile(stmt);
+//   // We can now call the functions taco generated to assemble the indices of the
+//   // output matrix and then actually compute the MTTKRP.
+//   A.assemble();
 
 
+//   // ref(i) = B(i,j) * C(j,k) * v(k);
+//   // IndexStmt refStmt = makeReductionNotation(ref.getAssignment());
+//   // refStmt = makeConcreteNotation(refStmt);
+//   // refStmt = insertTemporaries(refStmt);
+//   // refStmt = parallelizeOuterLoop(refStmt);
+//   // ref.compile(refStmt);
+//   // ref.assemble();
 
-  int filenum = 1;
+//   // Tensor<double> ref1({NUM_J}, rm);
+//   // Tensor<double> ref2({NUM_I}, rm);
+//   // ref1(j) = C(j,k) * v(k);
+//   // ref2(i) = B(i,j) * ref1(j);
 
-  std::vector<std::string> matfiles = {
-    "/home/min/a/kadhitha/ispc-examples/data/suitesparse/synthetic/synthetic.mtx",
-    "/home/min/a/kadhitha/ispc-examples/data/suitesparse/cage3/cage3.mtx",
-    "/home/min/a/kadhitha/ispc-examples/data/suitesparse/bcsstk17/bcsstk17.mtx",
-    "/home/min/a/kadhitha/ispc-examples/data/suitesparse/pdb1HYS/pdb1HYS.mtx",
-    "/home/min/a/kadhitha/ispc-examples/data/suitesparse/rma10/rma10.mtx",
-    "/home/min/a/kadhitha/ispc-examples/data/suitesparse/cant/cant.mtx", // 5
-    "/home/min/a/kadhitha/ispc-examples/data/suitesparse/consph/consph.mtx",
-    "/home/min/a/kadhitha/ispc-examples/data/suitesparse/cop20k_A/cop20k_A.mtx",
-    "/home/min/a/kadhitha/ispc-examples/data/suitesparse/shipsec1/shipsec1.mtx", // 8
-    "/home/min/a/kadhitha/ispc-examples/data/suitesparse/scircuit/scircuit.mtx",
-    "/home/min/a/kadhitha/ispc-examples/data/suitesparse/mac_econ_fwd500/mac_econ_fwd500.mtx", // 10
-    "/home/min/a/kadhitha/ispc-examples/data/suitesparse/wtk/pwtk.mtx",
-    "/home/min/a/kadhitha/ispc-examples/data/ufl/webbase-1M/webbase-1M.mtx", // 12
-    "/home/min/a/kadhitha/ispc-examples/data/suitesparse/wiki-Talk/wiki-Talk.mtx", // 13
-    "/home/min/a/kadhitha/ispc-examples/data/suitesparse/com-Orkut/com-Orkut.mtx",
-    "/home/min/a/kadhitha/ispc-examples/data/suitesparse/circuit5M/circuit5M.mtx", // 15
-    "/home/min/a/kadhitha/workspace/my_taco/FusedMM/dataset/harvard.mtx",
-    "/home/min/a/kadhitha/ispc-examples/data/suitesparse/twitter7/twitter7.mtx"
-  };
-  std::vector<std::string> matfilesrw = {
-    "/home/min/a/kadhitha/ispc-examples/data/suitesparse/rw/synthetic.mtx",
-    "/home/min/a/kadhitha/ispc-examples/data/suitesparse/rw/cage3.mtx",
-    "/home/min/a/kadhitha/ispc-examples/data/suitesparse/rw/bcsstk17.mtx",
-    "/home/min/a/kadhitha/ispc-examples/data/suitesparse/rw/pdb1HYS.mtx",
-    "/home/min/a/kadhitha/ispc-examples/data/suitesparse/rw/rma10.mtx",
-    "/home/min/a/kadhitha/ispc-examples/data/suitesparse/rw/cant.mtx",
-    "/home/min/a/kadhitha/ispc-examples/data/suitesparse/rw/consph.mtx",
-    "/home/min/a/kadhitha/ispc-examples/data/suitesparse/rw/cop20k_A.mtx",
-    "/home/min/a/kadhitha/ispc-examples/data/suitesparse/rw/shipsec1.mtx",
-    "/home/min/a/kadhitha/ispc-examples/data/suitesparse/rw/scircuit.mtx",
-    "/home/min/a/kadhitha/ispc-examples/data/suitesparse/mac_econ_fwd500/mac_econ_fwd500.mtx",
-    "/home/min/a/kadhitha/ispc-examples/data/suitesparse/wtk/pwtk.mtx",
-    "/home/min/a/kadhitha/ispc-examples/data/suitesparse/rw/webbase-1M.mtx",
-    "/home/min/a/kadhitha/ispc-examples/data/suitesparse/rw/wiki-Talk.mtx",
-    "/home/min/a/kadhitha/ispc-examples/data/suitesparse/rw/com-Orkut.mtx",
-    "/home/min/a/kadhitha/ispc-examples/data/suitesparse/rw/circuit5M.mtx",
-    "/home/min/a/kadhitha/ispc-examples/data/suitesparse/rw/harvard.mtx",
-    "/home/min/a/kadhitha/ispc-examples/data/suitesparse/rw/twitter7.mtx"
-  };
+//   // IndexStmt ref1Stmt = makeReductionNotation(ref1.getAssignment());
+//   // ref1Stmt = makeConcreteNotation(ref1Stmt);
+//   // ref1Stmt = insertTemporaries(ref1Stmt);
+//   // ref1Stmt = parallelizeOuterLoop(ref1Stmt);
+//   // ref1.compile(ref1Stmt);
+//   // ref1.assemble();
 
-  // uncomment this for reading the csr matrix saved in mtx file
-  std::cout << "reading B mat mtx\n";
+//   // IndexStmt ref2Stmt = makeReductionNotation(ref2.getAssignment());
+//   // ref2Stmt = makeConcreteNotation(ref2Stmt);
+//   // ref2Stmt = insertTemporaries(ref2Stmt);
+//   // ref2Stmt = parallelizeOuterLoop(ref2Stmt);
+//   // ref2.compile(ref2Stmt);
+//   // ref2.assemble();
 
+//   std::cout << "compute start\n";
+//   taco::util::TimeResults timevalue;
+//   bool time                = true;
+//   // TOOL_BENCHMARK_TIMER(ref.compute(), "\n\nReference Kernel: ", timevalue);
+//   TOOL_BENCHMARK_TIMER(A.compute(), "\n\nFused Kernel: ", timevalue);
+//   // ASSERT_TENSOR_EQ(ref, A);
 
-  int kDim = 8;
-  float SPARSITY = .3;
-  std::string matfile = matfiles[filenum];
-  std::cout << "reading B mat mtx\n";
-  Tensor<double> B = read(matfile, csr, true);
-  B.setName("B");
-  B.pack();
+//   // // check results
+//   // for (int q = 0; q < A.getDimension(0); ++q) {
+//   //   if ( abs(A(q) - ref(q))/abs(ref(q)) > ERROR_MARGIN) {
+//   //     std::cout << "error: results don't match A("<< q << "): " 
+//   //       << A(q) << ", ref: " << ref(q) << std::endl;
+//   //     ASSERT_TRUE(false);
+//   //   }
+//   // }
+//   // // ASSERT_TENSOR_EQ(A, ref);
+//   // TOOL_BENCHMARK_TIMER(ref1.compute(), "\n\nSDDMM Kernel: ", timevalue);
+//   // TOOL_BENCHMARK_TIMER(ref2.compute(), "\n\nSpMM Kernel: ", timevalue);
+//   // ASSERT_TENSOR_EQ(ref, ref2);
 
-  std::cout << "B dim0: " << B.getDimension(0) << ", dim1: " << B.getDimension(1) << std::endl;
-  std::cout << "adding c mat\n";
+//   // for (int q = 0; q < ref2.getDimension(0); ++q) {
+//   //   for (int w = 0; w < ref2.getDimension(1); ++w) {
+//   //     if ( abs(ref2(q,w) - ref(q,w))/abs(ref(q,w)) > ERROR_MARGIN) {
+//   //       std::cout << "error: results don't match A("<< q << "," << w << "): " 
+//   //         << ref2(q,w) << ", ref: " << ref(q,w) << std::endl;
+//   //       ASSERT_TRUE(false);
+//   //     }
+//   //   }
+//   // }
 
-  std::cout << "reading B mat mtx\n";
-  Tensor<double> C = read(matfile, csr, true);
-  C.setName("C");
-  C.pack();
+// }
 
+// TEST(scheduling_eval, spmvFused) {
+//   if (should_use_CUDA_codegen()) {
+//     return;
+//   }
 
-  Tensor<double> v("v", {C.getDimension(1)}, rm);
-  for (int i = 0; i < v.getDimension(0); ++i) {
-      v.insert({i}, unif(gen));
-  }
-  std::cout << "packing D mat\n";
-  v.pack();
+//   ofstream statfile;
+//   statfile.open(
+//     "/home/min/a/kadhitha/workspace/my_taco/taco/test/stats/spmv-spmv.txt", std::ios::app);
+//   if (statfile.is_open()) {
+//     statfile << "\nspmv-spmv execution\n";
+//     statfile << "\n-----------------------------------------\n";
+//   }
+//   taco_set_num_threads(NUM_THREADS_TO_USE);
 
-  if (statfile.is_open()) {
-    statfile 
-      << "A(i) = B(i,j) * C(j,k) * v(k);" << std::endl
-      << "B1_dimension: " << B.getDimension(0) << ", B2_dimension: " << B.getDimension(1) << ", vals: " << B.getStorage().getValues().getSize() << std::endl
-      << "C1_dimension: " << C.getDimension(0) << ", C2_dimension: " << C.getDimension(1) << ", vals: " << C.getStorage().getValues().getSize() << std::endl
-      << "D1_dimension: " << v.getDimension(0) << ", vals: " << v.getStorage().getValues().getSize() << std::endl
-      << std::endl;
-  }
+//   std::default_random_engine gen(0);
+//   std::uniform_real_distribution<double> unif(0.0, 1.0);
 
-  Tensor<double> A("A", {B.getDimension(0)}, rm);
-  Tensor<double> ref("ref", {B.getDimension(0)}, rm);
-  IndexVar i, j, k, l, m;
-  A(i) = B(i,j) * C(j,k) * v(k);
-
-  ref(i) = B(i,j) * C(j,k) * v(k);
-  IndexStmt refStmt = makeReductionNotation(ref.getAssignment());
-  refStmt = makeConcreteNotation(refStmt);
-  refStmt = insertTemporaries(refStmt);
-  refStmt = parallelizeOuterLoop(refStmt);
-  ref.compile(refStmt);
-  ref.assemble();
-
-  // IndexStmt stmt = A.getAssignment().concretize();
-  IndexStmt stmt = makeReductionNotation(A.getAssignment());
-  stmt = makeConcreteNotation(stmt);
-  printToFile("SpMVfused", stmt);
-  stmt = reorderLoopsTopologically(stmt);
-  stmt = loopFusionOverFission(stmt, A.getAssignment(), "f", 1);
-  stmt = insertTemporaries(stmt);
-  stmt = parallelizeOuterLoop(stmt);
-  A.compile(stmt);
-  A.assemble();
+//   Format csr({dense, sparse});
+//   Format  rm({dense});
 
 
-  // Tensor<double> ref1({NUM_J}, rm);
-  // Tensor<double> ref2({NUM_I}, rm);
-  // ref1(j) = C(j,k) * v(k);
-  // ref2(i) = B(i,j) * ref1(j);
 
-  // IndexStmt ref1Stmt = makeReductionNotation(ref1.getAssignment());
-  // ref1Stmt = makeConcreteNotation(ref1Stmt);
-  // ref1Stmt = insertTemporaries(ref1Stmt);
-  // ref1Stmt = parallelizeOuterLoop(ref1Stmt);
-  // ref1.compile(ref1Stmt);
-  // ref1.assemble();
+//   int filenum = 1;
 
-  // IndexStmt ref2Stmt = makeReductionNotation(ref2.getAssignment());
-  // ref2Stmt = makeConcreteNotation(ref2Stmt);
-  // ref2Stmt = insertTemporaries(ref2Stmt);
-  // ref2Stmt = parallelizeOuterLoop(ref2Stmt);
-  // ref2.compile(ref2Stmt);
-  // ref2.assemble();
+//   std::vector<std::string> matfiles = {
+//     "/home/min/a/kadhitha/ispc-examples/data/suitesparse/synthetic/synthetic.mtx",
+//     "/home/min/a/kadhitha/ispc-examples/data/suitesparse/cage3/cage3.mtx",
+//     "/home/min/a/kadhitha/ispc-examples/data/suitesparse/bcsstk17/bcsstk17.mtx",
+//     "/home/min/a/kadhitha/ispc-examples/data/suitesparse/pdb1HYS/pdb1HYS.mtx",
+//     "/home/min/a/kadhitha/ispc-examples/data/suitesparse/rma10/rma10.mtx",
+//     "/home/min/a/kadhitha/ispc-examples/data/suitesparse/cant/cant.mtx", // 5
+//     "/home/min/a/kadhitha/ispc-examples/data/suitesparse/consph/consph.mtx",
+//     "/home/min/a/kadhitha/ispc-examples/data/suitesparse/cop20k_A/cop20k_A.mtx",
+//     "/home/min/a/kadhitha/ispc-examples/data/suitesparse/shipsec1/shipsec1.mtx", // 8
+//     "/home/min/a/kadhitha/ispc-examples/data/suitesparse/scircuit/scircuit.mtx",
+//     "/home/min/a/kadhitha/ispc-examples/data/suitesparse/mac_econ_fwd500/mac_econ_fwd500.mtx", // 10
+//     "/home/min/a/kadhitha/ispc-examples/data/suitesparse/wtk/pwtk.mtx",
+//     "/home/min/a/kadhitha/ispc-examples/data/ufl/webbase-1M/webbase-1M.mtx", // 12
+//     "/home/min/a/kadhitha/ispc-examples/data/suitesparse/wiki-Talk/wiki-Talk.mtx", // 13
+//     "/home/min/a/kadhitha/ispc-examples/data/suitesparse/com-Orkut/com-Orkut.mtx",
+//     "/home/min/a/kadhitha/ispc-examples/data/suitesparse/circuit5M/circuit5M.mtx", // 15
+//     "/home/min/a/kadhitha/workspace/my_taco/FusedMM/dataset/harvard.mtx",
+//     "/home/min/a/kadhitha/ispc-examples/data/suitesparse/twitter7/twitter7.mtx"
+//   };
+//   std::vector<std::string> matfilesrw = {
+//     "/home/min/a/kadhitha/ispc-examples/data/suitesparse/rw/synthetic.mtx",
+//     "/home/min/a/kadhitha/ispc-examples/data/suitesparse/rw/cage3.mtx",
+//     "/home/min/a/kadhitha/ispc-examples/data/suitesparse/rw/bcsstk17.mtx",
+//     "/home/min/a/kadhitha/ispc-examples/data/suitesparse/rw/pdb1HYS.mtx",
+//     "/home/min/a/kadhitha/ispc-examples/data/suitesparse/rw/rma10.mtx",
+//     "/home/min/a/kadhitha/ispc-examples/data/suitesparse/rw/cant.mtx",
+//     "/home/min/a/kadhitha/ispc-examples/data/suitesparse/rw/consph.mtx",
+//     "/home/min/a/kadhitha/ispc-examples/data/suitesparse/rw/cop20k_A.mtx",
+//     "/home/min/a/kadhitha/ispc-examples/data/suitesparse/rw/shipsec1.mtx",
+//     "/home/min/a/kadhitha/ispc-examples/data/suitesparse/rw/scircuit.mtx",
+//     "/home/min/a/kadhitha/ispc-examples/data/suitesparse/mac_econ_fwd500/mac_econ_fwd500.mtx",
+//     "/home/min/a/kadhitha/ispc-examples/data/suitesparse/wtk/pwtk.mtx",
+//     "/home/min/a/kadhitha/ispc-examples/data/suitesparse/rw/webbase-1M.mtx",
+//     "/home/min/a/kadhitha/ispc-examples/data/suitesparse/rw/wiki-Talk.mtx",
+//     "/home/min/a/kadhitha/ispc-examples/data/suitesparse/rw/com-Orkut.mtx",
+//     "/home/min/a/kadhitha/ispc-examples/data/suitesparse/rw/circuit5M.mtx",
+//     "/home/min/a/kadhitha/ispc-examples/data/suitesparse/rw/harvard.mtx",
+//     "/home/min/a/kadhitha/ispc-examples/data/suitesparse/rw/twitter7.mtx"
+//   };
 
-  std::cout << "compute start\n";
-  taco::util::TimeResults timevalue;
-  bool time                = true;
-    std::string sofused = "/home/min/a/kadhitha/workspace/my_taco/taco/test/kernels/spmv_spmv/spmv_fused.so";
+//   // uncomment this for reading the csr matrix saved in mtx file
+//   std::cout << "reading B mat mtx\n";
 
-  TOOL_BENCHMARK_TIMER(ref.compute(statfile, sofused), "\n\nReference Kernel: ", timevalue);
+
+//   int kDim = 8;
+//   float SPARSITY = .3;
+//   std::string matfile = matfiles[filenum];
+//   std::cout << "reading B mat mtx\n";
+//   Tensor<double> B = read(matfile, csr, true);
+//   B.setName("B");
+//   B.pack();
+
+//   std::cout << "B dim0: " << B.getDimension(0) << ", dim1: " << B.getDimension(1) << std::endl;
+//   std::cout << "adding c mat\n";
+
+//   std::cout << "reading B mat mtx\n";
+//   Tensor<double> C = read(matfile, csr, true);
+//   C.setName("C");
+//   C.pack();
+
+
+//   Tensor<double> v("v", {C.getDimension(1)}, rm);
+//   for (int i = 0; i < v.getDimension(0); ++i) {
+//       v.insert({i}, unif(gen));
+//   }
+//   std::cout << "packing D mat\n";
+//   v.pack();
+
+//   if (statfile.is_open()) {
+//     statfile 
+//       << "A(i) = B(i,j) * C(j,k) * v(k);" << std::endl
+//       << "B1_dimension: " << B.getDimension(0) << ", B2_dimension: " << B.getDimension(1) << ", vals: " << B.getStorage().getValues().getSize() << std::endl
+//       << "C1_dimension: " << C.getDimension(0) << ", C2_dimension: " << C.getDimension(1) << ", vals: " << C.getStorage().getValues().getSize() << std::endl
+//       << "D1_dimension: " << v.getDimension(0) << ", vals: " << v.getStorage().getValues().getSize() << std::endl
+//       << std::endl;
+//   }
+
+//   Tensor<double> A("A", {B.getDimension(0)}, rm);
+//   Tensor<double> ref("ref", {B.getDimension(0)}, rm);
+//   IndexVar i, j, k, l, m;
+//   A(i) = B(i,j) * C(j,k) * v(k);
+
+//   ref(i) = B(i,j) * C(j,k) * v(k);
+//   IndexStmt refStmt = makeReductionNotation(ref.getAssignment());
+//   refStmt = makeConcreteNotation(refStmt);
+//   refStmt = insertTemporaries(refStmt);
+//   refStmt = parallelizeOuterLoop(refStmt);
+//   ref.compile(refStmt);
+//   ref.assemble();
+
+//   // IndexStmt stmt = A.getAssignment().concretize();
+//   IndexStmt stmt = makeReductionNotation(A.getAssignment());
+//   stmt = makeConcreteNotation(stmt);
+//   printToFile("SpMVfused", stmt);
+//   stmt = reorderLoopsTopologically(stmt);
+//   stmt = loopFusionOverFission(stmt, A.getAssignment(), "f", 1);
+//   stmt = insertTemporaries(stmt);
+//   stmt = parallelizeOuterLoop(stmt);
+//   A.compile(stmt);
+//   A.assemble();
+
+
+//   // Tensor<double> ref1({NUM_J}, rm);
+//   // Tensor<double> ref2({NUM_I}, rm);
+//   // ref1(j) = C(j,k) * v(k);
+//   // ref2(i) = B(i,j) * ref1(j);
+
+//   // IndexStmt ref1Stmt = makeReductionNotation(ref1.getAssignment());
+//   // ref1Stmt = makeConcreteNotation(ref1Stmt);
+//   // ref1Stmt = insertTemporaries(ref1Stmt);
+//   // ref1Stmt = parallelizeOuterLoop(ref1Stmt);
+//   // ref1.compile(ref1Stmt);
+//   // ref1.assemble();
+
+//   // IndexStmt ref2Stmt = makeReductionNotation(ref2.getAssignment());
+//   // ref2Stmt = makeConcreteNotation(ref2Stmt);
+//   // ref2Stmt = insertTemporaries(ref2Stmt);
+//   // ref2Stmt = parallelizeOuterLoop(ref2Stmt);
+//   // ref2.compile(ref2Stmt);
+//   // ref2.assemble();
+
+//   std::cout << "compute start\n";
+//   taco::util::TimeResults timevalue;
+//   bool time                = true;
+//     std::string sofused = "/home/min/a/kadhitha/workspace/my_taco/taco/test/kernels/spmv_spmv/spmv_fused.so";
+
+//   TOOL_BENCHMARK_TIMER(ref.compute(statfile, sofused), "\n\nReference Kernel: ", timevalue);
 
   
-  std::cout << "b1 dim: " << B.getTacoTensorT()->dimensions[1] << std::endl;
-  // TOOL_BENCHMARK_TIMER(ref.compute(statfile, sofused), "\n\nFused Kernel: ", timevalue);
-  // ASSERT_TENSOR_EQ(ref, A);
+//   std::cout << "b1 dim: " << B.getTacoTensorT()->dimensions[1] << std::endl;
+//   // TOOL_BENCHMARK_TIMER(ref.compute(statfile, sofused), "\n\nFused Kernel: ", timevalue);
+//   // ASSERT_TENSOR_EQ(ref, A);
 
-  // // check results
-  // for (int q = 0; q < A.getDimension(0); ++q) {
-  //   if ( abs(A(q) - ref(q))/abs(ref(q)) > ERROR_MARGIN) {
-  //     std::cout << "error: results don't match A("<< q << "): " 
-  //       << A(q) << ", ref: " << ref(q) << std::endl;
-  //     ASSERT_TRUE(false);
-  //   }
-  // }
-  // // ASSERT_TENSOR_EQ(A, ref);
-  // TOOL_BENCHMARK_TIMER(ref1.compute(), "\n\nSDDMM Kernel: ", timevalue);
-  // TOOL_BENCHMARK_TIMER(ref2.compute(), "\n\nSpMM Kernel: ", timevalue);
-  // ASSERT_TENSOR_EQ(ref, ref2);
+//   // // check results
+//   // for (int q = 0; q < A.getDimension(0); ++q) {
+//   //   if ( abs(A(q) - ref(q))/abs(ref(q)) > ERROR_MARGIN) {
+//   //     std::cout << "error: results don't match A("<< q << "): " 
+//   //       << A(q) << ", ref: " << ref(q) << std::endl;
+//   //     ASSERT_TRUE(false);
+//   //   }
+//   // }
+//   // // ASSERT_TENSOR_EQ(A, ref);
+//   // TOOL_BENCHMARK_TIMER(ref1.compute(), "\n\nSDDMM Kernel: ", timevalue);
+//   // TOOL_BENCHMARK_TIMER(ref2.compute(), "\n\nSpMM Kernel: ", timevalue);
+//   // ASSERT_TENSOR_EQ(ref, ref2);
 
-  // for (int q = 0; q < ref2.getDimension(0); ++q) {
-  //   for (int w = 0; w < ref2.getDimension(1); ++w) {
-  //     if ( abs(ref2(q,w) - ref(q,w))/abs(ref(q,w)) > ERROR_MARGIN) {
-  //       std::cout << "error: results don't match A("<< q << "," << w << "): " 
-  //         << ref2(q,w) << ", ref: " << ref(q,w) << std::endl;
-  //       ASSERT_TRUE(false);
-  //     }
-  //   }
-  // }
+//   // for (int q = 0; q < ref2.getDimension(0); ++q) {
+//   //   for (int w = 0; w < ref2.getDimension(1); ++w) {
+//   //     if ( abs(ref2(q,w) - ref(q,w))/abs(ref(q,w)) > ERROR_MARGIN) {
+//   //       std::cout << "error: results don't match A("<< q << "," << w << "): " 
+//   //         << ref2(q,w) << ", ref: " << ref(q,w) << std::endl;
+//   //       ASSERT_TRUE(false);
+//   //     }
+//   //   }
+//   // }
 
-  if (statfile.is_open()) {
-    statfile.close();
-  }
+//   if (statfile.is_open()) {
+//     statfile.close();
+//   }
 
-}
+// }
 
 TEST(scheduling_eval, sddmmFusedWithSyntheticData) {
   if (should_use_CUDA_codegen()) {

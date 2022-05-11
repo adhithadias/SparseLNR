@@ -112,7 +112,6 @@ TEST(indexstmt, sddmm) {
   std::cout << "topologically reordered loops statement: " << spmm << std::endl;
 
   Kernel kernel = compile(spmm);
-  kernel.compute();
 }
 
 TEST(indexstmt, sddmmPlusSpmm) {

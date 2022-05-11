@@ -95,39 +95,6 @@ if(OPENMP)
   set(C_CXX_FLAGS "-fopenmp ${C_CXX_FLAGS}")
 endif(OPENMP)
 
-set(PAPI_DIR "/home/min/a/kadhitha/workspace/my_taco/papi/src/install/")
-
-find_path(PAPI_DIR
-    NAMES include/papi.h
-)
-
-find_library(PAPI_LIBRARIES
-    # Pick the static library first for easier run-time linking.
-    NAMES libpapi.a papi
-    HINTS ${PAPI_DIR}/lib ${HILTIDEPS}/lib
-)
-
-find_path(PAPI_INCLUDE_DIRS
-    NAMES papi.h
-    HINTS ${PAPI_DIR}/include ${HILTIDEPS}/include
-)
-
-include(FindPackageHandleStandardArgs)
-find_package_handle_standard_args(PAPI DEFAULT_MSG
-    PAPI_LIBRARIES
-    PAPI_INCLUDE_DIRS
-)
-
-mark_as_advanced(
-    PAPI_PREFIX_DIRS
-    PAPI_LIBRARIES
-    PAPI_INCLUDE_DIRS
-)
-
-include_directories(${PAPI_INCLUDE_DIRS})
-
-# project (ValgrindExample)
-
 if(COVERAGE)
   find_program(PATH_TO_GCOVR gcovr REQUIRED)
   # add coverage tooling to build flags

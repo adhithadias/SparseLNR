@@ -77,7 +77,6 @@ public:
   
 private:
   std::stringstream source;
-  std::stringstream additional_source;
   std::stringstream header;
   std::string libname;
   std::string tmpdir;

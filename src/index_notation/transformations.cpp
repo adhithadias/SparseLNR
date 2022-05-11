@@ -1241,17 +1241,6 @@ IndexStmt parallelizeOuterLoop(IndexStmt stmt) {
     }
     return parallelized256;
   }
-  else if (should_use_ISPC_codegen()) {
-    std::cout << "outer loop parallelization for ISPC codegen\n";
-    // IndexStmt parallelized = Parallelize(forall.getIndexVar(), ParallelUnit::CPUSpmd, OutputRaceStrategy::NoRaces).apply(stmt, &reason);
-    // if (parallelized == IndexStmt()) {
-    //   // can't parallelize
-    //   return stmt;
-    // }
-    // return parallelized;
-
-    return stmt;
-  }
   else {
     std::cout << "outer loop parallelization for CPU codgen index statement\n";
     IndexStmt parallelized = Parallelize(forall.getIndexVar(), ParallelUnit::CPUThread, OutputRaceStrategy::NoRaces).apply(stmt, &reason);

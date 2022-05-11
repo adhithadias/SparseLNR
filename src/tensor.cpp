@@ -998,7 +998,6 @@ TensorBase::getHelperFunctions(const Format& format, Datatype ctype,
   };
   const auto dims = util::map(dimensions, getDim);
 
-  set_ISPC_code_stream_enabled(false);
   if (format.getOrder() > 0) {
     const Format bufferFormat = COO(format.getOrder(), false, true, false,
                                     format.getModeOrdering());

@@ -5,19 +5,12 @@
 #include <climits>
 #include "gtest/gtest.h"
 #include <cstdint>
-#include <papi.h>
 
 #define NUM_THREADS_TO_USE 1
 // #define NUM_THREADS_TO_USE 32
 
-void handle_error (int retval)
-{
-     printf("PAPI error %d: %s\n", retval, PAPI_strerror(retval));
-     exit(1);
-}
-
 TEST(scheduling_eval, spmvFusedWithSyntheticData) {
-  if (should_use_CUDA_codegen() || should_use_ISPC_codegen()) {
+  if (should_use_CUDA_codegen()) {
     return;
   }
   taco_set_num_threads(NUM_THREADS_TO_USE);
@@ -146,7 +139,7 @@ TEST(scheduling_eval, spmvFusedWithSyntheticData) {
 }
 
 TEST(scheduling_eval, spmvFused) {
-  if (should_use_CUDA_codegen() || should_use_ISPC_codegen()) {
+  if (should_use_CUDA_codegen()) {
     return;
   }
 
@@ -333,7 +326,7 @@ TEST(scheduling_eval, spmvFused) {
 }
 
 TEST(scheduling_eval, sddmmFusedWithSyntheticData) {
-  if (should_use_CUDA_codegen() || should_use_ISPC_codegen()) {
+  if (should_use_CUDA_codegen()) {
     return;
   }
 
@@ -494,7 +487,7 @@ IndexStmt scheduleSDDMMCPU_forfuse(IndexStmt stmt, Tensor<double> B, int CHUNK_S
 }
 
 TEST(scheduling_eval, sddmmFused) {
-  if (should_use_CUDA_codegen() || should_use_ISPC_codegen()) {
+  if (should_use_CUDA_codegen()) {
     return;
   }
 
@@ -775,7 +768,7 @@ TEST(scheduling_eval, sddmmFused) {
 
 
 TEST(scheduling_eval, hadamardFused) {
-  if (should_use_CUDA_codegen() || should_use_ISPC_codegen()) {
+  if (should_use_CUDA_codegen()) {
     return;
   }
 
@@ -1047,7 +1040,7 @@ TEST(scheduling_eval, hadamardFused) {
 
 
 TEST(scheduling_eval, mttkrpFusedWithSyntheticData) {
-  if (should_use_CUDA_codegen() || should_use_ISPC_codegen()) {
+  if (should_use_CUDA_codegen()) {
     return;
   }
   taco_set_num_threads(NUM_THREADS_TO_USE);
@@ -1187,7 +1180,7 @@ TEST(scheduling_eval, mttkrpFusedWithSyntheticData) {
 
 
 TEST(scheduling_eval, mttkrpFused) {
-  if (should_use_CUDA_codegen() || should_use_ISPC_codegen()) {
+  if (should_use_CUDA_codegen()) {
     return;
   }
 
@@ -1602,13 +1595,6 @@ TEST(scheduling_eval, ttmFused) {
     return;
   }
 
-  int retval, EventSet = PAPI_NULL;
-  retval = PAPI_hl_region_begin("dummy");
-  if ( retval != PAPI_OK ) handle_error(1);
-
-  retval = PAPI_hl_region_end("dummy");
-  if ( retval != PAPI_OK ) handle_error(1);
-
   taco_set_num_threads(NUM_THREADS_TO_USE);
 
   ofstream statfile;
@@ -1806,9 +1792,7 @@ TEST(scheduling_eval, ttmFused) {
 
     // TOOL_BENCHMARK_TIMER(ref.compute(), "\n\nReference ISPC: ", timevalue);
     std::string sofile_fused = "/home/min/a/kadhitha/workspace/my_taco/taco/test/kernels/ttm_ttm/fused.so";
-    retval = PAPI_hl_region_begin("fusedTTM"); if ( retval != PAPI_OK ) handle_error(1);
     TOOL_BENCHMARK_TIMER(A.compute(statfile, sofile_fused), "\n\nFused TTM->TTM: ", timevalue);
-    retval = PAPI_hl_region_end("fusedTTM"); if ( retval != PAPI_OK ) handle_error(1);
     if (statfile.is_open()) {
       statfile << "fused time: ";
       statfile << timevalue.mean << std::endl;
@@ -1822,9 +1806,7 @@ TEST(scheduling_eval, ttmFused) {
     statfile << "\nreference impl time \n";
 
     std::string sofile_original = "/home/min/a/kadhitha/workspace/my_taco/taco/test/kernels/ttm_ttm/ttm_original.so";
-    retval = PAPI_hl_region_begin("referenceTTM"); if ( retval != PAPI_OK ) handle_error(1);
     TOOL_BENCHMARK_TIMER(ref.compute(statfile, sofile_original), "\n\nReference TTM->TTM: ", timevalue);
-    retval = PAPI_hl_region_end("referenceTTM"); if ( retval != PAPI_OK ) handle_error(1);
     if (statfile.is_open()) {
       statfile << "reference time: ";
       statfile << timevalue.mean << std::endl;
@@ -1836,9 +1818,7 @@ TEST(scheduling_eval, ttmFused) {
     }
 
     std::string sofile_original2 = "/home/min/a/kadhitha/workspace/my_taco/taco/test/kernels/ttm_ttm/ttm_original2.so";
-    retval = PAPI_hl_region_begin("ref2TTM"); if ( retval != PAPI_OK ) handle_error(1);
     TOOL_BENCHMARK_TIMER(refn.compute(statfile, sofile_original2), "\n\nReference new TTM->TTM: ", timevalue);
-    retval = PAPI_hl_region_end("ref2TTM"); if ( retval != PAPI_OK ) handle_error(1);
     if (statfile.is_open()) {
       statfile << "reference new time: ";
       statfile << timevalue.mean << std::endl;
@@ -1852,9 +1832,7 @@ TEST(scheduling_eval, ttmFused) {
     }
 
     std::string sofile_ttm11 = "/home/min/a/kadhitha/workspace/my_taco/taco/test/kernels/ttm_ttm/ttm1_1.so";
-    retval = PAPI_hl_region_begin("ttm1_1"); if ( retval != PAPI_OK ) handle_error(1);
     TOOL_BENCHMARK_TIMER(ref1.compute(statfile, sofile_ttm11), "\n\nTTM1: ", timevalue);
-    retval = PAPI_hl_region_end("ttm1_1"); if ( retval != PAPI_OK ) handle_error(1);
     if (statfile.is_open()) {
       statfile << "TTM1: ";
       statfile << timevalue.mean << std::endl;
@@ -1866,9 +1844,7 @@ TEST(scheduling_eval, ttmFused) {
     }
 
     std::string sofile_ttm2 = "/home/min/a/kadhitha/workspace/my_taco/taco/test/kernels/ttm_ttm/ttm2.so";
-    retval = PAPI_hl_region_begin("ttm2"); if ( retval != PAPI_OK ) handle_error(1);
     TOOL_BENCHMARK_TIMER(ref2.compute(statfile, sofile_ttm2), "\n\nTTM2: ", timevalue);
-    retval = PAPI_hl_region_end("ttm2"); if ( retval != PAPI_OK ) handle_error(1);
     if (statfile.is_open()) {
       statfile << "TTM2: ";
       statfile << timevalue.mean << std::endl;
@@ -1881,9 +1857,7 @@ TEST(scheduling_eval, ttmFused) {
 
     statfile << "\nschedule 2\n";
 
-    retval = PAPI_hl_region_begin("gemm"); if ( retval != PAPI_OK ) handle_error(1);
     TOOL_BENCHMARK_TIMER(ref3.compute(statfile), "\n\ndense: ", timevalue);
-    retval = PAPI_hl_region_end("gemm"); if ( retval != PAPI_OK ) handle_error(1);
     if (statfile.is_open()) {
       statfile << "dense: ";
       statfile << timevalue.mean << std::endl;
@@ -1895,9 +1869,7 @@ TEST(scheduling_eval, ttmFused) {
     }
 
     std::string sofile_ttm12 = "/home/min/a/kadhitha/workspace/my_taco/taco/test/kernels/ttm_ttm/ttm1_2.so";
-    retval = PAPI_hl_region_begin("ttm1_2"); if ( retval != PAPI_OK ) handle_error(1);
     TOOL_BENCHMARK_TIMER(ref4.compute(statfile, sofile_ttm12), "\n\nTTM after dense: ", timevalue);
-    retval = PAPI_hl_region_end("ttm1_2"); if ( retval != PAPI_OK ) handle_error(1);
     if (statfile.is_open()) {
       statfile << "TTM after dense: ";
       statfile << timevalue.mean << std::endl;
@@ -1965,7 +1937,7 @@ TEST(scheduling_eval, ttmFused) {
 
 
 TEST(scheduling_eval, spmmFusedWithSyntheticData) {
-  if (should_use_CUDA_codegen() || should_use_ISPC_codegen()) {
+  if (should_use_CUDA_codegen()) {
     return;
   }
 
@@ -2127,18 +2099,9 @@ TEST(scheduling_eval, spmmFusedWithSyntheticData) {
 
 
 TEST(scheduling_eval, spmmFused) {
-  if (should_use_CUDA_codegen() || should_use_ISPC_codegen()) {
+  if (should_use_CUDA_codegen()) {
     return;
   }
-
-  // int retval, EventSet = PAPI_NULL;
-  // retval = PAPI_hl_region_begin("dummy");
-  // if ( retval != PAPI_OK ) handle_error(1);
-
-  /* Do some computation */
-
-  // retval = PAPI_hl_region_end("dummy");
-  // if ( retval != PAPI_OK ) handle_error(1);
 
   taco_set_num_threads(NUM_THREADS_TO_USE);
 
@@ -2391,42 +2354,26 @@ TEST(scheduling_eval, spmmFused) {
 
     statfile << "\n--------- 1st pattern computation TTM, GEMM\n";
     
-    // retval = PAPI_hl_region_begin("spmm");
-    // if ( retval != PAPI_OK ) handle_error(1);
     TOOL_BENCHMARK_TIMER(ref1.compute(statfile), "\n\nSpMM Kernel: ", timevalue);
-    // retval = PAPI_hl_region_end("spmm");
-    // if ( retval != PAPI_OK ) handle_error(1);
     if (statfile.is_open()) {
       statfile << "SpMM time: ";
       statfile << timevalue.mean << std::endl;
     } else { std::cout << " stat file is not open\n"; }
 
-    std::string sofile_spmm_template = "/home/min/a/kadhitha/workspace/my_taco/taco/test/kernels/sddmm_spmm/csr_dense_spmm.so";
-    // retval = PAPI_hl_region_begin("spmmtemplate");
-    // if ( retval != PAPI_OK ) handle_error(1);   
+    std::string sofile_spmm_template = "/home/min/a/kadhitha/workspace/my_taco/taco/test/kernels/sddmm_spmm/csr_dense_spmm.so"; 
     TOOL_BENCHMARK_TIMER(ref1.compute(statfile, sofile_spmm_template), "\n\nSpMM template Kernel: ", timevalue);
-    // retval = PAPI_hl_region_end("spmmtemplate");
-    // if ( retval != PAPI_OK ) handle_error(1);
     if (statfile.is_open()) {
       statfile << "SpMM template time: ";
       statfile << timevalue.mean << std::endl;
     } else { std::cout << " stat file is not open\n"; }
-    
-    // retval = PAPI_hl_region_begin("gemm");
-    // if ( retval != PAPI_OK ) handle_error(1); 
+     
     TOOL_BENCHMARK_TIMER(ref2.compute(statfile), "\n\nGeMM Kernel: ", timevalue);
-    // retval = PAPI_hl_region_end("gemm");
-    // if ( retval != PAPI_OK ) handle_error(1);
     if (statfile.is_open()) {
       statfile << "GeMM time: ";
       statfile << timevalue.mean << std::endl;
     } else { std::cout << " stat file is not open\n"; }
 
-    // retval = PAPI_hl_region_begin("gemmtemplate");
-    // if ( retval != PAPI_OK ) handle_error(1);
-    TOOL_BENCHMARK_TIMER(ref2_2.compute(statfile), "\n\nref GeMM template Kernel: ", timevalue);
-    // retval = PAPI_hl_region_end("gemmtemplate");
-    // if ( retval != PAPI_OK ) handle_error(1);    
+    TOOL_BENCHMARK_TIMER(ref2_2.compute(statfile), "\n\nref GeMM template Kernel: ", timevalue);   
     if (statfile.is_open()) {
       statfile << "ref 2 GeMM template time: ";
       statfile << timevalue.mean << std::endl;
@@ -2434,21 +2381,13 @@ TEST(scheduling_eval, spmmFused) {
 
     // std::string sofile_gemm_template = "/home/min/a/kadhitha/workspace/my_taco/taco/test/kernels/spmm_gemm/spmm_template.so";
     statfile << "\n--------- 2nd pattern computation GEMM, SpMM\n";
-    // retval = PAPI_hl_region_begin("gemmtemplate2");
-    // if ( retval != PAPI_OK ) handle_error(1);
-    TOOL_BENCHMARK_TIMER(ref3.compute(statfile), "\n\nGeMM template ref3 Kernel: ", timevalue);
-    // retval = PAPI_hl_region_end("gemmtemplate2");
-    // if ( retval != PAPI_OK ) handle_error(1);  
+    TOOL_BENCHMARK_TIMER(ref3.compute(statfile), "\n\nGeMM template ref3 Kernel: ", timevalue); 
     if (statfile.is_open()) {
       statfile << "ref3 GeMM template time: ";
       statfile << timevalue.mean << std::endl;
     } else { std::cout << " stat file is not open\n"; }
 
-    // retval = PAPI_hl_region_begin("spmm2");
-    // if ( retval != PAPI_OK ) handle_error(1);
     TOOL_BENCHMARK_TIMER(ref4.compute(statfile, sofile_spmm_template), "\n\nSpMM template Kernel ref4: ", timevalue);
-    // retval = PAPI_hl_region_end("spmm2");
-    // if ( retval != PAPI_OK ) handle_error(1);  
     if (statfile.is_open()) {
       statfile << "SpMM template time ref4: ";
       statfile << timevalue.mean << std::endl;
@@ -2457,32 +2396,20 @@ TEST(scheduling_eval, spmmFused) {
 
     statfile << "\n-------- reference pattern computation\n";
 
-    // retval = PAPI_hl_region_begin("ref");
-    // if ( retval != PAPI_OK ) handle_error(1);
-    TOOL_BENCHMARK_TIMER(ref.compute(statfile), "\n\nReference Kernel: ", timevalue);
-    // retval = PAPI_hl_region_end("ref");
-    // if ( retval != PAPI_OK ) handle_error(1);     
+    TOOL_BENCHMARK_TIMER(ref.compute(statfile), "\n\nReference Kernel: ", timevalue);     
     if (statfile.is_open()) {
       statfile << "taco reference time: ";
       statfile << timevalue << std::endl;
     } else { std::cout << " stat file is not open\n"; }
 
-    // retval = PAPI_hl_region_begin("refnew");
-    // if ( retval != PAPI_OK ) handle_error(1);
-    TOOL_BENCHMARK_TIMER(refn.compute(statfile), "\n\nReference new Kernel: ", timevalue);
-    // retval = PAPI_hl_region_end("refnew");
-    // if ( retval != PAPI_OK ) handle_error(1);     
+    TOOL_BENCHMARK_TIMER(refn.compute(statfile), "\n\nReference new Kernel: ", timevalue);   
     if (statfile.is_open()) {
       statfile << "taco reference new time: ";
       statfile << timevalue << std::endl;
     } else { std::cout << " stat file is not open\n"; }
 
 
-    // retval = PAPI_hl_region_begin("sparselnr");
-    // if ( retval != PAPI_OK ) handle_error(1);
     TOOL_BENCHMARK_TIMER(A.compute(statfile), "\n\nFused Kernel: ", timevalue);
-    // retval = PAPI_hl_region_end("sparselnr");
-    // if ( retval != PAPI_OK ) handle_error(1);
     if (statfile.is_open()) {
       statfile << "fused time: ";
       statfile << timevalue.mean << std::endl;
@@ -2532,44 +2459,6 @@ TEST(scheduling_eval, spmmFused) {
     statfile.close();
   }
 
-  
-  // unsigned int native = 0x0;
-
-  // retval = PAPI_library_init(PAPI_VER_CURRENT);
-
-  // if (retval != PAPI_VER_CURRENT) {
-  //   printf("PAPI library init error!\n");
-  //   exit(1);
-  // } else {
-  //   printf("PAPI library init success\n");
-  // }
-
-  // if (PAPI_create_eventset(&EventSet) != PAPI_OK) {
-  //   handle_error(1);
-  // }
-
-  // /* Add the native event */
-  // native = ()
-
-    // retval = PAPI_hl_region_begin("computation1");
-    // if ( retval != PAPI_OK )
-    //     handle_error(1);
-
-    // /* Do some computation */
-
-    // retval = PAPI_hl_region_end("computation1");
-    // if ( retval != PAPI_OK )
-    //     handle_error(1);
-
-    // retval = PAPI_hl_region_begin("computation2");
-    // if ( retval != PAPI_OK )
-    //     handle_error(1);
-
-    // /* Do some computation */
-
-    // retval = PAPI_hl_region_end("computation2");
-    // if ( retval != PAPI_OK )
-    //     handle_error(1);
 }
 
 
@@ -2578,7 +2467,7 @@ TEST(scheduling_eval, spmmFused) {
 
 
 TEST(scheduling_eval, sddmmspmmFused) {
-  if (should_use_CUDA_codegen() || should_use_ISPC_codegen()) {
+  if (should_use_CUDA_codegen()) {
     return;
   }
 

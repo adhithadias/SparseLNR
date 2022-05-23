@@ -825,7 +825,68 @@ void TensorBase::compute(std::ofstream& statfile, std::string& sofile) {
 
   taco::util::TimeResults timevalue;
   bool time                = true;
-  TOOL_BENCHMARK_TIMER2(this->content->module->callFuncPacked("compute", sofile, arguments.data()), 
+  TOOL_BENCHMARK_TIMER2(this->content->module->callFuncPacked("compute", sofile, arguments.data()), "\nkernel execution time: ", timevalue);
+  if (statfile.is_open()) {                                  
+    statfile << "\nkernel execution time: " << " " << timevalue << " ms" << endl;      
+  } else {                                                   
+    cout << "\nkernel execution time: " << " " << timevalue << " ms" << endl;          
+  }                                                          
+      
+  // this->content->module->callFuncPacked("compute", arguments.data());
+
+  if (content->assembleWhileCompute) {
+    setNeedsAssemble(false);
+    taco_tensor_t* tensorData = ((taco_tensor_t*)arguments[0]);
+    content->valuesSize = unpackTensorData(*tensorData, *this);
+  }
+}
+
+void TensorBase::compute(std::string& sofile, taco::util::TimeResults& timevalue) {
+  taco_uassert(!needsCompile()) << error::compute_without_compile;
+  // if (!needsCompute()) {
+  //   return;
+  // }
+  setNeedsCompute(false);
+  // Sync operand tensors if needed.
+  auto operands = getTensors(getAssignment().getRhs());
+  for (auto& operand : operands) {
+    // std::cout << "operand: " << operand.second << std::endl;
+    operand.second.syncValues();
+    operand.second.removeDependentTensor(*this);
+  }
+
+  auto arguments = packArguments(*this);
+
+  bool time                = true;
+  TOOL_BENCHMARK_TIMER2(this->content->module->callFuncPacked("compute", sofile, arguments.data()), "\nkernel execution time: ", timevalue);
+                                                         
+      
+  // this->content->module->callFuncPacked("compute", arguments.data());
+
+  if (content->assembleWhileCompute) {
+    setNeedsAssemble(false);
+    taco_tensor_t* tensorData = ((taco_tensor_t*)arguments[0]);
+    content->valuesSize = unpackTensorData(*tensorData, *this);
+  }
+}
+
+void TensorBase::compute(taco::util::TimeResults& timevalue) {
+  taco_uassert(!needsCompile()) << error::compute_without_compile;
+  // if (!needsCompute()) {
+  //   return;
+  // }
+  setNeedsCompute(false);
+  // Sync operand tensors if needed.
+  auto operands = getTensors(getAssignment().getRhs());
+  for (auto& operand : operands) {
+    operand.second.syncValues();
+    operand.second.removeDependentTensor(*this);
+  }
+
+  auto arguments = packArguments(*this);
+
+  bool time                = true;
+  TOOL_BENCHMARK_TIMER(this->content->module->callFuncPacked("compute", arguments.data()), 
       "\nkernel execution time: ", timevalue);
   // this->content->module->callFuncPacked("compute", arguments.data());
 
@@ -855,6 +916,11 @@ void TensorBase::compute(std::ofstream& statfile) {
   bool time                = true;
   TOOL_BENCHMARK_TIMER2(this->content->module->callFuncPacked("compute", arguments.data()), 
       "\nkernel execution time: ", timevalue);
+  if (statfile.is_open()) {                                  
+    statfile << "\nkernel execution time: " << " " << timevalue << " ms" << endl;      
+  } else {                                                   
+    cout << "\nkernel execution time: " << " " << timevalue << " ms" << endl;          
+  }
   // this->content->module->callFuncPacked("compute", arguments.data());
 
   if (content->assembleWhileCompute) {

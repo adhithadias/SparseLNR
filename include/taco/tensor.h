@@ -26,6 +26,7 @@
 #include "taco/error/error_messages.h"
 #include "taco/util/name_generator.h"
 #include "taco/util/strings.h"
+#include "taco/util/timers.h"
 
 
 namespace taco {
@@ -414,7 +415,9 @@ public:
   /// Compile the tensor expression.
   void compile();
   void compute(std::ofstream& statfile);
+  void compute(taco::util::TimeResults& timevalue);
   void compute(std::ofstream& statfile, std::string& sofile);
+  void compute(std::string& sofile, taco::util::TimeResults& timevalue);
 
   void compile(IndexStmt stmt, bool assembleWhileCompute=false);
 

@@ -962,7 +962,7 @@ TEST(scheduling_eval, ttmFusedWithSyntheticData) {
   int NUM_J = 5;
   int NUM_K = 5;
   int NUM_L = 64;
-  int NUM_M = 1024;
+  int NUM_M = 32;
   float SPARSITY = .1;
 
   Tensor<double> B("B", {NUM_I, NUM_J, NUM_K}, csf);
@@ -1190,7 +1190,6 @@ TEST(scheduling_eval, ttmFused) {
   A.compile(stmt);
   A.assemble();
 
-
   ref(i,j,m) = B(i,j,k) * C(k,l) * D(l,m); // TTM->TTM TACO
   IndexStmt refStmt = makeReductionNotation(ref.getAssignment());
   refStmt = makeConcreteNotation(refStmt);
@@ -1218,7 +1217,7 @@ TEST(scheduling_eval, ttmFused) {
   ref1(i,j,l) = B(i,j,k) * C(k,l); // TTM1
   IndexStmt ref1Stmt = makeReductionNotation(ref1.getAssignment());
   ref1Stmt = makeConcreteNotation(ref1Stmt);
-  // ref1Stmt = ref1Stmt.split(i, i0, i1, 16);
+  ref1Stmt = ref1Stmt.split(i, i0, i1, 16);
   ref1Stmt = insertTemporaries(ref1Stmt);
   ref1Stmt = parallelizeOuterLoop(ref1Stmt);
   ref1.compile(ref1Stmt);
@@ -1228,7 +1227,7 @@ TEST(scheduling_eval, ttmFused) {
   ref2(i,j,m) = ref1(i,j,l) * D(l,m); // TTM2
   IndexStmt ref2Stmt = makeReductionNotation(ref2.getAssignment());
   ref2Stmt = makeConcreteNotation(ref2Stmt);
-  // ref2Stmt = ref2Stmt.split(i, i0, i1, 16);
+  ref2Stmt = ref2Stmt.split(i, i0, i1, 16);
   ref2Stmt = insertTemporaries(ref2Stmt);
   ref2Stmt = parallelizeOuterLoop(ref2Stmt);
   ref2.compile(ref2Stmt);
@@ -1252,8 +1251,8 @@ TEST(scheduling_eval, ttmFused) {
   ref4(i,j,m) = B(i,j,k) * ref3(k,m); // TTM1
   IndexStmt ref4Stmt = makeReductionNotation(ref4.getAssignment());
   ref4Stmt = makeConcreteNotation(ref4Stmt);
-  // ref4Stmt = ref4Stmt
-  //   .split(i, i0, i1, 16);
+  ref4Stmt = ref4Stmt
+    .split(i, i0, i1, 16);
   //   // .split(k, k0, k1, 16)
   //   .split(m, m0, m1, 16)
   //   .reorder({i0, i1, j, m0, k, m1});
@@ -1261,6 +1260,8 @@ TEST(scheduling_eval, ttmFused) {
   ref4Stmt = parallelizeOuterLoop(ref4Stmt);
   ref4.compile(ref4Stmt);
   ref4.assemble();
+
+  return;
 
   std::cout << "compute start\n";
   taco::util::TimeResults timevalue;
@@ -1272,8 +1273,7 @@ TEST(scheduling_eval, ttmFused) {
   }
 
   // fused execution
-  std::string sofile_fused = "/home/min/a/kadhitha/workspace/my_taco/taco/test/kernels/ttm_ttm/fused.so";
-  A.compute(sofile_fused, timevalue);
+  A.compute(timevalue);
   timeValues[0] = timevalue.mean;
 
   r = rand();
@@ -1283,8 +1283,7 @@ TEST(scheduling_eval, ttmFused) {
 
   // reference impl
 
-  std::string sofile_original = "/home/min/a/kadhitha/workspace/my_taco/taco/test/kernels/ttm_ttm/ttm_original.so";
-  ref.compute(sofile_original, timevalue);
+  ref.compute(timevalue);
   timeValues[1] = timevalue.mean;
 
   r = rand();
@@ -1292,8 +1291,7 @@ TEST(scheduling_eval, ttmFused) {
     dummy_array_to_flush_cache[i] = r;
   }
 
-  std::string sofile_original2 = "/home/min/a/kadhitha/workspace/my_taco/taco/test/kernels/ttm_ttm/ttm_original2.so";
-  refn.compute(sofile_original2, timevalue);
+  refn.compute(timevalue);
   timeValues[2] = timevalue.mean;
 
   // schedule 1 ttm -> ttm
@@ -1303,8 +1301,7 @@ TEST(scheduling_eval, ttmFused) {
     dummy_array_to_flush_cache[i] = r;
   }
 
-  std::string sofile_ttm11 = "/home/min/a/kadhitha/workspace/my_taco/taco/test/kernels/ttm_ttm/ttm1_1.so";
-  ref1.compute(sofile_ttm11, timevalue);
+  ref1.compute(timevalue);
   timeValues[3] = timevalue.mean;
 
   r = rand();
@@ -1312,8 +1309,7 @@ TEST(scheduling_eval, ttmFused) {
     dummy_array_to_flush_cache[i] = r;
   }
 
-  std::string sofile_ttm2 = "/home/min/a/kadhitha/workspace/my_taco/taco/test/kernels/ttm_ttm/ttm2.so";
-  ref2.compute(sofile_ttm2, timevalue);
+  ref2.compute(timevalue);
   timeValues[4] = timevalue.mean;
 
   r = rand();
@@ -1331,8 +1327,7 @@ TEST(scheduling_eval, ttmFused) {
     dummy_array_to_flush_cache[i] = r;
   }
 
-  std::string sofile_ttm12 = "/home/min/a/kadhitha/workspace/my_taco/taco/test/kernels/ttm_ttm/ttm1_2.so";
-  ref4.compute(sofile_ttm12, timevalue);
+  ref4.compute(timevalue);
   timeValues[6] = timevalue.mean;
 
   r = rand();

@@ -1,4 +1,5 @@
 #include "taco/cuda.h"
+#include "taco/index_notation/index_notation.h"
 #include "taco/ir_tags.h"
 #include "taco/tensor.h"
 #include "test.h"
@@ -207,8 +208,7 @@ TEST(scheduling_eval, sddmmFused) {
   }
 
   std::cout << "reading B mat mtx\n";
-  Tensor<double> B = read(matfile, csr, true);
-  B.setName("B");
+  Tensor<double> B = read(matfile, csr);
   B.pack();
   std::cout << "B dim0: " << B.getDimension(0) << ", dim1: " << B.getDimension(1) << std::endl;
   
@@ -278,10 +278,10 @@ TEST(scheduling_eval, sddmmFused) {
   ref1(i,j)=B(i,j)*C(i,k)*D(j,k);
   ref2(i,l)=ref1(i,j)*F(j,l);
 
-  IndexStmt ref1Stmt = ref1.getAssignment().concretize(); // anyway Ryan's kernel is used here
-  
-  ref1Stmt = ref1Stmt.split(i, i0, i1, 16);
-          // .pos(j, jpos, B(i,j));
+  // IndexStmt ref1Stmt = ref1.getAssignment().concretize(); // anyway Ryan's kernel is used here
+  IndexStmt ref1Stmt = makeReductionNotation(ref1.getAssignment());
+  ref1Stmt = makeConcreteNotation(ref1Stmt);
+  ref1Stmt = ref1Stmt.split(i, i0, i1, 16); // assemble gives compilation error with more directives
           // .split(k, k0, k1, 8);
           // .reorder({i0, i1, jpos0, k, jpos1});
           // .parallelize(i0, ParallelUnit::CPUThread, OutputRaceStrategy::NoRaces)
@@ -291,7 +291,7 @@ TEST(scheduling_eval, sddmmFused) {
   // IndexStmt ref1Stmt = makeReductionNotation(ref1.getAssignment());
   // ref1Stmt = makeConcreteNotation(ref1Stmt);
   ref1Stmt = insertTemporaries(ref1Stmt);
-  ref1Stmt = parallelizeOuterLoop(ref1Stmt);
+  // ref1Stmt = parallelizeOuterLoop(ref1Stmt);
   ref1.compile(ref1Stmt);
   ref1.assemble();
 
@@ -311,7 +311,7 @@ TEST(scheduling_eval, sddmmFused) {
 
   std::cout << "compute start\n";
   taco::util::TimeResults timevalue;
-  vector<double> timeValues(5);
+  vector<double> timeValues(4);
   
   // fused kernel
   // std::string sofile_fused = "/home/min/a/kadhitha/workspace/my_taco/taco/test/kernels/sddmm_spmm/fused_kernel.so";
@@ -322,32 +322,25 @@ TEST(scheduling_eval, sddmmFused) {
   // sddmm and then spmm execution
   cout << "\nseparate execution\n";
   
-  // std::string sofile_sddmm = "/home/min/a/kadhitha/workspace/my_taco/taco/test/kernels/sddmm_spmm/csr_dense_spmm.so";
-  std::string sofile_sddmm = "/home/min/a/kadhitha/workspace/my_taco/taco/test/kernels/sddmm_spmm/csr_dense_dense_sddmm.so";
-  ref1.compute(sofile_sddmm, timevalue);
+  ref1.compute(timevalue);
   timeValues[1] = timevalue.mean;
-
-  std::string sofile_sddmm_ryan = "/home/min/a/kadhitha/workspace/my_taco/taco/test/kernels/sddmm_spmm/sddmm_ryan.so";
-  ref1.compute(sofile_sddmm_ryan, timevalue);
-  timeValues[2] = timevalue.mean;
   
   ref2.compute(timevalue);
-  timeValues[3] = timevalue.mean;
+  timeValues[2] = timevalue.mean;
 
   // reference execution
   cout << "\nreference execution \n";
 
-  // std::string sofile_original = "/home/min/a/kadhitha/workspace/my_taco/taco/test/kernels/sddmm_spmm/taco_original.so";
   ref.compute(timevalue);
-  timeValues[4] = timevalue.mean;
+  timeValues[3] = timevalue.mean;
 
   string dataset = matfile.substr(matfile.find_last_of("/\\") + 1);
   if (statfile.is_open()) {
     statfile
       << dataset.substr(0, dataset.find_first_of(".")) << ", "
       << timeValues[0] << ", "
-      << min(timeValues[1], timeValues[2]) + timeValues[3] << ", "
-      << timeValues[4]
+      << timeValues[1] + timeValues[2] << ", "
+      << timeValues[3]
       << endl
       ;
   }
@@ -552,18 +545,14 @@ TEST(scheduling_eval, hadamardFused) {
   timeValues[0] = timevalue.mean;
   
   // hadamard produce kernel execution
-  // // std::string sofile_sddmm = "/home/min/a/kadhitha/workspace/my_taco/taco/test/kernels/sddmm_spmm/csr_dense_spmm.so";
-  // std::string sofile_sddmm = "/home/min/a/kadhitha/workspace/my_taco/taco/test/kernels/sddmm_spmm/csr_dense_dense_sddmm.so";
   ref1.compute(timevalue);
   timeValues[1] = timevalue.mean;
   
   // gemm kernel
-  // std::string sofile_spmm = "/home/min/a/kadhitha/workspace/my_taco/taco/test/kernels/sddmm_spmm/csr_dense_spmm.so";
   ref2.compute(timevalue);
   timeValues[2] = timevalue.mean;
 
   // reference kernel
-  // std::string sofile_original = "/home/min/a/kadhitha/workspace/my_taco/taco/test/kernels/sddmm_spmm/taco_original.so";
   ref.compute(timevalue);
   timeValues[3] = timevalue.mean;
 
@@ -577,7 +566,6 @@ TEST(scheduling_eval, hadamardFused) {
       << endl
       ;
   }
-
 
   double* A_vals = (double*) (A.getTacoTensorT()->vals);
   double* ref_vals = (double*) (ref.getTacoTensorT()->vals);
@@ -2038,39 +2026,30 @@ TEST(scheduling_eval, sddmmSpmmFused) {
   std::cout << "compute start\n";
   taco::util::TimeResults timevalue;
   // fused, sddmm, sddmm_ryan, spmm_ryan, gemm, reference
-  vector<double> timeValues(6); 
+  vector<double> timeValues(5); 
   
-  // std::string sofile_fused = "/home/min/a/kadhitha/workspace/my_taco/taco/test/kernels/sddmm_spmm/fused_kernel.so";
   A.compute(timevalue);
   timeValues[0] = timevalue.mean;
   
-  std::string sofile_sddmm = "/home/min/a/kadhitha/workspace/my_taco/taco/test/kernels/sddmm_spmm/csr_dense_dense_sddmm.so";
-  ref1.compute(sofile_sddmm, timevalue);
+  ref1.compute(timevalue);
   timeValues[1] = timevalue.mean;
-
-  std::string sofile_sddmm_ryan = "/home/min/a/kadhitha/workspace/my_taco/taco/test/kernels/sddmm_spmm/sddmm_ryan.so";
-  ref1.compute(sofile_sddmm_ryan, timevalue);
-  timeValues[2] = timevalue.mean;
   
-  std::string sofile_spmm = "/home/min/a/kadhitha/workspace/my_taco/taco/test/kernels/sddmm_spmm/csr_dense_spmm.so";
   ref2.compute(timevalue);
+  timeValues[2] = timevalue.mean;
+
+  ref3.compute(timevalue);
   timeValues[3] = timevalue.mean;
 
-  // std::string sofile_spmm = "/home/min/a/kadhitha/workspace/my_taco/taco/test/kernels/sddmm_spmm/csr_dense_spmm.so";
-  ref3.compute(timevalue);
-  timeValues[4] = timevalue.mean;
-
-  // std::string sofile_original = "/home/min/a/kadhitha/workspace/my_taco/taco/test/kernels/sddmm_spmm/taco_original.so";
   ref.compute(timevalue);
-  timeValues[5] = timevalue.mean;
+  timeValues[4] = timevalue.mean;
 
   string dataset = matfile.substr(matfile.find_last_of("/\\") + 1);
   if (statfile.is_open()) {
     statfile 
       << dataset.substr(0, dataset.find_first_of(".")) << ", "
       << timeValues[0] << ", "
-      << min(timeValues[1], timeValues[2]) + timeValues[3] + timeValues[4] << ", "
-      << timeValues[5]
+      << timeValues[1] + timeValues[2] + timeValues[3] << ", "
+      << timeValues[4]
       << endl
       ;
   } else { std::cout << " stat file is not open\n"; }

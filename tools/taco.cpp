@@ -1128,19 +1128,12 @@ int main(int argc, char* argv[]) {
   taco_set_parallel_schedule(sched, chunkSize);
   taco_set_num_threads(nthreads);
 
-  Assignment assignment = tensor.getAssignment();
-  std::cout << "tensor.getAssignment(): " << assignment << std::endl;
+  Assignment assignment = tensor.getAssignment(); // tensor assignment
+  IndexStmt redStmt = makeReductionNotation(tensor.getAssignment()); // reduced notation
+  IndexStmt stmt = makeConcreteNotation(redStmt); // concrete notation
+  stmt = reorderLoopsTopologically(stmt); // sort indexes topologically
 
-  IndexStmt stmt2 = makeReductionNotation(tensor.getAssignment());
-  std::cout << "reducedNotation: " << stmt2 << std::endl;
-  // IndexStmt stmt = 
-  //     makeConcreteNotation(makeReductionNotation(tensor.getAssignment()));
-  IndexStmt stmt = makeConcreteNotation(stmt2);
-  std::cout << "concrete index statement: " << stmt << std::endl;
-  stmt = reorderLoopsTopologically(stmt);
-
-  std::cout << "topologically reordered loops statement: " << stmt << std::endl;
-
+  // set schedule commands
   if (setSchedule) {
     cuda |= setSchedulingCommands(scheduleCommands, parser, stmt, tensor.getAssignment());
   }
@@ -1149,8 +1142,6 @@ int main(int argc, char* argv[]) {
     stmt = insertTemporaries(stmt);
     stmt = parallelizeOuterLoop(stmt);
   }
-  std::cout << "after setting the scheduling commands\n";
-  std::cout << stmt << std::endl;
 
   if (cuda) {
     if (!CUDA_BUILT && benchmark) {
@@ -1162,9 +1153,8 @@ int main(int argc, char* argv[]) {
     set_CUDA_codegen_enabled(false);
   }
 
-  std::cout << "running scalar promote\n" << std::endl; //
+  // promote scalars in the code -- scalar promote
   stmt = scalarPromote(stmt);
-  std::cout << "\nafter scalar promote: \n" << stmt << std::endl << std::endl;
 
   if (printConcrete) {
     cout << stmt << endl;

@@ -279,7 +279,6 @@ static size_t unpackTensorData(const taco_tensor_t& tensorData,
 
 /// Pack coordinates into a data structure given by the tensor format.
 void TensorBase::pack() {
-  std::cout << "TensorBase::Pack() method\n";
   if (!needsPack()) {
     return;
   }
@@ -348,7 +347,6 @@ void TensorBase::pack() {
   taco_iassert((content->coordinateBufferUsed % content->coordinateSize) == 0);
   const size_t numCoordinates = content->coordinateBufferUsed / content->coordinateSize;
 
-  std::cout << "call helperFuncs\n";
   const auto helperFuncs = getHelperFunctions(getFormat(), getComponentType(),
                                               dimensions);
 
@@ -622,12 +620,10 @@ void TensorBase::compile() {
   IndexStmt stmt = makeConcreteNotation(makeReductionNotation(assignment));
   stmt = reorderLoopsTopologically(stmt);
   stmt = insertTemporaries(stmt);
-  std::cout << "calling parallelizeOuterLoop(stmt)\n";
   stmt = parallelizeOuterLoop(stmt);
   compile(stmt, content->assembleWhileCompute);
 }
 void TensorBase::compile(taco::IndexStmt stmt, bool assembleWhileCompute) {
-  std::cout << "TensorBase::compile\n";
   if (!needsCompile()) {
     return;
   }
@@ -944,9 +940,7 @@ void TensorBase::compute() {
   }
 
   auto arguments = packArguments(*this);
-  std::cout << "running the compute function from the shared library\n";
   this->content->module->callFuncPacked("compute", arguments.data());
-  std::cout << "compute function executed\n";
 
   if (content->assembleWhileCompute) {
     setNeedsAssemble(false);
@@ -1081,7 +1075,6 @@ TensorBase::getHelperFunctions(const Format& format, Datatype ctype,
     }
 
     // Lower packing and iterator code.
-    std::cout << "1 Lower packing and iterator code\n";
     helperModule->addFunction(lower(packStmt, "pack", true, true));
     helperModule->addFunction(lower(iterateStmt, "iterate", false, true));
   } else {
@@ -1102,7 +1095,6 @@ TensorBase::getHelperFunctions(const Format& format, Datatype ctype,
     IndexStmt iterateStmt = Yield({}, packedScalar());
     helperModule->addFunction(lower(iterateStmt, "iterate", false, true));
   }
-  std::cout << "Compiling the helperModule\n";
   helperModule->compile();
 
   helperFunctionsMutex.lock();

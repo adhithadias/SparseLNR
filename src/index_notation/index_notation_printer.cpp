@@ -224,9 +224,9 @@ void IndexNotationPrinter::visit(const YieldNode* op) {
 void IndexNotationPrinter::visit(const ForallNode* op) {
   os << "forall(" << op->indexVar << ", ";
   op->stmt.accept(this);
-  // if (op->parallel_unit != ParallelUnit::NotParallel) {
+  if (op->parallel_unit != ParallelUnit::NotParallel) {
     os << ", " << ParallelUnit_NAMES[(int) op->parallel_unit] << ", " << OutputRaceStrategy_NAMES[(int) op->output_race_strategy];
-  // }
+  }
   os << ")";
 }
 

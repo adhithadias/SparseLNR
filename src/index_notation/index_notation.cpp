@@ -2516,7 +2516,6 @@ IndexStmt makeReductionNotation(IndexStmt stmt) {
 
 // make concrete notation
 IndexStmt makeConcreteNotation(IndexStmt stmt) {
-  // std::cout << "concrete notation original assignment: " << stmt << std::endl;
 
   std::string reason;
   taco_iassert(isReductionNotation(stmt, &reason))
@@ -2525,7 +2524,6 @@ IndexStmt makeConcreteNotation(IndexStmt stmt) {
 
   // Free variables and reductions covering the whole rhs become top level loops
   vector<IndexVar> freeVars = to<Assignment>(stmt).getFreeVars();
-  std::cout << "free vars: " << freeVars << std::endl;
 
   struct RemoveTopLevelReductions : IndexNotationRewriter {
     using IndexNotationRewriter::visit;
@@ -2540,17 +2538,12 @@ IndexStmt makeConcreteNotation(IndexStmt stmt) {
         topLevelReductions.push_back(reduction.getVar());
         rhs = reduction.getExpr();
       }
-      // std::cout << "top level reductions: " << topLevelReductions << std::endl;
 
       if (rhs != node->rhs) {
         stmt = Assignment(node->lhs, rhs, Add()); // write with add
-        int idx = 0;
         for (auto& i : util::reverse(topLevelReductions)) {
-          std::cout << idx << ": " << stmt << std::endl;
-          idx++;
           stmt = forall(i, stmt);
         }
-        std::cout << idx << ": " << stmt << std::endl;
       }
       else {
         stmt = node;
@@ -2558,18 +2551,12 @@ IndexStmt makeConcreteNotation(IndexStmt stmt) {
     }
   };
   stmt = RemoveTopLevelReductions().rewrite(stmt);
-  // std::cout << "after remove top level reductions: " << stmt << std::endl;
 
   // now we form the stmt in reverse order of freeVars
-  int idx = 0;
   for (auto& i : util::reverse(freeVars)) {
-    std::cout << idx << ": " << stmt << std::endl;
     stmt = forall(i, stmt);
-    idx++;
   }
-  std::cout << idx << ": " << stmt << std::endl;
 
-  std::cout << "replacing reductions with whereas statements\n";
   // Replace other reductions with where and forall statements
   struct ReplaceReductionsWithWheres : IndexNotationRewriter {
     using IndexNotationRewriter::visit;

@@ -42,7 +42,6 @@ void Module::addFunction(Stmt func) {
 
 void Module::compileToSource(string path, string prefix) {
   if (!moduleFromUserSource) {
-    std::cout << "module not from user source\n";
   
     // create a codegen instance and add all the funcs
     bool didGenRuntime = false;
@@ -110,7 +109,6 @@ void writeShims(vector<Stmt> funcs, string path, string prefix) {
 } // anonymous namespace
 
 string Module::compile() {
-  std::cout << "Module::compile\n";
   string prefix = tmpdir+libname;
   string fullpath = prefix + ".so";
   
@@ -139,11 +137,7 @@ string Module::compile() {
   string cmd = cc + " " + cflags + " " +
     prefix + file_ending + " " + shims_file + " " + 
     "-o " + fullpath + " -lm";
-  std::cout << "--------------------------------------------------------------------------------tmpdir: " << tmpdir << std::endl;
-  std::cout << "--------------------------------------------------------------------------------libname: " << libname << std::endl;
-  std::cout << "--------------------------------------------------------------------------------prefix: " << prefix << std::endl;
-  std::cout << "--------------------------------------------------------------------------------fullpath: " << fullpath << std::endl;
-  std::cout << "--------------------------------------------------------------------------------cmd: " << cmd << std::endl;
+
 
   // open the output file & write out the source
   compileToSource(tmpdir, libname);
@@ -151,12 +145,6 @@ string Module::compile() {
   
   // write out the shims
   writeShims(funcs, tmpdir, libname);
-  for (auto &statement : funcs) {
-    std::cout << "----- statement --------" << std::endl;
-    // std::cout << statement;
-    std::cout << std::endl;
-  }
-  std::cout << tmpdir << std::endl << libname << std::endl;
   
   // now compile it
   int err = system(cmd.data());
@@ -183,13 +171,10 @@ string Module::getSource() {
 }
 
 void* Module::getFuncPtr(std::string& sofile, std::string name) {
-  std::cout << "opening shared object 1\n";
   if (so_lib_handle) {
     dlclose(so_lib_handle);
   }
-  std::cout << "opening shared object 2\n";
   so_lib_handle = dlopen(sofile.data(), RTLD_NOW | RTLD_LOCAL);
-  std::cout << "opening shared object : " << sofile << std::endl;
   return dlsym(so_lib_handle, name.data());
 }
 
@@ -225,9 +210,7 @@ int Module::callFuncPackedRaw(std::string name, std::string& sofile, void** args
   omp_set_num_threads(taco_get_num_threads());
 #endif
 
-  std::cout << "calling the function\n";
   int ret = func_ptr(args);
-  std::cout << "function call completed\n";
 
 #if USE_OPENMP
   omp_set_schedule(existingSched, existingChunkSize);
@@ -265,9 +248,7 @@ int Module::callFuncPackedRaw(std::string name, void** args) {
   omp_set_num_threads(taco_get_num_threads());
 #endif
 
-  std::cout << "calling the function\n";
   int ret = func_ptr(args);
-  std::cout << "function call completed\n";
 
 #if USE_OPENMP
   omp_set_schedule(existingSched, existingChunkSize);

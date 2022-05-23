@@ -45,8 +45,6 @@ TEST(scheduling_eval, sddmmFusedWithSyntheticData) {
   }
   B.pack();
 
-
-  std::cout << "B dim0: " << B.getDimension(0) << ", dim1: " << B.getDimension(1) << std::endl;
   std::cout << "adding c mat\n";
   Tensor<double> C({B.getDimension(0), kdim}, rm);
   for (int i = 0; i < C.getDimension(0); ++i) {
@@ -202,7 +200,7 @@ TEST(scheduling_eval, sddmmFused) {
   std::string matfile = "";
   if (getenv("TENSOR_FILE")) {
     matfile = getenv("TENSOR_FILE");
-    std::cout << "tensor_file: " << matfile << ";\n";
+    std::cout << "tensor_file: " << matfile << " is defined\n";
   } else {
     return;
   }
@@ -210,7 +208,6 @@ TEST(scheduling_eval, sddmmFused) {
   std::cout << "reading B mat mtx\n";
   Tensor<double> B = read(matfile, csr);
   B.pack();
-  std::cout << "B dim0: " << B.getDimension(0) << ", dim1: " << B.getDimension(1) << std::endl;
   
   std::cout << "adding C mat\n";
   Tensor<double> C({B.getDimension(0), kdim}, rm);
@@ -421,7 +418,7 @@ TEST(scheduling_eval, hadamardFused) {
   std::string matfile = "";
   if (getenv("TENSOR_FILE")) {
     matfile = getenv("TENSOR_FILE");
-    std::cout << "tensor_file: " << matfile << ";\n";
+    std::cout << "tensor_file: " << matfile << " is defined\n";
   } else {
     return;
   }
@@ -430,7 +427,6 @@ TEST(scheduling_eval, hadamardFused) {
   Tensor<double> B = read(matfile, csr, true);
   B.setName("B");
   B.pack();
-  std::cout << "B dim0: " << B.getDimension(0) << ", dim1: " << B.getDimension(1) << std::endl;
   
   std::cout << "adding C mat\n";
   Tensor<double> C({B.getDimension(1), kdim}, rm);
@@ -769,7 +765,7 @@ TEST(scheduling_eval, mttkrpFused) {
   std::string matfile = "";
   if (getenv("TENSOR_FILE")) {
     matfile = getenv("TENSOR_FILE");
-    std::cout << "tensor_file: " << matfile << ";\n";
+    std::cout << "tensor_file: " << matfile << " is defined\n";
   } else {
     return;
   }
@@ -1136,7 +1132,7 @@ TEST(scheduling_eval, ttmFused) {
   std::string matfile = "";
   if (getenv("TENSOR_FILE")) {
     matfile = getenv("TENSOR_FILE");
-    std::cout << "tensor_file: " << matfile << ";\n";
+    std::cout << "tensor_file: " << matfile << " is defined\n";
   } else {
     return;
   }
@@ -1442,18 +1438,17 @@ TEST(scheduling_eval, spmmFusedWithSyntheticData) {
       }
     }
   }
+  std::cout << "packing C mat\n";
   C.pack();
-  // write("/home/min/a/kadhitha/ispc-examples/data/suitesparse/synthetic/synthetic.mtx", B);
 
-  std::cout << "B dim0: " << B.getDimension(0) << ", dim1: " << B.getDimension(1) << std::endl;
-  std::cout << "adding c mat\n";
+  std::cout << "adding D mat\n";
   Tensor<double> D({C.getDimension(1), ldim}, rm);
   for (int i = 0; i < D.getDimension(0); ++i) {
     for (int j = 0; j < D.getDimension(1); ++j) {
       D.insert({i,j}, unif(gen));
     }
   }
-  std::cout << "packing C mat\n";
+  std::cout << "packing D mat\n";
   D.pack();
 
   // Tensor<double> E({B.getDimension(1), kdim}, rm);
@@ -1589,7 +1584,7 @@ TEST(scheduling_eval, spmmFused) {
   std::string matfile = "";
   if (getenv("TENSOR_FILE")) {
     matfile = getenv("TENSOR_FILE");
-    std::cout << "tensor_file: " << matfile << ";\n";
+    std::cout << "tensor_file: " << matfile << " is defined\n";
   } else {
     return;
   }
@@ -1882,7 +1877,7 @@ TEST(scheduling_eval, sddmmSpmmFused) {
   std::string matfile = "";
   if (getenv("TENSOR_FILE")) {
     matfile = getenv("TENSOR_FILE");
-    std::cout << "tensor_file: " << matfile << ";\n";
+    std::cout << "tensor_file: " << matfile << " is defined\n";
   } else {
     return;
   }
@@ -1892,7 +1887,6 @@ TEST(scheduling_eval, sddmmSpmmFused) {
   B.setName("B");
   B.pack();
 
-  std::cout << "B dim0: " << B.getDimension(0) << ", dim1: " << B.getDimension(1) << std::endl;
   std::cout << "adding C mat\n";
   Tensor<double> C({B.getDimension(0), kdim}, rm);
   for (int i = 0; i < C.getDimension(0); ++i) {

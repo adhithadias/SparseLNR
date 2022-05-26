@@ -4,11 +4,8 @@ shfile=`realpath $0`
 testdir=`dirname $shfile`
 rootdir=`dirname $testdir`
 
-echo "Directory is $shfile"
-echo "Directory is $testdir"
-echo "Directory is $rootdir"
-
-matfiles=("/home/min/a/kadhitha/workspace/my_taco/taco/net-repo-graph/cora.mtx" "/home/min/a/kadhitha/workspace/my_taco/taco/net-repo-graph/amazon.mtx" "/home/min/a/kadhitha/ispc-examples/data/suitesparse/synthetic/synthetic.mtx" "/home/min/a/kadhitha/ispc-examples/data/suitesparse/cage3/cage3.mtx" "/home/min/a/kadhitha/ispc-examples/data/suitesparse/bcsstk17/bcsstk17.mtx" "/home/min/a/kadhitha/ispc-examples/data/suitesparse/pdb1HYS/pdb1HYS.mtx" "/home/min/a/kadhitha/ispc-examples/data/suitesparse/rma10/rma10.mtx" "/home/min/a/kadhitha/ispc-examples/data/suitesparse/cant/cant.mtx" "/home/min/a/kadhitha/ispc-examples/data/suitesparse/consph/consph.mtx" "/home/min/a/kadhitha/ispc-examples/data/suitesparse/cop20k_A/cop20k_A.mtx" "/home/min/a/kadhitha/ispc-examples/data/suitesparse/shipsec1/shipsec1.mtx" "/home/min/a/kadhitha/ispc-examples/data/suitesparse/scircuit/scircuit.mtx" "/home/min/a/kadhitha/ispc-examples/data/suitesparse/mac_econ_fwd500/mac_econ_fwd500.mtx" "/home/min/a/kadhitha/ispc-examples/data/suitesparse/wtk/pwtk.mtx" "/home/min/a/kadhitha/ispc-examples/data/ufl/webbase-1M/webbase-1M.mtx" "/home/min/a/kadhitha/ispc-examples/data/suitesparse/wiki-Talk/wiki-Talk.mtx" "/home/min/a/kadhitha/ispc-examples/data/suitesparse/com-Orkut/com-Orkut.mtx" "/home/min/a/kadhitha/ispc-examples/data/suitesparse/circuit5M/circuit5M.mtx" "/home/min/a/kadhitha/workspace/my_taco/FusedMM/dataset/harvard.mtx" "/home/min/a/kadhitha/ispc-examples/data/suitesparse/twitter7/twitter7.mtx" "/home/min/a/kadhitha/ispc-examples/data/suitesparse/cop20k_A/cop20k.mtx")
+# replace with absolute paths to tensor files with tns format
+matfiles=("/absolute/path/to/file1.mtx" "/absolute/path/to/file2.mtx" "/absolute/path/to/filen.mtx")
 matfilenum=(0)
 
 mkdir -p $testdir/stats

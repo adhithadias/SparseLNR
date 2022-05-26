@@ -1,3 +1,45 @@
+# SparseLNR
+
+Follow the instructions in [TACO](#tensor-algebra-compiler-taco) to build the code repository.
+
+Once the repo is built download the graphs in mtx format and 3d tensors in tns format to a separate directory and update the statfiles list with absolute file paths of those files to execute `test_2d_sparselnr.sh` and `test_3d_sparselnr.sh` files. Note that mtx is the file type for 2D matrices and tns is the required file type for 3D tensors.
+
+```bash
+bash test_2d_sparselnr.sh
+bash test_3d_sparselnr.sh
+```
+
+Executing these files will call the test cases written to generate the evaluation graphs generated in the paper. These stats can be accessed in the `test/stats/` directory.
+
+The mimimal terminal command to get the loop structures of the fused kernels can be executed as follows;
+
+```bash
+## <SDDMM, SpMM>
+./bin/taco "A(i,l)=B(i,j)*C(i,k)*D(j,k)*E(j,l)" -f=A:dd:0,1 -f=B:ds:0,1 -f=C:dd:0,1 -f=D:dd:0,1 -f=E:dd:0,1 -s="loopfuse(b,1)"
+
+./bin/taco "A(i,l)=B(i,j)*C(i,k)*D(k,j)*E(j,l)" -f=A:dd:0,1 -f=B:ds:0,1 -f=C:dd:0,1 -f=D:dd:0,1 -f=E:dd:0,1 -s="loopfuse(b,1)"
+
+./bin/taco "A(i,l)=B(i,j)*C(i,k)*D(k,j)*E(j,l)" -f=A:dd:0,1 -f=B:ds:0,1 -f=C:dd:0,1 -f=D:dd:0,1 -f=E:dd:0,1 -s="reorder(j,k)" -s="loopfuse(b,1)"
+
+## <Hadamard, GEMM>
+### unfused <Hadamard, GEMM> kernel
+./bin/taco "A(i,l)=B(i,j)*C(j,k)*D(j,k)*F(k,l)" -f=A:dd:0,1 -f=B:ds:0,1 -f=C:dd:0,1 -f=D:dd:0,1 -f=E:dd:0,1
+
+### fused <Hadamard, GEMM> kernel
+./bin/taco "A(i,l)=B(i,j)*C(j,k)*D(j,k)*F(k,l)" -f=A:dd:0,1 -f=B:ds:0,1 -f=C:dd:0,1 -f=D:dd:0,1 -f=E:dd:0,1 -s="loopfuse(b,1)" -s="parallelize(i,CPUThread,NoRaces)"
+
+
+# <MTTKRP, GEMM>
+./bin/taco "A(i,m)=B(i,k,l)*C(k,j)*D(l,j)*E(j,m)" -f=A:dd:0,1 -f=B:dss:0,1,2 -f=C:dd:0,1 -f=D:dd:0,1 -f=E:dd:0,1
+
+./bin/taco "A(i,m)=B(i,k,l)*C(k,j)*D(l,j)*E(j,m)" -f=A:dd:0,1 -f=B:dss:0,1,2 -f=C:dd:0,1 -f=D:dd:0,1 -f=E:dd:0,1 -s="loopfuse(b,1)"
+
+./bin/taco "A(i,m)=B(i,k,l)*C(k,j)*D(l,j)*E(j,m)" -f=A:dd:0,1 -f=B:dss:0,1,2 -f=C:dd:0,1 -f=D:dd:0,1 -f=E:dd:0,1 -s="reorder(i,j,k,l,m)" -s="loopfuse(b,1)"
+```
+
+
+# Tensor Algebra Compiler (TACO)
+
 The Tensor Algebra Compiler (taco) is a C++ library that computes
 tensor algebra expressions on sparse and dense tensors.  It uses novel
 compiler techniques to get performance competitive with hand-optimized

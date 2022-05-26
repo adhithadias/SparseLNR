@@ -4,11 +4,8 @@ shfile=`realpath $0`
 testdir=`dirname $shfile`
 rootdir=`dirname $testdir`
 
-echo "Directory is $shfile"
-echo "Directory is $testdir"
-echo "Directory is $rootdir"
-
-matfiles=("/home/min/a/kadhitha/ispc-examples/data/tns/matmul_5-5-5.tns" "/home/min/a/kadhitha/ispc-examples/data/tns/delicious-3d.tns" "/home/min/a/kadhitha/ispc-examples/data/tns/flickr-3d.tns" "/home/min/a/kadhitha/ispc-examples/data/tns/nell-2.tns" "/home/min/a/kadhitha/ispc-examples/data/tns/nell-1.tns" "/home/min/a/kadhitha/ispc-examples/data/tns/vast-2015-mc1-3d.tns" "/home/min/a/kadhitha/ispc-examples/data/tns/darpa1998.tns" "/home/min/a/kadhitha/ispc-examples/data/tns/freebase_music.tns" "/home/min/a/kadhitha/ispc-examples/data/tns/freebase_sampled.tns")
+# replace with absolute paths to tensor files with tns format
+matfiles=("/absolute/path/to/file1.tns" "/absolute/path/to/file2.tns" "/absolute/path/to/filen.tns")
 matfilenum=(0)
 
 mkdir -p $testdir/stats

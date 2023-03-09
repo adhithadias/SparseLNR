@@ -64,6 +64,7 @@ std::ostream& operator<<(std::ostream& os, const Transformation& t) {
 
 // class Reorder
 struct Reorder::Content {
+  std::vector<int> path;
   std::vector<IndexVar> replacePattern;
   bool pattern_ordered; // In case of Reorder(i, j) need to change replacePattern ordering to actually reorder
 };
@@ -74,6 +75,12 @@ Reorder::Reorder(IndexVar i, IndexVar j) : content(new Content) {
 }
 
 Reorder::Reorder(std::vector<taco::IndexVar> replacePattern) : content(new Content) {
+  content->replacePattern = replacePattern;
+  content->pattern_ordered = true;
+}
+
+Reorder::Reorder(std::vector<int> path, std::vector<taco::IndexVar> replacePattern) : content(new Content) {
+  content->path = path;
   content->replacePattern = replacePattern;
   content->pattern_ordered = true;
 }
@@ -93,13 +100,60 @@ const std::vector<IndexVar>& Reorder::getreplacepattern() const {
   return content->replacePattern;
 }
 
+const std::vector<int>& Reorder::getpath() const {
+  return content->path;
+}
+
 IndexStmt Reorder::apply(IndexStmt stmt, string* reason) const {
   INIT_REASON(reason);
 
   string r;
-  if (!isConcreteNotation(stmt, &r)) {
+  // TODO - Add a different check for concrete index notation with branching
+  if (getpath().empty() && !isConcreteNotation(stmt, &r)) {
     *reason = "The index statement is not valid concrete index notation: " + r;
     return IndexStmt();
+  }
+
+  IndexStmt originalStmt = stmt;
+  struct ReorderVisitor : public IndexNotationVisitor {
+    using IndexNotationVisitor::visit;
+    vector<int>& path;
+    unsigned int pathIdx = 0;
+    IndexStmt innerStmt;
+
+    ReorderVisitor(vector<int>& path) : path(path) {}
+
+    void visit(const ForallNode* node) {
+      if (pathIdx == path.size()) {
+        innerStmt = IndexStmt(node);
+        return;
+      }
+      IndexNotationVisitor::visit(node);
+    }
+
+    void visit(const WhereNode* node) {
+
+      Where where(node);
+
+      if (pathIdx == path.size()) {
+        innerStmt = IndexStmt(node);
+        return;
+      }
+
+      if (!path[pathIdx]) {
+        pathIdx++;
+        IndexNotationVisitor::visit(node->producer);
+      } else {
+        pathIdx++;
+        IndexNotationVisitor::visit(node->consumer);
+      }
+    }
+  };
+  ReorderVisitor reorderVisitor(content->path);
+
+  if (!getpath().empty()) {
+    originalStmt.accept(&reorderVisitor);
+    stmt = reorderVisitor.innerStmt;
   }
 
   // collect current ordering of IndexVars
@@ -119,7 +173,6 @@ IndexStmt Reorder::apply(IndexStmt stmt, string* reason) const {
           }
         })
   );
-  cout << "currentOrdering: " << util::join(currentOrdering) << endl;
 
   if (!content->pattern_ordered && currentOrdering == getreplacepattern()) {
     taco_iassert(getreplacepattern().size() == 2);
@@ -130,7 +183,55 @@ IndexStmt Reorder::apply(IndexStmt stmt, string* reason) const {
     *reason = "The foralls of reorder pattern: " + util::join(getreplacepattern()) + " were not directly nested.";
     return IndexStmt();
   }
-  return ForAllReplace(currentOrdering, getreplacepattern()).apply(stmt, reason);
+
+  // TODO - implement path in ForAllReplace
+  auto reorderedStmt = ForAllReplace(getpath(), currentOrdering, getreplacepattern()).apply(stmt, reason);
+
+  struct ReorderedRewriter : public IndexNotationRewriter {
+    using IndexNotationRewriter::visit;
+
+    IndexStmt reorderedStmt;
+    vector<int>& path;
+    vector<int> visited;
+
+    ReorderedRewriter(IndexStmt reorderedStmt, vector<int>& path) : reorderedStmt(reorderedStmt), path(path) {}
+
+    void visit(const ForallNode* node) {
+      // at the end of the path, rewrite should happen using the producer and consumer
+      if (visited == path) {
+        stmt = reorderedStmt;
+        return;
+      }
+      IndexNotationRewriter::visit(node);
+    }
+
+    void visit(const WhereNode* node) {
+      Where where(node);
+
+      // add 0 to visited if the producer is visited and 1 if the consumer is visited
+      visited.push_back(0);
+      IndexStmt producer = rewrite(node->producer);
+      visited.pop_back();
+      visited.push_back(1);
+      IndexStmt consumer = rewrite(node->consumer);
+      visited.pop_back();
+      if (producer == node->producer && consumer == node->consumer) {
+        stmt = node;
+      }
+      else {
+        stmt = new WhereNode(consumer, producer);
+      }
+
+    }
+  };
+  ReorderedRewriter reorderedRewriter(reorderedStmt, content->path);
+
+  if (!getpath().empty()) {
+    stmt = reorderedRewriter.rewrite(originalStmt);
+    return stmt;
+  }
+
+  return reorderedStmt;
 }
 
 void Reorder::print(std::ostream& os) const {
@@ -1043,6 +1144,7 @@ std::ostream& operator<<(std::ostream& os, const Precompute& precompute) {
 
 // class ForAllReplace
 struct ForAllReplace::Content {
+  std::vector<int> path;
   std::vector<IndexVar> pattern;
   std::vector<IndexVar> replacement;
 };
@@ -1054,6 +1156,17 @@ ForAllReplace::ForAllReplace(std::vector<IndexVar> pattern, std::vector<IndexVar
   taco_iassert(!pattern.empty());
   content->pattern = pattern;
   content->replacement = replacement;
+}
+
+ForAllReplace::ForAllReplace(std::vector<int> path, std::vector<IndexVar> pattern, std::vector<IndexVar> replacement) : content(new Content) {
+  taco_iassert(!pattern.empty());
+  content->path = path;
+  content->pattern = pattern;
+  content->replacement = replacement;
+}
+
+std::vector<int> ForAllReplace::getPath() const {
+  return content->path;
 }
 
 std::vector<IndexVar> ForAllReplace::getPattern() const {
@@ -1068,7 +1181,8 @@ IndexStmt ForAllReplace::apply(IndexStmt stmt, string* reason) const {
   INIT_REASON(reason);
 
   string r;
-  if (!isConcreteNotation(stmt, &r)) {
+  // TODO - add a different check for concrete notation that comes with a path
+  if (getPath().empty() && !isConcreteNotation(stmt, &r)) {
     *reason = "The index statement is not valid concrete index notation: " + r;
     return IndexStmt();
   }

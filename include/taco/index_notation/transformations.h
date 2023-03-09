@@ -67,10 +67,12 @@ class Reorder : public TransformationInterface {
 public:
   Reorder(IndexVar i, IndexVar j);
   Reorder(std::vector<IndexVar> replacePattern);
+  Reorder(std::vector<int> path, std::vector<IndexVar> replacePattern);
 
   IndexVar geti() const;
   IndexVar getj() const;
   const std::vector<IndexVar>& getreplacepattern() const;
+  const std::vector<int>& getpath() const;
 
   /// Apply the reorder optimization to a concrete index statement.  Returns
   /// an undefined statement and a reason if the statement cannot be lowered.
@@ -146,6 +148,9 @@ public:
   ForAllReplace();
 
   ForAllReplace(std::vector<IndexVar> pattern, std::vector<IndexVar> replacement);
+  ForAllReplace(std::vector<int> path, std::vector<IndexVar> pattern, std::vector<IndexVar> replacement);
+
+  std::vector<int> getPath() const;
 
   std::vector<IndexVar> getPattern() const;
 

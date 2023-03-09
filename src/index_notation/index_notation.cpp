@@ -1919,6 +1919,15 @@ IndexStmt IndexStmt::reorder(std::vector<IndexVar> reorderedvars) const {
   return transformed;
 }
 
+IndexStmt IndexStmt::reorder(std::vector<int> path, std::vector<IndexVar> reorderedvars) const {
+  string reason;
+  IndexStmt transformed = Reorder(path, reorderedvars).apply(*this, &reason);
+  if (!transformed.defined()) {
+    taco_uerror << reason;
+  }
+  return transformed;
+}
+
 IndexStmt IndexStmt::mergeby(IndexVar i, MergeStrategy strategy) const {
   string reason;
   IndexStmt transformed = SetMergeStrategy(i, strategy).apply(*this, &reason);

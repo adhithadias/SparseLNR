@@ -504,9 +504,9 @@ IndexStmt LoopFuse::apply(IndexStmt stmt, std::string* reason) const {
   // multiplying workspace * consumer and if the producer is on right, 
   // then the consumer is constructed by multiplying consumer * workspace
   if (!getIsProducerOnLeft()) {
-    consumerAssignment = Assignment(to<Access>(getProducerAndConsumer.result), getProducerAndConsumer.consumer * workspace, getAssignment.innerAssignment.getOperator());
+    consumerAssignment = Assignment(to<Access>(getProducerAndConsumer.result), getProducerAndConsumer.consumer == NULL ? workspace : getProducerAndConsumer.consumer * workspace, getAssignment.innerAssignment.getOperator());
   } else {
-    consumerAssignment = Assignment(to<Access>(getProducerAndConsumer.result), workspace * getProducerAndConsumer.consumer, getAssignment.innerAssignment.getOperator());
+    consumerAssignment = Assignment(to<Access>(getProducerAndConsumer.result), getProducerAndConsumer.consumer == NULL ? workspace : workspace * getProducerAndConsumer.consumer, getAssignment.innerAssignment.getOperator());
   }
 
   // rewrite the index notation to use the temporary

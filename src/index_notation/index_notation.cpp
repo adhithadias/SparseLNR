@@ -1855,14 +1855,6 @@ IndexStmt IndexStmt::divide(IndexVar i, IndexVar i1, IndexVar i2, size_t splitFa
 }
 
 IndexStmt IndexStmt::loopfuse(int pos, bool isProducerOnLeft, vector<int>& path) const {
-
-  std::cout << "Loop fuse pos: " << pos;
-  std::cout << ", Loop fuse isProducerOnLeft: " << isProducerOnLeft;
-  for (const auto& p : path) {
-    std::cout << " " << p;
-  }
-  std::cout << std::endl;
-
   string reason;
   IndexStmt transformed = *this;
   transformed = Transformation(LoopFuse(pos, isProducerOnLeft, path)).apply(transformed, &reason);

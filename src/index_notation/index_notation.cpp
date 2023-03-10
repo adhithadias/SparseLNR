@@ -3490,6 +3490,23 @@ std::map<Forall, Where> getTemporaryLocations(IndexStmt stmt) {
   return temporaryLocs;
 }
 
+std::vector<Where> getTemporaryInitializationOrder(IndexStmt stmt) {
+  struct TemporaryLocsGetter : public IndexNotationVisitor {
+    vector<Where> temporaryOrder;
+
+    using IndexNotationVisitor::visit;
+
+    void visit(const WhereNode *op) {
+      Where where = Where(op);
+      temporaryOrder.push_back(where);
+      IndexNotationVisitor::visit(op);
+    }
+  };
+  TemporaryLocsGetter getter;
+  getter.visit(stmt);
+
+  return getter.temporaryOrder;
+}
 
 std::vector<TensorVar> getTemporaries(IndexStmt stmt) {
   vector<TensorVar> temporaries;

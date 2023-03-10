@@ -259,7 +259,7 @@ LowererImplImperative::lower(IndexStmt stmt, string name,
       getAssembledByUngroupedInsertion(stmt));
 
   // Create datastructure needed for temporary workspace hoisting/reuse
-  temporaryInitialization = getTemporaryLocations(stmt);
+  temporaryInitializationOrder = getTemporaryInitializationOrder(stmt);
 
   // Convert tensor results and arguments IR variables
   map<TensorVar, Expr> resultVars;
@@ -657,6 +657,7 @@ Stmt LowererImplImperative::lowerForall(Forall forall)
   if (forall.getParallelUnit() != ParallelUnit::NotParallel) {
     inParallelLoopDepth++;
   }
+  loopParallelUnits.push_back(forall.getParallelUnit());
 
   // Recover any available parents that were not recoverable previously
   vector<Stmt> recoverySteps;
@@ -783,14 +784,48 @@ Stmt LowererImplImperative::lowerForall(Forall forall)
   // Emit temporary initialization if forall is sequential or parallelized by
   // cpu threads and leads to a where statement
   // This is for workspace hoisting by 1-level
-  vector<Stmt> temporaryValuesInitFree = {Stmt(), Stmt()};
-  auto temp = temporaryInitialization.find(forall);
-  if (temp != temporaryInitialization.end() && forall.getParallelUnit() ==
-      ParallelUnit::NotParallel && !isScalar(temp->second.getTemporary().getType()))
-    temporaryValuesInitFree = codeToInitializeTemporary(temp->second);
-  else if (temp != temporaryInitialization.end() && forall.getParallelUnit() ==
-           ParallelUnit::CPUThread && !isScalar(temp->second.getTemporary().getType())) {
-    temporaryValuesInitFree = codeToInitializeTemporaryParallel(temp->second, forall.getParallelUnit());
+  vector<vector<Stmt> > temporaryValuesInit;
+  // iterate over temporaryInitializationOrder
+  for (auto it = temporaryInitializationOrder.begin(); it != temporaryInitializationOrder.end(); ++it) {
+    auto where0 = *it;
+
+    // check if where0 is a descendant of forall
+    struct IsDescendant : public IndexNotationVisitor {
+      using IndexNotationVisitor::visit;
+      bool isDescendant = false;
+      const Where& where0;
+      IsDescendant(const Where& where0) : where0(where0) {}
+      void visit(const WhereNode* op) {
+        Where where = Where(op);
+        if (where0 == where) {
+          isDescendant = true;
+        }
+        IndexNotationVisitor::visit(op);
+      }
+    };
+    IsDescendant isDescendant(where0);
+    isDescendant.visit(forall);
+
+    vector<Stmt> temporaryValuesInitFree0 = {Stmt(), Stmt()};
+    if (temporaryInitializationDone.find(where0) == temporaryInitializationDone.end() && isDescendant.isDescendant) {
+      auto temp = where0.getTemporary();
+      auto temporaryType = temp.getType();
+      if (!isScalar(temporaryType)) {
+        bool isParallel = false;
+        for (auto pu : loopParallelUnits) {
+          if (pu == ParallelUnit::CPUThread) {
+            isParallel = true;
+          }
+        }
+        if (!isParallel) {
+          temporaryValuesInitFree0 = codeToInitializeTemporary(where0);
+        } else {
+          temporaryValuesInitFree0 = codeToInitializeTemporaryParallel(where0, ParallelUnit::CPUThread);
+        }
+        temporaryValuesInit.push_back(temporaryValuesInitFree0);
+        temporaryInitializationDone.insert(where0);
+      }
+    }
   }
 
   Stmt loops;
@@ -890,10 +925,23 @@ Stmt LowererImplImperative::lowerForall(Forall forall)
     parallelUnitIndexVars.erase(forall.getParallelUnit());
     parallelUnitSizes.erase(forall.getParallelUnit());
   }
+
+  loopParallelUnits.pop_back();
+
+  vector<Stmt> inits;
+  vector<Stmt> frees;
+  // iterate over temporaryValuesInit and add to inits and frees
+  for (auto& s : temporaryValuesInit) {
+    inits.push_back(s[0]);
+    frees.push_back(s[1]);
+  }
+  Stmt initsBlock = Block::make(inits);
+  Stmt freesBlock = Block::make(frees);
+
   return Block::blanks(preInitValues,
-                       temporaryValuesInitFree[0],
+                       initsBlock,
                        loops,
-                       temporaryValuesInitFree[1]);
+                       freesBlock);
 }
 
 Stmt LowererImplImperative::lowerForallCloned(Forall forall) {
@@ -2519,22 +2567,63 @@ Stmt LowererImplImperative::lowerWhere(Where where) {
   std::tie(accelerateDenseWorkSpace, sortAccelerator) =
       canAccelerateDenseTemp(where);
 
-  // Declare and initialize the where statement's temporary
-  vector<Stmt> temporaryValuesInitFree = {Stmt(), Stmt()};
   bool temporaryHoisted = false;
-  for (auto it = temporaryInitialization.begin(); it != temporaryInitialization.end(); ++it) {
-    if (it->second == where && it->first.getParallelUnit() ==
-        ParallelUnit::NotParallel && !isScalar(temporary.getType())) {
-      temporaryHoisted = true;
-    } else if (it->second == where && it->first.getParallelUnit() ==
-               ParallelUnit::CPUThread && !isScalar(temporary.getType())) {
-      temporaryHoisted = true;
-      auto decls = codeToInitializeLocalTemporaryParallel(where, it->first.getParallelUnit());
+  vector<Stmt> temporaryValuesInitFree = {Stmt(), Stmt()};
+  vector<vector<Stmt> > temporaryValuesInit;
+  // iterate over temporaryInitializationOrder
+  for (auto it = temporaryInitializationOrder.begin(); it != temporaryInitializationOrder.end(); ++it) {
+    auto where0 = *it;
+    bool isParallel = false;
+    for (auto pu : loopParallelUnits) {
+      if (pu == ParallelUnit::CPUThread) {
+        isParallel = true;
+      }
+    }
 
-      temporaryValuesInitFree[0] = ir::Block::make(decls);
+    // check if where0 is a descendant of forall
+    struct IsDescendant : public IndexNotationVisitor {
+      using IndexNotationVisitor::visit;
+      bool isDescendant = false;
+      const Where& where0;
+      IsDescendant(const Where& where0) : where0(where0) {}
+      void visit(const WhereNode* op) {
+        Where where = Where(op);
+        if (where0 == where) {
+          isDescendant = true;
+        }
+        IndexNotationVisitor::visit(op);
+      }
+    };
+    IsDescendant isDescendant(where0);
+    isDescendant.visit(where);
+
+    vector<Stmt> temporaryValuesInitFree0 = {Stmt(), Stmt()};
+    if (temporaryInitializationDone.find(where0) == temporaryInitializationDone.end() && isDescendant.isDescendant) {
+      auto temp = where0.getTemporary();
+      auto temporaryType = temp.getType();
+      if (!isScalar(temporaryType)) {
+        if (!isParallel) {
+          temporaryValuesInitFree0 = codeToInitializeTemporary(where0);
+        } else {
+          temporaryValuesInitFree0 = codeToInitializeTemporaryParallel(where0, ParallelUnit::CPUThread);
+        }
+        temporaryValuesInit.push_back(temporaryValuesInitFree0);
+        temporaryInitializationDone.insert(where0);
+      }
+    }
+    if (where == where0 && !isScalar(temporary.getType())) {
+      if (!isParallel) {
+        temporaryHoisted = true;
+      } else {
+        temporaryHoisted = true;
+        auto decls = codeToInitializeLocalTemporaryParallel(where, ParallelUnit::CPUThread);
+
+        temporaryValuesInitFree[0] = ir::Block::make(decls);
+      }
     }
   }
 
+  // temporary is definitely hoisted if it is not a scalar at this point
   if (!temporaryHoisted) {
     temporaryValuesInitFree = codeToInitializeTemporary(where);
   }
@@ -2599,10 +2688,20 @@ Stmt LowererImplImperative::lowerWhere(Where where) {
     markAssignsAtomicDepth++;
   }
 
+  vector<Stmt> inits;
+  vector<Stmt> frees;
+  // iterate over temporaryValuesInit and add to inits and frees
+  for (auto& s : temporaryValuesInit) {
+    inits.push_back(s[0]);
+    frees.push_back(s[1]);
+  }
+  Stmt initsBlock = Block::make(inits);
+  Stmt freesBlock = Block::make(frees);
+
   whereConsumers.pop_back();
   whereTemps.pop_back();
   whereTempsToResult.erase(where.getTemporary());
-  return Block::make(initializeTemporary, producer, markAssignsAtomicDepth > 0 ? capturedLocatePos : ir::Stmt(), consumer,  freeTemporary);
+  return Block::make(initsBlock, initializeTemporary, producer, markAssignsAtomicDepth > 0 ? capturedLocatePos : ir::Stmt(), consumer,  freeTemporary, freesBlock);
 }
 
 

@@ -479,8 +479,6 @@ IndexStmt LoopFuse::apply(IndexStmt stmt, std::string* reason) const {
 
     void visit(const WhereNode* node) {
       Where where(node);
-      cout << "Where: " << where << endl;
-
       // select the path to visit
       if (!path[pathIdx]) { // if path[pathIdx] == 0, go to the producer
         pathIdx++;

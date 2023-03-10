@@ -1854,6 +1854,18 @@ IndexStmt IndexStmt::divide(IndexVar i, IndexVar i1, IndexVar i2, size_t splitFa
   return transformed;
 }
 
+IndexStmt IndexStmt::loopfuse(int pos, bool isProducerOnLeft, vector<int>& path) const {
+  string reason;
+  IndexStmt transformed = *this;
+  transformed = Transformation(LoopFuse(pos, isProducerOnLeft, path)).apply(transformed, &reason);
+  if (!transformed.defined()) {
+    taco_uerror << reason;
+  }
+  return transformed;
+
+  return *this;
+}
+
 IndexStmt IndexStmt::precompute(IndexExpr expr, std::vector<IndexVar> i_vars,
                                 std::vector<IndexVar> iw_vars, TensorVar workspace) const {
 
@@ -1901,6 +1913,15 @@ IndexStmt IndexStmt::reorder(taco::IndexVar i, taco::IndexVar j) const {
 IndexStmt IndexStmt::reorder(std::vector<IndexVar> reorderedvars) const {
   string reason;
   IndexStmt transformed = Reorder(reorderedvars).apply(*this, &reason);
+  if (!transformed.defined()) {
+    taco_uerror << reason;
+  }
+  return transformed;
+}
+
+IndexStmt IndexStmt::reorder(std::vector<int> path, std::vector<IndexVar> reorderedvars) const {
+  string reason;
+  IndexStmt transformed = Reorder(path, reorderedvars).apply(*this, &reason);
   if (!transformed.defined()) {
     taco_uerror << reason;
   }
@@ -2047,6 +2068,7 @@ IndexStmt IndexStmt::assemble(TensorVar result, AssembleStrategy strategy,
   }
   return transformed;
 }
+
 
 IndexStmt IndexStmt::wsaccel(TensorVar& ws, bool shouldAccel, const std::vector<IndexVar>& accelIndexVars) {
     if (accelIndexVars.size() == 0) {
@@ -3468,6 +3490,23 @@ std::map<Forall, Where> getTemporaryLocations(IndexStmt stmt) {
   return temporaryLocs;
 }
 
+std::vector<Where> getTemporaryInitializationOrder(IndexStmt stmt) {
+  struct TemporaryLocsGetter : public IndexNotationVisitor {
+    vector<Where> temporaryOrder;
+
+    using IndexNotationVisitor::visit;
+
+    void visit(const WhereNode *op) {
+      Where where = Where(op);
+      temporaryOrder.push_back(where);
+      IndexNotationVisitor::visit(op);
+    }
+  };
+  TemporaryLocsGetter getter;
+  getter.visit(stmt);
+
+  return getter.temporaryOrder;
+}
 
 std::vector<TensorVar> getTemporaries(IndexStmt stmt) {
   vector<TensorVar> temporaries;

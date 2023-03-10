@@ -513,7 +513,9 @@ private:
   std::set<ir::Expr> nonFullyInitializedResults;
 
   /// Map used to hoist temporary workspace initialization
-  std::map<Forall, Where> temporaryInitialization;
+  std::vector<Where> temporaryInitializationOrder;
+  std::set<Where> temporaryInitializationDone;
+  std::vector<ParallelUnit> loopParallelUnits;
 
   /// Map used to hoist parallel temporary workspaces. Maps workspace shared by all threads to where statement
   std::map<Where, TensorVar> whereToTemporaryVar;

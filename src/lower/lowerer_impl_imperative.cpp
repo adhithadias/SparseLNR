@@ -207,6 +207,7 @@ static std::set<Expr> hasSparseInserts(IndexStmt stmt, Iterators iterators,
     function<void(const ForallNode*,Matcher*)>([&](const ForallNode* op, 
                                                    Matcher* ctx) {
       definedIndexVars.insert(op->indexVar);
+      
       const auto lattice = MergeLattice::make(Forall(op), iterators, 
                                               provGraph, definedIndexVars);
       if (any(lattice.iterators(), 
@@ -234,6 +235,7 @@ Stmt
 LowererImplImperative::lower(IndexStmt stmt, string name,
                    bool assemble, bool compute, bool pack, bool unpack)
 {
+  // std::cout << "LowererImplImperative::lower: " << stmt << std::endl;
   this->assemble = assemble;
   this->compute = compute;
   definedIndexVarsOrdered = {};
@@ -291,22 +293,40 @@ LowererImplImperative::lower(IndexStmt stmt, string name,
   for (auto& temp : temporaries) {
     ir::Expr irVar = ir::Var::make(temp.getName(), temp.getType().getDataType(),
                                    true, true);
+                                   
     tensorVars.insert({temp, irVar});
+    // std::cout << "temp: " << temp << ", irVar: " << irVar << std::endl;
   }
 
   // Create variables for keeping track of result values array capacity
   createCapacityVars(resultVars, &capacityVars);
+
+  // // print tensorVars
+  // std::cout << "tensorVars: " << std::endl;
+  // for (auto& tensorVar : tensorVars) {
+  //   std::cout << "tensorVar: " << tensorVar.first << ", irVar: " << tensorVar.second << std::endl;
+  // }
 
   // Create iterators
   iterators = Iterators(stmt, tensorVars);
 
   provGraph = ProvenanceGraph(stmt);
 
+  // try generating whereTempsToResult here
+  // std::cout << "before whereTempsToResult" << std::endl;
+  getWhereTempsToResult(stmt, whereTempsToResult);
+
+
+  // std::cout << "provGraph: " << provGraph << std::endl;
+
   for (const IndexVar& indexVar : provGraph.getAllIndexVars()) {
+    // std::cout << "indexVar: " << indexVar << std::endl;
     if (iterators.modeIterators().count(indexVar)) {
+      // std::cout << "> indexVar: " << indexVar << ", expr: " << iterators.modeIterators()[indexVar].getIteratorVar() << std::endl;
       indexVarToExprMap.insert({indexVar, iterators.modeIterators()[indexVar].getIteratorVar()});
     }
     else {
+      // std::cout << "< indexVar: " << indexVar << ", expr: " << Var::make(indexVar.getName(), Int()) << std::endl;
       indexVarToExprMap.insert({indexVar, Var::make(indexVar.getName(), Int())});
     }
   }
@@ -420,8 +440,10 @@ LowererImplImperative::lower(IndexStmt stmt, string name,
   Stmt finalizeResults = finalizeResultArrays(resultAccesses);
 
   // Post-process body to replace workspace/temporary GetProperties with local variables
+  // std::cout << "before rewriting temporaryGP: " << body << std::endl;
   if (generateComputeCode())
     body = rewriteTemporaryGP(body, temporaries, temporarySizeMap);
+  // std::cout << "after rewriting temporaryGP: " << body << std::endl;
 
   // Store scalar stack variables back to results
   if (generateComputeCode()) {
@@ -644,8 +666,11 @@ LowererImplImperative::splitAppenderAndInserters(const vector<Iterator>& results
 }
 
 
+// aaaaaaaaaaaaaaaaaa
 Stmt LowererImplImperative::lowerForall(Forall forall)
 {
+  // std::cout << "\n\nLowererImplImperative::lowerForall: " << forall << std::endl;
+
   bool hasExactBound = provGraph.hasExactBound(forall.getIndexVar());
   bool forallNeedsUnderivedGuards = !hasExactBound && emitUnderivedGuards;
   if (!ignoreVectorize && forallNeedsUnderivedGuards &&
@@ -757,6 +782,7 @@ Stmt LowererImplImperative::lowerForall(Forall forall)
     }
   }
   Stmt recoveryStmt = Block::make(recoverySteps);
+  // std::cout << "recoveryStmt: " << recoveryStmt << std::endl;
 
   taco_iassert(!definedIndexVars.count(forall.getIndexVar()));
   definedIndexVars.insert(forall.getIndexVar());
@@ -770,6 +796,9 @@ Stmt LowererImplImperative::lowerForall(Forall forall)
     parallelUnitSizes[forall.getParallelUnit()] = ir::Sub::make(bounds[1], bounds[0]);
   }
 
+  // caseLattice is defined here
+  // try generating whereTempsToResult here
+  getWhereTempsToResult(forall, whereTempsToResult);
   MergeLattice caseLattice = MergeLattice::make(forall, iterators, provGraph, definedIndexVars, whereTempsToResult);
   vector<Access> resultAccesses;
   set<Access> reducedAccesses;
@@ -805,6 +834,7 @@ Stmt LowererImplImperative::lowerForall(Forall forall)
   // Emit a loop that iterates over over a single iterator (optimization)
   if (caseLattice.iterators().size() == 1 && caseLattice.iterators()[0].isUnique()) {
     MergeLattice loopLattice = caseLattice.getLoopLattice();
+    // std::cout << "loopLattice: " << loopLattice << std::endl;
 
     MergePoint point = loopLattice.points()[0];
     Iterator iterator = loopLattice.iterators()[0];
@@ -814,7 +844,20 @@ Stmt LowererImplImperative::lowerForall(Forall forall)
     vector<Iterator> inserters;
     tie(appenders, inserters) = splitAppenderAndInserters(point.results());
 
+    // for (long unsigned i=0; i < locators.size(); i++) {
+    //   cout << "locators[" << i << "]: " << locators[i] << endl;
+    // }
+    // for (long unsigned i = 0; i < appenders.size(); i++) {
+    //   cout << "appenders[" << i << "]: " << appenders[i] << endl;
+    // }
+    // for (long unsigned i = 0; i < inserters.size(); i++) {
+    //   cout << "inserters[" << i << "]: " << inserters[i] << endl;
+    // }
+
     std::vector<IndexVar> underivedAncestors = provGraph.getUnderivedAncestors(iterator.getIndexVar());
+    // for (long unsigned i = 0; i < underivedAncestors.size(); i++) {
+    //   cout << "underivedAncestors[" << i << "]: " << underivedAncestors[i] << endl;
+    // }
     IndexVar posDescendant;
     bool hasPosDescendant = false;
     if (!underivedAncestors.empty()) {
@@ -823,6 +866,9 @@ Stmt LowererImplImperative::lowerForall(Forall forall)
 
     bool isWhereProducer = false;
     vector<Iterator> results = point.results();
+    // for (unsigned long i = 0; i < results.size(); i++) {
+    //   std::cout << "results[" << i << "]: " << results[i] << std::endl;
+    // }
     for (Iterator result : results) {
       for (auto it = tensorVars.begin(); it != tensorVars.end(); it++) {
         if (it->second == result.getTensor()) {
@@ -838,6 +884,7 @@ Stmt LowererImplImperative::lowerForall(Forall forall)
     bool canAccelWithSparseIteration =
         provGraph.isFullyDerived(iterator.getIndexVar()) &&
         iterator.isDimensionIterator() && locators.size() == 1;
+    // std::cout << "canAccelWithSparseIteration: " << canAccelWithSparseIteration << std::endl;
     if (canAccelWithSparseIteration) {
       bool indexListsExist = false;
       // We are iterating over a dimension and locating into a temporary with a tracker to keep indices. Instead, we
@@ -850,6 +897,7 @@ Stmt LowererImplImperative::lowerForall(Forall forall)
       }
       canAccelWithSparseIteration &= indexListsExist;
     }
+    // std::cout << "canAccelWithSparseIteration: " << canAccelWithSparseIteration << std::endl;
 
     if (!isWhereProducer && hasPosDescendant && underivedAncestors.size() > 1 && provGraph.isPosVariable(iterator.getIndexVar()) && posDescendant == forall.getIndexVar()) {
       loops = lowerForallFusedPosition(forall, iterator, locators, inserters, appenders, caseLattice,
@@ -917,6 +965,7 @@ Stmt LowererImplImperative::lowerForall(Forall forall)
 
 Stmt LowererImplImperative::lowerForallCloned(Forall forall) {
   // want to emit guards outside of loop to prevent unstructured loop exits
+  // std::cout << "LowererImplImperative::lowerForallCloned: " << forall << std::endl;
 
   // construct guard
   // underived or pos variables that have a descendant that has not been defined yet
@@ -1214,6 +1263,7 @@ Stmt LowererImplImperative::lowerForallDimension(Forall forall,
                                        set<Access> reducedAccesses,
                                        ir::Stmt recoveryStmt)
 {
+  // std::cout << "LowererImplImperative::lowerForallDimension: " << forall << std::endl;
   Expr coordinate = getCoordinateVar(forall.getIndexVar());
 
   if (forall.getParallelUnit() != ParallelUnit::NotParallel && forall.getOutputRaceStrategy() == OutputRaceStrategy::Atomics) {
@@ -1258,6 +1308,7 @@ Stmt LowererImplImperative::lowerForallDimension(Forall forall,
                                                  set<Access> reducedAccesses,
                                                  ir::Stmt recoveryStmt)
   {
+    // std::cout << "LowererImplImperative::lowerForallDenseAcceleration: " << forall << std::endl;
     taco_iassert(locators.size() == 1) << "Optimizing a dense workspace is only supported when the consumer is the only RHS tensor";
     taco_iassert(provGraph.isFullyDerived(forall.getIndexVar())) << "Sparsely accelerating a dense workspace only works with fully derived index vars";
     taco_iassert(forall.getParallelUnit() == ParallelUnit::NotParallel) << "Sparsely accelerating a dense workspace only works within serial loops";
@@ -1328,6 +1379,7 @@ Stmt LowererImplImperative::lowerForallPosition(Forall forall, Iterator iterator
                                       set<Access> reducedAccesses,
                                       ir::Stmt recoveryStmt)
 {
+  // std::cout << "LowererImplImperative::lowerForallPosition: " << forall << std::endl;
   Expr coordinate = getCoordinateVar(forall.getIndexVar());
   Stmt declareCoordinate = Stmt();
   Stmt strideGuard = Stmt();
@@ -1442,6 +1494,8 @@ Stmt LowererImplImperative::lowerForallFusedPosition(Forall forall, Iterator ite
                                       set<Access> reducedAccesses,
                                       ir::Stmt recoveryStmt)
 {
+  // std::cout << "lowerForallFusedPosition" << std::endl;
+
   Expr coordinate = getCoordinateVar(forall.getIndexVar());
   Stmt declareCoordinate = Stmt();
   if (provGraph.isCoordVariable(forall.getIndexVar())) {
@@ -2094,11 +2148,14 @@ Stmt LowererImplImperative::lowerForallBody(Expr coordinate, IndexStmt stmt,
                                   const set<Access>& reducedAccesses, 
                                   MergeStrategy mergeStrategy) {
 
+  // std::cout << "LowererImplImperative::lowerForallBody" << std::endl;
   // Inserter positions
   Stmt declInserterPosVars = declLocatePosVars(inserters);
+  // std::cout << "declInserterPosVars: " << declInserterPosVars << std::endl;
 
   // Locate positions
   Stmt declLocatorPosVars = declLocatePosVars(locators);
+  // std::cout << "declLocatorPosVars: " << declLocatorPosVars << std::endl;
 
   if (captureNextLocatePos) {
     capturedLocatePos = Block::make(declInserterPosVars, declLocatorPosVars);
@@ -2130,6 +2187,9 @@ Stmt LowererImplImperative::lowerForallBody(Expr coordinate, IndexStmt stmt,
     append(stmts, loweredCases);
     Stmt body = Block::make(stmts);
 
+    // std::cout << "---\n" <<  declInserterPosVars << std::endl
+    //   << declLocatorPosVars << std::endl
+    //   << body << std::endl;
     return Block::make(declInserterPosVars, declLocatorPosVars, body);
   }
 
@@ -2154,7 +2214,9 @@ Stmt LowererImplImperative::lowerForallBody(Expr coordinate, IndexStmt stmt,
   Stmt incr = Block::make(stmts);
 
   // TODO: Emit code to insert coordinates
-
+  // std::cout << "===\n" <<  declInserterPosVars << std::endl
+  //     << declLocatorPosVars << std::endl
+  //     << body << std::endl;
   return Block::make(initVals,
                      declInserterPosVars,
                      declLocatorPosVars,
@@ -2533,6 +2595,9 @@ vector<Stmt> LowererImplImperative::codeToInitializeTemporary(Where where) {
 }
 
 Stmt LowererImplImperative::lowerWhere(Where where) {
+
+  // std::cout << "LowererImplImperative::lowerWhere: " << where << std::endl;
+
   TensorVar temporary = where.getTemporary();
   bool accelerateDenseWorkSpace, sortAccelerator;
   std::tie(accelerateDenseWorkSpace, sortAccelerator) =
@@ -2564,13 +2629,15 @@ Stmt LowererImplImperative::lowerWhere(Where where) {
   Stmt initializeTemporary = temporaryValuesInitFree[0];
   Stmt freeTemporary = temporaryValuesInitFree[1];
 
-  match(where.getConsumer(),
-        std::function<void(const AssignmentNode*)>([&](const AssignmentNode* op) {
-            if (op->lhs.getTensorVar().getOrder() > 0) {
-              whereTempsToResult[where.getTemporary()] = (const AccessNode *) op->lhs.ptr;
-            }
-        })
-  );
+  getWhereTempsToResult(where, whereTempsToResult);
+
+  // match(where.getConsumer(),
+  //       std::function<void(const AssignmentNode*)>([&](const AssignmentNode* op) {
+  //           if (op->lhs.getTensorVar().getOrder() > 0) {
+  //             whereTempsToResult[where.getTemporary()] = (const AccessNode *) op->lhs.ptr;
+  //           }
+  //       })
+  // );
 
   Stmt consumer = lower(where.getConsumer());
   if (accelerateDenseWorkSpace && sortAccelerator) {
@@ -2600,6 +2667,7 @@ Stmt LowererImplImperative::lowerWhere(Where where) {
   }
 
   whereConsumers.push_back(consumer);
+  
   whereTemps.push_back(where.getTemporary());
   captureNextLocatePos = true;
 
@@ -2623,7 +2691,7 @@ Stmt LowererImplImperative::lowerWhere(Where where) {
 
   whereConsumers.pop_back();
   whereTemps.pop_back();
-  whereTempsToResult.erase(where.getTemporary());
+  // whereTempsToResult.erase(where.getTemporary());
   return Block::make(initializeTemporary, producer, markAssignsAtomicDepth > 0 ? capturedLocatePos : ir::Stmt(), consumer,  freeTemporary);
 }
 
@@ -3386,18 +3454,20 @@ Stmt LowererImplImperative::initValues(Expr tensor, Expr initVal, Expr begin, Ex
 }
 
 Stmt LowererImplImperative::declLocatePosVars(vector<Iterator> locators) {
+  // std::cout << "LowererImplImperative::declLocatePosVars: " << locators.size() << std::endl;
   vector<Stmt> result;
   for (Iterator& locator : locators) {
+    // std::cout << "locator: " << locator << std::endl;
     accessibleIterators.insert(locator);
 
     bool doLocate = true;
-    for (Iterator ancestorIterator = locator.getParent();
-         !ancestorIterator.isRoot() && ancestorIterator.hasLocate();
-         ancestorIterator = ancestorIterator.getParent()) {
-      if (!accessibleIterators.contains(ancestorIterator)) {
-        doLocate = false;
-      }
-    }
+    // for (Iterator ancestorIterator = locator.getParent();
+    //      !ancestorIterator.isRoot() && ancestorIterator.hasLocate();
+    //      ancestorIterator = ancestorIterator.getParent()) {
+    //   if (!accessibleIterators.contains(ancestorIterator)) {
+    //     doLocate = false;
+    //   }
+    // }
 
     if (doLocate) {
       Iterator locateIterator = locator;
@@ -3421,6 +3491,7 @@ Stmt LowererImplImperative::declLocatePosVars(vector<Iterator> locators) {
           auto coordArray = indexSetIterator.posAccess(expr, coordinates(indexSetIterator)).getResults()[0];
           coords[coords.size() - 1] = coordArray;
         }
+        // std::cout << "coords: " << coords[coords.size() - 1] << std::endl;
         ModeFunction locate = locateIterator.locate(coords);
         taco_iassert(isValue(locate.getResults()[1], true));
         Stmt declarePosVar = VarDecl::make(locateIterator.getPosVar(),

@@ -2670,7 +2670,7 @@ TEST(workspaces, spmm_gemm_real) {
     return;
   }
 
-  Tensor<double> C("C", {B.getDimension(1)}, K, Format{Dense, Dense});
+  Tensor<double> C("C", {B.getDimension(1), K}, Format{Dense, Dense});
   for (int j=0; j<B.getDimension(1); j++) {
     for (int k=0; k<K; k++) {
       C.insert({j, k}, (double) k);

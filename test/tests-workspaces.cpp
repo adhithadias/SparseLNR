@@ -1506,10 +1506,6 @@ TEST(workspaces, loopcontractfuse) {
 }
 
 TEST(workspaces, loopcontractfuse_real) {
-  int L = 16;
-  int M = 16;
-  int N = 16;
-  Tensor<double> A("A", {L, M, N}, Format{Dense, Dense, Dense});
   // Tensor<double> B("B", {N, N, N}, Format{Dense, Sparse, Sparse});
   // Tensor<double> C("C", {N, N}, Format{Dense, Dense});
   // Tensor<double> D("D", {N, N}, Format{Dense, Dense});
@@ -1517,6 +1513,11 @@ TEST(workspaces, loopcontractfuse_real) {
 
   std::string mat_file = util::getFromEnv("TENSOR_FILE", "");
   int iterations = std::stoi(util::getFromEnv("ITERATIONS", "0"));
+  int L = std::stoi(util::getFromEnv("L", "16"));
+  int M = std::stoi(util::getFromEnv("M", "16"));
+  int N = std::stoi(util::getFromEnv("N", "16"));
+
+  Tensor<double> A("A", {L, M, N}, Format{Dense, Dense, Dense});
 
   if (mat_file == "") {
     std::cout << "No tensor file specified!\n";
@@ -1566,11 +1567,20 @@ TEST(workspaces, loopcontractfuse_real) {
 	vector<int> path0;
 	vector<int> path1 = {0};
 	stmt = stmt
-		.reorder({i, j, k, l, m, n})
-		.loopfuse(2, true, path0)
+		.reorder({i, n, j, k, l, m})
+		.loopfuse(3, true, path0)
 		.loopfuse(2, true, path1)
 		;
 	/* END loopcontractfuse_real TEST */
+
+  //
+	// vector<int> path0;
+	// vector<int> path1 = {0};
+	// stmt = stmt
+	// 	.reorder({i, n, j, k, l, m})
+	// 	.loopfuse(3, true, path0)
+	// 	.loopfuse(2, true, path1)
+	// 	;
 
   // // config 1 - loop depth 4
 	// stmt = stmt
@@ -1656,14 +1666,11 @@ std::cout << "workspaces, loopcontractfuse -> execution completed for matrix: " 
 }
 
 TEST(workspaces, spttn_cyclops_loopcontractfuse_real) {
-  int L = 128;
-  int M = 128;
-  int N = 128;
+  int L = std::stoi(util::getFromEnv("L", "16"));
+  int M = std::stoi(util::getFromEnv("M", "16"));
+  int N = std::stoi(util::getFromEnv("N", "16"));
+
   Tensor<double> A("A", {L, M, N}, Format{Dense, Dense, Dense});
-  // Tensor<double> B("B", {N, N, N}, Format{Dense, Sparse, Sparse});
-  // Tensor<double> C("C", {N, N}, Format{Dense, Dense});
-  // Tensor<double> D("D", {N, N}, Format{Dense, Dense});
-  // Tensor<double> E("E", {N, N}, Format{Dense, Dense});
 
   std::string mat_file = util::getFromEnv("TENSOR_FILE", "");
   int iterations = std::stoi(util::getFromEnv("ITERATIONS", "0"));
@@ -1707,7 +1714,7 @@ TEST(workspaces, spttn_cyclops_loopcontractfuse_real) {
   // IndexStmt stmt = A.getAssignment().concretize();
   // std::cout << stmt << endl;
 
-	/* BEGIN loopcontractfuse_real TEST */
+	/* BEGIN spttn_cyclops_loopcontractfuse_real TEST */
 	A(l, m, n) = B(i, j, k) * E(k, n) * D(j, m) * C(i, l);
 	
 	IndexStmt stmt = A.getAssignment().concretize();
@@ -1720,54 +1727,12 @@ TEST(workspaces, spttn_cyclops_loopcontractfuse_real) {
 		.loopfuse(2, true, path0)
 		.loopfuse(2, true, path1)
 		;
-	/* END loopcontractfuse_real TEST */
-
-  // // config 1 - loop depth 4
-	// stmt = stmt
-  //   .reorder({l, i, j, k, m, n})
-  //   .loopfuse(2, true, path0)
-  //   .reorder(path1, {m, k, j})
-  //   .loopfuse(2, true, path1)
-	// 	;
-
-  // // config 2 - loop depth 5
-  // stmt = stmt
-  //   .reorder({l, m, i, j, k, n})
-  //   .loopfuse(3, true, path0)
-  //   .reorder(path1, {n, k})
-  //   ;
-
-  // // config 3 - loop depth 5
-  // stmt = stmt
-  //   .reorder({l, m, i, j, k, n})
-  //   .loopfuse(3, true, path0)
-  //   ;
-
-  // // config 4 - loop depth 5
-  // stmt = stmt
-  //   .reorder({m, l, i, j, k, n})
-  //   .loopfuse(3, true, path0)
-  //    ;
-
-  // // config 5 - loop depth 4
-  // stmt = stmt
-  //   .reorder({l, i, j, k, m, n})
-  //   .loopfuse(2, true, path0)
-  //   .reorder(path1, {k, m, j})
-  //   .loopfuse(2, true, path1)
-  //  ;
-
-  // // config 6 - loop depth 5
-  // stmt = stmt
-  //   .reorder({m, l, i, j, k, n})
-  //   .loopfuse(3, true, path0)
-  //   .reorder(path1, {n, k})
-  //    ;
+	/* END spttn_cyclops_loopcontractfuse_real TEST */
 
   stmt = insertTemporaries(stmt);
   // stmt = stmt.concretize();
   cout << "final stmt: " << stmt << endl;
-  printCodeToFile("loopcontractfuse_real", stmt);
+  printCodeToFile("spttn_cyclops_loopcontractfuse_real", stmt);
 
   A.compile(stmt.concretize());
   A.assemble();
@@ -1780,7 +1745,7 @@ TEST(workspaces, spttn_cyclops_loopcontractfuse_real) {
   // expected.assemble();
 
   // IndexStmt stmt2 = expected.getAssignment().concretize();
-  // printCodeToFile("reference_loopcontractfuse_real", stmt2);
+  // printCodeToFile("reference_spttn_cyclops_loopcontractfuse_real", stmt2);
 
   clock_t begin;
   clock_t end;
@@ -2548,7 +2513,7 @@ TEST(workspaces, spmmh_gemm_real) {
 	
 	vector<int> path0;
 	stmt = stmt
-		.reorder({j, i, k, l})
+		.reorder({i, j, k, l})
 		.loopfuse(3, true, path0)
 		;
 	/* END spmmh_gemm_real TEST */
@@ -2698,7 +2663,7 @@ TEST(workspaces, spmm_gemm_real) {
 	
 	vector<int> path0;
 	stmt = stmt
-		.reorder({i, k ,j, l})
+		.reorder({i, k, j, l})
 		.loopfuse(2, true, path0)
 		;
 	/* END spmm_gemm_real TEST */

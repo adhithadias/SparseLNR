@@ -12,6 +12,7 @@
 #include "taco/lower/lower.h"
 #include "taco/util/env.h"
 #include "time.h"
+#include "omp.h"
 
 using namespace taco;
 
@@ -970,6 +971,11 @@ TEST(workspaces, sddmm_spmm_gemm_real) {
   int L = 16; 
   int M = 16;
 
+  // for parallel execution
+  int nthreads = std::stoi(util::getFromEnv("OMP_NUM_THREADS", "1"));
+  taco_set_num_threads(nthreads);
+  taco_set_parallel_schedule(ParallelSchedule::Static, 64);
+
   std::string mat_file = util::getFromEnv("TENSOR_FILE", "");
   int iterations = std::stoi(util::getFromEnv("ITERATIONS", "0"));
 
@@ -1028,6 +1034,7 @@ TEST(workspaces, sddmm_spmm_gemm_real) {
 		.reorder({i, j, k, l, m})
 		.loopfuse(4, true, path0)
 		.loopfuse(3, true, path1)
+    .parallelize(i, ParallelUnit::CPUThread, OutputRaceStrategy::NoRaces)
 		;
 	/* END sddmm_spmm_gemm_real TEST */
 
@@ -1050,21 +1057,23 @@ TEST(workspaces, sddmm_spmm_gemm_real) {
   // IndexStmt stmt2 = expected.getAssignment().concretize();
   // printCodeToFile("reference_sddmm_spmm_gemm_real", stmt2);
 
-  clock_t begin;
-  clock_t end;
+  std::chrono::time_point<std::chrono::system_clock> begin, end;
+  std::chrono::duration<double> elapsed_secs;
+  double elapsed_mills;
 
   for (int i = 0; i < iterations; i++) {
-    begin = clock();
+    begin = std::chrono::system_clock::now();
     A.compute(stmt);
-    end = clock();
-    double elapsed_secs = double(end - begin) / CLOCKS_PER_SEC * 1000;
+    end = std::chrono::system_clock::now();
+    elapsed_secs = end - begin;
+    elapsed_mills = elapsed_secs.count() * 1000;
     // begin = clock();
     // expected.compute();
     // end = clock();
     // double elapsed_secs_ref = double(end - begin) / CLOCKS_PER_SEC * 1000;
     // ASSERT_TENSOR_EQ(expected, A);
 
-    std::cout << elapsed_secs << std::endl;
+    std::cout << elapsed_mills << std::endl;
     // std::cout << elapsed_secs_ref << std::endl;
   }
 
@@ -1076,6 +1085,11 @@ TEST(workspaces, default_sddmm_spmm_gemm_real) {
   int K = 16;
   int L = 16; 
   int M = 16;
+
+  // for parallel execution
+  int nthreads = std::stoi(util::getFromEnv("OMP_NUM_THREADS", "1"));
+  taco_set_num_threads(nthreads);
+  taco_set_parallel_schedule(ParallelSchedule::Static, 64);
 
   std::string mat_file = util::getFromEnv("TENSOR_FILE", "");
   int iterations = std::stoi(util::getFromEnv("ITERATIONS", "0"));
@@ -1128,21 +1142,24 @@ TEST(workspaces, default_sddmm_spmm_gemm_real) {
   IndexStmt exp = makeReductionNotation(expected.getAssignment());
   exp = insertTemporaries(exp);
   exp = exp.concretize();
+  exp = exp.parallelize(i, ParallelUnit::CPUThread, OutputRaceStrategy::NoRaces);
   expected.compile(exp);
   expected.assemble();
 
   std::cout << "reference stmt: " << exp << endl;
   std::cout << "reference stmt: " << exp << endl;
-  printCodeToFile("reference_sddmm_spmm_gemm_real", exp);
+  printCodeToFile("default_sddmm_spmm_gemm_real", exp);
 
-  clock_t begin;
-  clock_t end;
+  std::chrono::time_point<std::chrono::system_clock> begin, end;
+  std::chrono::duration<double> elapsed_secs;
+  double elapsed_secs_ref;
 
   for (int i = 0; i < iterations; i++) {
-    begin = clock();
+    begin = std::chrono::system_clock::now();
     expected.compute();
-    end = clock();
-    double elapsed_secs_ref = double(end - begin) / CLOCKS_PER_SEC * 1000;
+    end = std::chrono::system_clock::now();
+    elapsed_secs = end - begin;
+    elapsed_secs_ref = elapsed_secs.count() * 1000;
 
     std::cout << elapsed_secs_ref << std::endl;
   }
@@ -1155,6 +1172,11 @@ TEST(workspaces, sddmm_spmm_real) {
   int K = 16;
   int L = 16;
 
+  // for parallel execution
+  int nthreads = std::stoi(util::getFromEnv("OMP_NUM_THREADS", "1"));
+  taco_set_num_threads(nthreads);
+  taco_set_parallel_schedule(ParallelSchedule::Static, 64);
+
   std::string mat_file = util::getFromEnv("TENSOR_FILE", "");
   int iterations = std::stoi(util::getFromEnv("ITERATIONS", "0"));
 
@@ -1162,27 +1184,30 @@ TEST(workspaces, sddmm_spmm_real) {
   B.setName("B");
   B.pack();
 
+  auto I = B.getDimension(0);
+  auto J = B.getDimension(1);
+
   if (mat_file == "") {
     std::cout << "No tensor file specified!\n";
     return;
   }
 
-  Tensor<double> C("C", {B.getDimension(0), K}, Format{Dense, Dense});
-  for (int i=0; i<B.getDimension(0); i++) {
+  Tensor<double> C("C", {I, K}, Format{Dense, Dense});
+  for (int i=0; i<I; i++) {
     for (int l=0; l<K; l++) {
       C.insert({i, l}, (double) i);
     }
   }
   C.pack();
-  Tensor<double> D("D", {B.getDimension(1), K}, Format{Dense, Dense});
-  for (int j=0; j<B.getDimension(1); j++) {
+  Tensor<double> D("D", {J, K}, Format{Dense, Dense});
+  for (int j=0; j<J; j++) {
     for (int m=0; m<K; m++) {
       D.insert({j, m}, (double) j);
     }
   }
   D.pack();
-  Tensor<double> E("E", {B.getDimension(1), L}, Format{Dense, Dense});
-  for (int j=0; j<B.getDimension(1); j++) {
+  Tensor<double> E("E", {J, L}, Format{Dense, Dense});
+  for (int j=0; j<J; j++) {
     for (int m=0; m<L; m++) {
       E.insert({j, m}, (double) j);
     }
@@ -1194,16 +1219,17 @@ TEST(workspaces, sddmm_spmm_real) {
   // 3 -> A(i,l) = B(i,j) * C(i,k) * D(j,k) * E(j,l) - <SDDMM, SpMM>
   IndexVar i("i"), j("j"), k("k"), l("l");
 
-	/* BEGIN sddmm_spmm_real TEST */
+  /* BEGIN sddmm_spmm_real TEST */
+
+	vector<int> path_ = {};
+
 	A(i, l) = B(i, j) * C(i, k) * D(j, k) * E(j, l);
-	
 	IndexStmt stmt = A.getAssignment().concretize();
 	std::cout << stmt << endl;
-	
-	vector<int> path0;
 	stmt = stmt
-		.reorder({i, j, k, l})
-		.loopfuse(3, true, path0)
+		.reorder(path_, {i,j,k,l})
+		.loopfuse(3, true, path_)
+		.parallelize(i, ParallelUnit::CPUThread, OutputRaceStrategy::NoRaces)
 		;
 	/* END sddmm_spmm_real TEST */
 
@@ -1222,21 +1248,23 @@ TEST(workspaces, sddmm_spmm_real) {
   // expected.compile(exp);
   // expected.assemble();
 
-  clock_t begin;
-  clock_t end; 
+  std::chrono::time_point<std::chrono::system_clock> begin, end;
+  std::chrono::duration<double> elapsed_secs;
+  double elapsed_mills; 
 
   for (int i = 0; i < iterations; i++) {
-    begin = clock();
+    begin = std::chrono::system_clock::now();
     A.compute(stmt);
-    end = clock();
-    double elapsed_secs = double(end - begin) / CLOCKS_PER_SEC * 1000;
+    end = std::chrono::system_clock::now();
+    elapsed_secs = end - begin;
+    elapsed_mills = elapsed_secs.count() * 1000;
     // begin = clock();
     // expected.compute();
     // end = clock();
     // double elapsed_secs_ref = double(end - begin) / CLOCKS_PER_SEC * 1000;
     // // ASSERT_TENSOR_EQ(expected, A);
 
-    std::cout << elapsed_secs << std::endl;
+    std::cout << elapsed_mills << std::endl;
     // std::cout << elapsed_secs_ref << std::endl;
   }
 
@@ -1244,9 +1272,117 @@ TEST(workspaces, sddmm_spmm_real) {
 
 }
 
+TEST(workspaces, sddmm_spmm_willow) {
+  int K = 16;
+  int L = 16;
+
+  int nthreads = std::stoi(util::getFromEnv("OMP_NUM_THREADS", "1"));
+  taco_set_num_threads(nthreads);
+  taco_set_parallel_schedule(ParallelSchedule::Static, 64);
+
+  std::string mat_file = util::getFromEnv("TENSOR_FILE", "");
+  int iterations = std::stoi(util::getFromEnv("ITERATIONS", "0"));
+
+  Tensor<double> B = read(mat_file, Format({Dense, Sparse}), true);
+  B.setName("B");
+  B.pack();
+
+  auto I = B.getDimension(0);
+  auto J = B.getDimension(1);
+
+  if (mat_file == "") {
+    std::cout << "No tensor file specified!\n";
+    return;
+  }
+
+  Tensor<double> C("C", {I, K}, Format{Dense, Dense});
+  for (int i=0; i<I; i++) {
+    for (int l=0; l<K; l++) {
+      C.insert({i, l}, (double) i);
+    }
+  }
+  C.pack();
+  Tensor<double> D("D", {J, K}, Format{Dense, Dense});
+  for (int j=0; j<J; j++) {
+    for (int m=0; m<K; m++) {
+      D.insert({j, m}, (double) j);
+    }
+  }
+  D.pack();
+  Tensor<double> E("E", {J, L}, Format{Dense, Dense});
+  for (int j=0; j<J; j++) {
+    for (int m=0; m<L; m++) {
+      E.insert({j, m}, (double) j);
+    }
+  }
+  E.pack();
+
+  Tensor<double> A("A", {B.getDimension(0), L}, Format{Dense, Dense});
+
+  // 3 -> A(i,l) = B(i,j) * C(i,k) * D(j,k) * E(j,l) - <SDDMM, SpMM>
+  IndexVar i("i"), j("j"), k("k"), l("l");
+
+  /* BEGIN sddmm_spmm_willow TEST */
+
+	vector<int> path_ = {};
+
+	A(i, l) = C(i, k) * D(j, k) * B(i, j) * E(j, l);
+	IndexStmt stmt = A.getAssignment().concretize();
+	std::cout << stmt << endl;
+	stmt = stmt
+		.reorder(path_, {i,j,k,l})
+		.loopfuse(2, true, path_)
+		// .parallelize(i, ParallelUnit::CPUThread, OutputRaceStrategy::NoRaces)
+		;
+	/* END sddmm_spmm_willow TEST */
+
+  stmt = stmt.concretize();
+  cout << "final stmt: " << stmt << endl;
+  printCodeToFile("sddmm_spmm_willow", stmt);
+
+  A.compile(stmt);
+  A.assemble();
+
+  // Tensor<double> expected("expected", {B.getDimension(0), L}, Format{Dense, Dense});
+  // expected(i,l) = B(i,j) * C(i,k) * D(j,k) * E(j,l);
+  // IndexStmt exp = makeReductionNotation(expected.getAssignment());
+  // exp = insertTemporaries(exp);
+  // exp = exp.concretize();
+  // expected.compile(exp);
+  // expected.assemble();
+
+  std::chrono::time_point<std::chrono::system_clock> begin, end;
+  std::chrono::duration<double> elapsed_secs;
+  double elapsed_mills; 
+
+  for (int i = 0; i < iterations; i++) {
+    begin = std::chrono::system_clock::now();
+    A.compute(stmt);
+    end = std::chrono::system_clock::now();
+    elapsed_secs = end - begin;
+    elapsed_mills = elapsed_secs.count() * 1000;
+    // begin = clock();
+    // expected.compute();
+    // end = clock();
+    // double elapsed_secs_ref = double(end - begin) / CLOCKS_PER_SEC * 1000;
+    // // ASSERT_TENSOR_EQ(expected, A);
+
+    std::cout << elapsed_mills << std::endl;
+    // std::cout << elapsed_secs_ref << std::endl;
+  }
+
+  std::cout << "workspaces, sddmm_spmm_willow -> execution completed for matrix: " << mat_file << std::endl;
+
+}
+
 TEST(workspaces, default_sddmm_spmm_real) {
   int K = 16;
   int L = 16;
+
+  // for parallel execution
+  int nthreads = std::stoi(util::getFromEnv("OMP_NUM_THREADS", "1"));
+  taco_set_num_threads(nthreads);
+  taco_set_parallel_schedule(ParallelSchedule::Static, 64);
 
   std::string mat_file = util::getFromEnv("TENSOR_FILE", "");
   int iterations = std::stoi(util::getFromEnv("ITERATIONS", "0"));
@@ -1290,6 +1426,7 @@ TEST(workspaces, default_sddmm_spmm_real) {
   IndexStmt exp = makeReductionNotation(expected.getAssignment());
   exp = insertTemporaries(exp);
   exp = exp.concretize();
+  exp = exp.parallelize(i, ParallelUnit::CPUThread, OutputRaceStrategy::NoRaces);
   expected.compile(exp);
   expected.assemble();
 
@@ -1297,16 +1434,22 @@ TEST(workspaces, default_sddmm_spmm_real) {
   cout << "default stmt: " << exp << endl;
   printCodeToFile("default_sddmm_spmm_real", exp);
 
-  clock_t begin;
-  clock_t end;
+  // double begin;
+  // double end;
+  std::chrono::time_point<std::chrono::system_clock> begin, end;
+  std::chrono::duration<double> elapsed_seconds;
+  double elapsed_mills = 0;
 
   for (int i = 0; i< iterations; i++) {
-    begin = clock();
+    begin = std::chrono::system_clock::now();
+    // begin = omp_get_wtime();
     expected.compute();
-    end = clock();
-    double elapsed_secs = double(end - begin) / CLOCKS_PER_SEC * 1000;
+    // end = omp_get_wtime();
+    end = std::chrono::system_clock::now();
+    elapsed_seconds = end - begin;
+    elapsed_mills = elapsed_seconds.count() * 1000;
 
-    std::cout << elapsed_secs << std::endl;
+    std::cout << elapsed_mills << std::endl;
   }
 
   std::cout << "workspaces, sddmm_spmm -> execution completed for matrix: " << mat_file << std::endl;
@@ -1511,6 +1654,11 @@ TEST(workspaces, loopcontractfuse_real) {
   // Tensor<double> D("D", {N, N}, Format{Dense, Dense});
   // Tensor<double> E("E", {N, N}, Format{Dense, Dense});
 
+  // for parallel execution
+  int nthreads = std::stoi(util::getFromEnv("OMP_NUM_THREADS", "1"));
+  taco_set_num_threads(nthreads);
+  taco_set_parallel_schedule(ParallelSchedule::Static, 64);
+
   std::string mat_file = util::getFromEnv("TENSOR_FILE", "");
   int iterations = std::stoi(util::getFromEnv("ITERATIONS", "0"));
   int L = std::stoi(util::getFromEnv("L", "16"));
@@ -1571,6 +1719,9 @@ TEST(workspaces, loopcontractfuse_real) {
 		.loopfuse(3, true, path0)
 		.loopfuse(2, true, path1)
 		;
+  if (nthreads > 1) {
+    stmt = stmt.parallelize(i, ParallelUnit::CPUThread, OutputRaceStrategy::Atomics);
+  }
 	/* END loopcontractfuse_real TEST */
 
   //
@@ -1642,14 +1793,16 @@ TEST(workspaces, loopcontractfuse_real) {
   // IndexStmt stmt2 = expected.getAssignment().concretize();
   // printCodeToFile("reference_loopcontractfuse_real", stmt2);
 
-  clock_t begin;
-  clock_t end;
+  std::chrono::time_point<std::chrono::system_clock> begin, end;
+  std::chrono::duration<double> elapsed_secs;
+  double elapsed_mills;
 
   for (int i=0; i < iterations; i++) {
-    begin = clock();
+    begin = std::chrono::system_clock::now();
     A.compute(stmt);
-    end = clock();
-    double elapsed_secs = double(end - begin) / CLOCKS_PER_SEC * 1000;
+    end = std::chrono::system_clock::now();
+    elapsed_secs = end - begin;
+    elapsed_mills = elapsed_secs.count() * 1000;
 
     // begin = clock();
     // if (iteration == 0) expected.compute();
@@ -1657,7 +1810,7 @@ TEST(workspaces, loopcontractfuse_real) {
     // double elapsed_secs_ref = double(end - begin) / CLOCKS_PER_SEC * 1000;
     // ASSERT_TENSOR_EQ(expected, A);
 
-    std::cout << elapsed_secs << std::endl;
+    std::cout << elapsed_mills << std::endl;
     // std::cout << elapsed_secs_ref << std::endl;
   }
 
@@ -1775,6 +1928,11 @@ TEST(workspaces, default_loopcontractfuse_real) {
   int M = 16;
   int N = 16;
 
+  // for parallel execution
+  int nthreads = std::stoi(util::getFromEnv("OMP_NUM_THREADS", "1"));
+  taco_set_num_threads(nthreads);
+  taco_set_parallel_schedule(ParallelSchedule::Static, 64);
+
   std::string mat_file = util::getFromEnv("TENSOR_FILE", "");
   int iterations = std::stoi(util::getFromEnv("ITERATIONS", "0"));
 
@@ -1815,29 +1973,36 @@ TEST(workspaces, default_loopcontractfuse_real) {
 
   Tensor<double> expected("expected", {N, N, N}, Format{Dense, Dense, Dense});
   expected(l,m,n) = B(i,j,k) * C(i,l) * D(j,m) * E(k,n);
-  expected.compile();
-  expected.assemble();
-
   IndexStmt stmt2 = expected.getAssignment().concretize();
+  stmt2 = insertTemporaries(stmt2);
+  stmt2 = stmt2.reorder({i, l, j, m, k, n});
+  if (nthreads > 1) {
+    stmt2 = stmt2.parallelize(i, ParallelUnit::CPUThread, OutputRaceStrategy::Atomics);
+  }
+  expected.compile(stmt2);
+  expected.assemble();
+  
   std::cout << "reference stmt: " << stmt2 << endl;
   std::cout << "reference stmt: " << stmt2 << endl;
-  printCodeToFile("reference_loopcontractfuse_real", stmt2);
+  printCodeToFile("default_loopcontractfuse_real", stmt2);
 
-  clock_t begin;
-  clock_t end;
+  std::chrono::time_point<std::chrono::system_clock> begin, end;
+  std::chrono::duration<double> elapsed_seconds;
+  double elapsed_mills = 0;
 
   for (int i = 0; i < iterations; i++) {
-    begin = clock();
+    begin = std::chrono::system_clock::now();
     expected.compute();
-    end = clock();
-    double elapsed_secs_ref = double(end - begin) / CLOCKS_PER_SEC * 1000;
+    end = std::chrono::system_clock::now();
+    elapsed_seconds = end - begin;
+    elapsed_mills = elapsed_seconds.count() * 1000;
     // ASSERT_TENSOR_EQ(expected, A);
 
     // std::cout << elapsed_secs << std::endl;
-    std::cout << elapsed_secs_ref << std::endl;
+    std::cout << elapsed_mills << std::endl;
   }
 
-  std::cout << "workspaces, default_loopcontractfuse -> execution completed for matrix: " << mat_file << std::endl;
+  std::cout << "workspaces, reference_loopcontractfuse -> execution completed for matrix: " << mat_file << std::endl;
 
 }
 
@@ -1845,6 +2010,11 @@ TEST(workspaces, default_loopcontractfuse_real) {
 TEST(workspaces, mttkrp_gemm_real) {
   int J = 32;
   int M = 64;
+
+  // for parallel execution
+  int nthreads = std::stoi(util::getFromEnv("OMP_NUM_THREADS", "1"));
+  taco_set_num_threads(nthreads);
+  taco_set_parallel_schedule(ParallelSchedule::Static, 64);
 
   std::string mat_file = util::getFromEnv("TENSOR_FILE", "");
   int iterations = std::stoi(util::getFromEnv("ITERATIONS", "0"));
@@ -1901,6 +2071,7 @@ TEST(workspaces, mttkrp_gemm_real) {
 	stmt = stmt
 		.reorder({i, j, k, l, m})
 		.loopfuse(3, true, path0)
+    .parallelize(i, ParallelUnit::CPUThread, OutputRaceStrategy::NoRaces);
 		;
 	/* END mttkrp_gemm_real TEST */
 
@@ -1920,16 +2091,18 @@ TEST(workspaces, mttkrp_gemm_real) {
   // expected.assemble();
 
   // IndexStmt stmt2 = expected.getAssignment().concretize();
-  // printCodeToFile("reference_loopcontractfuse_real", stmt2);
+  // printCodeToFile("reference_mttkrp_gemm_real_real", stmt2);
 
-  clock_t begin;
-  clock_t end;
+  std::chrono::time_point<std::chrono::system_clock> begin, end;
+  std::chrono::duration<double> elapsed_seconds;
+  double elapsed_mills = 0;
 
   for (int i=0; i < iterations; i++) {
-    begin = clock();
+    begin = std::chrono::system_clock::now();
     A.compute(stmt);
-    end = clock();
-    double elapsed_secs = double(end - begin) / CLOCKS_PER_SEC * 1000;
+    end = std::chrono::system_clock::now();
+    elapsed_seconds = end - begin;
+    elapsed_mills = elapsed_seconds.count() * 1000;
 
     // begin = clock();
     // if (iteration == 0) expected.compute();
@@ -1937,7 +2110,7 @@ TEST(workspaces, mttkrp_gemm_real) {
     // double elapsed_secs_ref = double(end - begin) / CLOCKS_PER_SEC * 1000;
     // ASSERT_TENSOR_EQ(expected, A);
 
-    std::cout << elapsed_secs << std::endl;
+    std::cout << elapsed_mills << std::endl;
     // std::cout << elapsed_secs_ref << std::endl;
   }
 
@@ -1948,6 +2121,11 @@ TEST(workspaces, mttkrp_gemm_real) {
 TEST(workspaces, default_mttkrp_gemm_real) {
   int J = 32;
   int M = 64;
+
+  // for parallel execution
+  int nthreads = std::stoi(util::getFromEnv("OMP_NUM_THREADS", "1"));
+  taco_set_num_threads(nthreads);
+  taco_set_parallel_schedule(ParallelSchedule::Static, 64);
 
   std::string mat_file = util::getFromEnv("TENSOR_FILE", "");
   int iterations = std::stoi(util::getFromEnv("ITERATIONS", "0"));
@@ -1998,6 +2176,7 @@ TEST(workspaces, default_mttkrp_gemm_real) {
 	IndexStmt stmt = A.getAssignment().concretize();
 	std::cout << "default statement: " << stmt << endl;
 
+  stmt = stmt.parallelize(i, ParallelUnit::CPUThread, OutputRaceStrategy::NoRaces);
   stmt = insertTemporaries(stmt);
   // stmt = stmt.concretize();
   cout << "final stmt: " << stmt << endl;
@@ -2006,16 +2185,18 @@ TEST(workspaces, default_mttkrp_gemm_real) {
   A.compile(stmt.concretize());
   A.assemble();
 
-  clock_t begin;
-  clock_t end;
+  std::chrono::time_point<std::chrono::system_clock> begin, end;
+  std::chrono::duration<double> elapsed_seconds;
+  double elapsed_mills = 0;
 
   for (int i=0; i < iterations; i++) {
-    begin = clock();
+    begin = std::chrono::system_clock::now();
     A.compute(stmt);
-    end = clock();
-    double elapsed_secs = double(end - begin) / CLOCKS_PER_SEC * 1000;
+    end = std::chrono::system_clock::now();
+    elapsed_seconds = end - begin;
+    elapsed_mills = elapsed_seconds.count() * 1000;
 
-    std::cout << elapsed_secs << std::endl;
+    std::cout << elapsed_mills << std::endl;
   }
 
   std::cout << "workspaces, mttkrp-gemm -> execution completed for matrix: " << mat_file << std::endl;
@@ -2169,6 +2350,11 @@ TEST(workspaces, spttm_ttm_real) {
   int L = 16;
   int M = 16;
 
+  // for parallel execution
+  int nthreads = std::stoi(util::getFromEnv("OMP_NUM_THREADS", "1"));
+  taco_set_num_threads(nthreads);
+  taco_set_parallel_schedule(ParallelSchedule::Static, 64);
+
   std::string mat_file = util::getFromEnv("TENSOR_FILE", "");
   int iterations = std::stoi(util::getFromEnv("ITERATIONS", "0"));
 
@@ -2213,8 +2399,9 @@ TEST(workspaces, spttm_ttm_real) {
 	
 	vector<int> path0;
 	stmt = stmt
-		.reorder({i, m, j, k, l})
+		.reorder({i, j, m, k, l})
 		.loopfuse(2, true, path0)
+    .parallelize(i, ParallelUnit::CPUThread, OutputRaceStrategy::NoRaces)
 		;
 	/* END spttm_ttm_real TEST */
 
@@ -2234,14 +2421,16 @@ TEST(workspaces, spttm_ttm_real) {
   // IndexStmt stmt2 = expected.getAssignment().concretize();
   // printCodeToFile("reference_spttm_ttm_real", stmt2);
 
-  clock_t begin;
-  clock_t end;
+  std::chrono::time_point<std::chrono::system_clock> begin, end;
+  std::chrono::duration<double> elapsed_seconds;
+  double elapsed_mills = 0;
 
   for (int i=0; i < iterations; i++) {
-    begin = clock();
+    begin = std::chrono::system_clock::now();
     A.compute(stmt);
-    end = clock();
-    double elapsed_secs = double(end - begin) / CLOCKS_PER_SEC * 1000;
+    end = std::chrono::system_clock::now();
+    elapsed_seconds = end - begin;
+    elapsed_mills = elapsed_seconds.count() * 1000;
 
     // begin = clock();
     // expected.compute();
@@ -2249,7 +2438,7 @@ TEST(workspaces, spttm_ttm_real) {
     // double elapsed_secs_ref = double(end - begin) / CLOCKS_PER_SEC * 1000;
     // ASSERT_TENSOR_EQ(expected, A);
 
-    std::cout << elapsed_secs << std::endl;
+    std::cout << elapsed_mills << std::endl;
     // std::cout << elapsed_secs_ref << std::endl;
   }
 
@@ -2258,6 +2447,10 @@ TEST(workspaces, spttm_ttm_real) {
 TEST(workspaces, default_spttm_ttm_real) {
   int L = 16;
   int M = 16;
+
+  int nthreads = std::stoi(util::getFromEnv("OMP_NUM_THREADS", "1"));
+  taco_set_num_threads(nthreads);
+  taco_set_parallel_schedule(ParallelSchedule::Static, 64);
 
   std::string mat_file = util::getFromEnv("TENSOR_FILE", "");
   int iterations = std::stoi(util::getFromEnv("ITERATIONS", "0"));
@@ -2291,25 +2484,28 @@ TEST(workspaces, default_spttm_ttm_real) {
 
   Tensor<double> expected("expected", {B.getDimension(0), L, M}, Format{Dense, Dense, Dense});
   expected(i,l,m) = B(i,j,k) * C(j,l) * D(k,m);
+  IndexStmt stmt2 = expected.getAssignment().concretize();
+  stmt2 = stmt2.parallelize(i, ParallelUnit::CPUThread, OutputRaceStrategy::NoRaces);
   expected.compile();
   expected.assemble();
-
-  IndexStmt stmt2 = expected.getAssignment().concretize();
+  
   std::cout << "reference stmt: " << stmt2 << endl;
   std::cout << "reference stmt: " << stmt2 << endl;
-  printCodeToFile("reference_spttm_ttm_real", stmt2);
+  printCodeToFile("default_spttm_ttm_real", stmt2);
 
-  clock_t begin;
-  clock_t end;
+  std::chrono::time_point<std::chrono::system_clock> begin, end;
+  std::chrono::duration<double> elapsed_seconds;
+  double elapsed_mills = 0;
 
   for (int i=0; i < iterations; i++) {
-    begin = clock();
+    begin = std::chrono::system_clock::now();
     expected.compute();
-    end = clock();
-    double elapsed_secs_ref = double(end - begin) / CLOCKS_PER_SEC * 1000;
+    end = std::chrono::system_clock::now();
+    elapsed_seconds = end - begin;
+    elapsed_mills = elapsed_seconds.count() * 1000;
     // ASSERT_TENSOR_EQ(expected, A);
 
-    std::cout << elapsed_secs_ref << std::endl;
+    std::cout << elapsed_mills << std::endl;
   }
 
   std::cout << "default spttm-ttm real test execution finished\n";
@@ -2319,6 +2515,10 @@ TEST(workspaces, default_spttm_ttm_real) {
 TEST(workspaces, spttm_spttm_real) {
   int L = 16;
   int M = 16;
+
+  int nthreads = std::stoi(util::getFromEnv("OMP_NUM_THREADS", "1"));
+  taco_set_num_threads(nthreads);
+  taco_set_parallel_schedule(ParallelSchedule::Static, 64);
 
   std::string mat_file = util::getFromEnv("TENSOR_FILE", "");
   int iterations = std::stoi(util::getFromEnv("ITERATIONS", "0"));
@@ -2385,14 +2585,16 @@ TEST(workspaces, spttm_spttm_real) {
   IndexStmt stmt2 = expected.getAssignment().concretize();
   printCodeToFile("reference_spttm_spttm_real", stmt2);
 
-  clock_t begin;
-  clock_t end;
+  std::chrono::time_point<std::chrono::system_clock> begin, end;
+  std::chrono::duration<double> elapsed_seconds;
+  double elapsed_mills = 0;
 
   for (int i=0; i < iterations; i++) {
-    begin = clock();
+    begin = std::chrono::system_clock::now();
     A.compute(stmt);
-    end = clock();
-    double elapsed_secs = double(end - begin) / CLOCKS_PER_SEC * 1000;
+    end = std::chrono::system_clock::now();
+    elapsed_seconds = end - begin;
+    elapsed_mills = elapsed_seconds.count() * 1000;
 
     // begin = clock();
     // expected.compute();
@@ -2400,7 +2602,7 @@ TEST(workspaces, spttm_spttm_real) {
     // double elapsed_secs_ref = double(end - begin) / CLOCKS_PER_SEC * 1000;
     // ASSERT_TENSOR_EQ(expected, A);
 
-    std::cout << elapsed_secs << std::endl;
+    std::cout << elapsed_mills << std::endl;
     // std::cout << elapsed_secs_ref << std::endl;
   }
 
@@ -2409,6 +2611,10 @@ TEST(workspaces, spttm_spttm_real) {
 TEST(workspaces, default_spttm_spttm_real) {
   int L = 16;
   int M = 16;
+
+  int nthreads = std::stoi(util::getFromEnv("OMP_NUM_THREADS", "1"));
+  taco_set_num_threads(nthreads);
+  taco_set_parallel_schedule(ParallelSchedule::Static, 64);
 
   std::string mat_file = util::getFromEnv("TENSOR_FILE", "");
   int iterations = std::stoi(util::getFromEnv("ITERATIONS", "0"));
@@ -2443,32 +2649,41 @@ TEST(workspaces, default_spttm_spttm_real) {
 
   Tensor<double> expected("expected", {B.getDimension(0), B.getDimension(1), M}, Format{Dense, Sparse, Dense});
   expected(i,j,m) = B(i,j,k) * C(k,l) * D(l,m);
+  IndexStmt stmt2 = expected.getAssignment().concretize();
+  stmt2 = stmt2.parallelize(i, ParallelUnit::CPUThread, OutputRaceStrategy::NoRaces);
   expected.compile();
   expected.assemble();
 
-  IndexStmt stmt2 = expected.getAssignment().concretize();
   std::cout << "reference stmt: " << stmt2 << endl;
   std::cout << "reference stmt: " << stmt2 << endl;
-  printCodeToFile("reference_spttm_spttm_real", stmt2);
+  printCodeToFile("default_spttm_spttm_real", stmt2);
 
-  clock_t begin;
-  clock_t end;
+  std::chrono::time_point<std::chrono::system_clock> begin, end;
+  std::chrono::duration<double> elapsed_seconds;
+  double elapsed_mills = 0;
 
   for (int i=0; i < iterations; i++) {
-    begin = clock();
+    begin = std::chrono::system_clock::now();
     expected.compute();
-    end = clock();
-    double elapsed_secs_ref = double(end - begin) / CLOCKS_PER_SEC * 1000;
+    end = std::chrono::system_clock::now();
+    elapsed_seconds = end - begin;
+    elapsed_mills = elapsed_seconds.count() * 1000;
     // ASSERT_TENSOR_EQ(expected, A);
 
-    std::cout << elapsed_secs_ref << std::endl;
+    std::cout << elapsed_mills << std::endl;
   }
+
+  std::cout << "workspaces, reference_spttm_spttm_real -> execution completed for matrix: " << mat_file << std::endl;
 
 }
 
 TEST(workspaces, spmmh_gemm_real) {
   int J = 64;
   int L = 64;
+
+  int nthreads = std::stoi(util::getFromEnv("OMP_NUM_THREADS", "1"));
+  taco_set_num_threads(nthreads);
+  taco_set_parallel_schedule(ParallelSchedule::Static, 64);
 
   std::string mat_file = util::getFromEnv("TENSOR_FILE", "");
   int iterations = std::stoi(util::getFromEnv("ITERATIONS", "0"));
@@ -2515,6 +2730,7 @@ TEST(workspaces, spmmh_gemm_real) {
 	stmt = stmt
 		.reorder({i, j, k, l})
 		.loopfuse(3, true, path0)
+    .parallelize(i, ParallelUnit::CPUThread, OutputRaceStrategy::NoRaces)
 		;
 	/* END spmmh_gemm_real TEST */
 
@@ -2533,21 +2749,23 @@ TEST(workspaces, spmmh_gemm_real) {
   // expected.compile(exp);
   // expected.assemble();
 
-  clock_t begin;
-  clock_t end; 
+  std::chrono::time_point<std::chrono::system_clock> begin, end;
+  std::chrono::duration<double> elapsed_seconds;
+  double elapsed_mills = 0;
 
   for (int i = 0; i < iterations; i++) {
-    begin = clock();
+    begin = std::chrono::system_clock::now();
     A.compute(stmt);
-    end = clock();
-    double elapsed_secs = double(end - begin) / CLOCKS_PER_SEC * 1000;
+    end = std::chrono::system_clock::now();
+    elapsed_seconds = end - begin;
+    elapsed_mills = elapsed_seconds.count() * 1000;
     // begin = clock();
     // expected.compute();
     // end = clock();
     // double elapsed_secs_ref = double(end - begin) / CLOCKS_PER_SEC * 1000;
     // // ASSERT_TENSOR_EQ(expected, A);
 
-    std::cout << elapsed_secs << std::endl;
+    std::cout << elapsed_mills << std::endl;
     // std::cout << elapsed_secs_ref << std::endl;
   }
 
@@ -2558,6 +2776,10 @@ TEST(workspaces, spmmh_gemm_real) {
 TEST(workspaces, default_spmmh_gemm_real) {
   int J = 64;
   int L = 64;
+
+  int nthreads = std::stoi(util::getFromEnv("OMP_NUM_THREADS", "1"));
+  taco_set_num_threads(nthreads);
+  taco_set_parallel_schedule(ParallelSchedule::Static, 64);
 
   std::string mat_file = util::getFromEnv("TENSOR_FILE", "");
   int iterations = std::stoi(util::getFromEnv("ITERATIONS", "0"));
@@ -2597,31 +2819,38 @@ TEST(workspaces, default_spmmh_gemm_real) {
   IndexStmt exp = makeReductionNotation(expected.getAssignment());
   exp = insertTemporaries(exp);
   exp = exp.concretize();
+  exp = exp.parallelize(i, ParallelUnit::CPUThread, OutputRaceStrategy::NoRaces);
   expected.compile(exp);
   expected.assemble();
 
   cout << "default stmt: " << exp << endl;
   cout << "default stmt: " << exp << endl;
-  printCodeToFile("default_sddmm_spmm_real", exp);
+  printCodeToFile("default_spmmh_gemm_real", exp);
 
-  clock_t begin;
-  clock_t end;
+  std::chrono::time_point<std::chrono::system_clock> begin, end;
+  std::chrono::duration<double> elapsed_seconds;
+  double elapsed_mills = 0;
 
   for (int i = 0; i< iterations; i++) {
-    begin = clock();
+    begin = std::chrono::system_clock::now();
     expected.compute();
-    end = clock();
-    double elapsed_secs = double(end - begin) / CLOCKS_PER_SEC * 1000;
+    end = std::chrono::system_clock::now();
+    elapsed_seconds = end - begin;
+    elapsed_mills = elapsed_seconds.count() * 1000;
 
-    std::cout << elapsed_secs << std::endl;
+    std::cout << elapsed_mills << std::endl;
   }
 
-  std::cout << "workspaces, sddmm_spmm -> execution completed for matrix: " << mat_file << std::endl;
+  std::cout << "workspaces, reference_spmmh_gemm -> execution completed for matrix: " << mat_file << std::endl;
 }
 
 TEST(workspaces, spmm_gemm_real) {
-  int K = 128;
+  int K = 64;
   int L = 64;
+
+  int nthreads = std::stoi(util::getFromEnv("OMP_NUM_THREADS", "1"));
+  taco_set_num_threads(nthreads);
+  taco_set_parallel_schedule(ParallelSchedule::Static, 64);
 
   std::string mat_file = util::getFromEnv("TENSOR_FILE", "");
   int iterations = std::stoi(util::getFromEnv("ITERATIONS", "0"));
@@ -2630,47 +2859,51 @@ TEST(workspaces, spmm_gemm_real) {
   B.setName("B");
   B.pack();
 
+  auto I = B.getDimension(0);
+  auto J = B.getDimension(1);
+
   if (mat_file == "") {
     std::cout << "No tensor file specified!\n";
     return;
   }
 
-  Tensor<double> C("C", {B.getDimension(1), K}, Format{Dense, Dense});
-  for (int j=0; j<B.getDimension(1); j++) {
+  Tensor<double> C("C", {J, K}, Format{Dense, Dense});
+  for (int j=0; j<J; j++) {
     for (int k=0; k<K; k++) {
       C.insert({j, k}, (double) k);
     }
   }
   C.pack();
-  Tensor<double> D("D", {L, K}, Format{Dense, Dense});
-  for (int k=0; k<L; k++) {
-    for (int l=0; l<K; l++) {
+  Tensor<double> D("D", {K, L}, Format{Dense, Dense});
+  for (int k=0; k<K; k++) {
+    for (int l=0; l<L; l++) {
       D.insert({k, l}, (double) l);
     }
   }
   D.pack();
 
-  Tensor<double> A("A", {B.getDimension(0), L}, Format{Dense, Dense});
+  Tensor<double> A("A", {I, L}, Format{Dense, Dense});
 
   // 3 -> A(i,l) = B(i,j) * C(j,k) * D(k,l) - <SpMM, GeMM>
   IndexVar i("i"), j("j"), k("k"), l("l");
 
-	/* BEGIN spmm_gemm_real TEST */
+  /* BEGIN spmm_gemm_real TEST */
+
+	vector<int> path_ = {};
+
 	A(i, l) = B(i, j) * C(j, k) * D(k, l);
-	
 	IndexStmt stmt = A.getAssignment().concretize();
 	std::cout << stmt << endl;
-	
-	vector<int> path0;
 	stmt = stmt
-		.reorder({i, k, j, l})
-		.loopfuse(2, true, path0)
+		.reorder(path_, {i,j,k,l})
+		.loopfuse(2, true, path_)
+    // .parallelize(i, ParallelUnit::CPUThread, OutputRaceStrategy::NoRaces);
 		;
 	/* END spmm_gemm_real TEST */
 
   stmt = stmt.concretize();
   cout << "final stmt: " << stmt << endl;
-  printCodeToFile("spmmh_gemm_real", stmt);
+  printCodeToFile("spmm_gemm_real", stmt);
 
   A.compile(stmt);
   A.assemble();
@@ -2683,31 +2916,41 @@ TEST(workspaces, spmm_gemm_real) {
   // expected.compile(exp);
   // expected.assemble();
 
-  clock_t begin;
-  clock_t end; 
+  std::chrono::time_point<std::chrono::system_clock> begin, end;
+  std::chrono::duration<double> elapsed_seconds;
+  double elapsed_mills = 0;
 
   for (int i = 0; i < iterations; i++) {
-    begin = clock();
-    A.compute(stmt);
-    end = clock();
-    double elapsed_secs = double(end - begin) / CLOCKS_PER_SEC * 1000;
+    begin = std::chrono::system_clock::now();
+
+    /* BEGIN spmm_gemm_real_execute TEST */
+		A.compute(stmt);
+		/* END spmm_gemm_real_execute TEST */
+    
+    end = std::chrono::system_clock::now();
+    elapsed_seconds = end - begin;
+    elapsed_mills = elapsed_seconds.count() * 1000;
     // begin = clock();
     // expected.compute();
     // end = clock();
     // double elapsed_secs_ref = double(end - begin) / CLOCKS_PER_SEC * 1000;
     // // ASSERT_TENSOR_EQ(expected, A);
 
-    std::cout << elapsed_secs << std::endl;
+    std::cout << elapsed_mills << std::endl;
     // std::cout << elapsed_secs_ref << std::endl;
   }
 
-  std::cout << "workspaces, spmm_gemm -> execution completed for matrix: " << mat_file << std::endl;
+  std::cout << "workspaces, spmm_gemm_real -> execution completed for matrix: " << mat_file << std::endl;
 
 }
 
 TEST(workspaces, default_spmm_gemm_real) {
   int K = 64;
   int L = 64;
+
+  int nthreads = std::stoi(util::getFromEnv("OMP_NUM_THREADS", "1"));
+  taco_set_num_threads(nthreads);
+  taco_set_parallel_schedule(ParallelSchedule::Static, 64);
 
   std::string mat_file = util::getFromEnv("TENSOR_FILE", "");
   int iterations = std::stoi(util::getFromEnv("ITERATIONS", "0"));
@@ -2744,26 +2987,29 @@ TEST(workspaces, default_spmm_gemm_real) {
   IndexStmt exp = makeReductionNotation(expected.getAssignment());
   exp = insertTemporaries(exp);
   exp = exp.concretize();
+  exp = exp.parallelize(i, ParallelUnit::CPUThread, OutputRaceStrategy::NoRaces);
   expected.compile(exp);
   expected.assemble();
 
   cout << "default stmt: " << exp << endl;
   cout << "default stmt: " << exp << endl;
-  printCodeToFile("default_sddmm_spmm_real", exp);
+  printCodeToFile("default_spmm_gemm_real", exp);
 
-  clock_t begin;
-  clock_t end;
+  std::chrono::time_point<std::chrono::system_clock> begin, end;
+  std::chrono::duration<double> elapsed_seconds;
+  double elapsed_mills = 0;
 
   for (int i = 0; i< iterations; i++) {
-    begin = clock();
+    begin = std::chrono::system_clock::now();
     expected.compute();
-    end = clock();
-    double elapsed_secs = double(end - begin) / CLOCKS_PER_SEC * 1000;
+    end = std::chrono::system_clock::now();
+    elapsed_seconds = end - begin;
+    elapsed_mills = elapsed_seconds.count() * 1000;
 
-    std::cout << elapsed_secs << std::endl;
+    std::cout << elapsed_mills << std::endl;
   }
 
-  std::cout << "workspaces, sddmm_spmm -> execution completed for matrix: " << mat_file << std::endl;
+  std::cout << "workspaces, reference_sddmm_spmm -> execution completed for matrix: " << mat_file << std::endl;
 }
 
 TEST(workspaces, loopreordercontractfuse) {

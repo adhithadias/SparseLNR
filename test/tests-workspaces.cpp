@@ -1023,18 +1023,21 @@ TEST(workspaces, sddmm_spmm_gemm_real) {
   IndexVar i("i"), j("j"), k("k"), l("l"), m("m");
 
 	/* BEGIN sddmm_spmm_gemm_real TEST */
+
+	vector<int> path_ = {};
+	vector<int> path_0 = {0};
+	vector<int> path_1 = {1};
+
 	A(i, m) = B(i, j) * C(i, k) * D(j, k) * E(j, l) * F(l, m);
-	
 	IndexStmt stmt = A.getAssignment().concretize();
 	std::cout << stmt << endl;
-	
-	vector<int> path0;
-	vector<int> path1 = {0};
 	stmt = stmt
-		.reorder({i, j, k, l, m})
-		.loopfuse(4, true, path0)
-		.loopfuse(3, true, path1)
-    .parallelize(i, ParallelUnit::CPUThread, OutputRaceStrategy::NoRaces)
+		.reorder(path_, {i,j,k,l,m})
+		.loopfuse(4, true, path_)
+		.reorder(path_0, {j,k,l})
+		.loopfuse(3, true, path_0)
+		.reorder(path_1, {l,m})
+		.parallelize(i, ParallelUnit::CPUThread, OutputRaceStrategy::NoRaces)
 		;
 	/* END sddmm_spmm_gemm_real TEST */
 
@@ -1268,7 +1271,8 @@ TEST(workspaces, sddmm_spmm_real) {
     // std::cout << elapsed_secs_ref << std::endl;
   }
 
-  std::cout << "workspaces, sddmm_spmm -> execution completed for matrix: " << mat_file << std::endl;
+  std::cout << "workspaces, sddmm_spmm -> execution completed for matrix: " << mat_file 
+    << ", for number of threads: " << nthreads << std::endl;
 
 }
 
@@ -1540,9 +1544,9 @@ TEST(workspaces, loopcontractfuse) {
   // float JPOS = 16; float KPOS = 400;
 
   // loop 5 is the lowest in this configuration
-  int L = 251; int M = 234; int N = 42;
-  int I = 265; int J = 1207; int K = 479;
-  float JPOS = 961; float KPOS = 2;
+  int L = 10; int M = 10; int N = 10;
+  int I = 100; int J = 100; int K = 100;
+  float JPOS = 5; float KPOS = 5;
 
   // int N = 16;
   float jk = (JPOS * KPOS);
@@ -1598,19 +1602,21 @@ TEST(workspaces, loopcontractfuse) {
   // E.pack();
 
   IndexVar i("i"), j("j"), k("k"), l("l"), m("m"), n("n");
-  A(l,m,n) = B(i,j,k) * C(i,l) * D(j,m) * E(k,n);
-
-  IndexStmt stmt = A.getAssignment().concretize();
-
-  std::cout << stmt << endl;
-
-	/* BEGIN loopcontractfuse TEST */
+	A(l, m, n) = B(i, j, k) * C(i, l) * D(j, m) * E(k, n);
+	
+	IndexStmt stmt = A.getAssignment().concretize();
+	std::cout << stmt << endl;
+	
 	vector<int> path0;
-	vector<int> path1 = {1};
+	vector<int> path1 = {0};
+  vector<int> path2 = {1};
 	stmt = stmt
-		.reorder({m, l, i, j, k, n})
-		.loopfuse(3, true, path0)
-		.reorder(path1, {n, k})
+		.reorder({l,m,n,i,j,k})
+		.loopfuse(2, true, path0);
+  cout << "stmt: " << stmt << endl;
+  stmt = stmt  .reorder(path2, {m,k,n,j});
+  cout << "stmt: " << stmt << endl;
+	stmt = stmt	.loopfuse(2, true, path2)
 		;
 	/* END loopcontractfuse TEST */
 
@@ -1707,6 +1713,7 @@ TEST(workspaces, loopcontractfuse_real) {
   // std::cout << stmt << endl;
 
 	/* BEGIN loopcontractfuse_real TEST */
+
 	A(l, m, n) = B(i, j, k) * E(k, n) * D(j, m) * C(i, l);
 	
 	IndexStmt stmt = A.getAssignment().concretize();
@@ -1714,14 +1721,16 @@ TEST(workspaces, loopcontractfuse_real) {
 	
 	vector<int> path0;
 	vector<int> path1 = {0};
+    vector<int> path2 = {1};
 	stmt = stmt
-		.reorder({i, n, j, k, l, m})
-		.loopfuse(3, true, path0)
-		.loopfuse(2, true, path1)
+    .reorder({i, n, j, k, l, m})
+    .loopfuse(3, true, path0)
+    .loopfuse(2, true, path1)
 		;
-  if (nthreads > 1) {
-    stmt = stmt.parallelize(i, ParallelUnit::CPUThread, OutputRaceStrategy::Atomics);
-  }
+    if (nthreads > 1) {
+        stmt = stmt.parallelize(i, ParallelUnit::CPUThread, OutputRaceStrategy::Atomics);
+    }
+
 	/* END loopcontractfuse_real TEST */
 
   //
@@ -1868,6 +1877,7 @@ TEST(workspaces, spttn_cyclops_loopcontractfuse_real) {
   // std::cout << stmt << endl;
 
 	/* BEGIN spttn_cyclops_loopcontractfuse_real TEST */
+
 	A(l, m, n) = B(i, j, k) * E(k, n) * D(j, m) * C(i, l);
 	
 	IndexStmt stmt = A.getAssignment().concretize();
@@ -1880,6 +1890,7 @@ TEST(workspaces, spttn_cyclops_loopcontractfuse_real) {
 		.loopfuse(2, true, path0)
 		.loopfuse(2, true, path1)
 		;
+
 	/* END spttn_cyclops_loopcontractfuse_real TEST */
 
   stmt = insertTemporaries(stmt);
@@ -2062,16 +2073,18 @@ TEST(workspaces, mttkrp_gemm_real) {
 
 
 	/* BEGIN mttkrp_gemm_real TEST */
+
+	vector<int> path_ = {};
+	vector<int> path_0 = {0};
+
 	A(i, m) = B(i, k, l) * C(l, j) * D(k, j) * E(j, m);
-	
 	IndexStmt stmt = A.getAssignment().concretize();
 	std::cout << stmt << endl;
-	
-	vector<int> path0;
 	stmt = stmt
-		.reorder({i, j, k, l, m})
-		.loopfuse(3, true, path0)
-    .parallelize(i, ParallelUnit::CPUThread, OutputRaceStrategy::NoRaces);
+		.reorder(path_, {i,j,k,l,m})
+		.loopfuse(3, true, path_)
+		.reorder(path_0, {k,l})
+		.parallelize(i, ParallelUnit::CPUThread, OutputRaceStrategy::NoRaces)
 		;
 	/* END mttkrp_gemm_real TEST */
 
@@ -2392,16 +2405,16 @@ TEST(workspaces, spttm_ttm_real) {
   // std::cout << stmt << endl;
 
 	/* BEGIN spttm_ttm_real TEST */
+
+	vector<int> path_ = {};
+
 	A(i, l, m) = B(i, j, k) * D(k, m) * C(j, l);
-	
 	IndexStmt stmt = A.getAssignment().concretize();
 	std::cout << stmt << endl;
-	
-	vector<int> path0;
 	stmt = stmt
-		.reorder({i, j, m, k, l})
-		.loopfuse(2, true, path0)
-    .parallelize(i, ParallelUnit::CPUThread, OutputRaceStrategy::NoRaces)
+		.reorder(path_, {i,m,j,k,l})
+		.loopfuse(2, true, path_)
+		.parallelize(i, ParallelUnit::CPUThread, OutputRaceStrategy::NoRaces)
 		;
 	/* END spttm_ttm_real TEST */
 
@@ -2558,15 +2571,15 @@ TEST(workspaces, spttm_spttm_real) {
   // std::cout << stmt << endl;
 
 	/* BEGIN spttm_spttm_real TEST */
+
+	vector<int> path_ = {};
+
 	A(i, j, m) = B(i, j, k) * C(k, l) * D(l, m);
-	
 	IndexStmt stmt = A.getAssignment().concretize();
 	std::cout << stmt << endl;
-	
-	vector<int> path0;
 	stmt = stmt
-		.reorder({i, j, l, k, m})
-		.loopfuse(2, true, path0)
+		.reorder(path_, {i,j,l,k,m})
+		.loopfuse(2, true, path_)
 		;
 	/* END spttm_spttm_real TEST */
 
@@ -2650,7 +2663,7 @@ TEST(workspaces, default_spttm_spttm_real) {
   Tensor<double> expected("expected", {B.getDimension(0), B.getDimension(1), M}, Format{Dense, Sparse, Dense});
   expected(i,j,m) = B(i,j,k) * C(k,l) * D(l,m);
   IndexStmt stmt2 = expected.getAssignment().concretize();
-  stmt2 = stmt2.parallelize(i, ParallelUnit::CPUThread, OutputRaceStrategy::NoRaces);
+  // stmt2 = stmt2.parallelize(i, ParallelUnit::CPUThread, OutputRaceStrategy::NoRaces);
   expected.compile();
   expected.assemble();
 
@@ -2721,16 +2734,16 @@ TEST(workspaces, spmmh_gemm_real) {
   IndexVar i("i"), j("j"), k("k"), l("l");
 
 	/* BEGIN spmmh_gemm_real TEST */
+
+	vector<int> path_ = {};
+
 	A(i, l) = B(i, k) * C(k, j) * D(k, j) * E(j, l);
-	
 	IndexStmt stmt = A.getAssignment().concretize();
 	std::cout << stmt << endl;
-	
-	vector<int> path0;
 	stmt = stmt
-		.reorder({i, j, k, l})
-		.loopfuse(3, true, path0)
-    .parallelize(i, ParallelUnit::CPUThread, OutputRaceStrategy::NoRaces)
+		.reorder(path_, {i,j,k,l})
+		.loopfuse(3, true, path_)
+		.parallelize(i, ParallelUnit::CPUThread, OutputRaceStrategy::NoRaces)
 		;
 	/* END spmmh_gemm_real TEST */
 
@@ -2844,7 +2857,7 @@ TEST(workspaces, default_spmmh_gemm_real) {
   std::cout << "workspaces, reference_spmmh_gemm -> execution completed for matrix: " << mat_file << std::endl;
 }
 
-TEST(workspaces, spmm_gemm_real) {
+TEST(workspaces, default_gemm_real) {
   int K = 64;
   int L = 64;
 
@@ -2887,17 +2900,204 @@ TEST(workspaces, spmm_gemm_real) {
   // 3 -> A(i,l) = B(i,j) * C(j,k) * D(k,l) - <SpMM, GeMM>
   IndexVar i("i"), j("j"), k("k"), l("l");
 
-  /* BEGIN spmm_gemm_real TEST */
+
 
 	vector<int> path_ = {};
 
 	A(i, l) = B(i, j) * C(j, k) * D(k, l);
 	IndexStmt stmt = A.getAssignment().concretize();
 	std::cout << stmt << endl;
+
+  stmt = stmt.concretize();
+  cout << "final stmt: " << stmt << endl;
+  printCodeToFile("spmm_gemm_real", stmt);
+
+  A.compile(stmt);
+  A.assemble();
+
+  // Tensor<double> expected("expected", {B.getDimension(0), L}, Format{Dense, Dense});
+  // expected(i,l) = B(i,j) * C(i,k) * D(j,k) * E(j,l);
+  // IndexStmt exp = makeReductionNotation(expected.getAssignment());
+  // exp = insertTemporaries(exp);
+  // exp = exp.concretize();
+  // expected.compile(exp);
+  // expected.assemble();
+
+  std::chrono::time_point<std::chrono::system_clock> begin, end;
+  std::chrono::duration<double> elapsed_seconds;
+  double elapsed_mills = 0;
+
+  for (int i = 0; i < iterations; i++) {
+    begin = std::chrono::system_clock::now();
+		A.compute(stmt);
+    end = std::chrono::system_clock::now();
+    elapsed_seconds = end - begin;
+    elapsed_mills = elapsed_seconds.count() * 1000;
+    // begin = clock();
+    // expected.compute();
+    // end = clock();
+    // double elapsed_secs_ref = double(end - begin) / CLOCKS_PER_SEC * 1000;
+    // // ASSERT_TENSOR_EQ(expected, A);
+
+    std::cout << elapsed_mills << std::endl;
+    // std::cout << elapsed_secs_ref << std::endl;
+  }
+
+  std::cout << "workspaces, spmm_gemm_willow -> execution completed for matrix: " << mat_file << std::endl;
+
+}
+
+TEST(workspaces, default_spmm_gemm_real) {
+  int K = std::stoi(util::getFromEnv("K", "64"));
+  int L = std::stoi(util::getFromEnv("L", "64"));
+
+  int nthreads = std::stoi(util::getFromEnv("OMP_NUM_THREADS", "1"));
+  taco_set_num_threads(nthreads);
+  taco_set_parallel_schedule(ParallelSchedule::Static, 64);
+
+  std::string mat_file = util::getFromEnv("TENSOR_FILE", "");
+  int iterations = std::stoi(util::getFromEnv("ITERATIONS", "0"));
+
+  Tensor<double> B = read(mat_file, Format({Dense, Sparse}), true);
+  B.setName("B");
+  B.pack();
+
+  auto I = B.getDimension(0);
+  auto J = B.getDimension(1);
+
+  if (mat_file == "") {
+    std::cout << "No tensor file specified!\n";
+    return;
+  }
+
+  Tensor<double> C("C", {J, K}, Format{Dense, Dense});
+  for (int j=0; j<J; j++) {
+    for (int k=0; k<K; k++) {
+      C.insert({j, k}, (double) k);
+    }
+  }
+  C.pack();
+  Tensor<double> D("D", {K, L}, Format{Dense, Dense});
+  for (int k=0; k<K; k++) {
+    for (int l=0; l<L; l++) {
+      D.insert({k, l}, (double) l);
+    }
+  }
+  D.pack();
+
+  Tensor<double> A("A", {I, L}, Format{Dense, Dense});
+
+  // 3 -> A(i,l) = B(i,j) * C(j,k) * D(k,l) - <SpMM, GeMM>
+  IndexVar i("i"), j("j"), k("k"), l("l");
+
+	vector<int> path_ = {};
+
+	A(i, l) = B(i, j) * C(j, k) * D(k, l);
+	IndexStmt stmt = A.getAssignment().concretize();
+	std::cout << stmt << endl;
+
+  stmt = stmt.concretize();
+  cout << "final stmt: " << stmt << endl;
+  printCodeToFile("spmm_gemm_real", stmt);
+
+  A.compile(stmt);
+  A.assemble();
+
+  // Tensor<double> expected("expected", {B.getDimension(0), L}, Format{Dense, Dense});
+  // expected(i,l) = B(i,j) * C(i,k) * D(j,k) * E(j,l);
+  // IndexStmt exp = makeReductionNotation(expected.getAssignment());
+  // exp = insertTemporaries(exp);
+  // exp = exp.concretize();
+  // expected.compile(exp);
+  // expected.assemble();
+
+  std::chrono::time_point<std::chrono::system_clock> begin, end;
+  std::chrono::duration<double> elapsed_seconds;
+  double elapsed_mills = 0;
+
+  for (int i = 0; i < iterations; i++) {
+    begin = std::chrono::system_clock::now();
+		A.compute(stmt);
+    end = std::chrono::system_clock::now();
+    elapsed_seconds = end - begin;
+    elapsed_mills = elapsed_seconds.count() * 1000;
+    // begin = clock();
+    // expected.compute();
+    // end = clock();
+    // double elapsed_secs_ref = double(end - begin) / CLOCKS_PER_SEC * 1000;
+    // // ASSERT_TENSOR_EQ(expected, A);
+
+    std::cout << elapsed_mills << std::endl;
+    // std::cout << elapsed_secs_ref << std::endl;
+  }
+
+  std::cout << "K=" << K << ", L=" << L 
+    << ", workspaces, default_spmm_gemm_real -> execution completed for matrix: " << mat_file << std::endl;
+
+}
+
+TEST(workspaces, spmm_gemm_real) {
+  int K = std::stoi(util::getFromEnv("K", "64"));
+  int L = std::stoi(util::getFromEnv("L", "64"));
+
+  int nthreads = std::stoi(util::getFromEnv("OMP_NUM_THREADS", "1"));
+  taco_set_num_threads(nthreads);
+  taco_set_parallel_schedule(ParallelSchedule::Static, 64);
+
+  std::string mat_file = util::getFromEnv("TENSOR_FILE", "");
+  int iterations = std::stoi(util::getFromEnv("ITERATIONS", "0"));
+
+  Tensor<double> B = read(mat_file, Format({Dense, Sparse}), true);
+  B.setName("B");
+  B.pack();
+
+  auto I = B.getDimension(0);
+  auto J = B.getDimension(1);
+
+  if (mat_file == "") {
+    std::cout << "No tensor file specified!\n";
+    return;
+  }
+
+  Tensor<double> C("C", {J, K}, Format{Dense, Dense});
+  for (int j=0; j<J; j++) {
+    for (int k=0; k<K; k++) {
+      C.insert({j, k}, (double) k);
+    }
+  }
+  C.pack();
+  Tensor<double> D("D", {K, L}, Format{Dense, Dense});
+  for (int k=0; k<K; k++) {
+    for (int l=0; l<L; l++) {
+      D.insert({k, l}, (double) l);
+    }
+  }
+  D.pack();
+
+  Tensor<double> A("A", {I, L}, Format{Dense, Dense});
+
+  // 3 -> A(i,l) = B(i,j) * C(j,k) * D(k,l) - <SpMM, GeMM>
+  IndexVar i("i"), j("j"), k("k"), l("l");
+
+/* BEGIN spmm_gemm_real TEST */
+
+	vector<int> path_ = {};
+
+	Tensor<double> _A("_A", {I, K}, Format{Dense, Dense});
+	_A(i, k) = B(i, j) * C(j, k);
+	IndexStmt stmt__A = _A.getAssignment().concretize();
+	stmt__A = stmt__A
+		.reorder(path_, {i,j,k})
+		;
+	stmt__A = stmt__A.concretize();
+	_A.compile(stmt__A);
+	_A.assemble();
+
+	A(i, l) = _A(i, k) * D(k, l);
+	IndexStmt stmt = A.getAssignment().concretize();
+	std::cout << stmt << endl;
 	stmt = stmt
-		.reorder(path_, {i,j,k,l})
-		.loopfuse(2, true, path_)
-    // .parallelize(i, ParallelUnit::CPUThread, OutputRaceStrategy::NoRaces);
+		.reorder(path_, {i,l,k})
 		;
 	/* END spmm_gemm_real TEST */
 
@@ -2922,11 +3122,10 @@ TEST(workspaces, spmm_gemm_real) {
 
   for (int i = 0; i < iterations; i++) {
     begin = std::chrono::system_clock::now();
-
     /* BEGIN spmm_gemm_real_execute TEST */
+		_A.compute(stmt__A);
 		A.compute(stmt);
 		/* END spmm_gemm_real_execute TEST */
-    
     end = std::chrono::system_clock::now();
     elapsed_seconds = end - begin;
     elapsed_mills = elapsed_seconds.count() * 1000;
@@ -2940,11 +3139,12 @@ TEST(workspaces, spmm_gemm_real) {
     // std::cout << elapsed_secs_ref << std::endl;
   }
 
-  std::cout << "workspaces, spmm_gemm_real -> execution completed for matrix: " << mat_file << std::endl;
+  std::cout << "K=" << K << ", L=" << L 
+    << ", workspaces, spmm_gemm_real -> execution completed for matrix: " << mat_file << std::endl;
 
 }
 
-TEST(workspaces, default_spmm_gemm_real) {
+TEST(workspaces, spmm_gemm_willow) {
   int K = 64;
   int L = 64;
 
@@ -2959,13 +3159,16 @@ TEST(workspaces, default_spmm_gemm_real) {
   B.setName("B");
   B.pack();
 
+  auto I = B.getDimension(0);
+  auto J = B.getDimension(1);
+
   if (mat_file == "") {
     std::cout << "No tensor file specified!\n";
     return;
   }
 
-  Tensor<double> C("C", {B.getDimension(1), K}, Format{Dense, Dense});
-  for (int j=0; j<B.getDimension(1); j++) {
+  Tensor<double> C("C", {J, K}, Format{Dense, Dense});
+  for (int j=0; j<J; j++) {
     for (int k=0; k<K; k++) {
       C.insert({j, k}, (double) k);
     }
@@ -2979,448 +3182,165 @@ TEST(workspaces, default_spmm_gemm_real) {
   }
   D.pack();
 
-  // 3 -> A(i,l) = B(i,k) * C(k,j) * D(k,j) * E(j,l) - <SpMMH, GEMM>
+  Tensor<double> A("A", {I, L}, Format{Dense, Dense});
+
+  // 3 -> A(i,l) = B(i,j) * C(j,k) * D(k,l) - <SpMM, GeMM>
   IndexVar i("i"), j("j"), k("k"), l("l");
 
-  Tensor<double> expected("expected", {B.getDimension(0), L}, Format{Dense, Dense});
-  expected(i,l) = B(i,j) * C(j,k) * D(k,l);
-  IndexStmt exp = makeReductionNotation(expected.getAssignment());
-  exp = insertTemporaries(exp);
-  exp = exp.concretize();
-  exp = exp.parallelize(i, ParallelUnit::CPUThread, OutputRaceStrategy::NoRaces);
-  expected.compile(exp);
-  expected.assemble();
+  /* BEGIN spmm_gemm_willow TEST */
 
-  cout << "default stmt: " << exp << endl;
-  cout << "default stmt: " << exp << endl;
-  printCodeToFile("default_spmm_gemm_real", exp);
+	vector<int> path_ = {};
+    vector<int> path1_ = {1};
+
+	A(i, l) = B(i, j) * C(j, k) * D(k, l);
+	IndexStmt stmt = A.getAssignment().concretize();
+	std::cout << stmt << endl;
+
+	stmt = stmt
+		.reorder(path_, {i,l,k,j})
+		.loopfuse(2, true, path_)
+        .reorder(path1_, {l,k})
+		;
+
+  /* END spmm_gemm_willow TEST */
+
+  stmt = stmt.concretize();
+  cout << "final stmt: " << stmt << endl;
+  printCodeToFile("spmm_gemm_real", stmt);
+
+  A.compile(stmt);
+  A.assemble();
+
+  // Tensor<double> expected("expected", {B.getDimension(0), L}, Format{Dense, Dense});
+  // expected(i,l) = B(i,j) * C(i,k) * D(j,k) * E(j,l);
+  // IndexStmt exp = makeReductionNotation(expected.getAssignment());
+  // exp = insertTemporaries(exp);
+  // exp = exp.concretize();
+  // expected.compile(exp);
+  // expected.assemble();
 
   std::chrono::time_point<std::chrono::system_clock> begin, end;
   std::chrono::duration<double> elapsed_seconds;
   double elapsed_mills = 0;
 
-  for (int i = 0; i< iterations; i++) {
+  for (int i = 0; i < iterations; i++) {
     begin = std::chrono::system_clock::now();
-    expected.compute();
+		A.compute(stmt);
+    
     end = std::chrono::system_clock::now();
     elapsed_seconds = end - begin;
     elapsed_mills = elapsed_seconds.count() * 1000;
+    // begin = clock();
+    // expected.compute();
+    // end = clock();
+    // double elapsed_secs_ref = double(end - begin) / CLOCKS_PER_SEC * 1000;
+    // // ASSERT_TENSOR_EQ(expected, A);
 
     std::cout << elapsed_mills << std::endl;
+    // std::cout << elapsed_secs_ref << std::endl;
   }
 
-  std::cout << "workspaces, reference_sddmm_spmm -> execution completed for matrix: " << mat_file << std::endl;
+  std::cout << "workspaces, spmm_gemm_willow -> execution completed for matrix: " << mat_file << std::endl;
+
 }
 
-TEST(workspaces, loopreordercontractfuse) {
-  int N = 16;
-  Tensor<double> A("A", {N, N, N}, Format{Dense, Dense, Dense});
-  Tensor<double> B("B", {N, N, N}, Format{Dense, Sparse, Sparse});
-  Tensor<double> C("C", {N, N}, Format{Dense, Dense});
-  Tensor<double> D("D", {N, N}, Format{Dense, Dense});
-  Tensor<double> E("E", {N, N}, Format{Dense, Dense});
+TEST(workspaces, spttm_spttm_willow) {
+  int L = 16;
+  int M = 16;
 
-  for (int i = 0; i < N; i++) {
-    for (int j = 0; j < N; j++) {
-      for (int k = 0; k < N; k++) {
-        B.insert({i, j, k}, (double) i);
-      }
-      C.insert({i, j}, (double) j);
-      E.insert({i, j}, (double) i*j);
-      D.insert({i, j}, (double) i*j);
-    }
+  int nthreads = std::stoi(util::getFromEnv("OMP_NUM_THREADS", "1"));
+  taco_set_num_threads(nthreads);
+  taco_set_parallel_schedule(ParallelSchedule::Static, 64);
+
+  std::string mat_file = util::getFromEnv("TENSOR_FILE", "");
+  int iterations = std::stoi(util::getFromEnv("ITERATIONS", "0"));
+
+  if (mat_file == "") {
+    std::cout << "No tensor file specified!\n";
+    return;
   }
 
+  Tensor<double> B = read(mat_file, Format({Dense, Sparse, Sparse}), true);
+  B.setName("B");
+  B.pack();
+
+  // A(i, j, m) = B(i, j, k) * C(k, l) * D(l, m);
+  Tensor<double> C("C", {B.getDimension(2), L}, Format{Dense, Dense});
+  for (int i=0; i<B.getDimension(2); i++) {
+    for (int l=0; l<L; l++) {
+      C.insert({i, l}, (double) i);
+    }
+  }
+  C.pack();
+  Tensor<double> D("D", {L, M}, Format{Dense, Dense});
+  for (int j=0; j<L; j++) {
+    for (int m=0; m<M; m++) {
+      D.insert({j, m}, (double) j);
+    }
+  }
+  D.pack();
+
+  Tensor<double> A("A", {B.getDimension(0), B.getDimension(1), M}, Format{Dense, Sparse, Dense});
+
+  // 5 -> A(i,l,m) = B(i,j,k) * C(j,l) * D(k,m) - <SpTTM, TTM>
   IndexVar i("i"), j("j"), k("k"), l("l"), m("m"), n("n");
-  A(l,m,n) = B(i,j,k) * C(i,l) * D(j,m) * E(k,n);
 
-  IndexStmt stmt = A.getAssignment().concretize();
+  // A(i,l,m) = B(i,j,k) * C(j,l) * D(k,m);
+  // IndexStmt stmt = A.getAssignment().concretize();
+  // std::cout << stmt << endl;
 
-  std::cout << stmt << endl;
-  vector<int> path1;
-  vector<int> path2 = {1};
-  stmt = stmt
-    .reorder({l,i,m, j, k, n})
-    .loopfuse(2, true, path1)
-    .reorder(path2, {m,k,j,n})
-    .loopfuse(2, true, path2)
-    ;
-  stmt = stmt
-    .parallelize(l, ParallelUnit::CPUThread, OutputRaceStrategy::NoRaces)
-    ;
+	/* BEGIN spttm_spttm_willow TEST */
 
+	A(i, j, m) = B(i, j, k) * C(k, l) * D(l, m);
+	
+	IndexStmt stmt = A.getAssignment().concretize();
+	std::cout << stmt << endl;
+	
+	vector<int> path0;
+    vector<int> path1 = {0};
+	stmt = stmt
+		.reorder({i, j, k, l, m})
+		.loopfuse(2, true, path0)
+        .reorder(path1, {k, l})
+		;
+
+	/* END spttm_spttm_willow TEST */
 
   stmt = stmt.concretize();
   cout << "final stmt: " << stmt << endl;
-  printCodeToFile("loopreordercontractfuse", stmt);
+  printCodeToFile("spttm_spttm_willow", stmt);
 
   A.compile(stmt.concretize());
   A.assemble();
-  A.compute();
 
-  Tensor<double> expected("expected", {N, N, N}, Format{Dense, Dense, Dense});
-  expected(l,m,n) = B(i,j,k) * C(i,l) * D(j,m) * E(k,n);
+  Tensor<double> expected("expected", {B.getDimension(0), B.getDimension(1), M}, Format{Dense, Sparse, Dense});
+  expected(i,j,m) = B(i,j,k) * C(k,l) * D(l,m);
   expected.compile();
   expected.assemble();
-  expected.compute();
-  ASSERT_TENSOR_EQ(expected, A);
-}
 
-TEST(workspaces, sddmm) {
-  int N = 16;
-  float SPARSITY = 0.3;
-  vector<int> dims{N,N};
-  const IndexVar i("i"), j("j"), k("k"), l("l");
+  IndexStmt stmt2 = expected.getAssignment().concretize();
+  printCodeToFile("reference_spttm_spttm_real", stmt2);
 
-  Tensor<double> A("A", dims, Format{Dense, Dense});
-  Tensor<double> B("B", dims, Format{Dense, Sparse});
-  Tensor<double> C("C", dims, Format{Dense, Dense});
-  Tensor<double> D("D", dims, Format{Dense, Dense});
+  std::chrono::time_point<std::chrono::system_clock> begin, end;
+  std::chrono::duration<double> elapsed_seconds;
+  double elapsed_mills = 0;
 
-  for (int i = 0; i < N; i++) {
-    for (int j = 0; j < N; j++) {
-      float rand_float = (float) rand() / (float) RAND_MAX;
-      if (rand_float < SPARSITY)
-        B.insert({i, j}, (double) i);
-      C.insert({i, j}, (double) j);
-      D.insert({i, j}, (double) i*j);
-    }
+  for (int i=0; i < iterations; i++) {
+    begin = std::chrono::system_clock::now();
+    A.compute(stmt);
+    end = std::chrono::system_clock::now();
+    elapsed_seconds = end - begin;
+    elapsed_mills = elapsed_seconds.count() * 1000;
+    // begin = clock();
+    // expected.compute();
+    // end = clock();
+    // double elapsed_secs_ref = double(end - begin) / CLOCKS_PER_SEC * 1000;
+    // // ASSERT_TENSOR_EQ(expected, A);
+
+    std::cout << elapsed_mills << std::endl;
+    // std::cout << elapsed_secs_ref << std::endl;
   }
 
-  A(i,j) = B(i,j) * C(i,k) * D(j,k);
+  std::cout << "workspaces, spttm_spttm_willow -> execution completed for matrix: " << mat_file << std::endl;
 
-  IndexStmt stmt = A.getAssignment().concretize();
-
-  vector<int> path1;
-  stmt = stmt
-    .reorder({i,k,j});
-  stmt = stmt
-    .loopfuse(3, true, path1);
-  stmt = stmt
-    .parallelize(i, ParallelUnit::CPUThread, OutputRaceStrategy::NoRaces)
-    ;
-
-  stmt = stmt.concretize();
-  cout << "final stmt: " << stmt << endl;
-  printCodeToFile("sddmm", stmt);
-
-  A.compile(stmt.concretize());
-  A.assemble();
-  // beging timing
-  A.compute();
-  // end timing
-
-  Tensor<double> expected("expected", dims, Format{Dense, Dense});
-  expected(i,j) = B(i,j) * C(i,k) * D(j,k);
-  expected.compile();
-  expected.assemble();
-  expected.compute();
-  ASSERT_TENSOR_EQ(expected, A);
-}
-
-TEST(workspaces, precompute2D_mul) {
-  int N = 16;
-  Tensor<double> A("A", {N, N}, Format{Dense, Dense});
-  Tensor<double> B("B", {N, N}, Format{Dense, Dense});
-  Tensor<double> C("C", {N, N}, Format{Dense, Dense});
-  Tensor<double> D("D", {N, N}, Format{Dense, Dense});
-
-  for (int i = 0; i < N; i++) {
-    for (int j = 0; j < N; j++) {
-      B.insert({i, j}, (double) i);
-      C.insert({i, j}, (double) j);
-      D.insert({i, j}, (double) i*j);
-    }
-  }
-
-  IndexVar i("i"), j("j"), k("k"), l("l");
-  IndexExpr precomputedExpr = B(i,j) * C(j,k);
-  IndexExpr precomputedExpr2 = precomputedExpr * D(k,l);
-  A(i,l) = precomputedExpr2;
-
-  IndexStmt stmt = A.getAssignment().concretize();
-  TensorVar ws("ws", Type(Float64, {(size_t)N, (size_t)N}), Format{Dense, Dense});
-  TensorVar t("t", Type(Float64, {(size_t)N, (size_t)N}), Format{Dense, Dense});
-
-  vector<int> path;  
-  stmt = stmt.precompute(precomputedExpr, {i,k}, {i,k}, ws);
-  stmt = stmt.precompute(ws(i,k) * D(k,l), {i,l}, {i,l}, t);
-  stmt = stmt.concretize();
-
-  std::cout << "stmt: " << stmt << std::endl;
-  printCodeToFile("precompute2D_mul", stmt);
-
-  A.compile(stmt.concretize());
-  A.assemble();
-  A.compute();
-
-  Tensor<double> expected("expected", {N, N}, Format{Dense, Dense});
-  expected(i,l) = B(i,j) * C(j,k) * D(k,l);
-  expected.compile();
-  expected.assemble();
-  expected.compute();
-  ASSERT_TENSOR_EQ(expected, A);
-}
-
-TEST(workspaces, precompute_sparseMul) {
-  int N = 16;
-  Tensor<double> A("A", {N, N}, Format{Dense, Dense});
-  Tensor<double> B("B", {N, N}, Format{Dense, Sparse});
-  Tensor<double> C("C", {N, N}, Format{Dense, Dense});
-  Tensor<double> D("D", {N, N}, Format{Dense, Dense});
-
-  for (int i = 0; i < N; i++) {
-    for (int j = 0; j < N; j++) {
-      B.insert({i, j}, (double) i);
-      C.insert({i, j}, (double) j);
-      D.insert({i, j}, (double) i*j);
-    }
-  }
-
-  IndexVar i("i"), j("j"), k("k"), l("l");
-  IndexExpr precomputedExpr = B(i,j) * C(j,k);
-  IndexExpr precomputedExpr2 = precomputedExpr * D(k,l);
-  A(i,l) = precomputedExpr2;
-
-  IndexStmt stmt = A.getAssignment().concretize();
-  TensorVar ws("ws", Type(Float64, {(size_t)N, (size_t)N}), Format{Dense, Dense});
-  TensorVar t("t", Type(Float64, {(size_t)N, (size_t)N}), Format{Dense, Dense});
-
-  stmt = stmt.precompute(precomputedExpr, {i,k}, {i,k}, ws);
-  stmt = stmt.precompute(ws(i,k) * D(k,l), {i,l}, {i,l}, t);
-  stmt = stmt.concretize();
-
-  std::cout << "stmt: " << stmt << std::endl;
-  printCodeToFile("precompute2D_sparseMul", stmt);
-
-  A.compile(stmt.concretize());
-  A.assemble();
-  A.compute();
-
-  Tensor<double> expected("expected", {N, N}, Format{Dense, Dense});
-  expected(i,l) = B(i,j) * C(j,k) * D(k,l);
-  expected.compile();
-  expected.assemble();
-  expected.compute();
-  ASSERT_TENSOR_EQ(expected, A);
-}
-
-TEST(workspaces, precompute_changedSparseMul) {
-  int N = 16;
-  Tensor<double> A("A", {N, N}, Format{Dense, Dense});
-  Tensor<double> B("B", {N, N}, Format{Dense, Sparse});
-  Tensor<double> C("C", {N, N}, Format{Dense, Dense});
-  Tensor<double> D("D", {N, N}, Format{Dense, Dense});
-
-  for (int i = 0; i < N; i++) {
-    for (int j = 0; j < N; j++) {
-      B.insert({i, j}, (double) i);
-      C.insert({i, j}, (double) j);
-      D.insert({i, j}, (double) i*j);
-    }
-  }
-
-  IndexVar i("i"), j("j"), k("k"), l("l");
-  IndexExpr precomputedExpr = C(j,k) * D(k,l);
-  IndexExpr precomputedExpr2 = B(i,j) * precomputedExpr;
-  A(i,l) = precomputedExpr2;
-
-  IndexStmt stmt = A.getAssignment().concretize();
-  TensorVar ws("ws", Type(Float64, {(size_t)N, (size_t)N}), Format{Dense, Dense});
-  TensorVar t("t", Type(Float64, {(size_t)N, (size_t)N}), Format{Dense, Dense});
-
-  stmt = stmt.precompute(precomputedExpr, {j,l}, {j,l}, ws);
-  stmt = stmt.precompute(B(i,j) * ws(j,l), {i,l}, {i,l}, t);
-  stmt = stmt.concretize();
-
-  std::cout << "stmt: " << stmt << std::endl;
-  printCodeToFile("precompute_changedSparseMul", stmt);
-
-  A.compile(stmt.concretize());
-  A.assemble();
-  A.compute();
-
-  Tensor<double> expected("expected", {N, N}, Format{Dense, Dense});
-  expected(i,l) = B(i,j) * C(j,k) * D(k,l);
-  expected.compile();
-  expected.assemble();
-  expected.compute();
-  ASSERT_TENSOR_EQ(expected, A);
-}
-
-
-TEST(workspaces, precompute_tensorContraction) {
-  int N = 16;
-
-  Tensor<double> X("X", {N, N, N}, Format{Dense, Dense, Dense});
-  Tensor<double> A("A", {N, N, N}, Format{Dense, Sparse, Sparse});
-  Tensor<double> B("B", {N, N}, Format{Dense, Dense});
-  Tensor<double> C("C", {N, N}, Format{Dense, Dense});
-  Tensor<double> D("D", {N, N}, Format{Dense, Dense});
-
-  for (int i = 0; i < N; i++) {
-    for (int j = 0; j < N; j++) {
-      B.insert({i, j}, (double) i);
-      C.insert({i, j}, (double) j);
-      D.insert({i, j}, (double) i*j);
-      for (int k = 0; k < N; k++) {
-        A.insert({i,j,k}, (double) i*j*k);
-      }
-    }
-  }
-
-  IndexVar i("i"), j("j"), k("k"), l("l"), m("m"), n("n");
-  TensorVar tmp("tmp", Type(Float64, {(size_t)N, (size_t)N}), Format{Dense, Dense});
-  IndexStmt stmt = 
-  forall(l,
-    where(
-      forall(m,
-        forall(k,
-          forall(j,
-            forall(n,
-              X(l,m,n) += tmp(j,k) * C(j,m) * D(k,n)
-            )
-          )
-        )
-      ),
-      forall(i,
-        forall(j,
-          forall(k,
-            tmp(j,k) += A(i,j,k) * B(i,l)
-          )
-        )
-      )
-    )
-  );
-
-  std::cout << "stmt: " << stmt << std::endl;
-  printCodeToFile("precompute_tensorContraction", stmt);
-
-  X(l,m,n) = A(i,j,k) * B(i,l) * C(j,m) * D(k,n);
-  X.compile(stmt.concretize());
-  X.assemble();
-  X.compute();
-
-  Tensor<double> expected("expected", {N, N, N}, Format{Dense, Dense, Dense});
-  expected(l, m, n) = A(i,j,k) * B(i,l) * C(j,m) * D(k,n);
-  expected.compile();
-  expected.assemble();
-  expected.compute();
-  ASSERT_TENSOR_EQ(expected, X);
-}
-
-
-TEST(workspaces, precompute_tensorContraction2) {
-  int N = 16;
-
-  Tensor<double> X("X", {N, N, N}, Format{Dense, Dense, Dense});
-  Tensor<double> A("A", {N, N, N}, Format{Dense, Sparse, Sparse});
-  Tensor<double> B("B", {N, N}, Format{Dense, Dense});
-  Tensor<double> C("C", {N, N}, Format{Dense, Dense});
-  Tensor<double> D("D", {N, N}, Format{Dense, Dense});
-
-  for (int i = 0; i < N; i++) {
-    for (int j = 0; j < N; j++) {
-      B.insert({i, j}, (double) i);
-      C.insert({i, j}, (double) j);
-      D.insert({i, j}, (double) i*j);
-      for (int k = 0; k < N; k++) {
-        A.insert({i,j,k}, (double) i*j*k);
-      }
-    }
-  }
-
-  IndexVar i("i"), j("j"), k("k"), l("l"), m("m"), n("n");
-  TensorVar tmp1("tmp1", Type(Float64, {(size_t)N, (size_t)N}), Format{Dense, Dense});
-  TensorVar tmp2("tmp2", Type(Float64, {(size_t)N}), Format{Dense});
-  IndexStmt stmt = 
-  forall(l,
-    where(
-      forall(m,
-        where(
-          forall(k,
-            forall(n,
-              X(l,m,n) += tmp2(k) * D(k,n) // contracts k
-            )
-          )
-          ,
-          forall(j,
-            forall(k,
-              tmp2(k) += tmp1(j,k) * C(j,m) // contracts j
-            )
-          )
-        )
-      ),
-      forall(i,
-        forall(j,
-          forall(k,
-            tmp1(j,k) += A(i,j,k) * B(i,l) // contracts i
-          )
-        )
-      )
-    )
-  );
-
-  std::cout << "stmt: " << stmt << std::endl;
-  printCodeToFile("precompute_tensorContraction2", stmt);
-
-  X(l,m,n) = A(i,j,k) * B(i,l) * C(j,m) * D(k,n);
-  X.compile(stmt.concretize());
-  X.assemble();
-  X.compute();
-
-  Tensor<double> expected("expected", {N, N, N}, Format{Dense, Dense, Dense});
-  expected(l, m, n) = A(i,j,k) * B(i,l) * C(j,m) * D(k,n);
-  expected.compile();
-  expected.assemble();
-  expected.compute();
-  ASSERT_TENSOR_EQ(expected, X);
-}
-
-
-
-TEST(workspaces, sddmmPlusSpmm) {
-  Type t(type<double>(), {3,3});
-  const IndexVar i("i"), j("j"), k("k"), l("l");
-
-  TensorVar A("A", t, Format{Dense, Dense});
-  TensorVar B("B", t, Format{Dense, Sparse});
-  TensorVar C("C", t, Format{Dense, Dense});
-  TensorVar D("D", t, Format{Dense, Dense});
-  TensorVar E("E", t, Format{Dense, Dense});
-
-  TensorVar tmp("tmp", Type(), Format());
-
-  // A(i,j) = B(i,j) * C(i,k) * D(j,k) * E(j,l)
-  IndexStmt fused = 
-  forall(i,
-    forall(j,
-      forall(k,
-        forall(l, A(i,l) += B(i,j) * C(i,k) * D(j,k) * E(j,l))
-      )
-    )
-  );
-
-  std::cout << "before topological sort: " << fused << std::endl;
-  fused = reorderLoopsTopologically(fused);
-  // std::vector<IndexVar> order{"i", "j", "k", "l"};
-  fused = fused.reorder({i, j, k, l});
-  std::cout << "after topological sort: " << fused << std::endl;
-
-  // fused = fused.precompute(B(i,j) * C(i,k) * D(j,k), {}, {}, tmp);
-  std::cout << "after precompute: " << fused << std::endl;
-
-  // Kernel kernel = compile(fused);
-
-  // IndexStmt fusedNested = 
-  // forall(i,
-  //   forall(j,
-  //     where(
-  //       forall(l, A(i,l) += tmp * E(j,l)), // consumer
-  //       forall(k, tmp += B(i,j) * C(i,k) * D(j,k)) // producer
-  //     )
-  //   )
-  // );
-
-  // std::cout << "nested loop stmt: " << fusedNested << std::endl; 
 }

@@ -18,6 +18,9 @@
 
 using namespace std;
 
+// #define USE_OPENMP
+// #undef TACO_DEBUG 
+
 namespace taco {
 namespace ir {
 
@@ -134,9 +137,10 @@ string Module::compile() {
     string defaultFlags = "-O3 -ffast-math -std=c99";
 #endif
     cflags = util::getFromEnv("TACO_CFLAGS", defaultFlags) + " -shared -fPIC";
-#if USE_OPENMP
+// #if USE_OPENMP
+    // cout << "Using OpenMP $$" << endl;
     cflags += " -fopenmp";
-#endif
+// #endif
     file_ending = ".c";
     shims_file = "";
   }
@@ -145,7 +149,7 @@ string Module::compile() {
     prefix + file_ending + " " + shims_file + " " + 
     "-o " + fullpath + " -lm";
 
-  // std::cout << "Compiling generated code with command:\n" << cmd << "\n";
+  // std::cout << "Compiling generated code with command: " << cmd << "\n";
 
   // open the output file & write out the source
   compileToSource(tmpdir, libname);

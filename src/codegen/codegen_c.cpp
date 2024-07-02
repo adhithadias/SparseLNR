@@ -34,9 +34,9 @@ const string cHeaders =
   "#include <math.h>\n"
   "#include <complex.h>\n"
   "#include <string.h>\n"
-  "#if _OPENMP\n"
+  // "#if _OPENMP\n"
   "#include <omp.h>\n"
-  "#endif\n"
+  // "#endif\n"
   "#define TACO_MIN(_a,_b) ((_a) < (_b) ? (_a) : (_b))\n"
   "#define TACO_MAX(_a,_b) ((_a) > (_b) ? (_a) : (_b))\n"
   "#define TACO_DEREF(_a) (((___context___*)(*__ctx__))->_a)\n"
@@ -277,6 +277,8 @@ void CodeGen_C::compile(Stmt stmt, bool isFirst) {
   }
   out << endl;
   // generate code for the Stmt
+  // std::cout << "generating code for statement" << std::endl;
+  // std::cout << stmt << std::endl;
   stmt.accept(this);
 }
 
@@ -327,6 +329,16 @@ void CodeGen_C::visit(const Function* func) {
     out << printContextDeclAndInit(varMap, localVars, numYields, func->name)
         << endl;
   }
+
+  // out << "\tchar * val;" << endl;
+  // out << "\tval = getenv( \"OMP_SCHEDULE\" );" << endl;
+  // out << "\tprintf(\"OMP_SCHEDULE: %s\\n\", val);" << endl;
+  // out << "\tomp_sched_t existingSched;\n";
+  // out << "\tint existingChunkSize;\n";
+  // out << "\tomp_get_schedule(&existingSched, &existingChunkSize);\n";
+  // out << "\tprintf(\"existingSched: %d\\n\", existingSched);\n";
+  // out << "\tprintf(\"existingChunkSize: %d\\n\", existingChunkSize);\n";
+  // out << "\tprintf(\"num_threads: %d\\n\", omp_get_max_threads());\n";
 
   // output body
   print(func->body);

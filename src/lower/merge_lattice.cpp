@@ -27,6 +27,7 @@ public:
                         whereTempsToResult(whereTempsToResult) {}
 
   MergeLattice build(IndexStmt stmt) {
+    // std::cout << "Building merge lattice for stmt " << stmt << std::endl;
     stmt.accept(this);
     MergeLattice l = lattice;
     lattice = MergeLattice({});
@@ -34,6 +35,7 @@ public:
   }
 
   MergeLattice build(IndexExpr expr) {
+    // std::cout << "Building merge lattice for expr " << expr << std::endl;
     expr.accept(this);
     MergeLattice l = lattice;
     lattice = MergeLattice({});
@@ -171,6 +173,7 @@ private:
     //        an empty lattice as there is nothing that needs to be merged =)
     // TODO: Add these cases to the test suite....
     IndexVar var(varNode);
+    // std::cout << "visiting index var " << var << std::endl;
     taco_iassert(provGraph.isUnderived(var));
     if (var == i) {
       lattice = MergeLattice({MergePoint({Iterator(var)}, {}, {})});
@@ -185,18 +188,98 @@ private:
 
   void visit(const AccessNode* access)
   {
+    Access accessExpr(access);
+    // std::cout << "accessExpr: " << accessExpr << std::endl;
+    // std::cout << "access: " << access << ", i: " << i << std::endl;
     // TODO: Case where Access is used in computation but not iteration algebra
+
+    // // print seenMergePoints
+    // std::cout << "seenMergePoints: " << std::endl;
+    // for (auto& p : seenMergePoints) {
+    //   std::cout << p.first << " -> " << p.second << std::endl;
+    // }
+    // std::cout << "--" << std::endl;
+
+
     if(seenMergePoints.find(access) != seenMergePoints.end()) {
+      // std::cout << "seen before" << std::endl;
       lattice = MergeLattice({seenMergePoints.at(access)});
       return;
     }
+    // else {
+    //   std::cout << "not seen before" << std::endl;
+    // }
+
+    // // print latticesOfTemporaries
+    // std::cout << "latticesOfTemporaries: " << std::endl;
+    // for (auto& p : latticesOfTemporaries) {
+    //   std::cout << p.first << " -> " << p.second << std::endl;
+    // }
+    // std::cout << "--" << std::endl;
 
     if (util::contains(latticesOfTemporaries, access->tensorVar)) {
       // If the accessed tensor variable is a temporary with an associated merge
       // lattice then we return that lattice.
-      lattice = latticesOfTemporaries.at(access->tensorVar);
+      // std::cout << accessExpr << " is a temporary" << std::endl;
+      // lattice = latticesOfTemporaries.at(access->tensorVar);
+
+      // // TODO ------------------------------------ include the temporary here
+      MergeLattice originalLattice = latticesOfTemporaries.at(access->tensorVar);
+
+      vector<IndexVar> underivedAcestors = provGraph.getUnderivedAncestors(i);
+
+      set<IndexVar> accessUnderivedAncestors;
+      for (IndexVar indexVar : access->indexVars) {
+        vector<IndexVar> underived = provGraph.getUnderivedAncestors(indexVar);
+        accessUnderivedAncestors.insert(underived.begin(), underived.end());
+      }
+
+      IndexVar accessVar;
+      bool foundAccessVar = false;
+
+      // use the outermost fused underived ancestor if multiple appear in access
+      for (int i = (int) underivedAcestors.size() - 1; i >= 0; i--) {
+        if (util::contains(accessUnderivedAncestors, underivedAcestors[i])) {
+          accessVar = underivedAcestors[i];
+          foundAccessVar = true;
+        }
+      }
+      if (!foundAccessVar) {
+        // The access expression does not index i so we construct a lattice from
+        // the mode iterator.  This is sufficient to support broadcast semantics!
+        // lattice = modeIterationLattice();
+        lattice = originalLattice;
+        // std::cout << "not foundAccessVar lattice for temporary: " << lattice << std::endl; 
+        return;
+      }
+
+      // std::cout << "getting iterator for accessExpr: " << accessExpr << ", access: " << access << ", i: " << i << std::endl;
+      Iterator iterator = getIterator(access, i);
+      // std::cout << "iterator: " << iterator << std::endl;
+      taco_iassert(iterator.hasCoordIter() || iterator.hasPosIter() ||
+                  iterator.hasLocate())
+              << "Iterator must support at least one capability";
+
+      vector<Iterator> pointIterators = {iterator};
+      if (provGraph.hasCoordBounds(i)) { // if there are coordiante bounds then add a ranger
+        pointIterators.push_back(iterators.modeIterator(i));
+      }
+
+      MergePoint point = (!iterator.hasCoordIter() && !iterator.hasPosIter())
+                         ? MergePoint({iterators.modeIterator(i)}, {iterator}, {})
+                         : MergePoint(pointIterators, {}, {});
+      MergeLattice newLattice = MergeLattice({point});
+      // std::cout << "else lattice: " << lattice << std::endl;
+      lattice = unionLattices(originalLattice, newLattice);
+
+      // --------------------
+
+      // std::cout << "lattice: " << lattice << std::endl;
       return;
     }
+    // else {
+    //   std::cout << "not a temporary" << std::endl;
+    // }
 
     vector<IndexVar> underivedAcestors = provGraph.getUnderivedAncestors(i);
 
@@ -220,10 +303,13 @@ private:
       // The access expression does not index i so we construct a lattice from
       // the mode iterator.  This is sufficient to support broadcast semantics!
       lattice = modeIterationLattice();
+      // std::cout << "not foundAccessVar lattice: " << lattice << std::endl; 
       return;
     }
 
+    // std::cout << "getting iterator for accessExpr: " << accessExpr << ", access: " << access << ", i: " << i << std::endl;
     Iterator iterator = getIterator(access, i);
+    // std::cout << "iterator: " << iterator << std::endl;
     taco_iassert(iterator.hasCoordIter() || iterator.hasPosIter() ||
                  iterator.hasLocate())
             << "Iterator must support at least one capability";
@@ -245,11 +331,13 @@ private:
     if (provGraph.getPosIteratorDescendant(accessVar, &posIteratorDescendant) && posIteratorDescendant == i) {
       MergePoint point = MergePoint(pointIterators, {}, {});
       lattice = MergeLattice({point});
+      // std::cout << "posIteratorDescendant lattice: " << lattice << std::endl;
     }
     // If this is a position variable then return an iterator over the variable and locate into the access
     else if (provGraph.isPosVariable(i)) {
       MergePoint point = MergePoint({iterators.modeIterator(i)}, {iterator}, {});
       lattice = MergeLattice({point});
+      // std::cout << "posVariable lattice: " << lattice << std::endl;
     }
     else {
       // If iterator does not support coordinate or position iteration then
@@ -258,6 +346,7 @@ private:
                          ? MergePoint({iterators.modeIterator(i)}, {iterator}, {})
                          : MergePoint(pointIterators, {}, {});
       lattice = MergeLattice({point});
+      // std::cout << "else lattice: " << lattice << std::endl;
     }
 
     seenMergePoints.insert({access, lattice.points()[0]});
@@ -326,6 +415,8 @@ private:
   }
 
   void visit(const CallIntrinsicNode* expr) {
+    CallIntrinsic intric(expr);
+    // std::cout << "visiting intrinsic " << intric << std::endl;
     const auto zeroPreservingArgsSets = 
         expr->func->zeroPreservingArgs(expr->args);
 
@@ -364,7 +455,10 @@ private:
   }
 
   void visit(const AssignmentNode* node) {
+    Assignment assign(node);
+    // std::cout << "visiting assignment: " << assign << std::endl;
     lattice = build(node->rhs);
+    // std::cout << "built lattice for assignment: " << assign << ", lattice: " << lattice << std::endl;
     latticesOfTemporaries.insert({node->lhs.getTensorVar(), lattice});
 
     // This is to allow for scalar temporaries to be used (for example
@@ -373,16 +467,33 @@ private:
     // (whereas the scalar has no index variables)
     const AccessNode * lhs = (const AccessNode *) node->lhs.ptr;
     if (whereTempsToResult.count(lhs->tensorVar) && lhs->tensorVar.getOrder() == 0) {
+      // std::cout << "is a scalar temporary: " << lhs->tensorVar << std::endl;
       lhs = whereTempsToResult[lhs->tensorVar];
+    } else {
+      // std::cout << "not a scalar temporary: " << lhs->tensorVar << std::endl;
     }
     set<IndexVar> lhsUnderivedAncestors;
     for (IndexVar indexVar : lhs->indexVars) {
+      // std::cout << "indexVar: " << indexVar << std::endl;
       vector<IndexVar> underived = provGraph.getUnderivedAncestors(indexVar);
+      // // print underived
+      // std::cout << "underived: ";
+      // for (auto& u : underived) {
+      //   std::cout << u << " ";
+      // }
+      // std::cout << std::endl;
+
       lhsUnderivedAncestors.insert(underived.begin(), underived.end());
     }
 
     // find results for all underived ancestors
     vector<IndexVar> underivedAncestors = provGraph.getUnderivedAncestors(i);
+    // // print underivedAncestors
+    // std::cout << "underivedAncestors: ";
+    // for (auto& u : underivedAncestors) {
+    //   std::cout << u << " ";
+    // }
+    // std::cout << std::endl;
     set<IndexVar> underivedAncestorsSet = set<IndexVar>(underivedAncestors.begin(), underivedAncestors.end());
     set<Iterator> resultIterators;
     for (auto accessVar : underivedAncestorsSet) {
@@ -394,12 +505,14 @@ private:
     if (!resultIterators.empty()) {
       vector<MergePoint> points;
       for (auto &point : lattice.points()) {
-        points.push_back(MergePoint(point.iterators(), point.locators(),
-                                    vector<Iterator>(resultIterators.begin(), resultIterators.end()),
-                                    point.isOmitter()));
+        auto p = MergePoint(point.iterators(), point.locators(), vector<Iterator>(resultIterators.begin(), resultIterators.end()), point.isOmitter());
+        // std::cout << "-point: " << p << std::endl;
+        points.push_back(p);
       }
       lattice = MergeLattice(points, lattice.getTensorRegionsToKeep());
+      // std::cout << "final lattice 2: " << lattice << std::endl;
     }
+    // std::cout << "final lattice 1: " << lattice << std::endl;
   }
 
   void visit(const YieldNode* node) {
@@ -407,10 +520,14 @@ private:
   }
 
   void visit(const ForallNode* node) {
+    Forall forall(node);
+    // std::cout << "visiting forall " << forall << std::endl;
     lattice = build(node->stmt);
   }
 
   void visit(const WhereNode* node) {
+    Where where(node);
+    // std::cout << "visiting where: " << where << std::endl;
     // Each where produces a temporary that is consumed on the left-hand side.
     // Since where nodes can be nested, it is possible to for multiple
     // temporaries to be consumed by a consumer expression.  The expression that
@@ -419,8 +536,11 @@ private:
     // expression the temporary is combined with.  The merge lattice
     // construction strategy for where nodes is to keep a map of temporaries and
     // their corresponding merge lattices.
+    // std::cout << "--- building producer where lattice" << std::endl;
     build(node->producer);
+    // std::cout << "--- building consumer where lattice" << std::endl;
     lattice = build(node->consumer);
+    // std::cout << "--- where clause lattice build complete\n" << std::endl;
   }
 
   void visit(const MultiNode* node) {
@@ -1005,6 +1125,20 @@ MergeLattice::MergeLattice(vector<MergePoint> points, set<set<Iterator>> regions
 MergeLattice MergeLattice::make(Forall forall, Iterators iterators, ProvenanceGraph provGraph, std::set<IndexVar> definedIndexVars, std::map<TensorVar, const AccessNode *> whereTempsToResult)
 {
   // Can emit merge lattice once underived ancestor can be recovered
+  // std::cout << "Making merge lattice for " << forall.getIndexVar() << std::endl;
+  // // print definedIndexVars
+  // std::cout << "Defined index vars: ";
+  // for (auto indexVar : definedIndexVars) {
+  //   std::cout << indexVar << ", ";
+  // }
+  // std::cout << std::endl;
+  // // print whereTempsToResult
+  // std::cout << "Where temps to result: " << whereTempsToResult.size() << std::endl;
+  // for (auto whereTempToResult : whereTempsToResult) {
+  //   std::cout << whereTempToResult.first << " -> " << whereTempToResult.second << ", ";
+  // }
+  // std::cout << std::endl;
+
   IndexVar indexVar = forall.getIndexVar();
 
   MergeLatticeBuilder builder(indexVar, iterators, provGraph, definedIndexVars, whereTempsToResult);
@@ -1012,6 +1146,7 @@ MergeLattice MergeLattice::make(Forall forall, Iterators iterators, ProvenanceGr
   vector<IndexVar> underivedAncestors = provGraph.getUnderivedAncestors(indexVar);
   for (auto ancestor : underivedAncestors) {
     if(!provGraph.isRecoverable(ancestor, definedIndexVars)) {
+      // std::cout << "returning 1\n";
       return MergeLattice({MergePoint({iterators.modeIterator(indexVar)}, {}, {})});
     }
   }
@@ -1020,10 +1155,13 @@ MergeLattice MergeLattice::make(Forall forall, Iterators iterators, ProvenanceGr
 
   // Can't remove points if lattice contains omitters since we lose merge cases during lowering.
   if(lattice.anyModeIteratorIsLeaf() && lattice.needExplicitZeroChecks()) {
+    // std::cout << "returning 2\n";
     return lattice;
   }
 
   // Loop lattice and case lattice are identical so simplify here
+  // std::cout << "returning 3\n";
+  // std::cout << "lattice: " << lattice << std::endl;
   return lattice.getLoopLattice();
 }
 

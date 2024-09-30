@@ -1172,6 +1172,7 @@ int main(int argc, char* argv[]) {
   ir::Stmt evaluate;
 
   taco_set_parallel_schedule(sched, chunkSize);
+  cout << "setting num threads: " << nthreads << endl;
   taco_set_num_threads(nthreads);
 
   IndexStmt stmt =

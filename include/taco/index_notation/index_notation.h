@@ -1325,6 +1325,8 @@ std::vector<TensorVar> getAttrQueryResults(IndexStmt stmt);
 /// Returns the temporaries in the index statement, in the order they appear.
 std::map<Forall, std::vector<Where> > getTemporaryLocations(IndexStmt stmt);
 
+void getWhereTempsToResult(IndexStmt stmt, std::map<TensorVar, const AccessNode *>& _whereTempsToResult);
+
 /// Returns the results in the index statement that should be assembled by 
 /// ungrouped insertion.
 std::vector<TensorVar> getAssembledByUngroupedInsertion(IndexStmt stmt);

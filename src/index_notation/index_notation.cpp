@@ -3475,6 +3475,32 @@ bool allForFreeLoopsBeforeAllReductionLoops(IndexStmt stmt) {
     return true;
   }
 
+void getWhereTempsToResult(IndexStmt stmt, std::map<TensorVar, const AccessNode *>& _whereTempsToResult) {
+  struct TemporaryLocsGetter : public IndexNotationVisitor {
+    std::map<TensorVar, const AccessNode *>& whereTempsToResult;
+
+    TemporaryLocsGetter(std::map<TensorVar, const AccessNode *>& _whereTempsToResult) : whereTempsToResult(_whereTempsToResult) {}
+
+    using IndexNotationVisitor::visit;
+
+    void visit(const WhereNode *op) {
+      Where where = Where(op);
+      TensorVar temporary = where.getTemporary();
+
+      match(where.getConsumer(), 
+      std::function<void(const AssignmentNode*)>([&](const AssignmentNode* op) {
+          if (op->lhs.getTensorVar().getOrder() > 0 && whereTempsToResult[temporary] == NULL) {
+            whereTempsToResult[temporary] = (const AccessNode *) op->lhs.ptr;
+          }
+      })
+      );
+      IndexNotationVisitor::visit(op);
+    }
+  };
+  TemporaryLocsGetter getter(_whereTempsToResult);
+  getter.visit(stmt);
+}
+
 std::map<Forall, vector<Where> > getTemporaryLocations(IndexStmt stmt) {
   struct TemporaryLocsGetter : public IndexNotationVisitor {
     map<Forall, vector<Where> > temporaryLocs;
@@ -3512,6 +3538,9 @@ std::map<Forall, vector<Where> > getTemporaryLocations(IndexStmt stmt) {
 
 
 std::vector<TensorVar> getTemporaries(IndexStmt stmt) {
+  // std::cout << "getTemporaries" << std::endl;
+  // std::cout << "stmt: " << stmt << std::endl;
+
   vector<TensorVar> temporaries;
   bool firstAssignment = true;
   match(stmt,
